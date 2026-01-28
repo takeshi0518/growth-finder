@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import HeaderNav from '@/components/header/header-nav';
+import HeaderNav from '@/components/landing/header-nav';
 
 export default function Header() {
   return (
