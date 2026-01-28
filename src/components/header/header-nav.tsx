@@ -49,6 +49,7 @@ export default function HeaderNav() {
                 </Link>
               </SheetTitle>
             </SheetHeader>
+
             <nav className="flex flex-col gap-4 mt-6">
               {navType === 'guest' && (
                 <GuestNav variant="mobile" onClose={() => setIsOpen(false)} />
@@ -78,6 +79,7 @@ function GuestNav({ variant, onClose }: NavProps) {
   const linkClass = isDesktop
     ? 'text-muted-foreground hover:text-foreground transition-colors'
     : 'text-lg py-2 hover:text-primary transition-colors p-2';
+  const buttonClass = isDesktop ? '' : 'w-full';
 
   return (
     <>
@@ -88,12 +90,12 @@ function GuestNav({ variant, onClose }: NavProps) {
         使い方
       </Link>
       <Link href="/login" onClick={onClose}>
-        <Button size="sm" className={!isDesktop ? 'w-full' : ''}>
+        <Button size="sm" className={buttonClass}>
           ログイン
         </Button>
       </Link>
       <Link href="/signup" onClick={onClose}>
-        <Button size="sm" className={!isDesktop ? 'w-full' : ''}>
+        <Button size="sm" className={buttonClass}>
           新規登録
         </Button>
       </Link>
@@ -103,13 +105,9 @@ function GuestNav({ variant, onClose }: NavProps) {
 
 function StaffNav({ variant, onClose }: NavProps) {
   const isDesktop = variant === 'desktop';
+  const buttonClass = isDesktop ? '' : 'w-full';
   return (
-    <Button
-      variant="ghost"
-      size="sm"
-      className={!isDesktop ? 'w-full' : ''}
-      onClick={onClose}
-    >
+    <Button variant="ghost" size="sm" className={buttonClass} onClick={onClose}>
       ログアウト
     </Button>
   );
@@ -120,6 +118,7 @@ function AdminNav({ variant, onClose }: NavProps) {
   const linkClass = isDesktop
     ? 'text-sm text-muted-foreground hover:text-foreground transition-colors'
     : 'text-lg py-2 hover:text-primary transition-colors';
+  const buttonClass = isDesktop ? '' : 'w-full';
   return (
     <>
       <Link href="/admin" className={linkClass} onClick={onClose}>
@@ -131,7 +130,7 @@ function AdminNav({ variant, onClose }: NavProps) {
       <Button
         variant="ghost"
         size="sm"
-        className={!isDesktop ? 'w-full' : ''}
+        className={buttonClass}
         onClick={onClose}
       >
         ログアウト
