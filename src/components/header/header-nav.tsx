@@ -36,7 +36,7 @@ export default function HeaderNav() {
 
       <div className="sm:hidden">
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild>
+          <SheetTrigger asChild className="cursor-pointer">
             <Button variant="ghost" size="icon">
               <Icons.menu />
             </Button>
