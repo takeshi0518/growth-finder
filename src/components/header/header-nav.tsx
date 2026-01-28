@@ -41,9 +41,13 @@ export default function HeaderNav() {
               <Icons.menu />
             </Button>
           </SheetTrigger>
-          <SheetContent side="right">
-            <SheetHeader>
-              <SheetTitle>メニュー</SheetTitle>
+          <SheetContent side="right" className="pt-16 px-6">
+            <SheetHeader className="mb-8">
+              <SheetTitle>
+                <Link href="/" className="text-xl font-semibold">
+                  Growth Finder
+                </Link>
+              </SheetTitle>
             </SheetHeader>
             <nav className="flex flex-col gap-4 mt-6">
               {navType === 'guest' && (
