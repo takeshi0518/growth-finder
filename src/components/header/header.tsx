@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import HeaderNav from '@/components/header/header-nav';
 
 export default function Header() {
