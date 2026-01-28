@@ -17,21 +17,21 @@ export default function HeaderNav() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
-  const getNaveType = () => {
+  const getNavType = () => {
     if (pathname.startsWith('/admin')) return 'admin';
     if (pathname.startsWith('/staff')) return 'staff';
     return 'guest';
   };
 
-  const navType = getNaveType();
+  const navType = getNavType();
 
   return (
     <>
       {/* デスクトップ用ナビゲーション */}
       <nav className="hidden sm:flex items-center gap-6">
-        {navType.startsWith('guest') && <GuestNav />}
-        {navType.startsWith('admin') && <AdminNav />}
-        {navType.startsWith('staff') && <StaffNav />}
+        {navType === 'guest' && <GuestNav variant="desktop" />}
+        {navType === 'admin' && <AdminNav variant="desktop" />}
+        {navType === 'staff' && <StaffNav variant="desktop" />}
       </nav>
 
       <div className="sm:hidden">
@@ -41,7 +41,7 @@ export default function HeaderNav() {
               <Icons.menu />
             </Button>
           </SheetTrigger>
-          <SheetContent side="right" className="pt-16 px-6">
+          <SheetContent side="right" className="pt-16 px-4">
             <SheetHeader className="mb-8">
               <SheetTitle>
                 <Link href="/" className="text-xl font-semibold">
@@ -51,13 +51,13 @@ export default function HeaderNav() {
             </SheetHeader>
             <nav className="flex flex-col gap-4 mt-6">
               {navType === 'guest' && (
-                <GuestNavMobile onClose={() => setIsOpen(false)} />
-              )}
-              {navType === 'staff' && (
-                <StaffNavMobile onClose={() => setIsOpen(false)} />
+                <GuestNav variant="mobile" onClose={() => setIsOpen(false)} />
               )}
               {navType === 'admin' && (
-                <AdminNavMobile onClose={() => setIsOpen(false)} />
+                <AdminNav variant="mobile" onClose={() => setIsOpen(false)} />
+              )}
+              {navType === 'staff' && (
+                <StaffNav variant="mobile" onClose={() => setIsOpen(false)} />
               )}
             </nav>
           </SheetContent>
@@ -67,35 +67,33 @@ export default function HeaderNav() {
   );
 }
 
-//デスクトップ用ナビゲーション
-function GuestNav() {
+type NavProps = {
+  variant: 'desktop' | 'mobile';
+  onClose?: () => void;
+};
+
+//ナビゲーションコンポーネント
+function GuestNav({ variant, onClose }: NavProps) {
+  const isDesktop = variant === 'desktop';
+  const linkClass = isDesktop
+    ? 'text-muted-foreground hover:text-foreground transition-colors'
+    : 'text-lg py-2 hover:text-primary transition-colors p-2';
+
   return (
     <>
-      <Link
-        href="#features"
-        className="text-muted-foreground hover:text-foreground transition-colors"
-      >
+      <Link href="#features" className={linkClass} onClick={onClose}>
         機能
       </Link>
-      <Link
-        href="#usage"
-        className="text-muted-foreground hover:text-foreground transition-colors"
-      >
+      <Link href="#usage" className={linkClass} onClick={onClose}>
         使い方
       </Link>
-      <Link
-        href="/login"
-        className="text-muted-foreground hover:text-foreground transition-colors"
-      >
-        <Button variant="ghost" size="sm" className="cursor-pointer">
+      <Link href="/login" onClick={onClose}>
+        <Button size="sm" className={!isDesktop ? 'w-full' : ''}>
           ログイン
         </Button>
       </Link>
-      <Link
-        href="/signup"
-        className="text-muted-foreground hover:text-foreground transition-colors"
-      >
-        <Button size="sm" className="cursor-pointer">
+      <Link href="/signup" onClick={onClose}>
+        <Button size="sm" className={!isDesktop ? 'w-full' : ''}>
           新規登録
         </Button>
       </Link>
@@ -103,78 +101,39 @@ function GuestNav() {
   );
 }
 
-function StaffNav() {
-  return <Button variant="ghost">ログアウト</Button>;
-}
-
-function AdminNav() {
+function StaffNav({ variant, onClose }: NavProps) {
+  const isDesktop = variant === 'desktop';
   return (
-    <>
-      <Link href="/admin" className="text-sm">
-        ダッシュボード
-      </Link>
-      <Link href="/admin/staff" className="text-sm">
-        スタッフ管理
-      </Link>
-      <Button variant="ghost">ログアウト</Button>
-    </>
-  );
-}
-
-//モバイル用ナビゲーション
-function GuestNavMobile({ onClose }: { onClose: () => void }) {
-  return (
-    <>
-      <Link
-        href="#features"
-        className="text-lg py-2 hover:text-primary transition-colors"
-        onClick={onClose}
-      >
-        機能
-      </Link>
-      <Link
-        href="#features"
-        className="text-lg py-2 hover:text-primary transition-colors"
-        onClick={onClose}
-      >
-        使い方
-      </Link>
-      <Link href="/login" onClick={onClose}>
-        <Button className="w-full">新規登録</Button>
-      </Link>
-      <Link href="/login" onClick={onClose}>
-        <Button className="w-full">ログイン</Button>
-      </Link>
-    </>
-  );
-}
-
-function StaffNavMobile({ onClose }: { onClose: () => void }) {
-  return (
-    <Button variant="ghost" className="w-full" onClick={onClose}>
+    <Button
+      variant="ghost"
+      size="sm"
+      className={!isDesktop ? 'w-full' : ''}
+      onClick={onClose}
+    >
       ログアウト
     </Button>
   );
 }
 
-function AdminNavMobile({ onClose }: { onClose: () => void }) {
+function AdminNav({ variant, onClose }: NavProps) {
+  const isDesktop = variant === 'desktop';
+  const linkClass = isDesktop
+    ? 'text-sm text-muted-foreground hover:text-foreground transition-colors'
+    : 'text-lg py-2 hover:text-primary transition-colors';
   return (
     <>
-      <Link
-        href="/admin"
-        className="text-lg py-2 hover:text-primary transition-colors"
-        onClick={onClose}
-      >
+      <Link href="/admin" className={linkClass} onClick={onClose}>
         ダッシュボード
       </Link>
-      <Link
-        href="/staff"
-        className="text-lg py-2 hover:text-primary transition-colors"
-        onClick={onClose}
-      >
+      <Link href="/admin/staff" className={linkClass} onClick={onClose}>
         スタッフ管理
       </Link>
-      <Button variant="ghost" className="w-full" onClick={onClose}>
+      <Button
+        variant="ghost"
+        size="sm"
+        className={!isDesktop ? 'w-full' : ''}
+        onClick={onClose}
+      >
         ログアウト
       </Button>
     </>
