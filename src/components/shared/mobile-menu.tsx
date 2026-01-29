@@ -20,6 +20,7 @@ type MobileMenuProps = {
 export default function MobileMenu({ children }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const handleClose = () => setIsOpen(false);
+
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild className="cursor-pointer">
