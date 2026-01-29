@@ -12,11 +12,9 @@ export default function LandingLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
-      <body className="antialiased">
-        <Header />
-        <main>{children}</main>
-      </body>
-    </html>
+    <>
+      <Header />
+      {children}
+    </>
   );
 }
