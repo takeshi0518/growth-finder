@@ -48,6 +48,8 @@
 }
 
 :root {
+  --background: #f0f4f8;
+  --foreground: #1e293b;
   --radius: 0.625rem;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
@@ -78,12 +80,10 @@
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
 }
 
 .dark {
-  --background: oklch(0.129 0.042 264.695);
+  --background: oklch(0.145 0 0);
   --foreground: oklch(0.984 0.003 247.858);
   --card: oklch(0.208 0.042 265.755);
   --card-foreground: oklch(0.984 0.003 247.858);
@@ -124,5 +124,11 @@
     @apply bg-background text-foreground;
     font-family: var(--font-noto-sans-jp), var(--font-geist-sans), system-ui,
       sans-serif;
+    background-image: radial-gradient(
+      circle,
+      rgba(100, 116, 139, 0.08) 1px,
+      transparent 1px
+    );
+    background-size: 20px 20px;
   }
 }

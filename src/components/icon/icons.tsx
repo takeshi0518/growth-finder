@@ -1,5 +1,8 @@
-import { Menu } from 'lucide-react';
+import { Menu, BarChart3, Edit3, MessageSquare } from 'lucide-react';
 
 export const Icons = {
-  menu: Menu,
+  Menu,
+  BarChart3,
+  Edit3,
+  MessageSquare,
 };
