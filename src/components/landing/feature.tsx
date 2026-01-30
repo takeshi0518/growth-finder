@@ -1,27 +1,34 @@
+import { LucideIcon } from 'lucide-react';
+import { Icons } from '@/components/icon/icons';
+
 const features = [
-  { icon: '📊', title: '評価の可視化', description: '３軸グラフで一目瞭然' },
   {
-    icon: '✏️',
+    icon: Icons.BarChart3,
+    title: '評価の可視化',
+    description: '３軸グラフで一目瞭然',
+  },
+  {
+    icon: Icons.Edit3,
     title: '簡単な評価入力',
     description: 'タブで入力整理 された画面',
   },
   {
-    icon: '💬',
+    icon: Icons.MessageSquare,
     title: 'フィードバック の記録',
     description: '良い点・改善点 を記録',
   },
 ];
 
 type FeatureCardProps = {
-  icon: string;
+  icon: LucideIcon;
   title: string;
   description: string;
 };
 
-function FeatureCard({ icon, title, description }: FeatureCardProps) {
+function FeatureCard({ icon: Icon, title, description }: FeatureCardProps) {
   return (
     <div className="w-full max-w-xs h-full text-center p-6 border rounded-lg bg-card">
-      <p className="mb-4 text-4xl">{icon}</p>
+      <Icon className="w-12 h-12 mx-auto mb-4 text-primary" />
       <h3 className="mb-3 text-lg font-semibold">{title}</h3>
       <p className="text-muted-foreground">{description}</p>
     </div>

@@ -25,7 +25,7 @@ export default function MobileMenu({ children }: MobileMenuProps) {
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild className="cursor-pointer">
         <Button variant="ghost" size="icon">
-          <Icons.menu />
+          <Icons.Menu/>
         </Button>
       </SheetTrigger>
       <SheetContent side="right" className="pt-16 px-4">
