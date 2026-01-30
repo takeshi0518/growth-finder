@@ -37,7 +37,7 @@ function FeatureCard({ icon: Icon, title, description }: FeatureCardProps) {
 
 export default function Feature() {
   return (
-    <div className="py-20">
+    <div id="features" className="py-20 scroll-mt-24">
       <div className="container mx-auto px-4">
         <h2 className="text-2xl md:text-4xl mb-12 text-center font-bold">
           Growth Finderの機能
