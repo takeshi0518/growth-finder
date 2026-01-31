@@ -48,8 +48,7 @@ export default function RealScreen() {
           {screenshots.map((screenshot, index) => (
             <Screenshot
               key={screenshot.alt}
-              src={screenshot.src}
-              alt={screenshot.alt}
+              {...screenshot}
               priority={index === 0}
               isFirst={index === 0}
             />
