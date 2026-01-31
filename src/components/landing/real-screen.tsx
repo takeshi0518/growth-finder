@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import SectionTitle from './section-title';
 
 const screenshots = [
   {
@@ -41,9 +42,7 @@ export default function RealScreen() {
   return (
     <div className="pt-16 pb-20">
       <div className="container mx-auto px-4">
-        <h2 className="text-2xl md:text-4xl mb-12 text-center font-bold">
-          実際の画面
-        </h2>
+        <SectionTitle>実際の画面</SectionTitle>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {screenshots.map((screenshot, index) => (
             <Screenshot
