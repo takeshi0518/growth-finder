@@ -1,6 +1,7 @@
 import Feature from '@/components/landing/feature';
 import Hero from '@/components/landing/hero';
 import RealScreen from '@/components/landing/real-screen';
+import Usage from '@/components/landing/usage';
 
 export default function LandingPage() {
   return (
@@ -8,6 +9,7 @@ export default function LandingPage() {
       <Hero />
       <Feature />
       <RealScreen />
+      <Usage />
     </>
   );
 }
