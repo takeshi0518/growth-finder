@@ -1,6 +1,7 @@
 import { LucideIcon } from 'lucide-react';
 import { Icons } from '@/components/icon/icons';
 import SectionTitle from './section-title';
+import Container from './container';
 
 const features = [
   {
@@ -38,15 +39,15 @@ function FeatureCard({ icon: Icon, title, description }: FeatureCardProps) {
 
 export default function Feature() {
   return (
-    <div id="features" className="py-20 scroll-mt-24">
-      <div className="container mx-auto px-4">
+    <section id="features" className="py-20 scroll-mt-24">
+      <Container>
         <SectionTitle>Growth Finderの機能</SectionTitle>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 place-items-center">
           {features.map((feature) => (
             <FeatureCard {...feature} key={feature.title} />
           ))}
         </div>
-      </div>
-    </div>
+      </Container>
+    </section>
   );
 }

@@ -1,6 +1,7 @@
 import { Icons } from '../icon/icons';
 import { LucideIcon } from 'lucide-react';
 import SectionTitle from './section-title';
+import Container from './container';
 
 const usageList = [
   {
@@ -51,15 +52,15 @@ function UsageItem({ index, icon: Icon, title, description }: UsageItemProps) {
 
 export default function Usage() {
   return (
-    <div id="usage" className="py-20">
-      <div className="container mx-auto px-4">
+    <section id="usage" className="py-20">
+      <Container>
         <SectionTitle>Growth Finderの使い方</SectionTitle>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {usageList.map((item) => (
             <UsageItem key={item.title} {...item} />
           ))}
         </div>
-      </div>
-    </div>
+      </Container>
+    </section>
   );
 }
