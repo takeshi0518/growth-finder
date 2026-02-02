@@ -21,9 +21,9 @@ const footerLinks = {
     { label: '使い方', href: '#usage' },
     { label: 'デモ', href: '/demo' },
   ],
-  accunt: [
-    { labe: 'ログイン', href: '/login' },
-    { labe: '新規登録', href: '/signup' },
+  account: [
+    { label: 'ログイン', href: '/login' },
+    { label: '新規登録', href: '/signup' },
   ],
 };
 
@@ -82,13 +82,13 @@ export default function Footer() {
             <div>
               <h4 className="font-semibold mb-4">アカウント</h4>
               <ul className="space-y-2 text-sm">
-                {footerLinks.accunt.map((link) => (
-                  <li key={link.labe}>
+                {footerLinks.account.map((link) => (
+                  <li key={link.label}>
                     <Link
                       href={link.href}
                       className="text-muted-foreground hover:text-foreground transition-colors"
                     >
-                      {link.labe}
+                      {link.label}
                     </Link>
                   </li>
                 ))}
