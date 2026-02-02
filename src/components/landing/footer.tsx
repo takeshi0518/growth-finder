@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Container from './container';
+import { Icons } from '../icon/icons';
 
 export default function Footer() {
   return (
@@ -7,7 +8,7 @@ export default function Footer() {
       <div className="border-t bg-background">
         <Container>
           <div className="py-8 md:py-12">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {/* ブランド情報 */}
               <div>
                 <h3 className="font-bold text-lg mb-4">Growth Finder</h3>
@@ -18,6 +19,30 @@ export default function Footer() {
                   <br />
                   人材育成ツール
                 </p>
+              </div>
+              {/* SNSリンク */}
+              <div>
+                <h4 className="font-semibold mb-4">SNS</h4>
+                <div className="flex gap-4">
+                  <Link
+                    href="https://x.com/y_takeshi0518"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                    aria-label="X(Twitter)"
+                  >
+                    <Icons.FaXTwitter className="w-5 h-5" />
+                  </Link>
+                  <Link
+                    href="https://github.com/takeshi0518"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                    aria-label="GitHub"
+                  >
+                    <Icons.FaGithub className="w-5 h-5" />
+                  </Link>
+                </div>
               </div>
               {/* リンク */}
               <div>
