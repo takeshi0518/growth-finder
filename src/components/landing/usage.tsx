@@ -51,7 +51,7 @@ function UsageItem({ index, icon: Icon, title, description }: UsageItemProps) {
 
 export default function Usage() {
   return (
-    <div className="py-20">
+    <div id="usage" className="py-20">
       <div className="container mx-auto px-4">
         <SectionTitle>Growth Finderの使い方</SectionTitle>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
