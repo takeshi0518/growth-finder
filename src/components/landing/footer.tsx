@@ -1,6 +1,31 @@
 import Link from 'next/link';
+
 import Container from './container';
 import { Icons } from '../icon/icons';
+
+const footerLinks = {
+  sns: [
+    {
+      label: 'GitHub',
+      icon: Icons.FaGithub,
+      href: 'https://github.com/takeshi0518',
+    },
+    {
+      label: 'X(Twitter)',
+      icon: Icons.FaXTwitter,
+      href: 'https://x.com/y_takeshi0518',
+    },
+  ],
+  service: [
+    { label: '機能', href: '#features' },
+    { label: '使い方', href: '#usage' },
+    { label: 'デモ', href: '/demo' },
+  ],
+  accunt: [
+    { labe: 'ログイン', href: '/login' },
+    { labe: '新規登録', href: '/signup' },
+  ],
+};
 
 export default function Footer() {
   return (
@@ -23,76 +48,50 @@ export default function Footer() {
             <div>
               <h4 className="font-semibold mb-4">SNS</h4>
               <div className="flex gap-4">
-                <Link
-                  href="https://x.com/y_takeshi0518"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                  aria-label="X(Twitter)"
-                >
-                  <Icons.FaXTwitter className="w-5 h-5" />
-                </Link>
-                <Link
-                  href="https://github.com/takeshi0518"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                  aria-label="GitHub"
-                >
-                  <Icons.FaGithub className="w-5 h-5" />
-                </Link>
+                {footerLinks.sns.map((link) => (
+                  <Link
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                    aria-label={link.label}
+                    key={link.label}
+                  >
+                    <link.icon className="w-5 h-5" />
+                  </Link>
+                ))}
               </div>
             </div>
             {/* リンク */}
             <div>
               <h4 className="font-semibold mb-4">サービス</h4>
               <ul className="space-y-2 text-sm">
-                <li>
-                  <Link
-                    href="#features"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    機能
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#usage"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    使い方
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/demo"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    デモ
-                  </Link>
-                </li>
+                {footerLinks.service.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
             {/* アカウント */}
             <div>
               <h4 className="font-semibold mb-4">アカウント</h4>
               <ul className="space-y-2 text-sm">
-                <li>
-                  <Link
-                    href="/login"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    ログイン
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/signup"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    新規登録
-                  </Link>
-                </li>
+                {footerLinks.accunt.map((link) => (
+                  <li key={link.labe}>
+                    <Link
+                      href={link.href}
+                      className="text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      {link.labe}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
