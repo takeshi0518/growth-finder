@@ -44,7 +44,7 @@ Growth Finder は、カフェなどの飲食店におけるスタッフ育成を
 
 - [開発コンセプトスライド](./docs/concept-slides.pdf) - なぜこのツールを作ったのか
 
-- [伸びしろ発見チェックシート](./docs/growth-finder-sheet.pdf.pdf) -自作したツールの実物(印刷用)
+- [伸びしろ発見チェックシート](./docs/growth-finder-sheet.pdf) -自作したツールの実物(印刷用)
 
 **現場での運用**
 
