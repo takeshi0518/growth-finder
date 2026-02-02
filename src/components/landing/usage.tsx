@@ -2,13 +2,19 @@ import { Icons } from '../icon/icons';
 import { LucideIcon } from 'lucide-react';
 import SectionTitle from './section-title';
 import Container from './container';
+import { Button } from '../ui/button';
+import Link from 'next/link';
 
 const usageList = [
   {
     index: '1',
     icon: Icons.Edit3,
     title: 'アカウント',
-    description: 'すぐに始める',
+    description: (
+      <Button size="sm" asChild variant="ghost">
+        <Link href="/signup">すぐに始める</Link>
+      </Button>
+    ),
   },
   {
     index: '2',
@@ -34,7 +40,7 @@ type UsageItemProps = {
   index: string;
   icon: LucideIcon;
   title: string;
-  description: string;
+  description: React.ReactNode;
 };
 
 function UsageItem({ index, icon: Icon, title, description }: UsageItemProps) {
@@ -44,7 +50,7 @@ function UsageItem({ index, icon: Icon, title, description }: UsageItemProps) {
       <div className="text-center mt-3">
         <Icon className="w-8 md:w-10 h-8 md:h-10 mx-auto text-primary" />
         <p className="mt-3 text-base font-semibold">{title}</p>
-        <p className="mt-4 text-xs text-muted-foreground">{description}</p>
+        <div className="mt-4 text-xs text-muted-foreground">{description}</div>
       </div>
     </div>
   );
