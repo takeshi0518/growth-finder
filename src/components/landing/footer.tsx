@@ -48,18 +48,21 @@ export default function Footer() {
             <div>
               <h4 className="font-semibold mb-4">SNS</h4>
               <div className="flex gap-4">
-                {footerLinks.sns.map((link) => (
-                  <Link
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                    aria-label={link.label}
-                    key={link.label}
-                  >
-                    <link.icon className="w-5 h-5" />
-                  </Link>
-                ))}
+                {footerLinks.sns.map((link) => {
+                  const Icon = link.icon;
+                  return (
+                    <Link
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-muted-foreground hover:text-foreground transition-colors"
+                      aria-label={link.label}
+                      key={link.label}
+                    >
+                      <Icon className="w-5 h-5" />
+                    </Link>
+                  );
+                })}
               </div>
             </div>
             {/* リンク */}
