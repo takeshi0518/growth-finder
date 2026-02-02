@@ -1,11 +1,12 @@
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
+import Container from './container';
 
 export default function Hero() {
   return (
-    <div className="pt-32 pb-20">
-      <div className="container mx-auto px-4">
+    <section className="pt-32 pb-20">
+      <Container>
         <div className="flex flex-col items-center gap-12">
           <h1 className="font-bold text-3xl sm:text-5xl md:text-7xl">
             Growth Finder
@@ -39,7 +40,7 @@ export default function Hero() {
             priority
           />
         </div>
-      </div>
-    </div>
+      </Container>
+    </section>
   );
 }

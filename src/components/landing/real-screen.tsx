@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import SectionTitle from './section-title';
+import Container from './container';
 
 const screenshots = [
   {
@@ -40,8 +41,8 @@ function Screenshot({ src, alt, priority, isFirst }: ScreenshotProps) {
 
 export default function RealScreen() {
   return (
-    <div className="pt-16 pb-20">
-      <div className="container mx-auto px-4">
+    <section className="pt-16 pb-20">
+      <Container>
         <SectionTitle>実際の画面</SectionTitle>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {screenshots.map((screenshot, index) => (
@@ -53,7 +54,7 @@ export default function RealScreen() {
             />
           ))}
         </div>
-      </div>
-    </div>
+      </Container>
+    </section>
   );
 }
