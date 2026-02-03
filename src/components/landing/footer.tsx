@@ -55,7 +55,7 @@ export default function Footer() {
                       href={link.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-muted-foreground hover:text-foreground transition-colors"
+                      className="text-muted-foreground hover:text-primary transition-colors"
                       aria-label={link.label}
                       key={link.label}
                     >
@@ -73,7 +73,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-muted-foreground hover:text-foreground transition-colors"
+                      className="text-muted-foreground hover:text-primary transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -89,7 +89,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-muted-foreground hover:text-foreground transition-colors"
+                      className="text-muted-foreground hover:text-primary transition-colors"
                     >
                       {link.label}
                     </Link>
