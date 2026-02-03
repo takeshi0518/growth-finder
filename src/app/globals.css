@@ -108,9 +108,11 @@
   [id] {
     scroll-margin-top: 6rem;
   }
+
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-noto-sans-jp), var(--font-geist-sans), system-ui,
