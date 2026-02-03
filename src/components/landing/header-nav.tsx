@@ -19,7 +19,7 @@ function GuestNav() {
       {guestNavItems.map((item) => (
         <Link
           href={item.href}
-          className="text-muted-foreground hover:text-foreground transition-colors"
+          className="text-muted-foreground hover:text-primary transition-colors"
           key={item.label}
           onClick={(e) => handleSmoothScroll(e, item.href)}
         >
