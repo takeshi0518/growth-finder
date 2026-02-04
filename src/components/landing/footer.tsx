@@ -29,14 +29,14 @@ const footerLinks = {
 
 export default function Footer() {
   return (
-    <footer className="border-t bg-background">
+    <footer className="bg-primary text-primary-foreground">
       <Container>
         <div className="py-8 md:py-12">
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* ブランド情報 */}
             <div>
               <h3 className="font-bold text-lg mb-4">Growth Finder</h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm">
                 スタッフの成長を可視化し、
                 <br />
                 関係性構築を支援する
@@ -55,9 +55,9 @@ export default function Footer() {
                       href={link.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-muted-foreground hover:text-primary transition-colors"
                       aria-label={link.label}
                       key={link.label}
+                      className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
                     >
                       <Icon className="w-5 h-5" />
                     </Link>
@@ -73,7 +73,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-muted-foreground hover:text-primary transition-colors"
+                      className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -89,7 +89,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-muted-foreground hover:text-primary transition-colors"
+                      className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -101,7 +101,7 @@ export default function Footer() {
         </div>
       </Container>
       {/* コピーライト */}
-      <div className="border-t mt-8 pt-8 mb-8 text-center text-sm text-muted-foreground">
+      <div className="p-8 text-center text-sm text-primary-foreground border-t border-primary-foreground/20">
         <p>
           &copy; {new Date().getFullYear()} Growth Finder. All rights reserved.
         </p>
