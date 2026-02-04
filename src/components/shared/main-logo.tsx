@@ -11,7 +11,7 @@ export default function MainLogo() {
         alt="Growth Finder"
         priority
         aria-label="Growth Finder ホームページへ"
-        className="h-5 sm:h-8 w-auto"
+        className="h-9 sm:h-10 w-auto"
       />
     </Link>
   );
