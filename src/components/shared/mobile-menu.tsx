@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { ReactNode, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
@@ -32,7 +31,7 @@ export default function MobileMenu({ children }: MobileMenuProps) {
       <SheetContent side="right" className="pt-8 px-6">
         <SheetHeader>
           <SheetTitle className="">
-            <MainLogo />
+            <MainLogo onClick={handleClose} />
           </SheetTitle>
         </SheetHeader>
 

@@ -1,9 +1,18 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function MainLogo() {
+type MainLogoProps = {
+  onClick?: () => void;
+};
+
+export default function MainLogo({ onClick }: MainLogoProps) {
+  const handleClick = (e: React.MouseEvent) => {
+    onClick?.();
+  };
   return (
-    <Link href="/">
+    <Link href="/" onClick={handleClick}>
       <Image
         src="/svg/logo.svg"
         width={160}
