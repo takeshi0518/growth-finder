@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/sheet';
 
 import { Icons } from '@/components/icon/icons';
+import MainLogo from './main-logo';
 
 type MobileMenuProps = {
   children: ReactNode | ((onClose: () => void) => ReactNode);
@@ -28,12 +29,10 @@ export default function MobileMenu({ children }: MobileMenuProps) {
           <Icons.Menu className="size-7 text-muted-foreground" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="pt-16 px-4">
-        <SheetHeader className="mb-8">
-          <SheetTitle>
-            <Link href="/" className="text-xl font-semibold">
-              Growth Finder
-            </Link>
+      <SheetContent side="right" className="pt-8 px-6">
+        <SheetHeader>
+          <SheetTitle className="">
+            <MainLogo />
           </SheetTitle>
         </SheetHeader>
 
