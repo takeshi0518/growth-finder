@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 
 import { FaXTwitter, FaGithub } from 'react-icons/fa6';
+import { FcGoogle } from 'react-icons/fc';
 
 export const Icons = {
   Menu,
@@ -18,4 +19,5 @@ export const Icons = {
   ClipboardPenLine,
   FaXTwitter,
   FaGithub,
+  FcGoogle,
 };
