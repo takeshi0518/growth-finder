@@ -5,6 +5,7 @@ import {
   MessageSquare,
   UserRoundPen,
   ClipboardPenLine,
+  MailCheck,
 } from 'lucide-react';
 
 import { FaXTwitter, FaGithub } from 'react-icons/fa6';
@@ -17,6 +18,7 @@ export const Icons = {
   MessageSquare,
   UserRoundPen,
   ClipboardPenLine,
+  MailCheck,
   FaXTwitter,
   FaGithub,
   FcGoogle,
