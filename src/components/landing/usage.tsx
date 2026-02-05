@@ -45,7 +45,7 @@ type UsageItemProps = {
 
 function UsageItem({ index, icon: Icon, title, description }: UsageItemProps) {
   return (
-    <div className="w-full p-6 lg:p-12 border rounded-2xl">
+    <div className="bg-primary-foreground w-full p-6 lg:p-12 border rounded-2xl">
       <p className="text-xl md:text-2xl">{index}</p>
       <div className="text-center mt-3">
         <Icon className="w-8 md:w-10 h-8 md:h-10 mx-auto text-primary" />

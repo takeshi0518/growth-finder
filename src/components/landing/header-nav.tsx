@@ -48,7 +48,7 @@ function GuestNavMobile({ onClose }: { onClose: () => void }) {
         <Link
           href={item.href}
           key={item.label}
-          className="text-lg py-2 hover:text-primary transition-colors p-2"
+          className="text-lg p-3 rounded-2xl hover:bg-primary/10 transition-colors"
           onClick={(e) => handleClick(e, item.href)}
         >
           {item.label}
