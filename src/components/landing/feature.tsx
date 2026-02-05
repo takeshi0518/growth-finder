@@ -29,7 +29,7 @@ type FeatureCardProps = {
 
 function FeatureCard({ icon: Icon, title, description }: FeatureCardProps) {
   return (
-    <div className="w-full max-w-xs h-full text-center p-6 border rounded-lg bg-card">
+    <div className="w-full max-w-xs h-full text-center p-6 md:p-10 lg:p-12 border rounded-lg bg-card">
       <Icon className="w-12 h-12 mx-auto mb-4 text-primary" />
       <h3 className="mb-3 text-lg font-semibold">{title}</h3>
       <p className="text-muted-foreground">{description}</p>
