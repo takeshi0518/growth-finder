@@ -6,6 +6,8 @@ import {
   UserRoundPen,
   ClipboardPenLine,
   MailCheck,
+  ArrowLeft,
+  KeyRound,
 } from 'lucide-react';
 
 import { FaXTwitter, FaGithub } from 'react-icons/fa6';
@@ -19,6 +21,8 @@ export const Icons = {
   UserRoundPen,
   ClipboardPenLine,
   MailCheck,
+  ArrowLeft,
+  KeyRound,
   FaXTwitter,
   FaGithub,
   FcGoogle,

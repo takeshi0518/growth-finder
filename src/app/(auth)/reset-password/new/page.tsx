@@ -5,21 +5,22 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import NewPasswordForm from './new-password-form';
 
-import LoginForm from './login-form';
-
-export default function LoginPage() {
+export default function NewPsswordPage() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl md:text-3xl">ログイン</CardTitle>
+        <CardTitle className="text-2xl md:text-3xl">
+          新しいパスワードを設定
+        </CardTitle>
         <CardDescription>
-          Growth Finderにログインして成長を可視化しましょう
+          ８文字以上の英数字を含むパスワードを設定してください
         </CardDescription>
       </CardHeader>
 
       <CardContent>
-        <LoginForm />
+        <NewPasswordForm />
       </CardContent>
     </Card>
   );
