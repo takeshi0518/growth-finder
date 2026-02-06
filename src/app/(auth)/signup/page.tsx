@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/card';
 import Link from 'next/link';
 import SignupForm from './signup-form';
+import { Icons } from '@/components/icon/icons';
 
 export default function Signup() {
   return (
@@ -38,24 +39,15 @@ export default function Signup() {
           </Link>
         </div>
 
-        <div className="relative w-full">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-card px-2 text-muted-foreground">
-              スタッフの方
-            </span>
-          </div>
-        </div>
-
-        <div className="text-center space-y-1">
-          <p className="text-sm font-medium">招待メールを確認してください</p>
-          <p className="text-xs text-muted-foreground">
-            管理者から招待メールが届いている場合は、
-            <br />
-            メール内のリンクからログインしてください
-          </p>
+        {/* ホームに戻る */}
+        <div className="text-center text-sm">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-1 text-muted-foreground hover:text-primary"
+          >
+            <Icons.ArrowLeft className="h-4 w-4 text-primary" />
+            ホームに戻る
+          </Link>
         </div>
       </CardFooter>
     </Card>
