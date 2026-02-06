@@ -11,28 +11,52 @@ import SignupForm from './signup-form';
 
 export default function Signup() {
   return (
-    <Card className="w-full max-w-md mt-10">
+    <Card className="w-full max-w-md">
       <CardHeader className="text-center">
-        <CardTitle className="text-xl sm:text-2xl">Signup</CardTitle>
+        <CardTitle className="text-xl sm:text-3xl">
+          管理者アカウント作成
+        </CardTitle>
         <CardDescription className="text-xs sm:text-base">
-          アカウントを作成してください
+          Growth Finderで組織の成長を可視化しましょう
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="space-y-6">
+      <CardContent>
         <SignupForm />
       </CardContent>
 
-      <CardFooter>
-        <p className="text-xs sm:text-sm text-muted-foreground text-center w-full">
-          すでにアカウントをお持ちの方は
+      <CardFooter className="flex flex-col gap-3">
+        <div className="text-center text-sm">
+          <span className="text-muted-foreground">
+            すでにアカウントをお持ちの方は
+          </span>
           <Link
             href="/login"
-            className="underline ml-1 hover:text-primary transition-colors"
+            className="text-primary hover:underline font-medium"
           >
-            こちら
+            ログイン
           </Link>
-        </p>
+        </div>
+
+        <div className="relative w-full">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-card px-2 text-muted-foreground">
+              スタッフの方
+            </span>
+          </div>
+        </div>
+
+        <div className="text-center space-y-1">
+          <p className="text-sm font-medium">招待メールを確認してください</p>
+          <p className="text-xs text-muted-foreground">
+            管理者から招待メールが届いている場合は、
+            <br />
+            メール内のリンクからログインしてください
+          </p>
+        </div>
       </CardFooter>
     </Card>
   );
