@@ -1,6 +1,7 @@
-import Container from '@/components/landing/container';
-import MainLogo from '@/components/shared/main-logo';
 import type { Metadata } from 'next';
+import Image from 'next/image';
+
+import Container from '@/components/landing/container';
 
 export const metadata: Metadata = {
   title: 'Growth Finder',
@@ -16,7 +17,14 @@ export default function LandingLayout({
     <div className="min-h-screen flex flex-col">
       <header className="border-b bg-card">
         <Container className="py-3">
-          <MainLogo />
+          <Image
+            src="/svg/logo.svg"
+            width={160}
+            height={40}
+            alt="Growth Finder"
+            priority
+            className="h-9 sm:h-10 w-auto"
+          />
         </Container>
       </header>
 
