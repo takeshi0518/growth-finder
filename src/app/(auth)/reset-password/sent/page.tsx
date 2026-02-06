@@ -29,16 +29,16 @@ export default function ResetPasswordSentPage() {
       <CardContent className="space-y-6 text-center">
         <div className="space-y-2">
           <p className="text-sm text-muted-foreground">
-            パスワードリセット用のメールを送信しました。
+            パスワードリセット用のメールを送信しました
           </p>
           <p className="text-sm text-muted-foreground">
-            メール内のリンクをクリックして、新しいパスワードを設定してください。
+            メール内のリンクをクリックして、新しいパスワードを設定してください
           </p>
         </div>
 
         <div className="pt-4 border-t">
           <p className="text-sm text-muted-foreground">
-            メールが届かない場合は迷惑メールフォルダを確認ください。
+            メールが届かない場合は迷惑メールフォルダを確認ください
           </p>
         </div>
       </CardContent>

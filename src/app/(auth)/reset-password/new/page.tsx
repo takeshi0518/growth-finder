@@ -15,7 +15,7 @@ export default function NewPsswordPage() {
           新しいパスワードを設定
         </CardTitle>
         <CardDescription>
-          ８文字以上の英数字を含むパスワードを設定してください。
+          ８文字以上の英数字を含むパスワードを設定してください
         </CardDescription>
       </CardHeader>
 
