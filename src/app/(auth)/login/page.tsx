@@ -12,28 +12,30 @@ import LoginForm from './login-form';
 
 export default function LoginPage() {
   return (
-    <Card className="w-full max-w-md mt-10">
+    <Card className="w-full max-w-md">
       <CardHeader className="text-center">
-        <CardTitle className="text-xl sm:text-2xl">Login</CardTitle>
-        <CardDescription className="text-xs sm:text-base">
-          アカウントにログインしてください
+        <CardTitle className="text-2xl md:text-3xl">ログイン</CardTitle>
+        <CardDescription>
+          Growth Finderにログインして成長を可視化しましょう
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="space-y-6">
+      <CardContent>
         <LoginForm />
       </CardContent>
 
-      <CardFooter>
-        <p className="text-xs sm:text-sm text-muted-foreground text-center w-full">
-          アカウントをお持ちでない方は
+      <CardFooter className="flex flex-col gap-4">
+        <div className="text-center text-sm">
+          <span className="text-muted-foreground">
+            アカウントをお持ちでない方は
+          </span>
           <Link
             href="/signup"
-            className="underline ml-1 hover:text-primary transition-colors"
+            className="text-primary hover:underline font-medium"
           >
-            こちら
+            新規登録
           </Link>
-        </p>
+        </div>
       </CardFooter>
     </Card>
   );
