@@ -1,3 +1,4 @@
+import Container from '@/components/landing/container';
 import MainLogo from '@/components/shared/main-logo';
 import type { Metadata } from 'next';
 
@@ -12,11 +13,16 @@ export default function LandingLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main>
-      <div className="flex flex-col justify-center items-center h-full min-h-screen p-6">
-        <MainLogo />
+    <div className="min-h-screen flex flex-col">
+      <header className="border-b bg-card">
+        <Container className="py-3">
+          <MainLogo />
+        </Container>
+      </header>
+
+      <main className="flex-1 flex items-center justify-center p-4">
         {children}
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }
