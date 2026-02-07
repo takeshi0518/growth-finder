@@ -8,6 +8,7 @@ import {
   MailCheck,
   ArrowLeft,
   KeyRound,
+  CheckCircle,
 } from 'lucide-react';
 
 import { FaXTwitter, FaGithub } from 'react-icons/fa6';
@@ -23,6 +24,7 @@ export const Icons = {
   MailCheck,
   ArrowLeft,
   KeyRound,
+  CheckCircle,
   FaXTwitter,
   FaGithub,
   FcGoogle,

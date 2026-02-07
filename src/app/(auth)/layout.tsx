@@ -31,6 +31,15 @@ export default function LandingLayout({
       <main className="flex-1 flex items-center justify-center p-4">
         {children}
       </main>
+
+      <footer className="bg-card py-4">
+        <div className="text-center text-xs text-muted-foreground">
+          <p>
+            &copy; {new Date().getFullYear()} Growth Finder. All rights
+            reserved.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
