@@ -2,54 +2,28 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
 
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/icon/icons';
 import { SingupInput, signupSchema } from '@/lib/validations/auth';
-import { createClient } from '@/lib/supabase/client';
-import { toast } from 'sonner';
-import { getAuthErrorMessage } from '@/lib/utils/error-message';
+import { useAuth } from '../hooks/use-auth';
 
 export default function SignupForm() {
-  const supabase = createClient();
-  const router = useRouter();
+  const { signup, isLoading } = useAuth();
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<SingupInput>({
     resolver: zodResolver(signupSchema),
     mode: 'onChange',
   });
 
   async function onSubmit(data: SingupInput) {
-    const organaizationId = crypto.randomUUID();
-
-    const { error } = await supabase.auth.signUp({
-      email: data.email,
-      password: data.password,
-      options: {
-        data: {
-          name: data.name,
-          store_name: data.storeName,
-          role: 'admin',
-          organization_id: organaizationId,
-        },
-      },
-    });
-
-    if (error) {
-      toast.error('アカウント作成に失敗しました', {
-        description: getAuthErrorMessage(error),
-      });
-      return;
-    }
-
-    router.push('/confirm-email');
+    await signup(data);
   }
 
   return (
@@ -135,7 +109,7 @@ export default function SignupForm() {
 
         {/* ログインボタン */}
         <Button type="submit" className="w-full" size="lg">
-          {isSubmitting ? '登録中...' : 'アカウントを作成'}
+          {isLoading ? '登録中...' : 'アカウントを作成'}
         </Button>
       </form>
 
