@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/icon/icons';
 import { SingupInput, signupSchema } from '@/lib/validations/auth';
 import { createClient } from '@/lib/supabase/client';
+import { toast } from 'sonner';
 
 export default function SignupForm() {
   const supabase = createClient();
@@ -41,7 +42,9 @@ export default function SignupForm() {
     });
 
     if (error) {
-      console.error('サインアップエラー', error.message);
+      toast.error('アカウント作成に失敗しました', {
+        description: error.message,
+      });
       return;
     }
 
