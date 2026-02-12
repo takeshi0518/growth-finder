@@ -1,4 +1,5 @@
 import Image from 'next/image';
+
 import SectionTitle from './section-title';
 import Container from './container';
 

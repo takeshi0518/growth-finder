@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import {
   Card,
   CardContent,
@@ -5,8 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import Link from 'next/link';
-
 import { Icons } from '@/components/icon/icons';
 import { Button } from '@/components/ui/button';
 

@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import { Icons } from '@/components/icon/icons';
 import {
   Card,
@@ -7,7 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import Link from 'next/link';
 import ResetForm from './reset-form';
 
 export default function ResetPasswordPage() {

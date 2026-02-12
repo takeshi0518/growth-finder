@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import Link from 'next/link';
+
 import SignupForm from './signup-form';
 import { Icons } from '@/components/icon/icons';
 
