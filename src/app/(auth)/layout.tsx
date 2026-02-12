@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 
-import Container from '@/components/landing/container';
+import Container from '@/components/shared/container';
 
 export const metadata: Metadata = {
   title: 'Growth Finder',

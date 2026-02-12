@@ -1,3 +1,5 @@
+import { cn } from '@/lib/utils';
+
 type SectionTitleProps = {
   children: React.ReactNode;
   className?: string;
@@ -9,7 +11,10 @@ export default function SectionTitle({
 }: SectionTitleProps) {
   return (
     <h2
-      className={`text-2xl md:text-4xl mb-12 text-center font-bold ${className}`}
+      className={cn(
+        'text-2xl md:text-4xl mb-12 text-center font-bold',
+        className
+      )}
     >
       {children}
     </h2>
