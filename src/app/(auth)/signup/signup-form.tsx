@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/icon/icons';
 import { SingupInput, signupSchema } from '@/lib/validations/auth';
 import { useAuth } from '../hooks/use-auth';
+import LoaderCircleIcon from '@/components/shared/loader-circle';
 
 export default function SignupForm() {
   const { signup, isLoading } = useAuth();
@@ -109,7 +110,7 @@ export default function SignupForm() {
 
         {/* ログインボタン */}
         <Button type="submit" className="w-full" size="lg">
-          {isLoading ? '登録中...' : 'アカウントを作成'}
+          {isLoading ? <LoaderCircleIcon /> : 'アカウントを作成'}
         </Button>
       </form>
 
