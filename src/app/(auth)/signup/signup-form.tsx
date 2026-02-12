@@ -12,7 +12,7 @@ import { useAuth } from '../hooks/use-auth';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
 
 export default function SignupForm() {
-  const { signup, isLoading } = useAuth();
+  const { signup, signInWithGoogle, isLoading } = useAuth();
 
   const {
     register,
@@ -125,7 +125,13 @@ export default function SignupForm() {
       </div>
 
       {/* Google OAuth */}
-      <Button type="button" variant="outline" size="lg" className="w-full">
+      <Button
+        type="button"
+        variant="outline"
+        size="lg"
+        className="w-full"
+        onClick={signInWithGoogle}
+      >
         <Icons.FcGoogle className="mr-2 h-5 w-5" />
         {isLoading ? <LoaderCircleIcon /> : 'Googleで続ける'}
       </Button>
