@@ -39,7 +39,7 @@ export default function SetupForm() {
         throw new Error('ユーザーが見つかりません');
       }
 
-      const { error, data: d } = await supabase
+      const { error } = await supabase
         .from('profiles')
         .update({
           name: data.name,
@@ -48,10 +48,8 @@ export default function SetupForm() {
         })
         .eq('id', user.id);
 
-      console.log('data:', d);
-      console.log('error', error);
-
       if (error) throw error;
+
       router.push('/admin');
     } catch (error) {
       console.error('Setup error', error);
