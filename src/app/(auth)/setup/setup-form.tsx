@@ -1,15 +1,17 @@
 'use client';
 
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import { SetupInput, setupSchema } from '@/lib/validations/auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
-import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { SetupInput, setupSchema, SingupInput } from '@/lib/validations/auth';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'sonner';
 
 export default function SetupForm() {
   const supabase = createClient();
@@ -25,10 +27,45 @@ export default function SetupForm() {
     mode: 'onChange',
   });
 
-  async function onSubmit(data: SingupInput) {}
+  async function onSubmit(data: SetupInput) {
+    setIsLoading(true);
+
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+        throw new Error('ユーザーが見つかりません');
+      }
+
+      const { error, data: d } = await supabase
+        .from('profiles')
+        .update({
+          name: data.name,
+          store_name: data.storeName,
+          is_setup_complete: true,
+        })
+        .eq('id', user.id);
+
+      console.log('data:', d);
+      console.log('error', error);
+
+      if (error) throw error;
+      router.push('/admin');
+    } catch (error) {
+      console.error('Setup error', error);
+      toast.error('登録に失敗しました', {
+        description: 'もう一度お試しください',
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
     <div className="space-y-6">
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         {/* 名前 */}
         <div className="space-y-2">
           <Label htmlFor="name">名前</Label>
