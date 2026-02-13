@@ -11,10 +11,13 @@ import { createClient } from '@/lib/supabase/client';
 export function useAuth() {
   const router = useRouter();
   const supabase = createClient();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState({
+    signup: false,
+    google: false,
+  });
 
   const signup = async (data: SingupInput) => {
-    setIsLoading(true);
+    setIsLoading((prev) => ({ ...prev, signup: true }));
     try {
       const organizationId = crypto.randomUUID();
 
@@ -41,12 +44,12 @@ export function useAuth() {
         description: getAuthErrorMessage(error),
       });
     } finally {
-      setIsLoading(false);
+      setIsLoading((prev) => ({ ...prev, signup: false }));
     }
   };
 
   const signInWithGoogle = async () => {
-    setIsLoading(true);
+    setIsLoading((prev) => ({ ...prev, google: true }));
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
@@ -65,8 +68,7 @@ export function useAuth() {
       toast.error('アカウント作成に失敗しました', {
         description: getAuthErrorMessage(error),
       });
-    } finally {
-      setIsLoading(false);
+      setIsLoading((prev) => ({ ...prev, google: false }));
     }
   };
 
