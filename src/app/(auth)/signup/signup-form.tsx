@@ -110,7 +110,7 @@ export default function SignupForm() {
 
         {/* ログインボタン */}
         <Button type="submit" className="w-full" size="lg">
-          {isLoading ? <LoaderCircleIcon /> : 'アカウントを作成'}
+          {isLoading.signup ? <LoaderCircleIcon /> : 'アカウントを作成'}
         </Button>
       </form>
 
@@ -133,7 +133,7 @@ export default function SignupForm() {
         onClick={signInWithGoogle}
       >
         <Icons.FcGoogle className="mr-2 h-5 w-5" />
-        {isLoading ? <LoaderCircleIcon /> : 'Googleで続ける'}
+        {isLoading.google ? <LoaderCircleIcon /> : 'Googleで続ける'}
       </Button>
     </div>
   );
