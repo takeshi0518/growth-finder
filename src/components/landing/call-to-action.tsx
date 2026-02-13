@@ -9,13 +9,13 @@ export default function CallToAction() {
     <section className="py-20">
       <Container>
         <div className="text-center">
-          <SectionTitle>今すぐGrowth Finderを試す</SectionTitle>
+          <SectionTitle>今すぐGrowth Finderを体験</SectionTitle>
           <p className="text-lg text-muted-foreground mb-8">
-            デモモードで全ての機能を体験できます
+            デモモードでは、アカウントを登録せずにアプリを利用できます
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" asChild>
-              <Link href="/demo">今すぐ試してみる(デモ)</Link>
+              <Link href="/demo">デモで今すぐ試す</Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
               <Link href="/signup">無料ではじめる</Link>

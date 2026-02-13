@@ -26,7 +26,7 @@ export default function Hero() {
           </div>
           <div className="flex flex-col gap-4 sm:flex-row sm:gap-8 md:gap-12">
             <Button size="lg" asChild>
-              <Link href="/signup">今すぐ試してみる</Link>
+              <Link href="/signup">デモで今すぐ試す</Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
               <Link href="/signup">無料ではじめる</Link>
