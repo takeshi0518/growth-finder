@@ -69,7 +69,21 @@ export const newPasswordSchema = z
     path: ['confirmPassword'],
   });
 
+// セットアップ
+export const setupSchema = z.object({
+  name: z
+    .string()
+    .min(1, '名前を入力してください')
+    .max(50, '名前は50文字以内で入力してください'),
+
+  storeName: z
+    .string()
+    .min(1, '店舗名を入力してください')
+    .max(100, '店舗名は100文字以内で入力してください'),
+});
+
 export type SingupInput = z.infer<typeof signupSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;
 export type NewPasswordInput = z.infer<typeof newPasswordSchema>;
+export type SetupInput = z.infer<typeof setupSchema>;
