@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import MobileMenu from '../shared/mobile-menu';
 
+import MobileMenu from '../shared/mobile-menu';
 import { useSmoothScroll } from '@/app/hooks/use-smooth-scroll';
 
 const guestNavItems = [

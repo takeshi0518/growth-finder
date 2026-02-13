@@ -1,7 +1,8 @@
-import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
-import Container from './container';
+
+import { Button } from '@/components/ui/button';
+import Container from '../shared/container';
 
 export default function Hero() {
   return (

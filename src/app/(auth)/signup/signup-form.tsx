@@ -9,9 +9,10 @@ import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/icon/icons';
 import { SingupInput, signupSchema } from '@/lib/validations/auth';
 import { useAuth } from '../hooks/use-auth';
+import LoaderCircleIcon from '@/components/shared/loader-circle';
 
 export default function SignupForm() {
-  const { signup, isLoading } = useAuth();
+  const { signup, signInWithGoogle, isLoading } = useAuth();
 
   const {
     register,
@@ -109,7 +110,7 @@ export default function SignupForm() {
 
         {/* ログインボタン */}
         <Button type="submit" className="w-full" size="lg">
-          {isLoading ? '登録中...' : 'アカウントを作成'}
+          {isLoading ? <LoaderCircleIcon /> : 'アカウントを作成'}
         </Button>
       </form>
 
@@ -124,9 +125,15 @@ export default function SignupForm() {
       </div>
 
       {/* Google OAuth */}
-      <Button type="button" variant="outline" size="lg" className="w-full">
+      <Button
+        type="button"
+        variant="outline"
+        size="lg"
+        className="w-full"
+        onClick={signInWithGoogle}
+      >
         <Icons.FcGoogle className="mr-2 h-5 w-5" />
-        Googleで続ける
+        {isLoading ? <LoaderCircleIcon /> : 'Googleで続ける'}
       </Button>
     </div>
   );

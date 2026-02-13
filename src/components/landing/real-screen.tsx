@@ -1,6 +1,7 @@
 import Image from 'next/image';
-import SectionTitle from './section-title';
-import Container from './container';
+
+import SectionTitle from '../shared/section-title';
+import Container from '../shared/container';
 
 const screenshots = [
   {

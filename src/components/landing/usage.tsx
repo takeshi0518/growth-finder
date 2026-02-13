@@ -1,9 +1,10 @@
-import { Icons } from '../icon/icons';
-import { LucideIcon } from 'lucide-react';
-import SectionTitle from './section-title';
-import Container from './container';
-import { Button } from '../ui/button';
 import Link from 'next/link';
+import { LucideIcon } from 'lucide-react';
+
+import { Button } from '../ui/button';
+import { Icons } from '../icon/icons';
+import SectionTitle from '../shared/section-title';
+import Container from '../shared/container';
 
 const usageList = [
   {
