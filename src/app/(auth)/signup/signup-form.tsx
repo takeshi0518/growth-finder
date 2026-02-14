@@ -109,7 +109,12 @@ export default function SignupForm() {
         </div>
 
         {/* ログインボタン */}
-        <Button type="submit" className="w-full" size="lg">
+        <Button
+          type="submit"
+          className="w-full"
+          size="lg"
+          disabled={isLoading.signup || isLoading.google}
+        >
           {isLoading.signup ? <LoaderCircleIcon /> : 'アカウントを作成'}
         </Button>
       </form>
@@ -131,9 +136,16 @@ export default function SignupForm() {
         size="lg"
         className="w-full"
         onClick={signInWithGoogle}
+        disabled={isLoading.signup || isLoading.google}
       >
-        <Icons.FcGoogle className="mr-2 h-5 w-5" />
-        {isLoading.google ? <LoaderCircleIcon /> : 'Googleで続ける'}
+        {isLoading.google ? (
+          <LoaderCircleIcon />
+        ) : (
+          <>
+            <Icons.FcGoogle className="mr-2 h-5 w-5" />
+            <span>Googleで続ける</span>
+          </>
+        )}
       </Button>
     </div>
   );
