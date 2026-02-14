@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: 'スタッフの成長を可視化し、関係性構築を支援する人材育成ツール',
 };
 
-export default function AuthLayout({
+export default function ProtectedLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

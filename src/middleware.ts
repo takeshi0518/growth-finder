@@ -34,20 +34,42 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  //認証が必要なルート
-  if (!user && request.nextUrl.pathname.startsWith('/admin')) {
+  const pathname = request.nextUrl.pathname;
+
+  //保護されたルート
+  const protectedPaths = ['/admin', '/setup', '/staff'];
+  const isProtectedPath = protectedPaths.some((path) =>
+    pathname.startsWith(path)
+  );
+
+  if (isProtectedPath && !user) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
-  if (!user && request.nextUrl.pathname.startsWith('/staff')) {
-    return NextResponse.redirect(new URL('/login', request.url));
+  // /setupへのアクセス制御
+  if (pathname === '/setup' && user) {
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('is_setup_complete')
+      .eq('id', user.id)
+      .single();
+
+    if (profile?.is_setup_complete) {
+      return NextResponse.redirect(new URL('/admin', request.url));
+    }
   }
 
-  return supabaseResponse;
+  //ログイン済みユーザーのリダイレクト
+  const authPaths = ['/login', '/singup'];
+  const isAuthPath = authPaths.includes(pathname);
+
+  if (isAuthPath && user) {
+    return NextResponse.redirect(new URL('/admin', request.url));
+  }
 }
 
 export const config = {
-  mathcer: [
+  matcher: [
     '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 };
