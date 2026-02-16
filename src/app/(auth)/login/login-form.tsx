@@ -14,7 +14,7 @@ import { useAuth } from '../hooks/use-auth';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
 
 export default function LoginForm() {
-  const { isLoading, signInWithGoogle, singIn } = useAuth();
+  const { isLoading, signInWithGoogle, signIn } = useAuth();
   const {
     register,
     handleSubmit,
@@ -25,7 +25,7 @@ export default function LoginForm() {
   });
 
   const onSubmit = async (data: LoginInput) => {
-    await singIn(data);
+    await signIn(data);
   };
 
   return (
@@ -36,7 +36,7 @@ export default function LoginForm() {
       </TabsList>
 
       {/* 管理者タブ */}
-      <TabsContent value="admin" className="space-y-4 mt-6">
+      <TabsContent value="admin" className="space-y-4 mt-6" key="admin">
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           {/* メールアドレス */}
           <div className="space-y-2">
@@ -78,9 +78,9 @@ export default function LoginForm() {
             type="submit"
             className="w-full"
             size="lg"
-            disabled={isLoading.google || isLoading.singIn}
+            disabled={isLoading.google || isLoading.signIn}
           >
-            {isLoading.singIn ? <LoaderCircleIcon /> : 'ログイン'}
+            {isLoading.signIn ? <LoaderCircleIcon /> : 'ログイン'}
           </Button>
         </form>
 
@@ -100,7 +100,7 @@ export default function LoginForm() {
           size="lg"
           className="w-full"
           onClick={signInWithGoogle}
-          disabled={isLoading.google || isLoading.singIn}
+          disabled={isLoading.google || isLoading.signIn}
         >
           {isLoading.google ? (
             <LoaderCircleIcon />
@@ -114,7 +114,7 @@ export default function LoginForm() {
       </TabsContent>
 
       {/* スタッフタブ */}
-      <TabsContent value="staff" className="space-y-4 mt-6">
+      <TabsContent value="staff" className="space-y-4 mt-6" key="staff">
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           {/* メールアドレス */}
           <div className="space-y-2">
@@ -157,9 +157,9 @@ export default function LoginForm() {
             type="submit"
             className="w-full"
             size="lg"
-            disabled={isLoading.google || isLoading.singIn}
+            disabled={isLoading.google || isLoading.signIn}
           >
-            {isLoading.singIn ? <LoaderCircleIcon /> : 'ログイン'}
+            {isLoading.signIn ? <LoaderCircleIcon /> : 'ログイン'}
           </Button>
         </form>
 

@@ -13,7 +13,7 @@ export function useAuth() {
   const supabase = createClient();
   const [isLoading, setIsLoading] = useState({
     singUp: false,
-    singIn: false,
+    signIn: false,
     google: false,
   });
 
@@ -49,8 +49,8 @@ export function useAuth() {
     }
   };
 
-  const singIn = async (data: LoginInput) => {
-    setIsLoading((prev) => ({ ...prev, singIn: true }));
+  const signIn = async (data: LoginInput) => {
+    setIsLoading((prev) => ({ ...prev, signIn: true }));
 
     try {
       const { error } = await supabase.auth.signInWithPassword({
@@ -66,7 +66,7 @@ export function useAuth() {
         description: getAuthErrorMessage(error),
       });
     } finally {
-      setIsLoading((prev) => ({ ...prev, singIn: false }));
+      setIsLoading((prev) => ({ ...prev, signIn: false }));
     }
   };
 
@@ -96,7 +96,7 @@ export function useAuth() {
 
   return {
     singUp,
-    singIn,
+    signIn,
     signInWithGoogle,
     isLoading,
   };
