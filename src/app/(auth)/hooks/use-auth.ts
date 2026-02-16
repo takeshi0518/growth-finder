@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 import { getAuthErrorMessage } from '@/lib/utils/error-message';
-import { SingupInput } from '@/lib/validations/auth';
+import { LoginInput, SingupInput } from '@/lib/validations/auth';
 import { createClient } from '@/lib/supabase/client';
 
 export function useAuth() {
@@ -13,6 +13,7 @@ export function useAuth() {
   const supabase = createClient();
   const [isLoading, setIsLoading] = useState({
     signup: false,
+    login: false,
     google: false,
   });
 
@@ -48,6 +49,27 @@ export function useAuth() {
     }
   };
 
+  const login = async (data: LoginInput) => {
+    setIsLoading((prev) => ({ ...prev, login: true }));
+
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: data.email,
+        password: data.password,
+      });
+
+      if (error) throw error;
+
+      router.refresh();
+    } catch (error) {
+      toast.error('ログインに失敗しました', {
+        description: getAuthErrorMessage(error),
+      });
+    } finally {
+      setIsLoading((prev) => ({ ...prev, login: false }));
+    }
+  };
+
   const signInWithGoogle = async () => {
     setIsLoading((prev) => ({ ...prev, google: true }));
     try {
@@ -74,6 +96,7 @@ export function useAuth() {
 
   return {
     signup,
+    login,
     signInWithGoogle,
     isLoading,
   };

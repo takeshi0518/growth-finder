@@ -2,13 +2,32 @@
 
 import Link from 'next/link';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/icon/icons';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { LoginInput, loginSchema } from '@/lib/validations/auth';
+import { useAuth } from '../hooks/use-auth';
+import LoaderCircleIcon from '@/components/shared/loader-circle';
 
 export default function LoginForm() {
+  const { isLoading, signInWithGoogle, login } = useAuth();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginInput>({
+    resolver: zodResolver(loginSchema),
+    mode: 'onChange',
+  });
+
+  const onSubmit = async (data: LoginInput) => {
+    await login(data);
+  };
+
   return (
     <Tabs defaultValue="admin" className="w-full">
       <TabsList className="grid grid-cols-2 w-full">
@@ -18,7 +37,7 @@ export default function LoginForm() {
 
       {/* 管理者タブ */}
       <TabsContent value="admin" className="space-y-4 mt-6">
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           {/* メールアドレス */}
           <div className="space-y-2">
             <Label htmlFor="admin-email">メールアドレス</Label>
@@ -26,8 +45,11 @@ export default function LoginForm() {
               id="admin-email"
               type="email"
               placeholder="your@email.com"
-              required
+              {...register('email')}
             />
+            {errors.email && (
+              <p className="text-sm text-red-500">{errors.email.message}</p>
+            )}
           </div>
 
           {/* パスワード */}
@@ -45,12 +67,20 @@ export default function LoginForm() {
               id="admin-password"
               type="password"
               placeholder="••••••••"
-              required
+              {...register('password')}
             />
+            {errors.password && (
+              <p className="text-sm text-red-500">{errors.password.message}</p>
+            )}
           </div>
 
-          <Button type="submit" className="w-full" size="lg">
-            ログイン
+          <Button
+            type="submit"
+            className="w-full"
+            size="lg"
+            disabled={isLoading.google || isLoading.login}
+          >
+            {isLoading.login ? <LoaderCircleIcon /> : 'ログイン'}
           </Button>
         </form>
 
@@ -64,15 +94,28 @@ export default function LoginForm() {
         </div>
 
         {/* Google OAuth */}
-        <Button type="button" variant="outline" size="lg" className="w-full">
-          <Icons.FcGoogle className="mr-2 h-5 w-5" />
-          Googleで続ける
+        <Button
+          type="button"
+          variant="outline"
+          size="lg"
+          className="w-full"
+          onClick={signInWithGoogle}
+          disabled={isLoading.google || isLoading.login}
+        >
+          {isLoading.google ? (
+            <LoaderCircleIcon />
+          ) : (
+            <>
+              <Icons.FcGoogle className="mr-2 h-5 w-5" />
+              <span>Googleで続ける</span>
+            </>
+          )}
         </Button>
       </TabsContent>
 
       {/* スタッフタブ */}
       <TabsContent value="staff" className="space-y-4 mt-6">
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           {/* メールアドレス */}
           <div className="space-y-2">
             <Label htmlFor="staff-email">メールアドレス</Label>
@@ -80,8 +123,11 @@ export default function LoginForm() {
               id="staff-email"
               type="email"
               placeholder="your@email.com"
-              required
+              {...register('email')}
             />
+            {errors.email && (
+              <p className="text-sm text-red-500">{errors.email.message}</p>
+            )}
           </div>
 
           {/* パスワード */}
@@ -99,13 +145,21 @@ export default function LoginForm() {
               id="staff-password"
               type="password"
               placeholder="••••••••"
-              required
+              {...register('password')}
             />
+            {errors.password && (
+              <p className="text-sm text-red-500">{errors.password.message}</p>
+            )}
           </div>
 
           {/* ログインボタン */}
-          <Button type="submit" className="w-full" size="lg">
-            ログイン
+          <Button
+            type="submit"
+            className="w-full"
+            size="lg"
+            disabled={isLoading.google || isLoading.login}
+          >
+            {isLoading.login ? <LoaderCircleIcon /> : 'ログイン'}
           </Button>
         </form>
 
