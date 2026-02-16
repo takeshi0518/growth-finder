@@ -108,7 +108,7 @@ export default function SignupForm() {
           )}
         </div>
 
-        {/* ログインボタン */}
+        {/* サインアップボタン */}
         <Button
           type="submit"
           className="w-full"
