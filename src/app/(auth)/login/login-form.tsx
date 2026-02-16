@@ -14,7 +14,7 @@ import { useAuth } from '../hooks/use-auth';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
 
 export default function LoginForm() {
-  const { isLoading, signInWithGoogle, login } = useAuth();
+  const { isLoading, signInWithGoogle, singIn } = useAuth();
   const {
     register,
     handleSubmit,
@@ -25,7 +25,7 @@ export default function LoginForm() {
   });
 
   const onSubmit = async (data: LoginInput) => {
-    await login(data);
+    await singIn(data);
   };
 
   return (
@@ -78,9 +78,9 @@ export default function LoginForm() {
             type="submit"
             className="w-full"
             size="lg"
-            disabled={isLoading.google || isLoading.login}
+            disabled={isLoading.google || isLoading.singIn}
           >
-            {isLoading.login ? <LoaderCircleIcon /> : 'ログイン'}
+            {isLoading.singIn ? <LoaderCircleIcon /> : 'ログイン'}
           </Button>
         </form>
 
@@ -100,7 +100,7 @@ export default function LoginForm() {
           size="lg"
           className="w-full"
           onClick={signInWithGoogle}
-          disabled={isLoading.google || isLoading.login}
+          disabled={isLoading.google || isLoading.singIn}
         >
           {isLoading.google ? (
             <LoaderCircleIcon />
@@ -157,9 +157,9 @@ export default function LoginForm() {
             type="submit"
             className="w-full"
             size="lg"
-            disabled={isLoading.google || isLoading.login}
+            disabled={isLoading.google || isLoading.singIn}
           >
-            {isLoading.login ? <LoaderCircleIcon /> : 'ログイン'}
+            {isLoading.singIn ? <LoaderCircleIcon /> : 'ログイン'}
           </Button>
         </form>
 

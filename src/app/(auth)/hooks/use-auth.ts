@@ -12,13 +12,13 @@ export function useAuth() {
   const router = useRouter();
   const supabase = createClient();
   const [isLoading, setIsLoading] = useState({
-    signup: false,
-    login: false,
+    singUp: false,
+    singIn: false,
     google: false,
   });
 
-  const signup = async (data: SingupInput) => {
-    setIsLoading((prev) => ({ ...prev, signup: true }));
+  const singUp = async (data: SingupInput) => {
+    setIsLoading((prev) => ({ ...prev, singUp: true }));
     try {
       const organizationId = crypto.randomUUID();
 
@@ -45,12 +45,12 @@ export function useAuth() {
         description: getAuthErrorMessage(error),
       });
     } finally {
-      setIsLoading((prev) => ({ ...prev, signup: false }));
+      setIsLoading((prev) => ({ ...prev, singUp: false }));
     }
   };
 
-  const login = async (data: LoginInput) => {
-    setIsLoading((prev) => ({ ...prev, login: true }));
+  const singIn = async (data: LoginInput) => {
+    setIsLoading((prev) => ({ ...prev, singIn: true }));
 
     try {
       const { error } = await supabase.auth.signInWithPassword({
@@ -66,7 +66,7 @@ export function useAuth() {
         description: getAuthErrorMessage(error),
       });
     } finally {
-      setIsLoading((prev) => ({ ...prev, login: false }));
+      setIsLoading((prev) => ({ ...prev, singIn: false }));
     }
   };
 
@@ -95,8 +95,8 @@ export function useAuth() {
   };
 
   return {
-    signup,
-    login,
+    singUp,
+    singIn,
     signInWithGoogle,
     isLoading,
   };
