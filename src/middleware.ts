@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getUserRole, updateSession } from './lib/supabase/middleware';
+import {
+  getUserRole,
+  isEmailConfirmed,
+  updateSession,
+} from './lib/supabase/middleware';
 
 export async function middleware(request: NextRequest) {
   const { user, supabase, supabaseResponse } = await updateSession(request);
@@ -14,6 +18,11 @@ export async function middleware(request: NextRequest) {
 
   if (isProtectedPath && !user) {
     return NextResponse.redirect(new URL('/login', request.url));
+  }
+
+  //メール認証が必要ルートへアクセス
+  if (isProtectedPath && user && !isEmailConfirmed(user)) {
+    return NextResponse.redirect(new URL('/confirm-email', request.url));
   }
 
   // roleベースのリダイレクト
@@ -53,7 +62,8 @@ export async function middleware(request: NextRequest) {
   const authPaths = ['/login', '/signup'];
   const isAuthPath = authPaths.includes(pathname);
 
-  if (isAuthPath && user) {
+  if (isAuthPath && user && isEmailConfirmed(user)) {
+    console.log(isEmailConfirmed(user));
     const role = await getUserRole(supabase, user.id);
     const redirectTo = role === 'admin' ? '/admin' : '/staff';
     return NextResponse.redirect(new URL(redirectTo, request.url));

@@ -1,4 +1,5 @@
 import { createServerClient } from '@supabase/ssr';
+import { User } from '@supabase/supabase-js';
 import { type NextRequest, NextResponse } from 'next/server';
 
 export async function updateSession(request: NextRequest) {
@@ -63,4 +64,10 @@ export async function isAdmin(supabase: any, userId: string): Promise<boolean> {
 export async function isStaff(supabase: any, userId: string): Promise<boolean> {
   const role = await getUserRole(supabase, userId);
   return role === 'staff';
+}
+
+export function isEmailConfirmed(user: User | null): boolean {
+  if (!user) return false;
+
+  return !!user.email_confirmed_at;
 }
