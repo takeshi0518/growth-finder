@@ -1,38 +1,12 @@
-import { createServerClient } from '@supabase/ssr';
 import { NextRequest, NextResponse } from 'next/server';
+import {
+  getUserRole,
+  isEmailConfirmed,
+  updateSession,
+} from './lib/supabase/middleware';
 
 export async function middleware(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({
-    request,
-  });
-
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value }) =>
-            request.cookies.set(name, value)
-          );
-          supabaseResponse = NextResponse.next({
-            request,
-          });
-          cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
-          );
-        },
-      },
-    }
-  );
-
-  //セッションをリフレッシュ
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { user, supabase, supabaseResponse } = await updateSession(request);
 
   const pathname = request.nextUrl.pathname;
 
@@ -46,6 +20,29 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
+  //メール認証が必要ルートへアクセス
+  if (isProtectedPath && user && !isEmailConfirmed(user)) {
+    return NextResponse.redirect(new URL('/confirm-email', request.url));
+  }
+
+  // roleベースのリダイレクト
+  if (
+    user &&
+    (pathname.startsWith('/admin') || pathname.startsWith('/staff'))
+  ) {
+    const role = await getUserRole(supabase, user.id);
+
+    // adminルートへアクセス
+    if (pathname.startsWith('/admin') && role !== 'admin') {
+      return NextResponse.redirect(new URL('/staff', request.url));
+    }
+
+    //staffルートへアクセス
+    if (pathname.startsWith('/staff') && role !== 'staff') {
+      return NextResponse.redirect(new URL('/admin', request.url));
+    }
+  }
+
   // /setupへのアクセス制御
   if (pathname === '/setup' && user) {
     const { data: profile } = await supabase
@@ -55,17 +52,24 @@ export async function middleware(request: NextRequest) {
       .single();
 
     if (profile?.is_setup_complete) {
-      return NextResponse.redirect(new URL('/admin', request.url));
+      const role = await getUserRole(supabase, user.id);
+      const redirectTo = role === 'admin' ? '/admin' : '/staff';
+      return NextResponse.redirect(new URL(redirectTo, request.url));
     }
   }
 
   //ログイン済みユーザーのリダイレクト
-  const authPaths = ['/login', '/singup'];
+  const authPaths = ['/login', '/signup'];
   const isAuthPath = authPaths.includes(pathname);
 
-  if (isAuthPath && user) {
-    return NextResponse.redirect(new URL('/admin', request.url));
+  if (isAuthPath && user && isEmailConfirmed(user)) {
+    console.log(isEmailConfirmed(user));
+    const role = await getUserRole(supabase, user.id);
+    const redirectTo = role === 'admin' ? '/admin' : '/staff';
+    return NextResponse.redirect(new URL(redirectTo, request.url));
   }
+
+  return supabaseResponse;
 }
 
 export const config = {

@@ -3,6 +3,10 @@ export function getAuthErrorMessage(error: unknown): string {
     return '予期しないエラーが発生しました。';
   }
 
+  if (error.message) {
+    return error.message;
+  }
+
   const errorMessage: Record<string, string> = {
     // ログイン関連
     'Invalid login credentials':

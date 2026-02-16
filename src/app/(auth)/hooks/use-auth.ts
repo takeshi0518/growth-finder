@@ -5,19 +5,20 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 import { getAuthErrorMessage } from '@/lib/utils/error-message';
-import { SingupInput } from '@/lib/validations/auth';
+import { LoginInput, SingupInput } from '@/lib/validations/auth';
 import { createClient } from '@/lib/supabase/client';
 
 export function useAuth() {
   const router = useRouter();
   const supabase = createClient();
   const [isLoading, setIsLoading] = useState({
-    signup: false,
+    singUp: false,
+    signIn: false,
     google: false,
   });
 
-  const signup = async (data: SingupInput) => {
-    setIsLoading((prev) => ({ ...prev, signup: true }));
+  const singUp = async (data: SingupInput) => {
+    setIsLoading((prev) => ({ ...prev, singUp: true }));
     try {
       const organizationId = crypto.randomUUID();
 
@@ -44,7 +45,84 @@ export function useAuth() {
         description: getAuthErrorMessage(error),
       });
     } finally {
-      setIsLoading((prev) => ({ ...prev, signup: false }));
+      setIsLoading((prev) => ({ ...prev, singUp: false }));
+    }
+  };
+
+  //管理者用ログイン
+  const signInAsAdmin = async (data: LoginInput) => {
+    setIsLoading((prev) => ({ ...prev, signIn: true }));
+
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: data.email,
+        password: data.password,
+      });
+
+      if (error) throw error;
+
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) throw new Error('ユーザー情報の取得に失敗しました');
+
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', user.id)
+        .single();
+
+      if (profile?.role !== 'admin') {
+        await supabase.auth.signOut();
+        throw new Error('管理者アカウントでログインしてください');
+      }
+
+      router.refresh();
+    } catch (error) {
+      toast.error('ログインに失敗しました', {
+        description: getAuthErrorMessage(error),
+      });
+    } finally {
+      setIsLoading((prev) => ({ ...prev, signIn: false }));
+    }
+  };
+
+  //管理者用ログイン
+  const signInAsStaff = async (data: LoginInput) => {
+    setIsLoading((prev) => ({ ...prev, signIn: true }));
+
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: data.email,
+        password: data.password,
+      });
+
+      if (error) throw error;
+
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) throw new Error('ユーザー情報の取得に失敗しました');
+
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', user.id)
+        .single();
+
+      if (profile?.role !== 'staff') {
+        await supabase.auth.signOut();
+        throw new Error('スタッフアカウントでログインしてください');
+      }
+      router.refresh();
+    } catch (error) {
+      toast.error('ログインに失敗しました', {
+        description: getAuthErrorMessage(error),
+      });
+    } finally {
+      setIsLoading((prev) => ({ ...prev, signIn: false }));
     }
   };
 
@@ -73,7 +151,9 @@ export function useAuth() {
   };
 
   return {
-    signup,
+    singUp,
+    signInAsAdmin,
+    signInAsStaff,
     signInWithGoogle,
     isLoading,
   };

@@ -12,7 +12,7 @@ import { useAuth } from '../hooks/use-auth';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
 
 export default function SignupForm() {
-  const { signup, signInWithGoogle, isLoading } = useAuth();
+  const { singUp, signInWithGoogle, isLoading } = useAuth();
 
   const {
     register,
@@ -24,7 +24,7 @@ export default function SignupForm() {
   });
 
   async function onSubmit(data: SingupInput) {
-    await signup(data);
+    await singUp(data);
   }
 
   return (
@@ -108,14 +108,14 @@ export default function SignupForm() {
           )}
         </div>
 
-        {/* ログインボタン */}
+        {/* サインアップボタン */}
         <Button
           type="submit"
           className="w-full"
           size="lg"
-          disabled={isLoading.signup || isLoading.google}
+          disabled={isLoading.singUp || isLoading.google}
         >
-          {isLoading.signup ? <LoaderCircleIcon /> : 'アカウントを作成'}
+          {isLoading.singUp ? <LoaderCircleIcon /> : 'アカウントを作成'}
         </Button>
       </form>
 
@@ -136,7 +136,7 @@ export default function SignupForm() {
         size="lg"
         className="w-full"
         onClick={signInWithGoogle}
-        disabled={isLoading.signup || isLoading.google}
+        disabled={isLoading.singUp || isLoading.google}
       >
         {isLoading.google ? (
           <LoaderCircleIcon />
