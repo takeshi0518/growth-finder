@@ -1,5 +1,5 @@
-import { NextResponse, type NextRequest } from 'next/server';
-import { updateSession } from './lib/supabase/middleware';
+import { NextRequest, NextResponse } from 'next/server';
+import { getUserRole, updateSession } from './lib/supabase/middleware';
 
 export async function middleware(request: NextRequest) {
   const { user, supabase, supabaseResponse } = await updateSession(request);
@@ -16,6 +16,24 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
+  // roleベースのリダイレクト
+  if (
+    user &&
+    (pathname.startsWith('/admin') || pathname.startsWith('/staff'))
+  ) {
+    const role = await getUserRole(supabase, user.id);
+
+    // adminルートへアクセス
+    if (pathname.startsWith('/admin') && role !== 'admin') {
+      return NextResponse.redirect(new URL('/staff', request.url));
+    }
+
+    //staffルートへアクセス
+    if (pathname.startsWith('/staff') && role !== 'staff') {
+      return NextResponse.redirect(new URL('/admin', request.url));
+    }
+  }
+
   // /setupへのアクセス制御
   if (pathname === '/setup' && user) {
     const { data: profile } = await supabase
@@ -25,7 +43,9 @@ export async function middleware(request: NextRequest) {
       .single();
 
     if (profile?.is_setup_complete) {
-      return NextResponse.redirect(new URL('/admin', request.url));
+      const role = await getUserRole(supabase, user.id);
+      const redirectTo = role === 'admin' ? '/admin' : '/staff';
+      return NextResponse.redirect(new URL(redirectTo, request.url));
     }
   }
 
@@ -34,7 +54,9 @@ export async function middleware(request: NextRequest) {
   const isAuthPath = authPaths.includes(pathname);
 
   if (isAuthPath && user) {
-    return NextResponse.redirect(new URL('/admin', request.url));
+    const role = await getUserRole(supabase, user.id);
+    const redirectTo = role === 'admin' ? '/admin' : '/staff';
+    return NextResponse.redirect(new URL(redirectTo, request.url));
   }
 
   return supabaseResponse;

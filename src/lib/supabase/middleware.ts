@@ -36,3 +36,31 @@ export async function updateSession(request: NextRequest) {
 
   return { user, supabaseResponse, supabase };
 }
+
+export async function getUserRole(
+  supabase: any,
+  userId: string
+): Promise<'admin' | 'staff' | null> {
+  const { data: profile, error } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', userId)
+    .single();
+
+  if (error) {
+    console.error('Get role error: ', error);
+    return null;
+  }
+
+  return profile?.role || null;
+}
+
+export async function isAdmin(supabase: any, userId: string): Promise<boolean> {
+  const role = await getUserRole(supabase, userId);
+  return role === 'admin';
+}
+
+export async function isStaff(supabase: any, userId: string): Promise<boolean> {
+  const role = await getUserRole(supabase, userId);
+  return role === 'staff';
+}
