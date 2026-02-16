@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -13,30 +14,44 @@ import { LoginInput, loginSchema } from '@/lib/validations/auth';
 import { useAuth } from '../hooks/use-auth';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
 
+type LoginTabValue = 'admin' | 'staff';
+
 export default function LoginForm() {
+  const [activeTab, setActiveTab] = useState<LoginTabValue>('admin');
   const { isLoading, signInWithGoogle, signIn } = useAuth();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
     mode: 'onChange',
   });
 
+  const handleTabChange = (value: string) => {
+    setActiveTab(value as LoginTabValue);
+    reset();
+  };
+
   const onSubmit = async (data: LoginInput) => {
     await signIn(data);
   };
 
   return (
-    <Tabs defaultValue="admin" className="w-full">
+    <Tabs
+      defaultValue="admin"
+      className="w-full"
+      value={activeTab}
+      onValueChange={handleTabChange}
+    >
       <TabsList className="grid grid-cols-2 w-full">
         <TabsTrigger value="admin">管理者</TabsTrigger>
         <TabsTrigger value="staff">スタッフ</TabsTrigger>
       </TabsList>
 
       {/* 管理者タブ */}
-      <TabsContent value="admin" className="space-y-4 mt-6" key="admin">
+      <TabsContent value="admin" className="space-y-4 mt-6">
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           {/* メールアドレス */}
           <div className="space-y-2">
@@ -114,7 +129,7 @@ export default function LoginForm() {
       </TabsContent>
 
       {/* スタッフタブ */}
-      <TabsContent value="staff" className="space-y-4 mt-6" key="staff">
+      <TabsContent value="staff" className="space-y-4 mt-6">
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           {/* メールアドレス */}
           <div className="space-y-2">
