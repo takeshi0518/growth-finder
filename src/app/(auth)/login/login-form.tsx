@@ -18,7 +18,8 @@ type LoginTabValue = 'admin' | 'staff';
 
 export default function LoginForm() {
   const [activeTab, setActiveTab] = useState<LoginTabValue>('admin');
-  const { isLoading, signInWithGoogle, signIn } = useAuth();
+  const { isLoading, signInWithGoogle, signInAsAdmin, signInAsStaff } =
+    useAuth();
   const {
     register,
     handleSubmit,
@@ -34,8 +35,12 @@ export default function LoginForm() {
     reset();
   };
 
-  const onSubmit = async (data: LoginInput) => {
-    await signIn(data);
+  const onSubmitAdmin = async (data: LoginInput) => {
+    await signInAsAdmin(data);
+  };
+
+  const onSubmitStaff = async (data: LoginInput) => {
+    await signInAsStaff(data);
   };
 
   return (
@@ -52,7 +57,7 @@ export default function LoginForm() {
 
       {/* 管理者タブ */}
       <TabsContent value="admin" className="space-y-4 mt-6">
-        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmitAdmin)}>
           {/* メールアドレス */}
           <div className="space-y-2">
             <Label htmlFor="admin-email">メールアドレス</Label>
@@ -130,7 +135,7 @@ export default function LoginForm() {
 
       {/* スタッフタブ */}
       <TabsContent value="staff" className="space-y-4 mt-6">
-        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmitStaff)}>
           {/* メールアドレス */}
           <div className="space-y-2">
             <Label htmlFor="staff-email">メールアドレス</Label>
