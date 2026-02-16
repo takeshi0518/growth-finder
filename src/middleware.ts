@@ -60,7 +60,7 @@ export async function middleware(request: NextRequest) {
   }
 
   //ログイン済みユーザーのリダイレクト
-  const authPaths = ['/login', '/singup'];
+  const authPaths = ['/login', '/signup'];
   const isAuthPath = authPaths.includes(pathname);
 
   if (isAuthPath && user) {
