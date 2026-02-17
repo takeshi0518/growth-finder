@@ -12,7 +12,7 @@ import { useAuth } from '../hooks/use-auth';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
 
 export default function SignupForm() {
-  const { singUp, signInWithGoogle, isLoading } = useAuth();
+  const { singUp, signUpWithGoogle, isLoading } = useAuth();
 
   const {
     register,
@@ -135,7 +135,7 @@ export default function SignupForm() {
         variant="outline"
         size="lg"
         className="w-full"
-        onClick={signInWithGoogle}
+        onClick={signUpWithGoogle}
         disabled={isLoading.singUp || isLoading.google}
       >
         {isLoading.google ? (

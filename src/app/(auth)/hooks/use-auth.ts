@@ -126,13 +126,39 @@ export function useAuth() {
     }
   };
 
+  //サインアップ用
+  const signUpWithGoogle = async () => {
+    setIsLoading((prev) => ({ ...prev, google: true }));
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback?intent=signup`,
+          queryParams: {
+            prompt: 'select_account',
+          },
+        },
+      });
+
+      if (error) {
+        throw error;
+      }
+    } catch (error) {
+      toast.error('アカウント作成に失敗しました', {
+        description: getAuthErrorMessage(error),
+      });
+      setIsLoading((prev) => ({ ...prev, google: false }));
+    }
+  };
+
+  //ログイン用
   const signInWithGoogle = async () => {
     setIsLoading((prev) => ({ ...prev, google: true }));
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
+          redirectTo: `${window.location.origin}/auth/callback?intent=login`,
           queryParams: {
             prompt: 'select_account',
           },
@@ -155,6 +181,7 @@ export function useAuth() {
     signInAsAdmin,
     signInAsStaff,
     signInWithGoogle,
+    signUpWithGoogle,
     isLoading,
   };
 }
