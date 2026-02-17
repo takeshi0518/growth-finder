@@ -7,7 +7,7 @@ export async function GET(request: Request) {
   const origin = requestUrl.origin;
 
   if (!code) {
-    return NextResponse.redirect(new URL('_login', origin));
+    return NextResponse.redirect(new URL('/login', origin));
   }
 
   const supabase = await createClient();
