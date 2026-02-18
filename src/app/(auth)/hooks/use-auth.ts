@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 import { getAuthErrorMessage } from '@/lib/utils/error-message';
 import {
   LoginInput,
+  NewPasswordInput,
   ResetPasswordEmailInput,
   SingupInput,
 } from '@/lib/validations/auth';
@@ -24,6 +25,7 @@ export function useAuth() {
     resetPassword: false,
   });
 
+  //管理者用サインアップ
   const singUp = async (data: SingupInput) => {
     setIsLoading((prev) => ({ ...prev, singUp: true }));
     try {
@@ -228,6 +230,30 @@ export function useAuth() {
     }
   };
 
+  //パスワードリセット
+  const resetPassword = async (data: NewPasswordInput) => {
+    setIsLoading((prev) => ({ ...prev, resetPassword: true }));
+
+    try {
+      const { error } = await supabase.auth.updateUser({
+        password: data.password,
+      });
+
+      if (error) throw error;
+
+      await supabase.auth.signOut();
+
+      toast.success('パスワードを更新しました');
+      router.push('/reset-password/complete');
+    } catch (error) {
+      toast.error('パスワードの更新に失敗しました', {
+        description: getAuthErrorMessage(error),
+      });
+    } finally {
+      setIsLoading((prev) => ({ ...prev, resetPassword: false }));
+    }
+  };
+
   return {
     singUp,
     signInAsAdmin,
@@ -235,6 +261,7 @@ export function useAuth() {
     signInWithGoogle,
     signUpWithGoogle,
     resetPasswordEmail,
+    resetPassword,
     logout,
     isLoading,
   };
