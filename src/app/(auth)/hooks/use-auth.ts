@@ -15,6 +15,7 @@ export function useAuth() {
     singUp: false,
     signIn: false,
     google: false,
+    logout: false,
   });
 
   const singUp = async (data: SingupInput) => {
@@ -176,12 +177,32 @@ export function useAuth() {
     }
   };
 
+  const logout = async () => {
+    setIsLoading((prev) => ({ ...prev, logout: true }));
+
+    try {
+      const { error } = await supabase.auth.signOut();
+
+      if (error) throw error;
+
+      toast.success('ログアウトしました');
+      router.push('/login');
+    } catch (error) {
+      toast.error('ログアウトに失敗しました', {
+        description: getAuthErrorMessage(error),
+      });
+    } finally {
+      setIsLoading((prev) => ({ ...prev, logout: false }));
+    }
+  };
+
   return {
     singUp,
     signInAsAdmin,
     signInAsStaff,
     signInWithGoogle,
     signUpWithGoogle,
+    logout,
     isLoading,
   };
 }
