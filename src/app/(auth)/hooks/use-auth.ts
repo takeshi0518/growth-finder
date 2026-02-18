@@ -20,8 +20,8 @@ export function useAuth() {
     signIn: false,
     google: false,
     logout: false,
-    resetpasswordEmail: false,
-    resetpassword: false,
+    resetPasswordEmail: false,
+    resetPassword: false,
   });
 
   const singUp = async (data: SingupInput) => {
@@ -205,7 +205,7 @@ export function useAuth() {
 
   //パスワードリセットEメール送信
   const resetPasswordEmail = async (data: ResetPasswordEmailInput) => {
-    setIsLoading((prev) => ({ ...prev, resetpasswordEmail: true }));
+    setIsLoading((prev) => ({ ...prev, resetPasswordEmail: true }));
 
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(data.email, {
@@ -224,7 +224,7 @@ export function useAuth() {
         description: getAuthErrorMessage(error),
       });
     } finally {
-      setIsLoading((prev) => ({ ...prev, resetpasswordEmail: false }));
+      setIsLoading((prev) => ({ ...prev, resetPasswordEmail: false }));
     }
   };
 

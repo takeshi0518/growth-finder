@@ -48,9 +48,9 @@ export default function ResetForm() {
         type="submit"
         className="w-full"
         size="lg"
-        disabled={isLoading.resetpasswordEmail}
+        disabled={isLoading.resetPasswordEmail}
       >
-        {isLoading.resetpasswordEmail ? (
+        {isLoading.resetPasswordEmail ? (
           <LoaderCircleIcon />
         ) : (
           'リセットメールを送信'
