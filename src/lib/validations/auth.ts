@@ -43,6 +43,14 @@ export const loginSchema = z.object({
   password: z.string().min(1, 'パスワードを入力してください'),
 });
 
+//パスワードリセット(メール送信)
+export const resetPasswordEmailSchema = z.object({
+  email: z
+    .string()
+    .min(1, 'メールアドレスを入力してください')
+    .email('正しいメールアドレスを入力してください'),
+});
+
 // パスワードリセット
 export const resetPasswordSchema = z.object({
   email: z
@@ -87,3 +95,4 @@ export type LoginInput = z.infer<typeof loginSchema>;
 export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;
 export type NewPasswordInput = z.infer<typeof newPasswordSchema>;
 export type SetupInput = z.infer<typeof setupSchema>;
+export type ResetPasswordEmailInput = z.infer<typeof resetPasswordEmailSchema>;
