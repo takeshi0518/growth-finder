@@ -5,7 +5,12 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 import { getAuthErrorMessage } from '@/lib/utils/error-message';
-import { LoginInput, SingupInput } from '@/lib/validations/auth';
+import {
+  LoginInput,
+  NewPasswordInput,
+  ResetPasswordEmailInput,
+  SingupInput,
+} from '@/lib/validations/auth';
 import { createClient } from '@/lib/supabase/client';
 
 export function useAuth() {
@@ -15,8 +20,12 @@ export function useAuth() {
     singUp: false,
     signIn: false,
     google: false,
+    logout: false,
+    resetPasswordEmail: false,
+    resetPassword: false,
   });
 
+  //管理者用サインアップ
   const singUp = async (data: SingupInput) => {
     setIsLoading((prev) => ({ ...prev, singUp: true }));
     try {
@@ -88,7 +97,7 @@ export function useAuth() {
     }
   };
 
-  //管理者用ログイン
+  //スタッフ用ログイン
   const signInAsStaff = async (data: LoginInput) => {
     setIsLoading((prev) => ({ ...prev, signIn: true }));
 
@@ -126,7 +135,7 @@ export function useAuth() {
     }
   };
 
-  //サインアップ用
+  //GoogleOAuthサインアップ
   const signUpWithGoogle = async () => {
     setIsLoading((prev) => ({ ...prev, google: true }));
     try {
@@ -151,7 +160,7 @@ export function useAuth() {
     }
   };
 
-  //ログイン用
+  //GoogleOAuthログイン
   const signInWithGoogle = async () => {
     setIsLoading((prev) => ({ ...prev, google: true }));
     try {
@@ -176,12 +185,84 @@ export function useAuth() {
     }
   };
 
+  //ログアウト
+  const logout = async () => {
+    setIsLoading((prev) => ({ ...prev, logout: true }));
+
+    try {
+      const { error } = await supabase.auth.signOut();
+
+      if (error) throw error;
+
+      toast.success('ログアウトしました');
+      router.push('/login');
+    } catch (error) {
+      toast.error('ログアウトに失敗しました', {
+        description: getAuthErrorMessage(error),
+      });
+    } finally {
+      setIsLoading((prev) => ({ ...prev, logout: false }));
+    }
+  };
+
+  //パスワードリセットEメール送信
+  const resetPasswordEmail = async (data: ResetPasswordEmailInput) => {
+    setIsLoading((prev) => ({ ...prev, resetPasswordEmail: true }));
+
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(data.email, {
+        redirectTo: `${window.location.origin}/reset-password/new`,
+      });
+
+      if (error) throw error;
+
+      toast.success('リセットメールを送信しました', {
+        description: 'メールをご確認ください',
+      });
+
+      router.push('/reset-password/sent');
+    } catch (error) {
+      toast.error('リセットメールの送信に失敗しました', {
+        description: getAuthErrorMessage(error),
+      });
+    } finally {
+      setIsLoading((prev) => ({ ...prev, resetPasswordEmail: false }));
+    }
+  };
+
+  //パスワードリセット
+  const resetPassword = async (data: NewPasswordInput) => {
+    setIsLoading((prev) => ({ ...prev, resetPassword: true }));
+
+    try {
+      const { error } = await supabase.auth.updateUser({
+        password: data.password,
+      });
+
+      if (error) throw error;
+
+      await supabase.auth.signOut();
+
+      toast.success('パスワードを更新しました');
+      router.push('/reset-password/complete');
+    } catch (error) {
+      toast.error('パスワードの更新に失敗しました', {
+        description: getAuthErrorMessage(error),
+      });
+    } finally {
+      setIsLoading((prev) => ({ ...prev, resetPassword: false }));
+    }
+  };
+
   return {
     singUp,
     signInAsAdmin,
     signInAsStaff,
     signInWithGoogle,
     signUpWithGoogle,
+    resetPasswordEmail,
+    resetPassword,
+    logout,
     isLoading,
   };
 }
