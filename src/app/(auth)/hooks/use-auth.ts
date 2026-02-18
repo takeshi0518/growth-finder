@@ -5,7 +5,11 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 import { getAuthErrorMessage } from '@/lib/utils/error-message';
-import { LoginInput, SingupInput } from '@/lib/validations/auth';
+import {
+  LoginInput,
+  ResetPasswordEmailInput,
+  SingupInput,
+} from '@/lib/validations/auth';
 import { createClient } from '@/lib/supabase/client';
 
 export function useAuth() {
@@ -16,6 +20,8 @@ export function useAuth() {
     signIn: false,
     google: false,
     logout: false,
+    resetpasswordEmail: false,
+    resetpassword: false,
   });
 
   const singUp = async (data: SingupInput) => {
@@ -89,7 +95,7 @@ export function useAuth() {
     }
   };
 
-  //管理者用ログイン
+  //スタッフ用ログイン
   const signInAsStaff = async (data: LoginInput) => {
     setIsLoading((prev) => ({ ...prev, signIn: true }));
 
@@ -127,7 +133,7 @@ export function useAuth() {
     }
   };
 
-  //サインアップ用
+  //GoogleOAuthサインアップ
   const signUpWithGoogle = async () => {
     setIsLoading((prev) => ({ ...prev, google: true }));
     try {
@@ -152,7 +158,7 @@ export function useAuth() {
     }
   };
 
-  //ログイン用
+  //GoogleOAuthログイン
   const signInWithGoogle = async () => {
     setIsLoading((prev) => ({ ...prev, google: true }));
     try {
@@ -177,6 +183,7 @@ export function useAuth() {
     }
   };
 
+  //ログアウト
   const logout = async () => {
     setIsLoading((prev) => ({ ...prev, logout: true }));
 
@@ -196,12 +203,38 @@ export function useAuth() {
     }
   };
 
+  //パスワードリセットEメール送信
+  const resetPasswordEmail = async (data: ResetPasswordEmailInput) => {
+    setIsLoading((prev) => ({ ...prev, resetpasswordEmail: true }));
+
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(data.email, {
+        redirectTo: `${window.location.origin}/reset-password/new`,
+      });
+
+      if (error) throw error;
+
+      toast.success('リセットメールを送信しました', {
+        description: 'メールをご確認ください',
+      });
+
+      router.push('/reset-password/sent');
+    } catch (error) {
+      toast.error('リセットメールの送信に失敗しました', {
+        description: getAuthErrorMessage(error),
+      });
+    } finally {
+      setIsLoading((prev) => ({ ...prev, resetpasswordEmail: false }));
+    }
+  };
+
   return {
     singUp,
     signInAsAdmin,
     signInAsStaff,
     signInWithGoogle,
     signUpWithGoogle,
+    resetPasswordEmail,
     logout,
     isLoading,
   };
