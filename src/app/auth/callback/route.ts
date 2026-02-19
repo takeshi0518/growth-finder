@@ -47,7 +47,15 @@ export async function GET(request: Request) {
       profile.role === 'admin' &&
       profile.is_setup_complete === true;
 
-    //新規ユーザーはブロック
+    //未登録ユーザーはブロック
+    if (!profile.is_setup_complete) {
+      await supabase.auth.signOut();
+      return NextResponse.redirect(
+        new URL('/login?error=oauth_not_registered', origin)
+      );
+    }
+
+    //管理者以外はブロック
     if (!isValidAdmin) {
       await supabase.auth.signOut();
       return NextResponse.redirect(
