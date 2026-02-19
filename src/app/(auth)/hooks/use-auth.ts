@@ -43,6 +43,7 @@ export function useAuth() {
             role: 'admin',
             organization_id: organizationId,
           },
+          emailRedirectTo: `${window.location.origin}/login`,
         },
       });
 
@@ -264,6 +265,9 @@ export function useAuth() {
       const { error } = await supabase.auth.resend({
         type: 'signup',
         email: data.email,
+        options: {
+          emailRedirectTo: `${window.location.origin}/login`,
+        },
       });
 
       if (error) throw error;
