@@ -87,7 +87,7 @@ export function useAuth() {
 
       if (profile?.role !== 'admin') {
         await supabase.auth.signOut();
-        throw new Error('管理者アカウントでログインしてください');
+        throw new Error('スタッフアカウントでログインしてください');
       }
 
       router.refresh();
@@ -126,7 +126,7 @@ export function useAuth() {
 
       if (profile?.role !== 'staff') {
         await supabase.auth.signOut();
-        throw new Error('スタッフアカウントでログインしてください');
+        throw new Error('管理者アカウントでログインしてください');
       }
       router.refresh();
     } catch (error) {
