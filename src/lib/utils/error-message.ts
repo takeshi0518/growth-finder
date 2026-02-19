@@ -1,13 +1,31 @@
 export function getAuthErrorMessage(error: unknown): string {
-  if (!(error instanceof Error)) {
-    return '予期しないエラーが発生しました。';
+  //Errorインスタンス
+  if (error instanceof Error) {
+    return translateErrorMessage(error.message);
   }
 
-  if (error.message) {
-    return error.message;
+  //SupabaseのAuthError
+  if (typeof error === 'object' && error !== null && 'message' in error) {
+    return translateErrorMessage(error.message as string);
   }
 
-  const errorMessage: Record<string, string> = {
+  return '予期しないエラーが発生しました';
+}
+
+//エラーメッセージの分離
+function translateErrorMessage(message: string): string {
+  const customErrors = [
+    '管理者アカウントでログインしてください',
+    'スタッフアカウントでログインしてください',
+    'ユーザー情報の取得に失敗しました',
+  ];
+
+  if (customErrors.includes(message)) {
+    return message;
+  }
+
+  //Supabaseのエラーメッセージを日本語に変換
+  const errorMap: Record<string, string> = {
     // ログイン関連
     'Invalid login credentials':
       'メールアドレスまたはパスワードが間違っています',
@@ -23,8 +41,5 @@ export function getAuthErrorMessage(error: unknown): string {
     'Provider not enabled': 'この認証方法は現在利用できません',
   };
 
-  return (
-    errorMessage[error.message] ||
-    'エラーが発生しました。もう一度お試しください。'
-  );
+  return errorMap[message] || message;
 }

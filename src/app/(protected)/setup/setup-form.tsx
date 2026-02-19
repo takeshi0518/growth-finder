@@ -50,6 +50,7 @@ export default function SetupForm() {
 
       if (error) throw error;
 
+      toast.success('アカウントを作成しました');
       router.push('/admin');
     } catch (error) {
       console.error('Setup error', error);

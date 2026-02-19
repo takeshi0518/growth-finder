@@ -8,6 +8,7 @@ import { getAuthErrorMessage } from '@/lib/utils/error-message';
 import {
   LoginInput,
   NewPasswordInput,
+  ResendConfirmationInput,
   ResetPasswordEmailInput,
   SingupInput,
 } from '@/lib/validations/auth';
@@ -23,6 +24,7 @@ export function useAuth() {
     logout: false,
     resetPasswordEmail: false,
     resetPassword: false,
+    resentdConfirmation: false,
   });
 
   //管理者用サインアップ
@@ -41,6 +43,7 @@ export function useAuth() {
             role: 'admin',
             organization_id: organizationId,
           },
+          emailRedirectTo: `${window.location.origin}/login`,
         },
       });
 
@@ -84,7 +87,7 @@ export function useAuth() {
 
       if (profile?.role !== 'admin') {
         await supabase.auth.signOut();
-        throw new Error('管理者アカウントでログインしてください');
+        throw new Error('スタッフアカウントでログインしてください');
       }
 
       router.refresh();
@@ -123,7 +126,7 @@ export function useAuth() {
 
       if (profile?.role !== 'staff') {
         await supabase.auth.signOut();
-        throw new Error('スタッフアカウントでログインしてください');
+        throw new Error('管理者アカウントでログインしてください');
       }
       router.refresh();
     } catch (error) {
@@ -254,6 +257,35 @@ export function useAuth() {
     }
   };
 
+  //確認メール再送信
+  const resendConfirmation = async (data: ResendConfirmationInput) => {
+    setIsLoading((prev) => ({ ...prev, resentdConfirmation: true }));
+
+    try {
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: data.email,
+        options: {
+          emailRedirectTo: `${window.location.origin}/login`,
+        },
+      });
+
+      if (error) throw error;
+
+      toast.success('確認メールを送信しました', {
+        description: 'メールをご確認ください',
+      });
+
+      router.push('/confirm-email');
+    } catch (error) {
+      toast.error('確認メールの送信に失敗しました', {
+        description: getAuthErrorMessage(error),
+      });
+    } finally {
+      setIsLoading((prev) => ({ ...prev, resentdConfirmation: false }));
+    }
+  };
+
   return {
     singUp,
     signInAsAdmin,
@@ -263,6 +295,7 @@ export function useAuth() {
     resetPasswordEmail,
     resetPassword,
     logout,
+    resendConfirmation,
     isLoading,
   };
 }
