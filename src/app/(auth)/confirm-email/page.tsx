@@ -34,17 +34,18 @@ export default function ConfirmEmailPage() {
           </p>
         </div>
 
-        <div className="pt-4 border-t">
+        <div className="pt-4 border-t space-y-2">
           <p className="text-sm text-muted-foreground">
             メールが届かない場合は迷惑メールフォルダを確認ください。
           </p>
+          <p className="text-sm text-muted-foreground">
+            メールを再送信したい場合は
+            <Link href="/resend-confirmation" className="border-b">
+              こちら
+            </Link>
+          </p>
         </div>
       </CardContent>
-      <CardFooter className="flex justify-center">
-        <Button asChild size="lg">
-          <Link href="/login">ログインページへ</Link>
-        </Button>
-      </CardFooter>
     </Card>
   );
 }
