@@ -44,7 +44,7 @@ export type Database = {
           is_setup_complete: boolean | null;
           name: string;
           organization_id: string | null;
-          role: string;
+          role: 'admin' | 'staff';
           store_name: string;
           updated_at: string;
         };
@@ -57,7 +57,7 @@ export type Database = {
           is_setup_complete?: boolean | null;
           name: string;
           organization_id?: string | null;
-          role: string;
+          role: 'admin' | 'staff';
           store_name: string;
           updated_at?: string;
         };
@@ -70,7 +70,7 @@ export type Database = {
           is_setup_complete?: boolean | null;
           name?: string;
           organization_id?: string | null;
-          role?: string;
+          role?: 'admin' | 'staff';
           store_name?: string;
           updated_at?: string;
         };
