@@ -27,7 +27,6 @@ export default function NewPasswordForm() {
 
   return (
     <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-      {/* 新しいパスワード */}
       <div className="space-y-2">
         <Label htmlFor="password">新しいパスワード</Label>
         <Input
@@ -44,7 +43,6 @@ export default function NewPasswordForm() {
         </p>
       </div>
 
-      {/* パスワード確認 */}
       <div className="space-y-2">
         <Label htmlFor="confirm-password">パスワード(確認)</Label>
         <Input
@@ -60,7 +58,6 @@ export default function NewPasswordForm() {
         )}
       </div>
 
-      {/* 更新ボタン */}
       <Button
         type="submit"
         className="w-full"

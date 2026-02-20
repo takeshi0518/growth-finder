@@ -29,7 +29,6 @@ export default function ResetForm() {
   });
   return (
     <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-      {/* メールアドレス */}
       <div className="space-y-2">
         <Label htmlFor="email">メールアドレス</Label>
         <Input
@@ -43,7 +42,6 @@ export default function ResetForm() {
         )}
       </div>
 
-      {/* 送信ボタン */}
       <Button
         type="submit"
         className="w-full"

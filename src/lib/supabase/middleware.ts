@@ -1,13 +1,15 @@
 import { createServerClient } from '@supabase/ssr';
 import { User } from '@supabase/supabase-js';
 import { type NextRequest, NextResponse } from 'next/server';
+import type { Database } from '../../../types/supabase';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
   });
 
-  const supabase = createServerClient(
+  const supabase = createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
@@ -39,7 +41,7 @@ export async function updateSession(request: NextRequest) {
 }
 
 export async function getUserRole(
-  supabase: any,
+  supabase: SupabaseClient<Database>,
   userId: string
 ): Promise<'admin' | 'staff' | null> {
   const { data: profile, error } = await supabase
@@ -56,12 +58,18 @@ export async function getUserRole(
   return profile?.role || null;
 }
 
-export async function isAdmin(supabase: any, userId: string): Promise<boolean> {
+export async function isAdmin(
+  supabase: SupabaseClient<Database>,
+  userId: string
+): Promise<boolean> {
   const role = await getUserRole(supabase, userId);
   return role === 'admin';
 }
 
-export async function isStaff(supabase: any, userId: string): Promise<boolean> {
+export async function isStaff(
+  supabase: SupabaseClient<Database>,
+  userId: string
+): Promise<boolean> {
   const role = await getUserRole(supabase, userId);
   return role === 'staff';
 }
