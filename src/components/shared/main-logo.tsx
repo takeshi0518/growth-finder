@@ -8,7 +8,7 @@ type MainLogoProps = {
 };
 
 export default function MainLogo({ onClick }: MainLogoProps) {
-  const handleClick = (e: React.MouseEvent) => {
+  const handleClick = () => {
     onClick?.();
   };
   return (

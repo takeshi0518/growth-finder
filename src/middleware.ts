@@ -63,7 +63,6 @@ export async function middleware(request: NextRequest) {
   const isAuthPath = authPaths.includes(pathname);
 
   if (isAuthPath && user && isEmailConfirmed(user)) {
-    console.log(isEmailConfirmed(user));
     const role = await getUserRole(supabase, user.id);
     const redirectTo = role === 'admin' ? '/admin' : '/staff';
     return NextResponse.redirect(new URL(redirectTo, request.url));
