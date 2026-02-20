@@ -55,10 +55,8 @@ export default function LoginForm() {
         <TabsTrigger value="staff">スタッフ</TabsTrigger>
       </TabsList>
 
-      {/* 管理者タブ */}
       <TabsContent value="admin" className="space-y-4 mt-6">
         <form className="space-y-4" onSubmit={handleSubmit(onSubmitAdmin)}>
-          {/* メールアドレス */}
           <div className="space-y-2">
             <Label htmlFor="admin-email">メールアドレス</Label>
             <Input
@@ -72,7 +70,6 @@ export default function LoginForm() {
             )}
           </div>
 
-          {/* パスワード */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label htmlFor="admin-password">パスワード</Label>
@@ -113,7 +110,6 @@ export default function LoginForm() {
           </div>
         </div>
 
-        {/* Google OAuth */}
         <Button
           type="button"
           variant="outline"
@@ -133,10 +129,8 @@ export default function LoginForm() {
         </Button>
       </TabsContent>
 
-      {/* スタッフタブ */}
       <TabsContent value="staff" className="space-y-4 mt-6">
         <form className="space-y-4" onSubmit={handleSubmit(onSubmitStaff)}>
-          {/* メールアドレス */}
           <div className="space-y-2">
             <Label htmlFor="staff-email">メールアドレス</Label>
             <Input
@@ -150,7 +144,6 @@ export default function LoginForm() {
             )}
           </div>
 
-          {/* パスワード */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label htmlFor="staff-password">パスワード</Label>
@@ -172,7 +165,6 @@ export default function LoginForm() {
             )}
           </div>
 
-          {/* ログインボタン */}
           <Button
             type="submit"
             className="w-full"

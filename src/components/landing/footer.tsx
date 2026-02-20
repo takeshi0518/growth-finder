@@ -33,7 +33,6 @@ export default function Footer() {
       <Container>
         <div className="py-8 md:py-12">
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* ブランド情報 */}
             <div>
               <h3 className="font-bold text-lg mb-4">Growth Finder</h3>
               <p className="text-sm">
@@ -44,7 +43,6 @@ export default function Footer() {
                 人材育成ツール
               </p>
             </div>
-            {/* SNSリンク */}
             <div>
               <h4 className="font-semibold mb-4">SNS</h4>
               <div className="flex gap-4">
@@ -65,7 +63,6 @@ export default function Footer() {
                 })}
               </div>
             </div>
-            {/* リンク */}
             <div>
               <h4 className="font-semibold mb-4">サービス</h4>
               <ul className="space-y-2 text-sm">
@@ -81,7 +78,6 @@ export default function Footer() {
                 ))}
               </ul>
             </div>
-            {/* アカウント */}
             <div>
               <h4 className="font-semibold mb-4">アカウント</h4>
               <ul className="space-y-2 text-sm">
@@ -100,7 +96,6 @@ export default function Footer() {
           </div>
         </div>
       </Container>
-      {/* コピーライト */}
       <div className="p-8 text-center text-sm text-primary-foreground border-t border-primary-foreground/20">
         <p>
           &copy; {new Date().getFullYear()} Growth Finder. All rights reserved.

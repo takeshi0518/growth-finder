@@ -65,7 +65,6 @@ export default function SetupForm() {
   return (
     <div className="space-y-6">
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-        {/* 名前 */}
         <div className="space-y-2">
           <Label htmlFor="name">名前</Label>
           <Input
@@ -79,7 +78,6 @@ export default function SetupForm() {
           )}
         </div>
 
-        {/* 店舗名 */}
         <div className="space-y-2">
           <Label htmlFor="storeName">店舗名</Label>
           <Input
@@ -94,7 +92,6 @@ export default function SetupForm() {
           )}
         </div>
 
-        {/* ログインボタン */}
         <Button type="submit" className="w-full" size="lg">
           {isLoading ? <LoaderCircleIcon /> : 'アカウントを作成'}
           登録する

@@ -25,25 +25,24 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/confirm-email', request.url));
   }
 
-  // roleベースのリダイレクト
+  // 役割ベースのアクセス制御
   if (
     user &&
     (pathname.startsWith('/admin') || pathname.startsWith('/staff'))
   ) {
     const role = await getUserRole(supabase, user.id);
 
-    // adminルートへアクセス
     if (pathname.startsWith('/admin') && role !== 'admin') {
       return NextResponse.redirect(new URL('/staff', request.url));
     }
 
-    //staffルートへアクセス
     if (pathname.startsWith('/staff') && role !== 'staff') {
       return NextResponse.redirect(new URL('/admin', request.url));
     }
   }
 
   // /setupへのアクセス制御
+  //追加情報入力後の/setupへアクセス制御
   if (pathname === '/setup' && user) {
     const { data: profile } = await supabase
       .from('profiles')
