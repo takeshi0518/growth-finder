@@ -7,24 +7,24 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/icon/icons';
-import { SingupInput, signupSchema } from '@/lib/validations/auth';
+import { SignupInput, signupSchema } from '@/lib/validations/auth';
 import { useAuth } from '../hooks/use-auth';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
 
 export default function SignupForm() {
-  const { singUp, signUpWithGoogle, isLoading } = useAuth();
+  const { signUp, signUpWithGoogle, isLoading } = useAuth();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SingupInput>({
+  } = useForm<SignupInput>({
     resolver: zodResolver(signupSchema),
     mode: 'onChange',
   });
 
-  async function onSubmit(data: SingupInput) {
-    await singUp(data);
+  async function onSubmit(data: SignupInput) {
+    await signUp(data);
   }
 
   return (
@@ -113,9 +113,9 @@ export default function SignupForm() {
           type="submit"
           className="w-full"
           size="lg"
-          disabled={isLoading.singUp || isLoading.google}
+          disabled={isLoading.signUp || isLoading.google}
         >
-          {isLoading.singUp ? <LoaderCircleIcon /> : 'アカウントを作成'}
+          {isLoading.signUp ? <LoaderCircleIcon /> : 'アカウントを作成'}
         </Button>
       </form>
 
@@ -136,7 +136,7 @@ export default function SignupForm() {
         size="lg"
         className="w-full"
         onClick={signUpWithGoogle}
-        disabled={isLoading.singUp || isLoading.google}
+        disabled={isLoading.signUp || isLoading.google}
       >
         {isLoading.google ? (
           <LoaderCircleIcon />

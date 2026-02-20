@@ -10,7 +10,7 @@ import {
   NewPasswordInput,
   ResendConfirmationInput,
   ResetPasswordEmailInput,
-  SingupInput,
+  SignupInput,
 } from '@/lib/validations/auth';
 import { createClient } from '@/lib/supabase/client';
 
@@ -18,7 +18,7 @@ export function useAuth() {
   const router = useRouter();
   const supabase = createClient();
   const [isLoading, setIsLoading] = useState({
-    singUp: false,
+    signUp: false,
     signIn: false,
     google: false,
     logout: false,
@@ -28,8 +28,8 @@ export function useAuth() {
   });
 
   //管理者用サインアップ
-  const singUp = async (data: SingupInput) => {
-    setIsLoading((prev) => ({ ...prev, singUp: true }));
+  const signUp = async (data: SignupInput) => {
+    setIsLoading((prev) => ({ ...prev, signUp: true }));
     try {
       const organizationId = crypto.randomUUID();
 
@@ -57,7 +57,7 @@ export function useAuth() {
         description: getAuthErrorMessage(error),
       });
     } finally {
-      setIsLoading((prev) => ({ ...prev, singUp: false }));
+      setIsLoading((prev) => ({ ...prev, signUp: false }));
     }
   };
 
@@ -287,7 +287,7 @@ export function useAuth() {
   };
 
   return {
-    singUp,
+    signUp,
     signInAsAdmin,
     signInAsStaff,
     signInWithGoogle,

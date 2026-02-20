@@ -90,7 +90,7 @@ export const setupSchema = z.object({
     .max(100, '店舗名は100文字以内で入力してください'),
 });
 
-export type SingupInput = z.infer<typeof signupSchema>;
+export type SignupInput = z.infer<typeof signupSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;
 export type NewPasswordInput = z.infer<typeof newPasswordSchema>;
