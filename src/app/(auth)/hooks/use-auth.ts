@@ -50,6 +50,7 @@ export function useAuth() {
         throw error;
       }
 
+      localStorage.setItem('lastLoginMethod', 'email');
       router.push('/confirm-email');
     } catch (error) {
       toast.error('アカウント作成に失敗しました', {
@@ -95,9 +96,8 @@ export function useAuth() {
         );
       }
 
-      if (role === 'admin') {
-        localStorage.setItem('lastLoginMethod', 'email');
-      }
+      localStorage.setItem('lastLoginMethod', 'email');
+      localStorage.setItem('lastLoginTab', role);
 
       router.refresh();
     } catch (error) {
@@ -121,6 +121,7 @@ export function useAuth() {
     setIsLoading((prev) => ({ ...prev, google: true }));
     try {
       localStorage.setItem('lastLoginMethod', 'google');
+      localStorage.setItem('lastLoginTab', 'admin');
 
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
@@ -133,7 +134,8 @@ export function useAuth() {
       });
 
       if (error) {
-        localStorage.removeItem('lastLoginMethod')
+        localStorage.removeItem('lastLoginMethod');
+        localStorage.removeItem('lastLoginTab');
         throw error;
       }
     } catch (error) {
@@ -148,6 +150,7 @@ export function useAuth() {
     setIsLoading((prev) => ({ ...prev, google: true }));
     try {
       localStorage.setItem('lastLoginMethod', 'google');
+      localStorage.setItem('lastLoginTab', 'admin');
 
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
@@ -161,6 +164,7 @@ export function useAuth() {
 
       if (error) {
         localStorage.removeItem('lastLoginMethod');
+        localStorage.removeItem('lastLoginTab');
         throw error;
       }
     } catch (error) {
