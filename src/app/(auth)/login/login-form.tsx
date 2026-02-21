@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -18,6 +18,7 @@ type LoginTabValue = 'admin' | 'staff';
 
 export default function LoginForm() {
   const [activeTab, setActiveTab] = useState<LoginTabValue>('admin');
+  const [lastLoginMethod, setLastLoginMethod] = useState<string | null>(null);
   const { isLoading, signInWithGoogle, signInAsAdmin, signInAsStaff } =
     useAuth();
   const {
@@ -30,159 +31,185 @@ export default function LoginForm() {
     mode: 'onChange',
   });
 
+  useEffect(() => {
+    const method = localStorage.getItem('lastLoginMethod');
+    const tab = localStorage.getItem('lastLoginTab') as LoginTabValue;
+
+    setLastLoginMethod(method);
+
+    if (tab === 'admin' || tab === 'staff') {
+      setActiveTab(tab);
+    }
+  }, []);
+
   const handleTabChange = (value: string) => {
-    setActiveTab(value as LoginTabValue);
+    const newTab = value as LoginTabValue;
+    setActiveTab(newTab);
     reset();
-  };
 
-  const onSubmitAdmin = async (data: LoginInput) => {
-    await signInAsAdmin(data);
-  };
-
-  const onSubmitStaff = async (data: LoginInput) => {
-    await signInAsStaff(data);
+    localStorage.setItem('lastLoginTab', newTab);
   };
 
   return (
-    <Tabs
-      defaultValue="admin"
-      className="w-full"
-      value={activeTab}
-      onValueChange={handleTabChange}
-    >
-      <TabsList className="grid grid-cols-2 w-full">
-        <TabsTrigger value="admin">管理者</TabsTrigger>
-        <TabsTrigger value="staff">スタッフ</TabsTrigger>
-      </TabsList>
-
-      <TabsContent value="admin" className="space-y-4 mt-6">
-        <form className="space-y-4" onSubmit={handleSubmit(onSubmitAdmin)}>
-          <div className="space-y-2">
-            <Label htmlFor="admin-email">メールアドレス</Label>
-            <Input
-              id="admin-email"
-              type="email"
-              placeholder="your@email.com"
-              {...register('email')}
-            />
-            {errors.email && (
-              <p className="text-sm text-red-500">{errors.email.message}</p>
+    <>
+      {activeTab === 'admin' && lastLoginMethod && (
+        <div className="bg-primary/10 rounded-lg p-3 mb-3 flex justify-center gap-2">
+          <Icons.Lightbulb className="h-5 w-5 text-yellow-500" />
+          <p className="text-sm text-muted-foreground text-center">
+            前回は
+            {lastLoginMethod === 'google' ? (
+              <span className="font-medium">Google</span>
+            ) : (
+              <span className="font-medium">メールアドレス</span>
             )}
-          </div>
-
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="admin-password">パスワード</Label>
-              <Link
-                href="/reset-password"
-                className="text-xs text-primary hover:underline"
-              >
-                パスワードを忘れた場合
-              </Link>
-            </div>
-            <Input
-              id="admin-password"
-              type="password"
-              placeholder="••••••••"
-              {...register('password')}
-            />
-            {errors.password && (
-              <p className="text-sm text-red-500">{errors.password.message}</p>
-            )}
-          </div>
-
-          <Button
-            type="submit"
-            className="w-full"
-            size="lg"
-            disabled={isLoading.google || isLoading.signIn}
-          >
-            {isLoading.signIn ? <LoaderCircleIcon /> : 'ログイン'}
-          </Button>
-        </form>
-
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-card px-2 text-muted-foreground">または</span>
-          </div>
-        </div>
-
-        <Button
-          type="button"
-          variant="outline"
-          size="lg"
-          className="w-full"
-          onClick={signInWithGoogle}
-          disabled={isLoading.google || isLoading.signIn}
-        >
-          {isLoading.google ? (
-            <LoaderCircleIcon />
-          ) : (
-            <>
-              <Icons.FcGoogle className="mr-2 h-5 w-5" />
-              <span>Googleで続ける</span>
-            </>
-          )}
-        </Button>
-      </TabsContent>
-
-      <TabsContent value="staff" className="space-y-4 mt-6">
-        <form className="space-y-4" onSubmit={handleSubmit(onSubmitStaff)}>
-          <div className="space-y-2">
-            <Label htmlFor="staff-email">メールアドレス</Label>
-            <Input
-              id="staff-email"
-              type="email"
-              placeholder="your@email.com"
-              {...register('email')}
-            />
-            {errors.email && (
-              <p className="text-sm text-red-500">{errors.email.message}</p>
-            )}
-          </div>
-
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="staff-password">パスワード</Label>
-              <Link
-                href="/reset-password"
-                className="text-xs text-primary hover:underline"
-              >
-                パスワードを忘れた場合
-              </Link>
-            </div>
-            <Input
-              id="staff-password"
-              type="password"
-              placeholder="••••••••"
-              {...register('password')}
-            />
-            {errors.password && (
-              <p className="text-sm text-red-500">{errors.password.message}</p>
-            )}
-          </div>
-
-          <Button
-            type="submit"
-            className="w-full"
-            size="lg"
-            disabled={isLoading.google || isLoading.signIn}
-          >
-            {isLoading.signIn ? <LoaderCircleIcon /> : 'ログイン'}
-          </Button>
-        </form>
-
-        <div className="rounded-lg bg-primary/10 p-4">
-          <p className="text-xs text-muted-foreground text-center">
-            スタッフはメールアドレスとパスワードでログインしてください
-            <br />
-            初回ログインの場合は招待メールをご確認ください
+            でログインしました
           </p>
         </div>
-      </TabsContent>
-    </Tabs>
+      )}
+      <Tabs
+        defaultValue="admin"
+        className="w-full"
+        value={activeTab}
+        onValueChange={handleTabChange}
+      >
+        <TabsList className="grid grid-cols-2 w-full">
+          <TabsTrigger value="admin">管理者</TabsTrigger>
+          <TabsTrigger value="staff">スタッフ</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="admin" className="space-y-4 mt-6">
+          <form className="space-y-4" onSubmit={handleSubmit(signInAsAdmin)}>
+            <div className="space-y-2">
+              <Label htmlFor="admin-email">メールアドレス</Label>
+              <Input
+                id="admin-email"
+                type="email"
+                placeholder="your@email.com"
+                {...register('email')}
+              />
+              {errors.email && (
+                <p className="text-sm text-red-500">{errors.email.message}</p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="admin-password">パスワード</Label>
+                <Link
+                  href="/reset-password"
+                  className="text-xs text-primary hover:underline"
+                >
+                  パスワードを忘れた場合
+                </Link>
+              </div>
+              <Input
+                id="admin-password"
+                type="password"
+                placeholder="••••••••"
+                {...register('password')}
+              />
+              {errors.password && (
+                <p className="text-sm text-red-500">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full"
+              size="lg"
+              disabled={isLoading.google || isLoading.signIn}
+            >
+              {isLoading.signIn ? <LoaderCircleIcon /> : 'ログイン'}
+            </Button>
+          </form>
+
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-card px-2 text-muted-foreground">または</span>
+            </div>
+          </div>
+
+          <Button
+            type="button"
+            variant="outline"
+            size="lg"
+            className="w-full"
+            onClick={signInWithGoogle}
+            disabled={isLoading.google || isLoading.signIn}
+          >
+            {isLoading.google ? (
+              <LoaderCircleIcon />
+            ) : (
+              <>
+                <Icons.FcGoogle className="mr-2 h-5 w-5" />
+                <span>Googleで続ける</span>
+              </>
+            )}
+          </Button>
+        </TabsContent>
+
+        <TabsContent value="staff" className="space-y-4 mt-6">
+          <form className="space-y-4" onSubmit={handleSubmit(signInAsStaff)}>
+            <div className="space-y-2">
+              <Label htmlFor="staff-email">メールアドレス</Label>
+              <Input
+                id="staff-email"
+                type="email"
+                placeholder="your@email.com"
+                {...register('email')}
+              />
+              {errors.email && (
+                <p className="text-sm text-red-500">{errors.email.message}</p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="staff-password">パスワード</Label>
+                <Link
+                  href="/reset-password"
+                  className="text-xs text-primary hover:underline"
+                >
+                  パスワードを忘れた場合
+                </Link>
+              </div>
+              <Input
+                id="staff-password"
+                type="password"
+                placeholder="••••••••"
+                {...register('password')}
+              />
+              {errors.password && (
+                <p className="text-sm text-red-500">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full"
+              size="lg"
+              disabled={isLoading.google || isLoading.signIn}
+            >
+              {isLoading.signIn ? <LoaderCircleIcon /> : 'ログイン'}
+            </Button>
+          </form>
+
+          <div className="rounded-lg bg-primary/10 p-4">
+            <p className="text-xs text-muted-foreground text-center">
+              スタッフはメールアドレスとパスワードでログインしてください
+              <br />
+              初回ログインの場合は招待メールをご確認ください
+            </p>
+          </div>
+        </TabsContent>
+      </Tabs>
+    </>
   );
 }

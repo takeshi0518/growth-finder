@@ -50,6 +50,7 @@ export function useAuth() {
         throw error;
       }
 
+      localStorage.setItem('lastLoginMethod', 'email');
       router.push('/confirm-email');
     } catch (error) {
       toast.error('アカウント作成に失敗しました', {
@@ -60,7 +61,10 @@ export function useAuth() {
     }
   };
 
-  const signInAsAdmin = async (data: LoginInput) => {
+  const signInAdminOrStaff = async (
+    data: LoginInput,
+    role: 'admin' | 'staff'
+  ) => {
     setIsLoading((prev) => ({ ...prev, signIn: true }));
 
     try {
@@ -83,10 +87,17 @@ export function useAuth() {
         .eq('id', user.id)
         .single();
 
-      if (profile?.role !== 'admin') {
+      if (profile?.role !== role) {
         await supabase.auth.signOut();
-        throw new Error('スタッフアカウントでログインしてください');
+        throw new Error(
+          role === 'admin'
+            ? '管理者アカウントでログインしてください'
+            : 'スタッフアカウントでログインしてください'
+        );
       }
+
+      localStorage.setItem('lastLoginMethod', 'email');
+      localStorage.setItem('lastLoginTab', role);
 
       router.refresh();
     } catch (error) {
@@ -98,46 +109,20 @@ export function useAuth() {
     }
   };
 
+  const signInAsAdmin = async (data: LoginInput) => {
+    await signInAdminOrStaff(data, 'admin');
+  };
+
   const signInAsStaff = async (data: LoginInput) => {
-    setIsLoading((prev) => ({ ...prev, signIn: true }));
-
-    try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email: data.email,
-        password: data.password,
-      });
-
-      if (error) throw error;
-
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (!user) throw new Error('ユーザー情報の取得に失敗しました');
-
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', user.id)
-        .single();
-
-      if (profile?.role !== 'staff') {
-        await supabase.auth.signOut();
-        throw new Error('管理者アカウントでログインしてください');
-      }
-      router.refresh();
-    } catch (error) {
-      toast.error('ログインに失敗しました', {
-        description: getAuthErrorMessage(error),
-      });
-    } finally {
-      setIsLoading((prev) => ({ ...prev, signIn: false }));
-    }
+    await signInAdminOrStaff(data, 'staff');
   };
 
   const signUpWithGoogle = async () => {
     setIsLoading((prev) => ({ ...prev, google: true }));
     try {
+      localStorage.setItem('lastLoginMethod', 'google');
+      localStorage.setItem('lastLoginTab', 'admin');
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
@@ -149,6 +134,8 @@ export function useAuth() {
       });
 
       if (error) {
+        localStorage.removeItem('lastLoginMethod');
+        localStorage.removeItem('lastLoginTab');
         throw error;
       }
     } catch (error) {
@@ -162,6 +149,9 @@ export function useAuth() {
   const signInWithGoogle = async () => {
     setIsLoading((prev) => ({ ...prev, google: true }));
     try {
+      localStorage.setItem('lastLoginMethod', 'google');
+      localStorage.setItem('lastLoginTab', 'admin');
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
@@ -173,6 +163,8 @@ export function useAuth() {
       });
 
       if (error) {
+        localStorage.removeItem('lastLoginMethod');
+        localStorage.removeItem('lastLoginTab');
         throw error;
       }
     } catch (error) {
@@ -277,16 +269,41 @@ export function useAuth() {
     }
   };
 
+  const resendResetPasswordEmail = async (data: ResendConfirmationInput) => {
+    setIsLoading((prev) => ({ ...prev, resentdConfirmation: true }));
+
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(data.email, {
+        redirectTo: `${window.location.origin}/reset-password/new`,
+      });
+
+      if (error) throw error;
+
+      toast.success('リセットメールを送信しました', {
+        description: 'メールをご確認ください',
+      });
+
+      router.push('/reset-password/sent');
+    } catch (error) {
+      toast.error('リセットメールの送信に失敗しました', {
+        description: getAuthErrorMessage(error),
+      });
+    } finally {
+      setIsLoading((prev) => ({ ...prev, resentdConfirmation: false }));
+    }
+  };
+
   return {
     signUp,
+    signInWithGoogle,
     signInAsAdmin,
     signInAsStaff,
-    signInWithGoogle,
     signUpWithGoogle,
     resetPasswordEmail,
     resetPassword,
     logout,
     resendConfirmation,
+    resendResetPasswordEmail,
     isLoading,
   };
 }

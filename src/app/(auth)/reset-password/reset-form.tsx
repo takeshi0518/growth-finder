@@ -15,10 +15,6 @@ import LoaderCircleIcon from '@/components/shared/loader-circle';
 export default function ResetForm() {
   const { resetPasswordEmail, isLoading } = useAuth();
 
-  const onSubmit = async (data: ResetPasswordEmailInput) => {
-    await resetPasswordEmail(data);
-  };
-
   const {
     register,
     handleSubmit,
@@ -28,7 +24,7 @@ export default function ResetForm() {
     mode: 'onChange',
   });
   return (
-    <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+    <form className="space-y-4" onSubmit={handleSubmit(resetPasswordEmail)}>
       <div className="space-y-2">
         <Label htmlFor="email">メールアドレス</Label>
         <Input

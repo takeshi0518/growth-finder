@@ -10,7 +10,8 @@ import {
   KeyRound,
   CheckCircle,
   LoaderCircle,
-  AlertCircle
+  AlertCircle,
+  Lightbulb,
 } from 'lucide-react';
 
 import { FaXTwitter, FaGithub } from 'react-icons/fa6';
@@ -29,6 +30,7 @@ export const Icons = {
   CheckCircle,
   LoaderCircle,
   AlertCircle,
+  Lightbulb,
   FaXTwitter,
   FaGithub,
   FcGoogle,

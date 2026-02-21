@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Icons } from '@/components/icon/icons';
-import ResetMailForm from './reset-mail-form';
+import ResendResetPassword from './resend-reset-password';
 
 export default function ResendConfirmationPage() {
   return (
@@ -23,7 +23,7 @@ export default function ResendConfirmationPage() {
       </CardHeader>
 
       <CardContent>
-        <ResetMailForm />
+        <ResendResetPassword />
       </CardContent>
     </Card>
   );

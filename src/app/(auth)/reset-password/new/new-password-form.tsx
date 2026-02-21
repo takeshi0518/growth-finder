@@ -12,10 +12,6 @@ import LoaderCircleIcon from '@/components/shared/loader-circle';
 export default function NewPasswordForm() {
   const { resetPassword, isLoading } = useAuth();
 
-  const onSubmit = async (data: NewPasswordInput) => {
-    await resetPassword(data);
-  };
-
   const {
     register,
     handleSubmit,
@@ -26,7 +22,7 @@ export default function NewPasswordForm() {
   });
 
   return (
-    <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+    <form className="space-y-4" onSubmit={handleSubmit(resetPassword)}>
       <div className="space-y-2">
         <Label htmlFor="password">新しいパスワード</Label>
         <Input

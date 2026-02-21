@@ -10,11 +10,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-import { useAuth } from '../hooks/use-auth';
+import { useAuth } from '../../hooks/use-auth';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
 
-export default function ResetMailForm() {
-  const { resendConfirmation, isLoading } = useAuth();
+export default function ResendResetPassword() {
+  const { resendResetPasswordEmail, isLoading } = useAuth();
   const {
     register,
     handleSubmit,
@@ -24,7 +24,10 @@ export default function ResetMailForm() {
     mode: 'onChange',
   });
   return (
-    <form className="space-y-4" onSubmit={handleSubmit(resendConfirmation)}>
+    <form
+      className="space-y-4"
+      onSubmit={handleSubmit(resendResetPasswordEmail)}
+    >
       {/* メールアドレス */}
       <div className="space-y-2">
         <Label htmlFor="email">メールアドレス</Label>
