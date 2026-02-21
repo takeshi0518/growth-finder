@@ -255,6 +255,30 @@ export function useAuth() {
     }
   };
 
+  const resendResetPasswordEmail = async (data: ResendConfirmationInput) => {
+    setIsLoading((prev) => ({ ...prev, resentdConfirmation: true }));
+
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(data.email, {
+        redirectTo: `${window.location.origin}/reset-password/new`,
+      });
+
+      if (error) throw error;
+
+      toast.success('リセットメールを送信しました', {
+        description: 'メールをご確認ください',
+      });
+
+      router.push('/reset-password/sent');
+    } catch (error) {
+      toast.error('リセットメールの送信に失敗しました', {
+        description: getAuthErrorMessage(error),
+      });
+    } finally {
+      setIsLoading((prev) => ({ ...prev, resentdConfirmation: false }));
+    }
+  };
+
   return {
     signUp,
     signInWithGoogle,
@@ -265,6 +289,7 @@ export function useAuth() {
     resetPassword,
     logout,
     resendConfirmation,
+    resendResetPasswordEmail,
     isLoading,
   };
 }

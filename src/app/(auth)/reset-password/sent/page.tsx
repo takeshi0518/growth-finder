@@ -42,9 +42,12 @@ export default function ResetPasswordSentPage() {
       </CardContent>
 
       <CardFooter className="flex justify-center">
-        <Button asChild size="lg">
-          <Link href="/login">ログインページへ</Link>
-        </Button>
+        <p className="text-sm text-muted-foreground">
+          メールを再送信したい場合は
+          <Link href="/reset-password/resend" className="border-b">
+            こちら
+          </Link>
+        </p>
       </CardFooter>
     </Card>
   );
