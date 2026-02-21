@@ -95,6 +95,10 @@ export function useAuth() {
         );
       }
 
+      if (role === 'admin') {
+        localStorage.setItem('lastLoginMethod', 'email');
+      }
+
       router.refresh();
     } catch (error) {
       toast.error('ログインに失敗しました', {
@@ -116,6 +120,8 @@ export function useAuth() {
   const signUpWithGoogle = async () => {
     setIsLoading((prev) => ({ ...prev, google: true }));
     try {
+      localStorage.setItem('lastLoginMethod', 'google');
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
@@ -127,6 +133,7 @@ export function useAuth() {
       });
 
       if (error) {
+        localStorage.removeItem('lastLoginMethod')
         throw error;
       }
     } catch (error) {
@@ -140,6 +147,8 @@ export function useAuth() {
   const signInWithGoogle = async () => {
     setIsLoading((prev) => ({ ...prev, google: true }));
     try {
+      localStorage.setItem('lastLoginMethod', 'google');
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
@@ -151,6 +160,7 @@ export function useAuth() {
       });
 
       if (error) {
+        localStorage.removeItem('lastLoginMethod');
         throw error;
       }
     } catch (error) {
