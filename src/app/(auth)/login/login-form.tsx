@@ -35,14 +35,6 @@ export default function LoginForm() {
     reset();
   };
 
-  const onSubmitAdmin = async (data: LoginInput) => {
-    await signInAsAdmin(data);
-  };
-
-  const onSubmitStaff = async (data: LoginInput) => {
-    await signInAsStaff(data);
-  };
-
   return (
     <Tabs
       defaultValue="admin"
@@ -56,7 +48,7 @@ export default function LoginForm() {
       </TabsList>
 
       <TabsContent value="admin" className="space-y-4 mt-6">
-        <form className="space-y-4" onSubmit={handleSubmit(onSubmitAdmin)}>
+        <form className="space-y-4" onSubmit={handleSubmit(signInAsAdmin)}>
           <div className="space-y-2">
             <Label htmlFor="admin-email">メールアドレス</Label>
             <Input
@@ -130,7 +122,7 @@ export default function LoginForm() {
       </TabsContent>
 
       <TabsContent value="staff" className="space-y-4 mt-6">
-        <form className="space-y-4" onSubmit={handleSubmit(onSubmitStaff)}>
+        <form className="space-y-4" onSubmit={handleSubmit(signInAsStaff)}>
           <div className="space-y-2">
             <Label htmlFor="staff-email">メールアドレス</Label>
             <Input

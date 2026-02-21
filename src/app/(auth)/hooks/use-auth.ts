@@ -60,7 +60,10 @@ export function useAuth() {
     }
   };
 
-  const signInAsAdmin = async (data: LoginInput) => {
+  const signInAdminOrStaff = async (
+    data: LoginInput,
+    role: 'admin' | 'staff'
+  ) => {
     setIsLoading((prev) => ({ ...prev, signIn: true }));
 
     try {
@@ -83,9 +86,13 @@ export function useAuth() {
         .eq('id', user.id)
         .single();
 
-      if (profile?.role !== 'admin') {
+      if (profile?.role !== role) {
         await supabase.auth.signOut();
-        throw new Error('スタッフアカウントでログインしてください');
+        throw new Error(
+          role === 'admin'
+            ? '管理者アカウントでログインしてください'
+            : 'スタッフアカウントでログインしてください'
+        );
       }
 
       router.refresh();
@@ -98,41 +105,12 @@ export function useAuth() {
     }
   };
 
+  const signInAsAdmin = async (data: LoginInput) => {
+    await signInAdminOrStaff(data, 'admin');
+  };
+
   const signInAsStaff = async (data: LoginInput) => {
-    setIsLoading((prev) => ({ ...prev, signIn: true }));
-
-    try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email: data.email,
-        password: data.password,
-      });
-
-      if (error) throw error;
-
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (!user) throw new Error('ユーザー情報の取得に失敗しました');
-
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', user.id)
-        .single();
-
-      if (profile?.role !== 'staff') {
-        await supabase.auth.signOut();
-        throw new Error('管理者アカウントでログインしてください');
-      }
-      router.refresh();
-    } catch (error) {
-      toast.error('ログインに失敗しました', {
-        description: getAuthErrorMessage(error),
-      });
-    } finally {
-      setIsLoading((prev) => ({ ...prev, signIn: false }));
-    }
+    await signInAdminOrStaff(data, 'staff');
   };
 
   const signUpWithGoogle = async () => {
@@ -279,9 +257,9 @@ export function useAuth() {
 
   return {
     signUp,
+    signInWithGoogle,
     signInAsAdmin,
     signInAsStaff,
-    signInWithGoogle,
     signUpWithGoogle,
     resetPasswordEmail,
     resetPassword,
