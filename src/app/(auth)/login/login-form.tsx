@@ -44,7 +44,7 @@ export default function LoginForm() {
 
   const handleTabChange = (value: string) => {
     const newTab = value as LoginTabValue;
-    setActiveTab(value as LoginTabValue);
+    setActiveTab(newTab);
     reset();
 
     localStorage.setItem('lastLoginTab', newTab);
