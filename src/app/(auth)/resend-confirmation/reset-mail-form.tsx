@@ -23,11 +23,8 @@ export default function ResetMailForm() {
     resolver: zodResolver(resetPasswordEmailSchema),
     mode: 'onChange',
   });
-  const onSubmit = async (data: ResendConfirmationInput) => {
-    await resendConfirmation(data);
-  };
   return (
-    <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+    <form className="space-y-4" onSubmit={handleSubmit(resendConfirmation)}>
       {/* メールアドレス */}
       <div className="space-y-2">
         <Label htmlFor="email">メールアドレス</Label>

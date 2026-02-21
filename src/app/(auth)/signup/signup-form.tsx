@@ -23,14 +23,9 @@ export default function SignupForm() {
     mode: 'onChange',
   });
 
-  async function onSubmit(data: SignupInput) {
-    await signUp(data);
-  }
-
   return (
     <div className="space-y-6">
-      <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-        {/* メールアドレス */}
+      <form className="space-y-4" onSubmit={handleSubmit(signUp)}>
         <div className="space-y-2">
           <Label htmlFor="email">メールアドレス</Label>
           <Input
@@ -45,7 +40,6 @@ export default function SignupForm() {
           )}
         </div>
 
-        {/* 名前 */}
         <div className="space-y-2">
           <Label htmlFor="name">名前</Label>
           <Input
@@ -59,7 +53,6 @@ export default function SignupForm() {
           )}
         </div>
 
-        {/* 店舗名 */}
         <div className="space-y-2">
           <Label htmlFor="storeName">店舗名</Label>
           <Input
@@ -74,7 +67,6 @@ export default function SignupForm() {
           )}
         </div>
 
-        {/* パスワード */}
         <div className="space-y-2">
           <Label htmlFor="password">パスワード</Label>
           <Input
@@ -108,7 +100,6 @@ export default function SignupForm() {
           )}
         </div>
 
-        {/* サインアップボタン */}
         <Button
           type="submit"
           className="w-full"
@@ -119,7 +110,6 @@ export default function SignupForm() {
         </Button>
       </form>
 
-      {/* 区切り線 */}
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t" />
@@ -129,7 +119,6 @@ export default function SignupForm() {
         </div>
       </div>
 
-      {/* Google OAuth */}
       <Button
         type="button"
         variant="outline"
