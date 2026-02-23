@@ -35,7 +35,7 @@ export default function MobileMenu({ children }: MobileMenuProps) {
           </SheetTitle>
         </SheetHeader>
 
-        <nav className="flex flex-col gap-4 mt-6">
+        <nav className="flex flex-col gap-4 mt-6 h-full">
           {typeof children === 'function' ? children(handleClose) : children}
         </nav>
       </SheetContent>

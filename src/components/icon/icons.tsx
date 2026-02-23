@@ -12,6 +12,10 @@ import {
   LoaderCircle,
   AlertCircle,
   Lightbulb,
+  Settings,
+  Gauge,
+  Users,
+  LogOut,
 } from 'lucide-react';
 
 import { FaXTwitter, FaGithub } from 'react-icons/fa6';
@@ -31,6 +35,10 @@ export const Icons = {
   LoaderCircle,
   AlertCircle,
   Lightbulb,
+  Settings,
+  Gauge,
+  Users,
+  LogOut,
   FaXTwitter,
   FaGithub,
   FcGoogle,
