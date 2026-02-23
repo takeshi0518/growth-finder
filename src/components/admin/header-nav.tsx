@@ -8,12 +8,7 @@ import { useAuth } from '@/app/(auth)/hooks/use-auth';
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 import { Icons } from '../icon/icons';
-
-const adminNavItems = [
-  { href: '/admin', label: 'ダッシュボード', icon: Icons.Gauge },
-  { href: '/admin/staff', label: 'スタッフ管理', icon: Icons.Users },
-  { href: '/admin/setting', label: '設定', icon: Icons.Settings },
-] as const;
+import { adminNavItems } from '@/app/(protected)/admin/nav-items';
 
 function AdminNavMobile({ onClose }: { onClose: () => void }) {
   const pathname = usePathname();
@@ -46,7 +41,7 @@ function AdminNavMobile({ onClose }: { onClose: () => void }) {
         disabled={isLoading.logout}
         onClick={() => logout()}
       >
-        <Icons.LogOut />
+        <Icons.LogOut className="h-5 w-5 shrink-0" />
         ログアウト
       </Button>
     </>

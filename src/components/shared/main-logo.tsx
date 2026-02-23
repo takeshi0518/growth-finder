@@ -4,15 +4,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 type MainLogoProps = {
+  href?: string;
   onClick?: () => void;
 };
 
-export default function MainLogo({ onClick }: MainLogoProps) {
+export default function MainLogo({ href = '/', onClick }: MainLogoProps) {
   const handleClick = () => {
     onClick?.();
   };
   return (
-    <Link href="/" onClick={handleClick}>
+    <Link href={href} onClick={handleClick}>
       <Image
         src="/svg/logo.svg"
         width={160}

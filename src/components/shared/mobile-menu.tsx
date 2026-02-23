@@ -29,9 +29,9 @@ export default function MobileMenu({ children }: MobileMenuProps) {
         </Button>
       </SheetTrigger>
       <SheetContent side="right" className="pt-8 px-6">
-        <SheetHeader>
-          <SheetTitle className="">
-            <MainLogo onClick={handleClose} />
+        <SheetHeader className="pr-8">
+          <SheetTitle>
+            <MainLogo onClick={handleClose} href="/admin" />
           </SheetTitle>
         </SheetHeader>
 
