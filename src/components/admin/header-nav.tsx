@@ -41,7 +41,7 @@ function AdminNavMobile({ onClose }: { onClose: () => void }) {
         disabled={isLoading.logout}
         onClick={() => logout()}
       >
-        <Icons.LogOut />
+        <Icons.LogOut className="h-5 w-5 shrink-0" />
         ログアウト
       </Button>
     </>

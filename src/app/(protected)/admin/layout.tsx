@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 import Header from '@/components/admin/header';
+import Sidebar from './sidebar';
 
 export const metadata: Metadata = {
   title: 'Growth Finder',
@@ -14,7 +15,9 @@ export default function AdminLayout({
 }>) {
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
-      <Header />
+      <Header className="md:hidden" />
+
+      <Sidebar className="hidden md:flex" />
       <div className="flex flex-col flex-1">
         <main className="flex-1 p-4">{children}</main>
         <footer className="bg-card py-4">
