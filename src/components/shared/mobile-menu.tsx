@@ -28,7 +28,7 @@ export default function MobileMenu({ children }: MobileMenuProps) {
           <Icons.Menu className="size-7 text-muted-foreground" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="pt-8 px-6">
+      <SheetContent side="right" className="pt-8 px-6 bg-card">
         <SheetHeader className="pr-8">
           <SheetTitle>
             <MainLogo onClick={handleClose} href="/admin" />

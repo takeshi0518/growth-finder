@@ -1,6 +1,5 @@
 import { z } from 'zod';
 
-// サインアップ
 export const signupSchema = z
   .object({
     email: z
@@ -33,7 +32,40 @@ export const signupSchema = z
     path: ['confirmPassword'],
   });
 
-// ログイン
+export const updateProfileSchema = z.object({
+  name: z
+    .string()
+    .min(1, '名前を入力してください')
+    .max(50, '名前は50文字以内で入力してください'),
+
+  storeName: z
+    .string()
+    .min(1, '店舗名を入力してください')
+    .max(100, '店舗名は100文字以内で入力してください'),
+
+  email: z
+    .string()
+    .min(1, 'メールアドレスを入力してください')
+    .email('正しいメールアドレスを入力してください'),
+});
+
+export const updatePasswordSchema = z
+  .object({
+    currentPassword: z.string().min(1, '現在のパスワードを入力してください'),
+    password: z
+      .string()
+      .min(8, 'パスワードは8文字以上で入力してください')
+      .regex(
+        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]/,
+        'パスワードは英数字を含む必要があります'
+      ),
+    confirmPassword: z.string().min(1, 'パスワード(確認)を入力してください'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'パスワードが一致しません',
+    path: ['confirmPassword'],
+  });
+
 export const loginSchema = z.object({
   email: z
     .string()
@@ -43,7 +75,6 @@ export const loginSchema = z.object({
   password: z.string().min(1, 'パスワードを入力してください'),
 });
 
-//パスワードリセット(メール送信)
 export const resetPasswordEmailSchema = z.object({
   email: z
     .string()
@@ -51,7 +82,6 @@ export const resetPasswordEmailSchema = z.object({
     .email('正しいメールアドレスを入力してください'),
 });
 
-// パスワードリセット
 export const resetPasswordSchema = z.object({
   email: z
     .string()
@@ -59,7 +89,6 @@ export const resetPasswordSchema = z.object({
     .email('正しいメールアドレスを入力してください'),
 });
 
-// 新しいパスワード
 export const newPasswordSchema = z
   .object({
     password: z
@@ -77,7 +106,6 @@ export const newPasswordSchema = z
     path: ['confirmPassword'],
   });
 
-// セットアップ
 export const setupSchema = z.object({
   name: z
     .string()
@@ -97,3 +125,5 @@ export type NewPasswordInput = z.infer<typeof newPasswordSchema>;
 export type SetupInput = z.infer<typeof setupSchema>;
 export type ResetPasswordEmailInput = z.infer<typeof resetPasswordEmailSchema>;
 export type ResendConfirmationInput = z.infer<typeof resetPasswordEmailSchema>;
+export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
+export type UpdatePasswordInput = z.infer<typeof updatePasswordSchema>;

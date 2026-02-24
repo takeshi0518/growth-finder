@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
-import { getAuthErrorMessage } from '@/lib/utils/error-message';
+import { getErrorMessage } from '@/lib/utils/error-message';
 import {
   LoginInput,
   NewPasswordInput,
@@ -54,7 +54,7 @@ export function useAuth() {
       router.push('/confirm-email');
     } catch (error) {
       toast.error('アカウント作成に失敗しました', {
-        description: getAuthErrorMessage(error),
+        description: getErrorMessage(error),
       });
     } finally {
       setIsLoading((prev) => ({ ...prev, signUp: false }));
@@ -102,7 +102,7 @@ export function useAuth() {
       router.refresh();
     } catch (error) {
       toast.error('ログインに失敗しました', {
-        description: getAuthErrorMessage(error),
+        description: getErrorMessage(error),
       });
     } finally {
       setIsLoading((prev) => ({ ...prev, signIn: false }));
@@ -140,7 +140,7 @@ export function useAuth() {
       }
     } catch (error) {
       toast.error('アカウント作成に失敗しました', {
-        description: getAuthErrorMessage(error),
+        description: getErrorMessage(error),
       });
       setIsLoading((prev) => ({ ...prev, google: false }));
     }
@@ -169,7 +169,7 @@ export function useAuth() {
       }
     } catch (error) {
       toast.error('アカウント作成に失敗しました', {
-        description: getAuthErrorMessage(error),
+        description: getErrorMessage(error),
       });
       setIsLoading((prev) => ({ ...prev, google: false }));
     }
@@ -187,7 +187,7 @@ export function useAuth() {
       router.push('/login');
     } catch (error) {
       toast.error('ログアウトに失敗しました', {
-        description: getAuthErrorMessage(error),
+        description: getErrorMessage(error),
       });
     } finally {
       setIsLoading((prev) => ({ ...prev, logout: false }));
@@ -211,7 +211,7 @@ export function useAuth() {
       router.push('/reset-password/sent');
     } catch (error) {
       toast.error('リセットメールの送信に失敗しました', {
-        description: getAuthErrorMessage(error),
+        description: getErrorMessage(error),
       });
     } finally {
       setIsLoading((prev) => ({ ...prev, resetPasswordEmail: false }));
@@ -234,7 +234,7 @@ export function useAuth() {
       router.push('/reset-password/complete');
     } catch (error) {
       toast.error('パスワードの更新に失敗しました', {
-        description: getAuthErrorMessage(error),
+        description: getErrorMessage(error),
       });
     } finally {
       setIsLoading((prev) => ({ ...prev, resetPassword: false }));
@@ -262,7 +262,7 @@ export function useAuth() {
       router.push('/confirm-email');
     } catch (error) {
       toast.error('確認メールの送信に失敗しました', {
-        description: getAuthErrorMessage(error),
+        description: getErrorMessage(error),
       });
     } finally {
       setIsLoading((prev) => ({ ...prev, resentdConfirmation: false }));
@@ -286,7 +286,7 @@ export function useAuth() {
       router.push('/reset-password/sent');
     } catch (error) {
       toast.error('リセットメールの送信に失敗しました', {
-        description: getAuthErrorMessage(error),
+        description: getErrorMessage(error),
       });
     } finally {
       setIsLoading((prev) => ({ ...prev, resentdConfirmation: false }));

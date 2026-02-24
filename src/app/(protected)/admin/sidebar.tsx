@@ -47,7 +47,7 @@ export default function Sidebar({ className }: SidebarProps) {
       </nav>
 
       <Button
-        variant="ghost"
+        variant="outline"
         className="justify-items-start gap-3"
         onClick={() => logout()}
         disabled={isLoading.logout}

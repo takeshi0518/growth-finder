@@ -1,4 +1,4 @@
-export function getAuthErrorMessage(error: unknown): string {
+export function getErrorMessage(error: unknown): string {
   //Errorインスタンス
   if (error instanceof Error) {
     return translateErrorMessage(error.message);
@@ -18,6 +18,11 @@ function translateErrorMessage(message: string): string {
     '管理者アカウントでログインしてください',
     'スタッフアカウントでログインしてください',
     'ユーザー情報の取得に失敗しました',
+    'プロフィールの更新に失敗しました',
+    '入力内容を確認してください',
+    '認証エラーが発生しました',
+    '現在のパスワードが正しくありません',
+    'パスワードの更新に失敗しました',
   ];
 
   if (customErrors.includes(message)) {
