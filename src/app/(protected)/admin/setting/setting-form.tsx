@@ -5,7 +5,17 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Icons } from '@/components/icon/icons';
 
-export default function SettingForm() {
+type Profile = {
+  name: string;
+  store_name: string;
+  email: string;
+} | null;
+
+type SettingFormProps = {
+  profile: Profile;
+};
+
+export default function SettingForm({ profile }: SettingFormProps) {
   return (
     <form className="space-y-4">
       <div className="flex justify-center">
@@ -25,15 +35,15 @@ export default function SettingForm() {
 
       <div className="space-y-2">
         <Label>名前</Label>
-        <Input type="text" placeholder="" />
+        <Input type="text" defaultValue={profile?.name ?? ''} />
       </div>
       <div className="space-y-2">
         <Label>店舗名</Label>
-        <Input type="text" placeholder="" />
+        <Input type="text" defaultValue={profile?.store_name ?? ''} />
       </div>
       <div className="space-y-2">
         <Label>メールアドレス</Label>
-        <Input type="email" placeholder="" />
+        <Input type="email" defaultValue={profile?.email ?? ''} />
       </div>
 
       <Button type="button" size="lg" className="w-full">

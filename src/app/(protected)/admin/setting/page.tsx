@@ -1,11 +1,26 @@
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Icons } from '@/components/icon/icons';
 import SettingForm from './setting-form';
 import PasswordForm from './password-form';
+import { createClient } from '@/lib/supabase/server';
 
-export default function SettingPage() {
+export default async function SettingPage() {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) redirect('/login');
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('name, store_name, email')
+    .single();
+
   return (
     <div className="mt-20 md:mt-0 max-w-7xl mx-auto w-full py-6 px-4 space-y-6">
       <Link
@@ -25,7 +40,7 @@ export default function SettingPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <SettingForm />
+            <SettingForm profile={profile} />
           </CardContent>
         </Card>
 
