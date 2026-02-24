@@ -125,5 +125,5 @@ export type NewPasswordInput = z.infer<typeof newPasswordSchema>;
 export type SetupInput = z.infer<typeof setupSchema>;
 export type ResetPasswordEmailInput = z.infer<typeof resetPasswordEmailSchema>;
 export type ResendConfirmationInput = z.infer<typeof resetPasswordEmailSchema>;
-export type UpdateProfileInput = z.infer<typeof updatePasswordSchema>;
+export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
 export type UpdatePawwsordInput = z.infer<typeof updatePasswordSchema>;
