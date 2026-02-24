@@ -13,17 +13,17 @@ export async function updateProfile(data: UpdateProfileInput) {
 
   const validated = updateProfileSchema.safeParse(data);
   if (!validated.success) {
-    return { error: '入力内容を確認してください' };
+    throw new Error('入力内容を確認してください');
   }
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) return { error: '認証エラーが発生しました' };
+  if (!user) throw new Error('認証エラーが発生しました');
 
   if (data.email !== user.email) {
     const { error } = await supabase.auth.updateUser({ email: data.email });
-    if (error) return { error: 'メールアドレスの更新に失敗しました' };
+    if (error) throw new Error('メールアドレスの更新に失敗しました');
   }
 
   const { error } = await supabase
@@ -35,7 +35,7 @@ export async function updateProfile(data: UpdateProfileInput) {
     })
     .eq('id', user.id);
 
-  if (error) return { error: 'プロフィールの更新に失敗しました' };
+  if (error) throw new Error('プロフィールの更新に失敗しました');
 
   return { success: true };
 }

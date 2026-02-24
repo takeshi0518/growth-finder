@@ -16,6 +16,7 @@ export default async function SettingPage() {
 
   if (!user) redirect('/login');
 
+  const isOAuthUser = user?.app_metadata?.provider === 'google';
   const { data: profile } = await supabase
     .from('profiles')
     .select('name, store_name, email')
@@ -52,7 +53,7 @@ export default async function SettingPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <PasswordForm />
+            <PasswordForm isOAuthUser={isOAuthUser} />
           </CardContent>
         </Card>
       </div>

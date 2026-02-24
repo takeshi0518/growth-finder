@@ -1,9 +1,20 @@
 'use client';
 
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Icons } from '@/components/icon/icons';
+import { toast } from 'sonner';
+import {
+  UpdateProfileInput,
+  updateProfileSchema,
+} from '@/lib/validations/auth';
+import { updateProfile } from './actions';
+import LoaderCircleIcon from '@/components/shared/loader-circle';
+import { getErrorMessage } from '@/lib/utils/error-message';
 
 type Profile = {
   name: string;
@@ -16,8 +27,32 @@ type SettingFormProps = {
 };
 
 export default function SettingForm({ profile }: SettingFormProps) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<UpdateProfileInput>({
+    resolver: zodResolver(updateProfileSchema),
+    defaultValues: {
+      name: profile?.name ?? '',
+      storeName: profile?.store_name ?? '',
+      email: profile?.email ?? '',
+    },
+  });
+
+  const onSubmit = async (data: UpdateProfileInput) => {
+    try {
+      await updateProfile(data);
+      toast.success('プロフィールを更新しました');
+    } catch (error) {
+      toast.error('プロフィールの更新に失敗しました', {
+        description: getErrorMessage(error),
+      });
+    }
+  };
+
   return (
-    <form className="space-y-4">
+    <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex justify-center">
         <div className="relative">
           <div className="w-24 h-24 rounded-full border-2 overflow-hidden bg-card- flex items-center justify-center">
@@ -34,20 +69,29 @@ export default function SettingForm({ profile }: SettingFormProps) {
       </div>
 
       <div className="space-y-2">
-        <Label>名前</Label>
-        <Input type="text" defaultValue={profile?.name ?? ''} />
+        <Label htmlFor="name">名前</Label>
+        <Input id="name" type="text" {...register('name')} />
+        {errors.name && (
+          <p className="text-sm text-red-500">{errors.name.message}</p>
+        )}
       </div>
       <div className="space-y-2">
-        <Label>店舗名</Label>
-        <Input type="text" defaultValue={profile?.store_name ?? ''} />
+        <Label htmlFor="storeName">店舗名</Label>
+        <Input id="storeName" type="text" {...register('storeName')} />
+        {errors.name && (
+          <p className="text-sm text-red-500">{errors.storeName?.message}</p>
+        )}
       </div>
       <div className="space-y-2">
-        <Label>メールアドレス</Label>
-        <Input type="email" defaultValue={profile?.email ?? ''} />
+        <Label htmlFor="email">メールアドレス</Label>
+        <Input id="email" type="email" {...register('email')} />
+        {errors.name && (
+          <p className="text-sm text-red-500">{errors.email?.message}</p>
+        )}
       </div>
 
-      <Button type="button" size="lg" className="w-full">
-        保存
+      <Button type="submit" size="lg" className="w-full">
+        {isSubmitting ? <LoaderCircleIcon /> : '保存'}
       </Button>
     </form>
   );
