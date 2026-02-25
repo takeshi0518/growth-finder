@@ -126,6 +126,9 @@ export default function SettingForm({ profile }: SettingFormProps) {
           />
         </div>
       </div>
+      <p className="text-xs text-muted-foreground text-center">
+        jpeg・png・webp形式 2MB以下
+      </p>
 
       <div className="space-y-2">
         <Label htmlFor="name">名前</Label>
