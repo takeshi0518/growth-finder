@@ -7,6 +7,7 @@ import {
   UpdateProfileInput,
   updateProfileSchema,
 } from '@/lib/validations/auth';
+import { AVATAR_ALLOWED_TYPES, AVATAR_MAX_SIZE } from '@/lib/constants/upload';
 
 export async function uploadAvatar(formData: FormData) {
   const supabase = await createClient();
@@ -19,13 +20,11 @@ export async function uploadAvatar(formData: FormData) {
   const file = formData.get('avatar') as File;
   if (!file) throw new Error('ファイルが選択されていません');
 
-  const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-  if (!allowedTypes.includes(file.type)) {
+  if (!AVATAR_ALLOWED_TYPES.includes(file.type)) {
     throw new Error('jpeg・png・webp形式の画像を選択してください');
   }
 
-  const maxSize = 2 * 1024 * 1024;
-  if (file.size > maxSize) {
+  if (file.size > AVATAR_MAX_SIZE) {
     throw new Error('ファイルサイズは2MB以下にしてください');
   }
 

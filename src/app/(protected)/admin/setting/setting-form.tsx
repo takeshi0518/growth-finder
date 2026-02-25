@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Image from 'next/image';
 
 import { Tables } from '../../../../../types/supabase';
 import { Button } from '@/components/ui/button';
@@ -18,7 +19,11 @@ import {
 import { updateProfile, uploadAvatar } from './actions';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
 import { getErrorMessage } from '@/lib/utils/error-message';
-import Image from 'next/image';
+import {
+  AVATAR_ALLOWED_TYPES,
+  AVATAR_MAX_SIZE,
+  AVATAR_MAX_SIZE_LABEL,
+} from '@/lib/constants/upload';
 
 type Profile = Pick<
   Tables<'profiles'>,
@@ -40,15 +45,13 @@ export default function SettingForm({ profile }: SettingFormProps) {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const allowedTypes = ['image/jpeg', 'image/png', '/image/webp'];
-    if (!allowedTypes.includes(file.type)) {
+    if (!AVATAR_ALLOWED_TYPES.includes(file.type)) {
       toast.error('jpeg・png・webp形式の画像を選択してください');
       return;
     }
 
-    const maxSize = 2 * 1024 * 1024;
-    if (file.size > maxSize) {
-      toast.error('ファイルサイズは2MB以下にしてください');
+    if (file.size > AVATAR_MAX_SIZE) {
+      toast.error(`ファイルサイズは${AVATAR_MAX_SIZE_LABEL}以下にしてください`);
       return;
     }
 
@@ -126,7 +129,7 @@ export default function SettingForm({ profile }: SettingFormProps) {
         </div>
       </div>
       <p className="text-xs text-muted-foreground text-center">
-        jpeg・png・webp形式 2MB以下
+        {`jpeg・png・webp形式 ${AVATAR_MAX_SIZE_LABEL}以下`}
       </p>
 
       <div className="space-y-2">
