@@ -16,7 +16,7 @@ import {
   UpdateProfileInput,
   updateProfileSchema,
 } from '@/lib/validations/auth';
-import { updateProfile, uploadAvatar } from './actions';
+import { updateProfile } from './actions';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
 import { getErrorMessage } from '@/lib/utils/error-message';
 import {
@@ -24,6 +24,7 @@ import {
   AVATAR_MAX_SIZE,
   AVATAR_MAX_SIZE_LABEL,
 } from '@/lib/constants/upload';
+import { uploadAvatar } from '@/lib/utils/upload';
 
 type Profile = Pick<
   Tables<'profiles'>,
@@ -32,9 +33,10 @@ type Profile = Pick<
 
 type SettingFormProps = {
   profile: Profile;
+  userId: string;
 };
 
-export default function SettingForm({ profile }: SettingFormProps) {
+export default function SettingForm({ profile, userId }: SettingFormProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(
     profile?.avatar_url ?? null
@@ -59,7 +61,7 @@ export default function SettingForm({ profile }: SettingFormProps) {
     try {
       const formData = new FormData();
       formData.append('avatar', file);
-      const result = await uploadAvatar(formData);
+      const result = await uploadAvatar(formData, userId);
       setAvatarUrl(result.publicUrl);
       toast.success('画像をアップロードしました');
     } catch (error) {

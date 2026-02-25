@@ -47,7 +47,7 @@ export default async function SettingPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <SettingForm profile={profile} />
+            <SettingForm profile={profile} userId={user.id} />
           </CardContent>
         </Card>
 
