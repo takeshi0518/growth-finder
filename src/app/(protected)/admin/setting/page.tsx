@@ -19,7 +19,7 @@ export default async function SettingPage() {
   const isOAuthUser = user?.app_metadata?.provider === 'google';
   const { data: profile } = await supabase
     .from('profiles')
-    .select('name, store_name, email')
+    .select('name, store_name, email, avatar_url')
     .single();
 
   return (

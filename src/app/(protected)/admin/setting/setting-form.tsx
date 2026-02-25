@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -12,14 +14,16 @@ import {
   UpdateProfileInput,
   updateProfileSchema,
 } from '@/lib/validations/auth';
-import { updateProfile } from './actions';
+import { updateProfile, uploadAvatar } from './actions';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
 import { getErrorMessage } from '@/lib/utils/error-message';
+import Image from 'next/image';
 
 type Profile = {
   name: string;
   store_name: string;
   email: string;
+  avatar_url: string;
 } | null;
 
 type SettingFormProps = {
@@ -27,6 +31,44 @@ type SettingFormProps = {
 };
 
 export default function SettingForm({ profile }: SettingFormProps) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(
+    profile?.avatar_url ?? null
+  );
+  const [isUploading, setIsUploading] = useState(false);
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const allowedTypes = ['image/jpeg', 'image/png', '/image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      toast.error('jpeg・png・webp形式の画像を選択してください');
+      return;
+    }
+
+    const maxSize = 2 * 1024 * 1024;
+    if (file.size > maxSize) {
+      toast.error('ファイルサイズは2MB以下にしてください');
+      return;
+    }
+
+    setIsUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append('avatar', file);
+      const result = await uploadAvatar(formData);
+      setAvatarUrl(result.publicUrl);
+      toast.success('画像をアップロードしました');
+    } catch (error) {
+      toast.error('画像のアップロードに失敗しました', {
+        description: getErrorMessage(error),
+      });
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   const {
     register,
     handleSubmit,
@@ -56,15 +98,32 @@ export default function SettingForm({ profile }: SettingFormProps) {
       <div className="flex justify-center">
         <div className="relative">
           <div className="w-24 h-24 rounded-full border-2 overflow-hidden bg-card- flex items-center justify-center">
-            <Icons.UserCircle className="w-16 h-16 text-muted-foreground" />
+            {avatarUrl ? (
+              <Image
+                src={avatarUrl}
+                alt="アバター"
+                fill
+                className="object-cover"
+              />
+            ) : (
+              <Icons.UserCircle className="w-16 h-16 text-muted-foreground" />
+            )}
           </div>
           <button
             type="button"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={isUploading}
             className="absolute bottom-0 right-0 bg-background border rounded-full px-2 py-0.5 text-xs"
           >
-            編集
+            {isUploading ? '...' : '編集'}
           </button>
-          <input type="file" accept="image/*" className="hidden" />
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            onChange={handleFileChange}
+            className="hidden"
+          />
         </div>
       </div>
 
