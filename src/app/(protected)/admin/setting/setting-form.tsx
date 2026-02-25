@@ -151,9 +151,11 @@ export default function SettingForm({ profile }: SettingFormProps) {
         )}
       </div>
 
-      <Button type="submit" size="lg" className="w-full">
-        {isSubmitting ? <LoaderCircleIcon /> : '保存'}
-      </Button>
+      <div className="flex justify-center">
+        <Button type="submit" size="lg" className="w-full sm:w-48">
+          {isSubmitting ? <LoaderCircleIcon /> : '保存'}
+        </Button>
+      </div>
     </form>
   );
 }
