@@ -5,6 +5,7 @@ import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import { Tables } from '../../../../../types/supabase';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -19,12 +20,10 @@ import LoaderCircleIcon from '@/components/shared/loader-circle';
 import { getErrorMessage } from '@/lib/utils/error-message';
 import Image from 'next/image';
 
-type Profile = {
-  name: string;
-  store_name: string;
-  email: string;
-  avatar_url: string;
-} | null;
+type Profile = Pick<
+  Tables<'profiles'>,
+  'name' | 'store_name' | 'email' | 'avatar_url'
+> | null;
 
 type SettingFormProps = {
   profile: Profile;
