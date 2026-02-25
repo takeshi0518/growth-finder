@@ -38,8 +38,8 @@ export default async function SettingPage() {
         <span>ダッシュボードへ戻る</span>
       </Link>
 
-      <div className="flex flex-col md:flex-row md:items-start gap-6">
-        <Card className="md:flex-1">
+      <div className="flex flex-col lg:flex-row lg:items-start gap-6">
+        <Card className="lg:flex-1">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Icons.UserRoundPen />
@@ -51,7 +51,7 @@ export default async function SettingPage() {
           </CardContent>
         </Card>
 
-        <Card className="md:flex-1">
+        <Card className="lg:flex-1">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Icons.KeyRound />
