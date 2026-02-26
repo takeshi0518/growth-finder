@@ -18,6 +18,7 @@ import {
   LogOut,
   UserCircle,
   Undo2,
+  UserPlus
 } from 'lucide-react';
 
 import { FaXTwitter, FaGithub } from 'react-icons/fa6';
@@ -43,6 +44,7 @@ export const Icons = {
   LogOut,
   UserCircle,
   Undo2,
+  UserPlus,
   FaXTwitter,
   FaGithub,
   FcGoogle,
