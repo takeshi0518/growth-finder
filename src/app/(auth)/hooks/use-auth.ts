@@ -15,8 +15,6 @@ import {
 } from '@/lib/validations/auth';
 import { createClient } from '@/lib/supabase/client';
 
-type ProfileForRole = Pick<Tables<'profiles'>, 'role'>;
-
 export function useAuth() {
   const router = useRouter();
   const supabase = createClient();
@@ -88,7 +86,7 @@ export function useAuth() {
         .from('profiles')
         .select('role')
         .eq('id', user.id)
-        .single<ProfileForRole>();
+        .single();
 
       if (profile?.role !== role) {
         await supabase.auth.signOut();
