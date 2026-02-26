@@ -23,6 +23,10 @@ function translateErrorMessage(message: string): string {
     '認証エラーが発生しました',
     '現在のパスワードが正しくありません',
     'パスワードの更新に失敗しました',
+    'ファイルが選択されていません',
+    'jpeg・png・webp形式の画像を選択してください',
+    'ファイルサイズは2MB以下にしてください',
+    '画像のアップロードに失敗しました',
   ];
 
   if (customErrors.includes(message)) {

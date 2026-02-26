@@ -1,8 +1,12 @@
 'use client';
 
+import { useState } from 'react';
+import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Image from 'next/image';
 
+import { Tables } from '../../../../../types/supabase';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -15,18 +19,60 @@ import {
 import { updateProfile } from './actions';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
 import { getErrorMessage } from '@/lib/utils/error-message';
+import {
+  AVATAR_ALLOWED_TYPES,
+  AVATAR_MAX_SIZE,
+  AVATAR_MAX_SIZE_LABEL,
+} from '@/lib/constants/upload';
+import { uploadAvatar } from '@/lib/utils/upload';
 
-type Profile = {
-  name: string;
-  store_name: string;
-  email: string;
-} | null;
+type Profile = Pick<
+  Tables<'profiles'>,
+  'name' | 'store_name' | 'email' | 'avatar_url'
+> | null;
 
 type SettingFormProps = {
   profile: Profile;
+  userId: string;
 };
 
-export default function SettingForm({ profile }: SettingFormProps) {
+export default function SettingForm({ profile, userId }: SettingFormProps) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(
+    profile?.avatar_url ?? null
+  );
+  const [isUploading, setIsUploading] = useState(false);
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!AVATAR_ALLOWED_TYPES.includes(file.type)) {
+      toast.error('jpeg・png・webp形式の画像を選択してください');
+      return;
+    }
+
+    if (file.size > AVATAR_MAX_SIZE) {
+      toast.error(`ファイルサイズは${AVATAR_MAX_SIZE_LABEL}以下にしてください`);
+      return;
+    }
+
+    setIsUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append('avatar', file);
+      const result = await uploadAvatar(formData, userId);
+      setAvatarUrl(result.publicUrl);
+      toast.success('画像をアップロードしました');
+    } catch (error) {
+      toast.error('画像のアップロードに失敗しました', {
+        description: getErrorMessage(error),
+      });
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   const {
     register,
     handleSubmit,
@@ -56,17 +102,37 @@ export default function SettingForm({ profile }: SettingFormProps) {
       <div className="flex justify-center">
         <div className="relative">
           <div className="w-24 h-24 rounded-full border-2 overflow-hidden bg-card- flex items-center justify-center">
-            <Icons.UserCircle className="w-16 h-16 text-muted-foreground" />
+            {avatarUrl ? (
+              <Image
+                src={avatarUrl}
+                alt="アバター"
+                fill
+                className="object-cover"
+              />
+            ) : (
+              <Icons.UserCircle className="w-16 h-16 text-muted-foreground" />
+            )}
           </div>
           <button
             type="button"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={isUploading}
             className="absolute bottom-0 right-0 bg-background border rounded-full px-2 py-0.5 text-xs"
           >
-            編集
+            {isUploading ? '...' : '編集'}
           </button>
-          <input type="file" accept="image/*" className="hidden" />
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            onChange={handleFileChange}
+            className="hidden"
+          />
         </div>
       </div>
+      <p className="text-xs text-muted-foreground text-center">
+        {`jpeg・png・webp形式 ${AVATAR_MAX_SIZE_LABEL}以下`}
+      </p>
 
       <div className="space-y-2">
         <Label htmlFor="name">名前</Label>
@@ -90,9 +156,11 @@ export default function SettingForm({ profile }: SettingFormProps) {
         )}
       </div>
 
-      <Button type="submit" size="lg" className="w-full">
-        {isSubmitting ? <LoaderCircleIcon /> : '保存'}
-      </Button>
+      <div className="flex justify-center">
+        <Button type="submit" size="lg" className="w-full sm:w-48">
+          {isSubmitting ? <LoaderCircleIcon /> : '保存'}
+        </Button>
+      </div>
     </form>
   );
 }

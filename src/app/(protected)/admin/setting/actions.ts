@@ -8,6 +8,9 @@ import {
   updateProfileSchema,
 } from '@/lib/validations/auth';
 
+
+
+
 export async function updateProfile(data: UpdateProfileInput) {
   const supabase = await createClient();
 

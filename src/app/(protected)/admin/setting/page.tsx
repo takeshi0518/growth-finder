@@ -1,11 +1,17 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
+import { Tables } from '../../../../../types/supabase';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Icons } from '@/components/icon/icons';
 import SettingForm from './setting-form';
 import PasswordForm from './password-form';
 import { createClient } from '@/lib/supabase/server';
+
+type Profile = Pick<
+  Tables<'profiles'>,
+  'name' | 'store_name' | 'email' | 'avatar_url'
+> | null;
 
 export default async function SettingPage() {
   const supabase = await createClient();
@@ -19,8 +25,8 @@ export default async function SettingPage() {
   const isOAuthUser = user?.app_metadata?.provider === 'google';
   const { data: profile } = await supabase
     .from('profiles')
-    .select('name, store_name, email')
-    .single();
+    .select('name, store_name, email, avatar_url')
+    .single<Profile>();
 
   return (
     <div className="mt-20 md:mt-0 max-w-7xl mx-auto w-full py-6 px-4 space-y-6">
@@ -32,8 +38,8 @@ export default async function SettingPage() {
         <span>ダッシュボードへ戻る</span>
       </Link>
 
-      <div className="flex flex-col md:flex-row md:items-start gap-6">
-        <Card className="md:flex-1">
+      <div className="flex flex-col lg:flex-row lg:items-start gap-6">
+        <Card className="lg:flex-1">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Icons.UserRoundPen />
@@ -41,11 +47,11 @@ export default async function SettingPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <SettingForm profile={profile} />
+            <SettingForm profile={profile} userId={user.id} />
           </CardContent>
         </Card>
 
-        <Card className="md:flex-1">
+        <Card className="lg:flex-1">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Icons.KeyRound />
