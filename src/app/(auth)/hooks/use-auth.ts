@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Tables } from '../../../../types/supabase';
 import { toast } from 'sonner';
 
 import { getErrorMessage } from '@/lib/utils/error-message';
@@ -13,6 +14,8 @@ import {
   SignupInput,
 } from '@/lib/validations/auth';
 import { createClient } from '@/lib/supabase/client';
+
+type ProfileForRole = Pick<Tables<'profiles'>, 'role'>;
 
 export function useAuth() {
   const router = useRouter();
@@ -85,7 +88,7 @@ export function useAuth() {
         .from('profiles')
         .select('role')
         .eq('id', user.id)
-        .single();
+        .single<ProfileForRole>();
 
       if (profile?.role !== role) {
         await supabase.auth.signOut();
