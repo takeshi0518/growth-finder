@@ -19,13 +19,6 @@ type PasswordFormProps = {
 };
 
 export default function PasswordForm({ isOAuthUser }: PasswordFormProps) {
-  if (isOAuthUser) {
-    return (
-      <p className="text-sm text-muted-foreground">
-        Googleアカウントで認証しているためパスワードの設定はありません
-      </p>
-    );
-  }
   const {
     register,
     handleSubmit,
@@ -34,6 +27,14 @@ export default function PasswordForm({ isOAuthUser }: PasswordFormProps) {
     resolver: zodResolver(updatePasswordSchema),
     mode: 'onChange',
   });
+
+  if (isOAuthUser) {
+    return (
+      <p className="text-sm text-muted-foreground">
+        Googleアカウントで認証しているためパスワードの設定はありません
+      </p>
+    );
+  }
 
   const onSubmit = async (data: UpdatePasswordInput) => {
     try {
