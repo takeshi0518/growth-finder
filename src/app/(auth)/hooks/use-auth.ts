@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Tables } from '../../../../types/supabase';
 import { toast } from 'sonner';
 
 import { getErrorMessage } from '@/lib/utils/error-message';

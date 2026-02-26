@@ -1,9 +1,5 @@
 import { NextResponse } from 'next/server';
-import { Tables } from '../../../../types/supabase';
-
 import { createClient } from '@/lib/supabase/server';
-
-type ProfileForAuth = Pick<Tables<'profiles'>, 'is_setup_complete' | 'role'>;
 
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
@@ -36,7 +32,7 @@ export async function GET(request: Request) {
     .from('profiles')
     .select('is_setup_complete, role')
     .eq('id', user.id)
-    .single<ProfileForAuth>();
+    .single();
 
   if (profileError) {
     console.error('Profile fetch error:', profileError);
