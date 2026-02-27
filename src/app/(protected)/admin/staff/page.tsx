@@ -53,8 +53,8 @@ export default function StaffManagementPage() {
             スタッフ管理
           </CardTitle>
           <Button>
-            <Icons.UserPlus className="w-4 h-4 mr-2" />
-            スタッフ追加
+            <Icons.UserPlus className="w-4 h-4" />
+            <span className="hidden sm:block">スタッフを追加</span>
           </Button>
         </CardHeader>
 

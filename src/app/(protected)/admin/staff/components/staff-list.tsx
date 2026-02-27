@@ -23,8 +23,8 @@ export default function StaffList({ staffs }: StaffListProps) {
     <>
       <StaffSearch value={search} onChange={setSearch} />
       <div className="space-y-3">
-        <p className="text-sm text-muted-foreground">合計:{staffs.length}</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <p className="text-sm text-muted-foreground">合計 {staffs.length} 人</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {staffs.map((staff) => (
             <StaffCard key={staff.id} staff={staff} />
           ))}
