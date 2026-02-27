@@ -2,6 +2,38 @@ import Link from 'next/link';
 import { Icons } from '@/components/icon/icons';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import StaffList from './components/staff-list';
+
+export const dummyStaffs = [
+  {
+    id: '1',
+    name: '山田太郎',
+    role: 'スタッフ',
+    store_name: 'example店',
+    avatar_url: null,
+  },
+  {
+    id: '2',
+    name: '鈴木花子',
+    role: 'スタッフ',
+    store_name: 'example店',
+    avatar_url: null,
+  },
+  {
+    id: '3',
+    name: '佐藤次郎',
+    role: 'スタッフ',
+    store_name: 'example店',
+    avatar_url: null,
+  },
+  {
+    id: '4',
+    name: '田中三郎',
+    role: 'スタッフ',
+    store_name: 'example店',
+    avatar_url: null,
+  },
+];
 
 export default function StaffManagementPage() {
   return (
@@ -27,10 +59,7 @@ export default function StaffManagementPage() {
         </CardHeader>
 
         <CardContent className="space-y-6">
-          <div className="space-y-3">
-            <p className="text-sm text-muted-foreground">合計:</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
-          </div>
+          <StaffList staffs={dummyStaffs} />
         </CardContent>
       </Card>
     </div>
