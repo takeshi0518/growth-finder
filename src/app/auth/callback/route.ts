@@ -76,5 +76,5 @@ export async function GET(request: Request) {
   }
 
   //intentがない場合
-  return NextResponse.redirect(new URL('/admin', request.url));
+  return NextResponse.redirect(new URL('/admin', origin));
 }
