@@ -18,7 +18,7 @@ export async function addStaff(data: AddStaffInput) {
 
   const { data: adminProfile } = await supabase
     .from('profiles')
-    .select('organization_id')
+    .select('organization_id, store_name')
     .eq('id', user.id)
     .single();
   if (!adminProfile?.organization_id) {
@@ -33,6 +33,8 @@ export async function addStaff(data: AddStaffInput) {
       name: data.name,
       role: 'staff',
       organization_id: adminProfile.organization_id,
+      store_name: adminProfile.store_name,
+      is_setup_complete: true,
     },
   });
 

@@ -16,6 +16,9 @@ import { useForm } from 'react-hook-form';
 import { AddStaffInput, addStaffSchema } from '@/lib/validations/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
+import { toast } from 'sonner';
+import { getErrorMessage } from '@/lib/utils/error-message';
+import { addStaff } from '../actions';
 
 export default function StaffAddDialog() {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,12 +26,24 @@ export default function StaffAddDialog() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<AddStaffInput>({
     resolver: zodResolver(addStaffSchema),
   });
 
-  const onSubmit = () => {};
+  const onSubmit = async (data: AddStaffInput) => {
+    try {
+      await addStaff(data);
+      toast.success('スタッフを追加しました');
+      setIsOpen(false);
+      reset();
+    } catch (error) {
+      toast.error('スタッフの登録に失敗しました', {
+        description: getErrorMessage(error),
+      });
+    }
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
