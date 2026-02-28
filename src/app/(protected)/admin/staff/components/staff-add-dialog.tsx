@@ -1,6 +1,8 @@
 'use client';
 
-import { Icons } from '@/components/icon/icons';
+import { useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -9,12 +11,24 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { useState } from 'react';
+import { Icons } from '@/components/icon/icons';
+import { useForm } from 'react-hook-form';
+import { AddStaffInput, addStaffSchema } from '@/lib/validations/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
+import LoaderCircleIcon from '@/components/shared/loader-circle';
 
 export default function StaffAddDialog() {
   const [isOpen, setIsOpen] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<AddStaffInput>({
+    resolver: zodResolver(addStaffSchema),
+  });
+
+  const onSubmit = () => {};
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -32,22 +46,39 @@ export default function StaffAddDialog() {
           </DialogTitle>
         </DialogHeader>
 
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2">
             <Label>名前</Label>
-            <Input type="text" placeholder="山田太郎" />
+            <Input type="text" placeholder="山田太郎" {...register('name')} />
+            {errors.name && (
+              <p className="text-sm text-red-500">{errors.name.message}</p>
+            )}
           </div>
           <div className="space-y-2">
             <Label>メールアドレス</Label>
-            <Input type="email" placeholder="staff@example.com" />
+            <Input
+              type="email"
+              placeholder="staff@example.com"
+              {...register('email')}
+            />
+            {errors.email && (
+              <p className="text-sm text-red-500">{errors.email.message}</p>
+            )}
           </div>
           <div className="space-y-2">
             <Label>パスワード</Label>
-            <Input type="password" placeholder="••••••••" />
+            <Input
+              type="password"
+              placeholder="••••••••"
+              {...register('password')}
+            />
+            {errors.password && (
+              <p className="text-sm text-red-500">{errors.password.message}</p>
+            )}
           </div>
 
           <Button type="submit" className="w-full" size="lg">
-            登録する
+            {isSubmitting ? <LoaderCircleIcon /> : '登録する'}
           </Button>
         </form>
       </DialogContent>
