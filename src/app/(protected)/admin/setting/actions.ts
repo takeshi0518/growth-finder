@@ -6,10 +6,7 @@ import {
   updatePasswordSchema,
   UpdateProfileInput,
   updateProfileSchema,
-} from '@/lib/validations/auth';
-
-
-
+} from '@/lib/validations/schemas';
 
 export async function updateProfile(data: UpdateProfileInput) {
   const supabase = await createClient();

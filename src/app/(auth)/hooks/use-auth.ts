@@ -11,7 +11,7 @@ import {
   ResendConfirmationInput,
   ResetPasswordEmailInput,
   SignupInput,
-} from '@/lib/validations/auth';
+} from '@/lib/validations/schemas';
 import { createClient } from '@/lib/supabase/client';
 
 export function useAuth() {

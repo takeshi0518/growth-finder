@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { Icons } from '@/components/icon/icons';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import StaffList from './components/staff-list';
+import StaffAddDialog from './components/staff-add-dialog';
 
 export const dummyStaffs = [
   {
@@ -52,10 +52,7 @@ export default function StaffManagementPage() {
             <Icons.Users className="w-5 h-5" />
             スタッフ管理
           </CardTitle>
-          <Button>
-            <Icons.UserPlus className="w-4 h-4" />
-            <span className="hidden sm:block">スタッフを追加</span>
-          </Button>
+          <StaffAddDialog />
         </CardHeader>
 
         <CardContent className="space-y-6">

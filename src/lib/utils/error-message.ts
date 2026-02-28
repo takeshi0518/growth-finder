@@ -27,6 +27,8 @@ function translateErrorMessage(message: string): string {
     'jpeg・png・webp形式の画像を選択してください',
     'ファイルサイズは2MB以下にしてください',
     '画像のアップロードに失敗しました',
+    '組織情報の取得に失敗しました',
+    'スタッフの登録に失敗しました',
   ];
 
   if (customErrors.includes(message)) {

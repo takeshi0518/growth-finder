@@ -15,7 +15,7 @@ import { toast } from 'sonner';
 import {
   UpdateProfileInput,
   updateProfileSchema,
-} from '@/lib/validations/auth';
+} from '@/lib/validations/schemas';
 import { updateProfile } from './actions';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
 import { getErrorMessage } from '@/lib/utils/error-message';
