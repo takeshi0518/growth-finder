@@ -20,6 +20,7 @@ export default async function SettingPage() {
   const { data: profile } = await supabase
     .from('profiles')
     .select('name, store_name, email, avatar_url')
+    .eq('id', user.id)
     .single();
 
   return (
