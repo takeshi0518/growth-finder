@@ -29,6 +29,7 @@ function translateErrorMessage(message: string): string {
     '画像のアップロードに失敗しました',
     '組織情報の取得に失敗しました',
     'スタッフの登録に失敗しました',
+    'スタッフの削除に失敗しました',
   ];
 
   if (customErrors.includes(message)) {

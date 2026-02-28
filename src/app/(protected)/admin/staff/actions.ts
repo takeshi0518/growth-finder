@@ -40,3 +40,16 @@ export async function addStaff(data: AddStaffInput) {
 
   if (error) throw new Error('スタッフの登録に失敗しました');
 }
+
+export async function deleteStaff(staffId: string) {
+  const supabase = await createClient();
+  const supabaseAdmin = createAdminClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error('認証エラーが発生しました');
+
+  const { error } = await supabaseAdmin.auth.admin.deleteUser(staffId);
+  if (error) throw new Error('スタッフの削除に失敗しました');
+}
