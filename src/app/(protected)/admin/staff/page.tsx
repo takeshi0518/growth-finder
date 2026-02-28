@@ -3,39 +3,28 @@ import { Icons } from '@/components/icon/icons';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import StaffList from './components/staff-list';
 import StaffAddDialog from './components/staff-add-dialog';
+import { createClient } from '@/lib/supabase/server';
+import { redirect } from 'next/navigation';
 
-export const dummyStaffs = [
-  {
-    id: '1',
-    name: '山田太郎',
-    role: 'スタッフ',
-    store_name: 'example店',
-    avatar_url: null,
-  },
-  {
-    id: '2',
-    name: '鈴木花子',
-    role: 'スタッフ',
-    store_name: 'example店',
-    avatar_url: null,
-  },
-  {
-    id: '3',
-    name: '佐藤次郎',
-    role: 'スタッフ',
-    store_name: 'example店',
-    avatar_url: null,
-  },
-  {
-    id: '4',
-    name: '田中三郎',
-    role: 'スタッフ',
-    store_name: 'example店',
-    avatar_url: null,
-  },
-];
+export default async function StaffManagementPage() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirect('/login');
 
-export default function StaffManagementPage() {
+  const { data: adminProfile } = await supabase
+    .from('profiles')
+    .select('organization_id')
+    .eq('id', user.id)
+    .single();
+
+  const { data: staffs } = await supabase
+    .from('profiles')
+    .select('id, name, role, store_name, avatar_url')
+    .eq('organization_id', adminProfile?.organization_id ?? '')
+    .eq('role', 'staff');
+
   return (
     <div className="mt-20 md:mt-0 max-w-7xl mx-auto w-full py-6 px-4 space-y-6">
       <Link
@@ -56,7 +45,7 @@ export default function StaffManagementPage() {
         </CardHeader>
 
         <CardContent className="space-y-6">
-          <StaffList staffs={dummyStaffs} />
+          <StaffList staffs={staffs ?? []} />
         </CardContent>
       </Card>
     </div>
