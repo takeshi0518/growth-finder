@@ -55,7 +55,7 @@ export default function StaffCard({ staff }: StaffCardProps) {
         </div>
         <div className="flex justify-center items-center">
           <div className="flex items-center gap-2">
-            <div className="w-15 h-15 rounded-full bg-card flex items-center justify-center overflow-hidden shrink-0">
+            <div className="w-10 h-10 rounded-full bg-card flex items-center justify-center overflow-hidden shrink-0">
               {staff.avatar_url ? (
                 <Image
                   src={staff.avatar_url}
@@ -68,11 +68,11 @@ export default function StaffCard({ staff }: StaffCardProps) {
                 <Icons.UserCircle className="h-10 w-10 text-muted-foreground" />
               )}
             </div>
-            <span className="font-medium text-sm lg:text-xl">{staff.name}</span>
+            <span className="font-medium text-sm">{staff.name}</span>
           </div>
         </div>
 
-        <div className="mt-3 space-y-1 text-xs lg:text-lg text-muted-foreground">
+        <div className="mt-3 space-y-1 text-xs text-muted-foreground">
           <p>役職 {staff.role}</p>
           <p>店舗名 {staff.store_name}</p>
         </div>
