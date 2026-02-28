@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 import {
   UpdatePasswordInput,
   updatePasswordSchema,
-} from '@/lib/validations/auth';
+} from '@/lib/validations/schemas';
 import { updatePassword } from './actions';
 import { getErrorMessage } from '@/lib/utils/error-message';
 import LoaderCircleIcon from '@/components/shared/loader-circle';

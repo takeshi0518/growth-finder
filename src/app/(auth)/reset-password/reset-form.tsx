@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import {
   ResetPasswordEmailInput,
   resetPasswordEmailSchema,
-} from '@/lib/validations/auth';
+} from '@/lib/validations/schemas';
 import { useAuth } from '../hooks/use-auth';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
 

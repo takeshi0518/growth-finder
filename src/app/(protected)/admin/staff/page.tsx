@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { Icons } from '@/components/icon/icons';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import StaffList from './components/staff-list';
 import StaffAddDialog from './components/staff-add-dialog';
 
