@@ -3,6 +3,7 @@
 import { createAdminClient } from '@/lib/supabase/admin';
 import { createClient } from '@/lib/supabase/server';
 import { AddStaffInput, addStaffSchema } from '@/lib/validations/schemas';
+import { revalidatePath } from 'next/cache';
 
 export async function addStaff(data: AddStaffInput) {
   const supabase = await createClient();
@@ -39,6 +40,8 @@ export async function addStaff(data: AddStaffInput) {
   });
 
   if (error) throw new Error('スタッフの登録に失敗しました');
+
+  revalidatePath('/admin/staff');
 }
 
 export async function deleteStaff(staffId: string) {
@@ -52,4 +55,6 @@ export async function deleteStaff(staffId: string) {
 
   const { error } = await supabaseAdmin.auth.admin.deleteUser(staffId);
   if (error) throw new Error('スタッフの削除に失敗しました');
+
+  revalidatePath('/admin/staff');
 }
