@@ -204,8 +204,6 @@ export default function LoginForm() {
           <div className="rounded-lg bg-primary/10 p-4">
             <p className="text-xs text-muted-foreground text-center">
               スタッフはメールアドレスとパスワードでログインしてください
-              <br />
-              初回ログインの場合は招待メールをご確認ください
             </p>
           </div>
         </TabsContent>
