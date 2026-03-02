@@ -8,7 +8,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import Image from 'next/image';
@@ -25,14 +24,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import StaffCardMenu from './staff-card-menu';
+import { Staff } from '../../../../../../types/staff';
 
-type Staff = {
-  id: string;
-  name: string;
-  role: string;
-  store_name: string;
-  avatar_url: string | null;
-};
 type StaffCardProps = {
   staff: Staff;
 };
@@ -50,7 +44,6 @@ export default function StaffCard({ staff }: StaffCardProps) {
       });
     }
   };
-  console.log(isDeleteOpen);
 
   return (
     <Card className="relative">
@@ -63,25 +56,7 @@ export default function StaffCard({ staff }: StaffCardProps) {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem className="cursor-pointer">
-                <Icons.FileText className="mr-2 size-4" />
-                詳細
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
-                <Icons.ClipboardList className="mr-2 size-4" />
-                評価
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
-                <Icons.Pencil className="mr-2 size-4" />
-                編集
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                className="text-destructive cursor-pointer"
-                onSelect={() => setIsDeleteOpen(true)}
-              >
-                <Icons.Trash2 className="mr-2 size-4" />
-                削除
-              </DropdownMenuItem>
+              <StaffCardMenu />
             </DropdownMenuContent>
             <AlertDialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
               <AlertDialogContent>
