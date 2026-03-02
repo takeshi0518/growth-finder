@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   AlertDialog,
@@ -12,6 +12,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { toast } from 'sonner';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,19 +22,28 @@ import {
 import { Icons } from '@/components/icon/icons';
 import { Staff } from '../../../../../../types/staff';
 import { deleteStaff } from '../actions';
-import { toast } from 'sonner';
 import { getErrorMessage } from '@/lib/utils/error-message';
 
 type StaffCardMenuProps = {
   staff: Staff;
 };
 
-export default function StaffCardMenu({ staff }: StaffCardMenuProps) {
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+type DeleteDialogProps = {
+  staffName: string;
+  staffId: string;
+  isDeleteOpen: boolean;
+  setIsDeleteOpen: Dispatch<SetStateAction<boolean>>;
+};
 
+function DeleteDialog({
+  staffName,
+  staffId,
+  isDeleteOpen,
+  setIsDeleteOpen,
+}: DeleteDialogProps) {
   const handleDelete = async () => {
     try {
-      await deleteStaff(staff.id);
+      await deleteStaff(staffId);
       toast.success('スタッフを削除しました');
     } catch (error) {
       toast.error('スタッフの削除に失敗しました', {
@@ -41,6 +51,32 @@ export default function StaffCardMenu({ staff }: StaffCardMenuProps) {
       });
     }
   };
+  return (
+    <AlertDialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>{staffName}を削除しますか？</AlertDialogTitle>
+          <AlertDialogDescription>
+            この操作は取り消せません。スタッフの全データが完全に削除されます。
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>キャンセル</AlertDialogCancel>
+          <AlertDialogAction
+            className="bg-destructive! hover:bg-destructive/90!"
+            onClick={handleDelete}
+          >
+            削除する
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+
+export default function StaffCardMenu({ staff }: StaffCardMenuProps) {
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -70,25 +106,12 @@ export default function StaffCardMenu({ staff }: StaffCardMenuProps) {
         </DropdownMenuItem>
       </DropdownMenuContent>
 
-      <AlertDialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>{staff.name}を削除しますか？</AlertDialogTitle>
-            <AlertDialogDescription>
-              この操作は取り消せません。スタッフの全データが完全に削除されます。
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>キャンセル</AlertDialogCancel>
-            <AlertDialogAction
-              className="bg-destructive! hover:bg-destructive/90!"
-              onClick={handleDelete}
-            >
-              削除する
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <DeleteDialog
+        staffName={staff.name}
+        staffId={staff.id}
+        isDeleteOpen={isDeleteOpen}
+        setIsDeleteOpen={setIsDeleteOpen}
+      />
     </DropdownMenu>
   );
 }
