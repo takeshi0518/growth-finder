@@ -3,14 +3,7 @@
 import { useState } from 'react';
 import StaffCard from './staff-card';
 import StaffSearch from './staff-search';
-
-type Staff = {
-  id: string;
-  name: string;
-  role: string;
-  store_name: string;
-  avatar_url: string | null;
-};
+import { Staff } from '../../../../../../types/staff';
 
 type StaffListProps = {
   staffs: Staff[];

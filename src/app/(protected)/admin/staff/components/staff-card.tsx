@@ -1,111 +1,24 @@
 'use client';
 
-import { useState } from 'react';
-
 import { Icons } from '@/components/icon/icons';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import Image from 'next/image';
-import { deleteStaff } from '../actions';
-import { toast } from 'sonner';
-import { getErrorMessage } from '@/lib/utils/error-message';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
 
-type Staff = {
-  id: string;
-  name: string;
-  role: string;
-  store_name: string;
-  avatar_url: string | null;
-};
+import StaffCardMenu from './staff-card-menu';
+import { Staff } from '../../../../../../types/staff';
+
 type StaffCardProps = {
   staff: Staff;
 };
 
 export default function StaffCard({ staff }: StaffCardProps) {
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-
-  const handleDelete = async () => {
-    try {
-      await deleteStaff(staff.id);
-      toast.success('スタッフを削除しました');
-    } catch (error) {
-      toast.error('スタッフの削除に失敗しました', {
-        description: getErrorMessage(error),
-      });
-    }
-  };
-  console.log(isDeleteOpen);
-
   return (
     <Card className="relative">
       <CardContent className="pb-4">
         <div className="absolute top-3 right-3">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="size-8">
-                <Icons.EllipsisVerticalIcon className="size-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem className="cursor-pointer">
-                <Icons.FileText className="mr-2 size-4" />
-                詳細
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
-                <Icons.ClipboardList className="mr-2 size-4" />
-                評価
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
-                <Icons.Pencil className="mr-2 size-4" />
-                編集
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                className="text-destructive cursor-pointer"
-                onSelect={() => setIsDeleteOpen(true)}
-              >
-                <Icons.Trash2 className="mr-2 size-4" />
-                削除
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-            <AlertDialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>
-                    {staff.name}を削除しますか？
-                  </AlertDialogTitle>
-                  <AlertDialogDescription>
-                    この操作は取り消せません。スタッフの全データが完全に削除されます。
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>キャンセル</AlertDialogCancel>
-                  <AlertDialogAction
-                    className="bg-destructive! hover:bg-destructive/90!"
-                    onClick={handleDelete}
-                  >
-                    削除する
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-          </DropdownMenu>
+          <StaffCardMenu staff={staff} />
         </div>
+        
         <div className="flex justify-center items-center">
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-full bg-card flex items-center justify-center overflow-hidden shrink-0">
