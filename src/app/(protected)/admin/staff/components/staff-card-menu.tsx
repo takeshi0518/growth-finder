@@ -31,6 +31,15 @@ import { deleteStaff } from '../actions';
 import { getErrorMessage } from '@/lib/utils/error-message';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import { useForm } from 'react-hook-form';
+import {
+  EditStaffInput,
+  EditStaffPasswordInput,
+  editStaffPasswordSchema,
+  editStaffSchema,
+} from '@/lib/validations/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
+import LoaderCircleIcon from '@/components/shared/loader-circle';
 
 type StaffCardMenuProps = {
   staff: Staff;
@@ -103,6 +112,29 @@ function EditDialog({
   isEditOpen,
   setIsEditOpen,
 }: EditDialogProps) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<EditStaffInput>({
+    resolver: zodResolver(editStaffSchema),
+    defaultValues: {
+      name: staffName ?? '',
+      email: staffEmail ?? '',
+    },
+  });
+
+  const onSubmit = async (data: EditStaffInput) => {
+    try {
+      //Todo: 更新処理
+      toast.success('スタッフの更新に成功しました');
+    } catch (error) {
+      toast.error('スタッフの更新に失敗しました', {
+        description: getErrorMessage(error),
+      });
+    }
+  };
+
   return (
     <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
       <DialogContent>
@@ -114,18 +146,29 @@ function EditDialog({
             </div>
           </DialogTitle>
         </DialogHeader>
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2">
             <Label htmlFor="name">名前</Label>
-            <Input id="name" type="text" defaultValue={staffName} />
+            <Input id="name" type="text" {...register('name')} />
+            {errors.name && (
+              <p className="text-sm text-red-500">{errors.name?.message}</p>
+            )}
           </div>
           <div className="space-y-2">
             <Label htmlFor="email">メールアドレス</Label>
-            <Input id="email" type="email" defaultValue={staffEmail} />
+            <Input id="email" type="email" {...register('email')} />
+            {errors.email && (
+              <p className="text-sm text-red-500">{errors.email?.message}</p>
+            )}
           </div>
           <div className="flex justify-center">
-            <Button type="submit" size="lg" className="w-full sm:w-48">
-              保存
+            <Button
+              type="submit"
+              size="lg"
+              className="w-full sm:w-48"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? <LoaderCircleIcon /> : '保存'}
             </Button>
           </div>
         </form>
@@ -139,6 +182,25 @@ function EditPasswordDialog({
   isEditPasswordOpen,
   setIsEditPasswordOpen,
 }: EditPasswordDialogProps) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<EditStaffPasswordInput>({
+    resolver: zodResolver(editStaffPasswordSchema),
+  });
+
+  const onSubmit = async (data: EditStaffPasswordInput) => {
+    try {
+      await //Todo: パスワード変更処理
+      toast.success('パスワードの更新に成功しました');
+    } catch (error) {
+      toast.error('パスワードの更新に失敗しました', {
+        description: getErrorMessage(error),
+      });
+    }
+  };
+
   return (
     <Dialog open={isEditPasswordOpen} onOpenChange={setIsEditPasswordOpen}>
       <DialogContent>
@@ -150,22 +212,41 @@ function EditPasswordDialog({
             </div>
           </DialogTitle>
         </DialogHeader>
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2">
-            <Label htmlFor="currentPassword">パスワード</Label>
+            <Label htmlFor="password">新しいパスワード</Label>
             <Input
-              id="currentPassword"
+              id="password"
               type="password"
               placeholder="••••••••"
+              {...register('password')}
             />
+            {errors.password && (
+              <p className="text-sm text-red-500">{errors.password?.message}</p>
+            )}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">確認パスワード</Label>
-            <Input id="password" type="password" placeholder="••••••••" />
+            <Label htmlFor="confirmPassword">確認パスワード</Label>
+            <Input
+              id="confirmPassword"
+              type="password"
+              placeholder="••••••••"
+              {...register('confirmPassword')}
+            />
+            {errors.confirmPassword && (
+              <p className="text-sm text-red-500">
+                {errors.confirmPassword?.message}
+              </p>
+            )}
           </div>
           <div className="flex justify-center">
-            <Button type="submit" size="lg" className="w-full sm:w-48">
-              保存
+            <Button
+              type="submit"
+              size="lg"
+              className="w-full sm:w-48"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? <LoaderCircleIcon /> : '保存'}
             </Button>
           </div>
         </form>
