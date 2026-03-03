@@ -21,7 +21,7 @@ export default async function StaffManagementPage() {
 
   const { data: staffs } = await supabase
     .from('profiles')
-    .select('id, name, role, store_name, avatar_url')
+    .select('id, name, role, store_name, avatar_url, email')
     .eq('organization_id', adminProfile?.organization_id ?? '')
     .eq('role', 'staff');
 

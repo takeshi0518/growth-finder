@@ -12,6 +12,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { toast } from 'sonner';
 import {
   DropdownMenu,
@@ -21,8 +27,19 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Icons } from '@/components/icon/icons';
 import { Staff } from '../../../../../../types/staff';
-import { deleteStaff } from '../actions';
+import { deleteStaff, editStaff } from '../actions';
 import { getErrorMessage } from '@/lib/utils/error-message';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { useForm } from 'react-hook-form';
+import {
+  EditStaffInput,
+  EditStaffPasswordInput,
+  editStaffPasswordSchema,
+  editStaffSchema,
+} from '@/lib/validations/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
+import LoaderCircleIcon from '@/components/shared/loader-circle';
 
 type StaffCardMenuProps = {
   staff: Staff;
@@ -33,6 +50,20 @@ type DeleteDialogProps = {
   staffId: string;
   isDeleteOpen: boolean;
   setIsDeleteOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+type EditDialogProps = {
+  staffId: string;
+  staffEmail: string;
+  staffName: string;
+  isEditOpen: boolean;
+  setIsEditOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+type EditPasswordDialogProps = {
+  staffId: string;
+  isEditPasswordOpen: boolean;
+  setIsEditPasswordOpen: Dispatch<SetStateAction<boolean>>;
 };
 
 function DeleteDialog({
@@ -74,37 +105,202 @@ function DeleteDialog({
   );
 }
 
-export default function StaffCardMenu({ staff }: StaffCardMenuProps) {
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+function EditDialog({
+  staffId,
+  staffName,
+  staffEmail,
+  isEditOpen,
+  setIsEditOpen,
+}: EditDialogProps) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<EditStaffInput>({
+    resolver: zodResolver(editStaffSchema),
+    defaultValues: {
+      name: staffName ?? '',
+      email: staffEmail ?? '',
+    },
+  });
+
+  const onSubmit = async (data: EditStaffInput) => {
+    try {
+      await editStaff(data, staffId);
+      toast.success('スタッフの更新に成功しました');
+      setIsEditOpen(false);
+    } catch (error) {
+      toast.error('スタッフの更新に失敗しました', {
+        description: getErrorMessage(error),
+      });
+    }
+  };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="size-8">
-          <Icons.EllipsisVerticalIcon className="size-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem className="cursor-pointer">
-          <Icons.FileText className="mr-2 size-4" />
-          詳細
-        </DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer">
-          <Icons.ClipboardList className="mr-2 size-4" />
-          評価
-        </DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer">
-          <Icons.Pencil className="mr-2 size-4" />
-          編集
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          onSelect={() => setIsDeleteOpen(true)}
-          className="cursor-pointer text-destructive"
-        >
-          <Icons.Trash2 className="mr-2 size-4" />
-          削除
-        </DropdownMenuItem>
-      </DropdownMenuContent>
+    <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle className="mb-2">
+            <div className="flex items-center">
+              <Icons.Pencil className="h-4 w-4 mr-2" />
+              <span>スタッフを編集</span>
+            </div>
+          </DialogTitle>
+        </DialogHeader>
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+          <div className="space-y-2">
+            <Label htmlFor="name">名前</Label>
+            <Input id="name" type="text" {...register('name')} />
+            {errors.name && (
+              <p className="text-sm text-red-500">{errors.name?.message}</p>
+            )}
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="email">メールアドレス</Label>
+            <Input id="email" type="email" {...register('email')} />
+            {errors.email && (
+              <p className="text-sm text-red-500">{errors.email?.message}</p>
+            )}
+          </div>
+          <div className="flex justify-center">
+            <Button
+              type="submit"
+              size="lg"
+              className="w-full sm:w-48"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? <LoaderCircleIcon /> : '保存'}
+            </Button>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function EditPasswordDialog({
+  staffId,
+  isEditPasswordOpen,
+  setIsEditPasswordOpen,
+}: EditPasswordDialogProps) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<EditStaffPasswordInput>({
+    resolver: zodResolver(editStaffPasswordSchema),
+  });
+
+  const onSubmit = async (data: EditStaffPasswordInput) => {
+    try {
+      await //Todo: パスワード変更処理
+      toast.success('パスワードの更新に成功しました');
+    } catch (error) {
+      toast.error('パスワードの更新に失敗しました', {
+        description: getErrorMessage(error),
+      });
+    }
+  };
+
+  return (
+    <Dialog open={isEditPasswordOpen} onOpenChange={setIsEditPasswordOpen}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle className="mb-2">
+            <div className="flex items-center">
+              <Icons.KeyRound className="h-4 w-4 mr-2" />
+              <span>パスワードを変更</span>
+            </div>
+          </DialogTitle>
+        </DialogHeader>
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+          <div className="space-y-2">
+            <Label htmlFor="password">新しいパスワード</Label>
+            <Input
+              id="password"
+              type="password"
+              placeholder="••••••••"
+              {...register('password')}
+            />
+            {errors.password && (
+              <p className="text-sm text-red-500">{errors.password?.message}</p>
+            )}
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="confirmPassword">確認パスワード</Label>
+            <Input
+              id="confirmPassword"
+              type="password"
+              placeholder="••••••••"
+              {...register('confirmPassword')}
+            />
+            {errors.confirmPassword && (
+              <p className="text-sm text-red-500">
+                {errors.confirmPassword?.message}
+              </p>
+            )}
+          </div>
+          <div className="flex justify-center">
+            <Button
+              type="submit"
+              size="lg"
+              className="w-full sm:w-48"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? <LoaderCircleIcon /> : '保存'}
+            </Button>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+export default function StaffCardMenu({ staff }: StaffCardMenuProps) {
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isEditPasswordOpen, setIsEditPasswordOpen] = useState(false);
+
+  return (
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" size="icon" className="size-8">
+            <Icons.EllipsisVerticalIcon className="size-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuItem className="cursor-pointer">
+            <Icons.FileText className="mr-2 size-4" />
+            詳細
+          </DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer">
+            <Icons.ClipboardList className="mr-2 size-4" />
+            評価
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onSelect={() => setIsEditOpen(true)}
+          >
+            <Icons.Pencil className="mr-2 size-4" />
+            編集
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onSelect={() => setIsEditPasswordOpen(true)}
+          >
+            <Icons.KeyRound className="mr-2 size-4" />
+            パスワード変更
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onSelect={() => setIsDeleteOpen(true)}
+            className="cursor-pointer text-destructive"
+          >
+            <Icons.Trash2 className="mr-2 size-4" />
+            削除
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
 
       <DeleteDialog
         staffName={staff.name}
@@ -112,6 +308,20 @@ export default function StaffCardMenu({ staff }: StaffCardMenuProps) {
         isDeleteOpen={isDeleteOpen}
         setIsDeleteOpen={setIsDeleteOpen}
       />
-    </DropdownMenu>
+
+      <EditDialog
+        staffId={staff.id}
+        staffName={staff.name}
+        staffEmail={staff.email}
+        isEditOpen={isEditOpen}
+        setIsEditOpen={setIsEditOpen}
+      />
+
+      <EditPasswordDialog
+        staffId={staff.id}
+        isEditPasswordOpen={isEditPasswordOpen}
+        setIsEditPasswordOpen={setIsEditPasswordOpen}
+      />
+    </>
   );
 }

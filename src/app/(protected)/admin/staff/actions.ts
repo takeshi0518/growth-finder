@@ -2,7 +2,12 @@
 
 import { createAdminClient } from '@/lib/supabase/admin';
 import { createClient } from '@/lib/supabase/server';
-import { AddStaffInput, addStaffSchema } from '@/lib/validations/schemas';
+import {
+  AddStaffInput,
+  addStaffSchema,
+  EditStaffInput,
+  editStaffSchema,
+} from '@/lib/validations/schemas';
 import { revalidatePath } from 'next/cache';
 
 export async function addStaff(data: AddStaffInput) {
@@ -55,6 +60,37 @@ export async function deleteStaff(staffId: string) {
 
   const { error } = await supabaseAdmin.auth.admin.deleteUser(staffId);
   if (error) throw new Error('スタッフの削除に失敗しました');
+
+  revalidatePath('/admin/staff');
+}
+
+export async function editStaff(data: EditStaffInput, staffId: string) {
+  const supabase = await createClient();
+  const supabaseAdmin = createAdminClient();
+
+  const validated = editStaffSchema.safeParse(data);
+  if (!validated.success) throw new Error('入力内容を確認してください');
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error('認証エラーが発生しました');
+
+  const { error: authError } = await supabaseAdmin.auth.admin.updateUserById(
+    staffId,
+    { email: data.email }
+  );
+  if (authError) throw new Error('メールアドレスの更新に失敗しました');
+
+  const { error } = await supabase
+    .from('profiles')
+    .update({
+      name: data.name,
+      email: data.email,
+    })
+    .eq('id', staffId);
+
+  if (error) throw new Error('スタッフの更新に失敗しました');
 
   revalidatePath('/admin/staff');
 }

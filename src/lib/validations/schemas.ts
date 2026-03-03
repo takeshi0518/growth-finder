@@ -136,6 +136,33 @@ export const addStaffSchema = z.object({
     ),
 });
 
+export const editStaffSchema = z.object({
+  name: z
+    .string()
+    .min(1, '名前を入力してください')
+    .max(50, '名前は50文字以内で入力してください'),
+  email: z
+    .string()
+    .min(1, 'メールアドレスを入力してください')
+    .email('正しいメールアドレスを入力してください'),
+});
+
+export const editStaffPasswordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(8, 'パスワードは8文字以上で入力してください')
+      .regex(
+        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]/,
+        'パスワードは英数字を含む必要があります'
+      ),
+    confirmPassword: z.string().min(1, 'パスワード(確認)を入力してください'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'パスワードが一致しません',
+    path: ['confirmPassword'],
+  });
+
 export type SignupInput = z.infer<typeof signupSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;
@@ -146,3 +173,5 @@ export type ResendConfirmationInput = z.infer<typeof resetPasswordEmailSchema>;
 export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
 export type UpdatePasswordInput = z.infer<typeof updatePasswordSchema>;
 export type AddStaffInput = z.infer<typeof addStaffSchema>;
+export type EditStaffInput = z.infer<typeof editStaffSchema>;
+export type EditStaffPasswordInput = z.infer<typeof editStaffPasswordSchema>;

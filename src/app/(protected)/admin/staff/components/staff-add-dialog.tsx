@@ -92,9 +92,11 @@ export default function StaffAddDialog() {
             )}
           </div>
 
-          <Button type="submit" className="w-full" size="lg">
-            {isSubmitting ? <LoaderCircleIcon /> : '登録する'}
-          </Button>
+          <div className="text-center">
+            <Button type="submit" size="lg" className="w-full sm:w-48">
+              {isSubmitting ? <LoaderCircleIcon /> : '登録する'}
+            </Button>
+          </div>
         </form>
       </DialogContent>
     </Dialog>
