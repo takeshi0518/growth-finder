@@ -30,6 +30,8 @@ function translateErrorMessage(message: string): string {
     '組織情報の取得に失敗しました',
     'スタッフの登録に失敗しました',
     'スタッフの削除に失敗しました',
+    'スタッフの更新に失敗しました',
+    'メールアドレスの更新に失敗しました',
   ];
 
   if (customErrors.includes(message)) {

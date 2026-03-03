@@ -27,7 +27,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Icons } from '@/components/icon/icons';
 import { Staff } from '../../../../../../types/staff';
-import { deleteStaff } from '../actions';
+import { deleteStaff, editStaff } from '../actions';
 import { getErrorMessage } from '@/lib/utils/error-message';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -126,8 +126,9 @@ function EditDialog({
 
   const onSubmit = async (data: EditStaffInput) => {
     try {
-      //Todo: 更新処理
+      await editStaff(data, staffId);
       toast.success('スタッフの更新に成功しました');
+      setIsEditOpen(false);
     } catch (error) {
       toast.error('スタッフの更新に失敗しました', {
         description: getErrorMessage(error),
