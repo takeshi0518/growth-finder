@@ -1,6 +1,6 @@
 'use client';
 
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   AlertDialog,
@@ -40,6 +40,13 @@ import {
 } from '@/lib/validations/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
+import Image from 'next/image';
+import {
+  AVATAR_ALLOWED_TYPES,
+  AVATAR_MAX_SIZE,
+  AVATAR_MAX_SIZE_LABEL,
+} from '@/lib/constants/upload';
+import { uploadStaffAvatar } from '@/lib/utils/upload';
 
 type StaffCardMenuProps = {
   staff: Staff;
@@ -56,6 +63,7 @@ type EditDialogProps = {
   staffId: string;
   staffEmail: string;
   staffName: string;
+  staffAvatarUrl: string | null;
   isEditOpen: boolean;
   setIsEditOpen: Dispatch<SetStateAction<boolean>>;
 };
@@ -109,9 +117,14 @@ function EditDialog({
   staffId,
   staffName,
   staffEmail,
+  staffAvatarUrl,
   isEditOpen,
   setIsEditOpen,
 }: EditDialogProps) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(staffAvatarUrl);
+  const [isUploading, setIsUploading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -123,6 +136,36 @@ function EditDialog({
       email: staffEmail ?? '',
     },
   });
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!AVATAR_ALLOWED_TYPES.includes(file.type)) {
+      toast.error('jpeg・png・webp形式の画像を選択してください');
+      return;
+    }
+
+    if (file.size > AVATAR_MAX_SIZE) {
+      toast.error(`ファイルサイズは${AVATAR_MAX_SIZE_LABEL}以下にしてください`);
+      return;
+    }
+
+    setIsUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append('avatar', file);
+      const result = await uploadStaffAvatar(formData, staffId);
+      setAvatarUrl(result.publicUrl);
+      toast.success('画像をアップロードしました');
+    } catch (error) {
+      toast.error('画像のアップロードに失敗しました', {
+        description: getErrorMessage(error),
+      });
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
   const onSubmit = async (data: EditStaffInput) => {
     try {
@@ -148,6 +191,42 @@ function EditDialog({
           </DialogTitle>
         </DialogHeader>
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+          <div className="flex justify-center">
+            <div className="relative">
+              <div className="w-24 h-24 rounded-full border-2 overflow-hidden bg-card flex items-center justify-center">
+                {avatarUrl ? (
+                  <Image
+                    src={avatarUrl}
+                    alt={staffName}
+                    width={100}
+                    height={100}
+                    className="object-cover"
+                  />
+                ) : (
+                  <Icons.UserCircle className="w-16 h-16 text-muted-foreground" />
+                )}
+              </div>
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={isUploading}
+                className="absolute bottom-0 right-0 bg-background border rounded-full px-2 py-0.5 text-xs"
+              >
+                {isUploading ? '...' : '編集'}
+              </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+            </div>
+          </div>
+          <p className="text-xs text-muted-foreground text-center">
+            {`jpeg・png・webp形式 ${AVATAR_MAX_SIZE_LABEL}以下`}
+          </p>
+
           <div className="space-y-2">
             <Label htmlFor="name">名前</Label>
             <Input id="name" type="text" {...register('name')} />
@@ -314,6 +393,7 @@ export default function StaffCardMenu({ staff }: StaffCardMenuProps) {
         staffId={staff.id}
         staffName={staff.name}
         staffEmail={staff.email}
+        staffAvatarUrl={staff.avatar_url}
         isEditOpen={isEditOpen}
         setIsEditOpen={setIsEditOpen}
       />

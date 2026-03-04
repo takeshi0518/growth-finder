@@ -24,7 +24,7 @@ import {
   AVATAR_MAX_SIZE,
   AVATAR_MAX_SIZE_LABEL,
 } from '@/lib/constants/upload';
-import { uploadAvatar } from '@/lib/utils/upload';
+import { uploadAdminAvatar } from '@/lib/utils/upload';
 
 type Profile = Pick<
   Tables<'profiles'>,
@@ -61,7 +61,7 @@ export default function SettingForm({ profile, userId }: SettingFormProps) {
     try {
       const formData = new FormData();
       formData.append('avatar', file);
-      const result = await uploadAvatar(formData, userId);
+      const result = await uploadAdminAvatar(formData);
       setAvatarUrl(result.publicUrl);
       toast.success('画像をアップロードしました');
     } catch (error) {
@@ -101,12 +101,13 @@ export default function SettingForm({ profile, userId }: SettingFormProps) {
     <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex justify-center">
         <div className="relative">
-          <div className="w-24 h-24 rounded-full border-2 overflow-hidden bg-card- flex items-center justify-center">
+          <div className="w-24 h-24 rounded-full border-2 overflow-hidden bg-card flex items-center justify-center">
             {avatarUrl ? (
               <Image
                 src={avatarUrl}
                 alt="アバター"
-                fill
+                width={100}
+                height={100}
                 className="object-cover"
               />
             ) : (
