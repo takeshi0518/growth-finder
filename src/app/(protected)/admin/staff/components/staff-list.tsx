@@ -16,12 +16,22 @@ export default function StaffList({ staffs }: StaffListProps) {
     <>
       <StaffSearch value={search} onChange={setSearch} />
       <div className="space-y-3">
-        <p className="text-sm text-muted-foreground">合計 {staffs.length} 人</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {staffs.map((staff) => (
-            <StaffCard key={staff.id} staff={staff} />
-          ))}
-        </div>
+        <p className="text-sm text-muted-foreground">
+          合計 {filterdStaffs.length} 人
+        </p>
+        {filterdStaffs.length === 0 ? (
+          <p>
+            {search
+              ? '検索結果が見つかりませんでした'
+              : 'スタッフが登録されていません'}
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filterdStaffs.map((staff) => (
+              <StaffCard key={staff.id} staff={staff} />
+            ))}
+          </div>
+        )}
       </div>
     </>
   );
