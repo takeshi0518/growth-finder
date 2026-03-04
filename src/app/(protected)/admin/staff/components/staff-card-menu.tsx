@@ -193,12 +193,13 @@ function EditDialog({
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex justify-center">
             <div className="relative">
-              <div className="w-24 h-24 rounded-full border-2 overflow-hidden bg-card- flex items-center justify-center">
+              <div className="w-24 h-24 rounded-full border-2 overflow-hidden bg-card flex items-center justify-center">
                 {avatarUrl ? (
                   <Image
                     src={avatarUrl}
                     alt={staffName}
-                    fill
+                    width={100}
+                    height={100}
                     className="object-cover"
                   />
                 ) : (
