@@ -27,7 +27,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Icons } from '@/components/icon/icons';
 import { Staff } from '../../../../../../types/staff';
-import { deleteStaff, editStaff } from '../actions';
+import { deleteStaff, editStaff, editStaffPassword } from '../actions';
 import { getErrorMessage } from '@/lib/utils/error-message';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -193,8 +193,9 @@ function EditPasswordDialog({
 
   const onSubmit = async (data: EditStaffPasswordInput) => {
     try {
-      await //Todo: パスワード変更処理
+      await editStaffPassword(staffId, data);
       toast.success('パスワードの更新に成功しました');
+      setIsEditPasswordOpen(false);
     } catch (error) {
       toast.error('パスワードの更新に失敗しました', {
         description: getErrorMessage(error),

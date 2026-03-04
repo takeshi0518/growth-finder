@@ -6,6 +6,8 @@ import {
   AddStaffInput,
   addStaffSchema,
   EditStaffInput,
+  EditStaffPasswordInput,
+  editStaffPasswordSchema,
   editStaffSchema,
 } from '@/lib/validations/schemas';
 import { revalidatePath } from 'next/cache';
@@ -93,4 +95,26 @@ export async function editStaff(data: EditStaffInput, staffId: string) {
   if (error) throw new Error('スタッフの更新に失敗しました');
 
   revalidatePath('/admin/staff');
+}
+
+export async function editStaffPassword(
+  staffId: string,
+  data: EditStaffPasswordInput
+) {
+  const supabase = await createClient();
+  const supabaseAdmin = createAdminClient();
+
+  const validated = editStaffPasswordSchema.safeParse(data);
+  if (!validated.success) throw new Error('入力内容を確認してください');
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error('認証エラーが発生しました');
+
+  const { error } = await supabaseAdmin.auth.admin.updateUserById(staffId, {
+    password: data.password,
+  });
+
+  if (error) throw new Error('パスワードの更新に失敗しました');
 }
