@@ -36,7 +36,7 @@ type SettingFormProps = {
   userId: string;
 };
 
-export default function SettingForm({ profile, userId }: SettingFormProps) {
+export default function SettingForm({ profile }: SettingFormProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(
     profile?.avatar_url ?? null
@@ -158,7 +158,12 @@ export default function SettingForm({ profile, userId }: SettingFormProps) {
       </div>
 
       <div className="flex justify-center">
-        <Button type="submit" size="lg" className="w-full sm:w-48">
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          size="lg"
+          className="w-full sm:w-48"
+        >
           {isSubmitting ? <LoaderCircleIcon /> : '保存'}
         </Button>
       </div>
