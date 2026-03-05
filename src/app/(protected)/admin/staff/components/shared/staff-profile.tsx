@@ -58,11 +58,15 @@ export default function StaffProfile({ targetStaff, staffId }: StaffProfile) {
             </div>
           </div>
 
-          <div className="space-y-2">
+          <div className="p-1 space-y-2 border-b">
             <Label>店舗名</Label>
             <p className="text-sm text-muted-foreground">
               {targetStaff.store_name}
             </p>
+          </div>
+          <div className="p-1 space-y-2 border-b">
+            <Label>役職</Label>
+            <p className="text-sm text-muted-foreground">{targetStaff.role}</p>
           </div>
           <div className="space-y-2">
             <Label htmlFor="name">名前</Label>
