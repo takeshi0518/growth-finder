@@ -6,6 +6,7 @@ import { Icons } from '@/components/icon/icons';
 import SettingForm from './setting-form';
 import PasswordForm from './password-form';
 import { createClient } from '@/lib/supabase/server';
+import BackPageLink from '@/components/shared/back-page-link';
 
 export default async function SettingPage() {
   const supabase = await createClient();
@@ -25,13 +26,7 @@ export default async function SettingPage() {
 
   return (
     <div className="mt-20 md:mt-0 max-w-7xl mx-auto w-full py-6 px-4 space-y-6">
-      <Link
-        href="/admin"
-        className="w-fit flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-      >
-        <Icons.Undo2 />
-        <span>ダッシュボードへ戻る</span>
-      </Link>
+      <BackPageLink href="/admin" label="ダッシュボードへ戻る" />
 
       <div className="flex flex-col lg:flex-row lg:items-start gap-6">
         <Card className="lg:flex-1">
