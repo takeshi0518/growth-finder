@@ -90,7 +90,12 @@ export default function PasswordForm({ isOAuthUser }: PasswordFormProps) {
         )}
       </div>
       <div className="flex justify-center">
-        <Button type="submit" size="lg" className="w-full sm:w-48">
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          size="lg"
+          className="w-full sm:w-48"
+        >
           {isSubmitting ? <LoaderCircleIcon /> : '更新する'}
         </Button>
       </div>
