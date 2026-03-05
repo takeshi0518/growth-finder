@@ -18,6 +18,7 @@ export default function StaffSearch({ value, onChange }: StaffSearchProps) {
       <Input
         type="text"
         placeholder="名前で検索"
+        className="lg:max-w-md"
         value={value}
         onChange={(e) => onChange(e.target.value)}
       />
