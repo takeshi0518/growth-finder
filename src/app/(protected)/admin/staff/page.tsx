@@ -5,6 +5,7 @@ import StaffList from './components/staff-list';
 import StaffAddDialog from './components/staff-add-dialog';
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
+import BackPageLink from '@/components/shared/back-page-link';
 
 export default async function StaffManagementPage() {
   const supabase = await createClient();
@@ -27,13 +28,7 @@ export default async function StaffManagementPage() {
 
   return (
     <div className="mt-20 md:mt-0 max-w-7xl mx-auto w-full py-6 px-4 space-y-6">
-      <Link
-        href="/admin"
-        className="w-fit flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-      >
-        <Icons.Undo2 />
-        <span>ダッシュボードへ戻る</span>
-      </Link>
+      <BackPageLink href="/admin" label="ダッシュボードへ戻る" />
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">

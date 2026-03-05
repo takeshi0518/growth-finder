@@ -10,6 +10,7 @@ import Link from 'next/link';
 
 import SignupForm from './signup-form';
 import { Icons } from '@/components/icon/icons';
+import BackPageLink from '@/components/shared/back-page-link';
 
 export default function Signup() {
   return (
@@ -40,15 +41,8 @@ export default function Signup() {
           </Link>
         </div>
 
-        {/* ホームに戻る */}
         <div className="text-center text-sm">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-1 text-muted-foreground hover:text-primary"
-          >
-            <Icons.ArrowLeft className="h-4 w-4 text-primary" />
-            ホームに戻る
-          </Link>
+          <BackPageLink href="/" label="ホームへ戻る" />
         </div>
       </CardFooter>
     </Card>

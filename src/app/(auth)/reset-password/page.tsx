@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import ResetForm from './reset-form';
+import BackPageLink from '@/components/shared/back-page-link';
 
 export default function ResetPasswordPage() {
   return (
@@ -35,13 +36,7 @@ export default function ResetPasswordPage() {
 
       <CardFooter className="flex justify-center">
         <div className="text-center text-sm">
-          <Link
-            href="/login"
-            className="inline-flex items-center gap-1 text-muted-foreground hover:text-primary"
-          >
-            <Icons.ArrowLeft className="h-4 w-4 text-primary" />
-            ログインに戻る
-          </Link>
+          <BackPageLink href="/login" label="ログインへ戻る" />
         </div>
       </CardFooter>
     </Card>
