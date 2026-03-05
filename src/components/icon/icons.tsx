@@ -25,6 +25,7 @@ import {
   ClipboardList,
   Pencil,
   Trash2,
+  CalendarDays,
 } from 'lucide-react';
 
 import { FaXTwitter, FaGithub } from 'react-icons/fa6';
@@ -57,6 +58,7 @@ export const Icons = {
   ClipboardList,
   Pencil,
   Trash2,
+  CalendarDays,
   FaXTwitter,
   FaGithub,
   FcGoogle,

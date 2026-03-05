@@ -6,6 +6,7 @@ import { Tables } from '../../../../../../../types/supabase';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
+import EvalationSection from '../../[staffId]/components/evaluation-section';
 
 type Profile = Pick<
   Tables<'profiles'>,
@@ -21,9 +22,13 @@ export default function StaffProfile({ targetStaff, staffId }: StaffProfile) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Icons.FileText className="w-5 h-5" />
-          スタッフ詳細
+        <CardTitle className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <Icons.FileText className="w-5 h-5" />
+            スタッフ詳細
+          </div>
+
+          <EvalationSection />
         </CardTitle>
       </CardHeader>
 
@@ -77,12 +82,12 @@ export default function StaffProfile({ targetStaff, staffId }: StaffProfile) {
             <Input id="email" type="email" defaultValue={targetStaff.email} />
           </div>
 
-          <div className="flex justify-around">
-            <Button type="submit" size="lg" className="w-36">
+          <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
+            <Button type="submit" size="lg" className="w-full sm:w-36 md:w-48">
               保存
             </Button>
 
-            <Button asChild size="lg" className="w-36">
+            <Button asChild size="lg" className="w-full sm:w-36 md:w-48">
               <Link href={`/admin/staff/${staffId}/evaluations`}>評価</Link>
             </Button>
           </div>
