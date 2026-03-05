@@ -47,6 +47,7 @@ import {
   AVATAR_MAX_SIZE_LABEL,
 } from '@/lib/constants/upload';
 import { uploadStaffAvatar } from '@/lib/utils/upload';
+import Link from 'next/link';
 
 type StaffCardMenuProps = {
   staff: Staff;
@@ -350,9 +351,11 @@ export default function StaffCardMenu({ staff }: StaffCardMenuProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem className="cursor-pointer">
-            <Icons.FileText className="mr-2 size-4" />
-            詳細
+          <DropdownMenuItem asChild className="cursor-pointer">
+            <Link href={`/admin/staff/${staff.id}`}>
+              <Icons.FileText className="mr-2 size-4" />
+              詳細
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem className="cursor-pointer">
             <Icons.ClipboardList className="mr-2 size-4" />
