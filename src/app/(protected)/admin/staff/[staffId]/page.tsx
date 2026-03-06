@@ -2,6 +2,7 @@ import BackPageLink from '@/components/shared/back-page-link';
 import StaffProfile from '../components/shared/staff-profile';
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
+import EvaluationSection from '../components/shared/evaluation-section';
 
 type StaffDetailPageProps = {
   params: { staffId: string };
@@ -31,6 +32,7 @@ export default async function StaffDetailPage({
     <div className="mt-20 md:mt-0 max-w-7xl mx-auto w-full py-6 px-4 space-y-6">
       <BackPageLink href="/admin/staff" label="スタッフ一覧に戻る" />
       <StaffProfile targetStaff={targetStaff} staffId={staffId} />
+      <EvaluationSection label="評価" />
     </div>
   );
 }

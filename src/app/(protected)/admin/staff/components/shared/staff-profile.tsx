@@ -1,22 +1,22 @@
 'use client';
 
+import { useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import Link from 'next/link';
+import Image from 'next/image';
+
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'sonner';
 import { Icons } from '@/components/icon/icons';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import Image from 'next/image';
 import { Tables } from '../../../../../../../types/supabase';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import Link from 'next/link';
-import EvalationSection from '../../[staffId]/components/evaluation-section';
-import { useForm } from 'react-hook-form';
 import { EditStaffInput, editStaffSchema } from '@/lib/validations/schemas';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { editStaff } from '../../actions';
-import { toast } from 'sonner';
 import { getErrorMessage } from '@/lib/utils/error-message';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
-import { useRef, useState } from 'react';
 import {
   AVATAR_ALLOWED_TYPES,
   AVATAR_MAX_SIZE,
@@ -97,13 +97,11 @@ export default function StaffProfile({ targetStaff, staffId }: StaffProfile) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <CardTitle>
           <div className="flex items-center gap-2">
             <Icons.FileText className="w-5 h-5" />
             スタッフ詳細
           </div>
-
-          <EvalationSection />
         </CardTitle>
       </CardHeader>
 
