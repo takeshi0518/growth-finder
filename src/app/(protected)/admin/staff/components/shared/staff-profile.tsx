@@ -106,74 +106,83 @@ export default function StaffProfile({ targetStaff, staffId }: StaffProfile) {
       </CardHeader>
 
       <CardContent>
-        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex justify-center">
-            <div className="relative">
-              <div className="w-24 h-24 rounded-full border-2 overflow-hidden bg-card flex items-center justify-center">
-                {avatarUrl ? (
-                  <Image
-                    src={avatarUrl}
-                    alt={targetStaff.name}
-                    width={100}
-                    height={100}
-                    className="object-cover"
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="flex flex-col items-center space-y-6">
+            <div className="flex flex-col gap-5 ">
+              <div className="flex justify-center">
+                <div className="relative">
+                  <div className="w-24 h-24 rounded-full border-2 overflow-hidden bg-card flex items-center justify-center">
+                    {avatarUrl ? (
+                      <Image
+                        src={avatarUrl}
+                        alt={targetStaff.name}
+                        width={100}
+                        height={100}
+                        className="object-cover"
+                      />
+                    ) : (
+                      <Icons.UserCircle className="w-16 h-16 text-muted-foreground" />
+                    )}
+                  </div>
+                  <button
+                    type="button"
+                    disabled={isUploading}
+                    onClick={() => fileInputRef.current?.click()}
+                    className="absolute bottom-0 right-0 bg-background border rounded-full px-2 py-0.5 text-xs"
+                  >
+                    編集
+                  </button>
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    accept="image/jpeg,image/png,image/webp"
+                    onChange={handleFileChange}
+                    className="hidden"
                   />
-                ) : (
-                  <Icons.UserCircle className="w-16 h-16 text-muted-foreground" />
-                )}
+                </div>
               </div>
-              <button
-                type="button"
-                disabled={isUploading}
-                onClick={() => fileInputRef.current?.click()}
-                className="absolute bottom-0 right-0 bg-background border rounded-full px-2 py-0.5 text-xs"
-              >
-                編集
-              </button>
-              <input
-                type="file"
-                ref={fileInputRef}
-                accept="image/jpeg,image/png,image/webp"
-                onChange={handleFileChange}
-                className="hidden"
-              />
+
+              <div className="space-y-2">
+                <div className="flex gap-2">
+                  <Label>店舗名</Label>
+                  <p className="text-sm text-muted-foreground">
+                    {targetStaff.store_name}
+                  </p>
+                </div>
+                <div className="flex gap-2">
+                  <Label>役職</Label>
+                  <p className="text-sm text-muted-foreground">
+                    {targetStaff.role}
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div className="p-1 space-y-2 border-b">
-            <Label>店舗名</Label>
-            <p className="text-sm text-muted-foreground">
-              {targetStaff.store_name}
-            </p>
-          </div>
-          <div className="p-1 space-y-2 border-b">
-            <Label>役職</Label>
-            <p className="text-sm text-muted-foreground">{targetStaff.role}</p>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="name">名前</Label>
-            <Input id="name" type="text" {...register('name')} />
-            {errors.name && (
-              <p className="text-sm text-red-500">{errors.name?.message}</p>
-            )}
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="email">メールアドレス</Label>
-            <Input id="email" type="email" {...register('email')} />
-            {errors.email && (
-              <p className="text-sm text-red-500">{errors.email?.message}</p>
-            )}
-          </div>
+            <div className="space-y-2 w-full max-w-md">
+              <Label htmlFor="name">名前</Label>
+              <Input id="name" type="text" {...register('name')} />
+              {errors.name && (
+                <p className="text-sm text-red-500">{errors.name?.message}</p>
+              )}
+            </div>
+            <div className="space-y-2 w-full max-w-md">
+              <Label htmlFor="email">メールアドレス</Label>
+              <Input id="email" type="email" {...register('email')} />
+              {errors.email && (
+                <p className="text-sm text-red-500">{errors.email?.message}</p>
+              )}
+            </div>
 
-          <div className="text-center">
-            <Button
-              type="submit"
-              size="lg"
-              className="w-full sm:w-48"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? <LoaderCircleIcon /> : '保存'}
-            </Button>
+            <div className="text-center w-full max-w-md">
+              <Button
+                type="submit"
+                size="lg"
+                disabled={isSubmitting}
+                className="w-full md:max-w-48"
+              >
+                {isSubmitting ? <LoaderCircleIcon /> : '保存'}
+              </Button>
+            </div>
           </div>
         </form>
       </CardContent>
