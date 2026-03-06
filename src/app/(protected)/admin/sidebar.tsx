@@ -16,6 +16,7 @@ type SidebarProps = {
 export default function Sidebar({ className }: SidebarProps) {
   const pathname = usePathname();
   const { isLoading, logout } = useAuth();
+
   return (
     <aside
       className={cn(
@@ -30,13 +31,18 @@ export default function Sidebar({ className }: SidebarProps) {
       <nav className="flex flex-col gap-5 flex-1">
         {adminNavItems.map((item) => {
           const Icon = item.icon;
+          const isActive =
+            item.href === '/admin'
+              ? pathname === '/admin'
+              : pathname.startsWith(item.href);
+
           return (
             <Link
               href={item.href}
               key={item.label}
               className={cn(
                 'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-colors',
-                pathname === item.href ? 'bg-primary/10' : 'hover:bg-primary/10'
+                isActive ? 'bg-primary/10' : 'hover:bg-primary/10'
               )}
             >
               <Icon className="h-5 w-5 shrink-0" />
