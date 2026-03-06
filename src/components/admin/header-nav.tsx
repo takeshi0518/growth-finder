@@ -17,7 +17,12 @@ function AdminNavMobile({ onClose }: { onClose: () => void }) {
   return (
     <>
       {adminNavItems.map((item) => {
-        const Icon = item.icon;
+        const Icon = item.icon; 
+
+        const isActive =
+          item.href === '/admin'
+            ? pathname === '/admin'
+            : pathname.startsWith(item.href);
 
         return (
           <Link
@@ -25,8 +30,8 @@ function AdminNavMobile({ onClose }: { onClose: () => void }) {
             key={item.label}
             onClick={onClose}
             className={cn(
-              'flex items-center gap-3 text-lg p-3 rounded-2xl hover:bg-primary/10 transition-colors',
-              pathname === item.href ? 'bg-primary/10' : 'hover:bg-primary/10'
+              'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-colors',
+              isActive ? 'bg-primary/10' : 'hover:bg-primary/10'
             )}
           >
             <Icon className="h-5 w-5 shrink-0" />
