@@ -165,18 +165,14 @@ export default function StaffProfile({ targetStaff, staffId }: StaffProfile) {
             )}
           </div>
 
-          <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
+          <div className="text-center">
             <Button
               type="submit"
               size="lg"
-              className="w-full sm:w-36 md:w-48"
+              className="w-full sm:w-48"
               disabled={isSubmitting}
             >
               {isSubmitting ? <LoaderCircleIcon /> : '保存'}
-            </Button>
-
-            <Button asChild size="lg" className="w-full sm:w-36 md:w-48">
-              <Link href={`/admin/staff/${staffId}/evaluations`}>評価</Link>
             </Button>
           </div>
         </form>
