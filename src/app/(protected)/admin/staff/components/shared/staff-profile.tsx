@@ -2,7 +2,6 @@
 
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Link from 'next/link';
 import Image from 'next/image';
 
 import { Label } from '@/components/ui/label';
