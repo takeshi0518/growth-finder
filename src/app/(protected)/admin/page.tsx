@@ -1,10 +1,9 @@
+import AdminProfile from './components/admin-profile';
+
 export default function AdminPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-3xl font-bold">管理者ダッシュボード</h1>
-        <p className="text-muted-foreground mt-2">準備中</p>
-      </div>
+    <div className="mt-20 md:mt-0 max-w-7xl mx-auto w-full py-6 px-4 space-y-6">
+      <AdminProfile />
     </div>
   );
 }
