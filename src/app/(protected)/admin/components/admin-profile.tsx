@@ -1,8 +1,10 @@
+import { Button } from '@/components/ui/button';
 import { Tables } from '../../../../../types/supabase';
 import { Icons } from '@/components/icon/icons';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import Image from 'next/image';
+import CreateEvaluationPeriodDialog from './create-evaluation-period-dialog';
 
 type Profile = Pick<
   Tables<'profiles'>,
@@ -16,13 +18,14 @@ type AdminProfile = {
 export default function AdminProfile({ profile }: AdminProfile) {
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>
           <div className="flex items-center gap-2">
             <Icons.UserCircle className="w-5 h-5" />
             プロフィール
           </div>
         </CardTitle>
+        <CreateEvaluationPeriodDialog />
       </CardHeader>
 
       <CardContent>
