@@ -2,7 +2,7 @@ import BackPageLink from '@/components/shared/back-page-link';
 import StaffProfile from '../components/shared/staff-profile';
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
-import EvaluationSection from '../components/shared/evaluation-section';
+import EvaluationSection from '../../components/evaluation-section';
 
 type StaffDetailPageProps = {
   params: { staffId: string };
