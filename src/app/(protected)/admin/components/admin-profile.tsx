@@ -17,14 +17,13 @@ type AdminProfile = {
 export default function AdminProfile({ profile }: AdminProfile) {
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
+      <CardHeader>
         <CardTitle>
           <div className="flex items-center gap-2">
             <Icons.UserCircle className="w-5 h-5" />
             プロフィール
           </div>
         </CardTitle>
-        <CreateEvaluationPeriodDialog />
       </CardHeader>
 
       <CardContent>
