@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import CreateEvaluationPeriodDialog from './create-evaluation-period-dialog';
 import { Icons } from '@/components/icon/icons';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import EvaluationPeriodMenu from './evaluation-period-menu';
 
 const dummyData = [
   { name: '2025年3月〜2025年4月' },
@@ -31,7 +32,7 @@ export default function EvaluationPeriodList() {
                 className="flex justify-between items-center text-sm p-2 border-b"
               >
                 {period.name}
-                <Icons.EllipsisVerticalIcon className="w-4 h-4" />
+                <EvaluationPeriodMenu />
               </p>
             ))}
           </div>

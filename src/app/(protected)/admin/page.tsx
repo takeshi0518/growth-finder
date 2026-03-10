@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import AdminProfile from './components/admin-profile';
 import { redirect } from 'next/navigation';
-import EvaluationPeriodList from './components/evaluation-periodllist';
+import EvaluationPeriodList from './components/evaluation-period-list';
 
 export default async function AdminPage() {
   const supabase = await createClient();

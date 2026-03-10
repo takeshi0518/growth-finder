@@ -1,0 +1,151 @@
+'use client';
+
+import { Dispatch, SetStateAction, useState } from 'react';
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
+import { Icons } from '@/components/icon/icons';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+
+type DeleteDialogProps = {
+  evaluationPeriodName: string;
+  evaluationPeriodId: string;
+  isDeleteOpen: boolean;
+  setIsDeleteOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+type EditDialogProps = {
+  evaluationPeriodName: string;
+  evaluationPeriodId: string;
+  isEditOpen: boolean;
+  setIsEditOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+function DeleteDialog({
+  evaluationPeriodName,
+  evaluationPeriodId,
+  isDeleteOpen,
+  setIsDeleteOpen,
+}: DeleteDialogProps) {
+  return (
+    <AlertDialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>
+            {evaluationPeriodName}を削除しますか？
+          </AlertDialogTitle>
+          <AlertDialogDescription>
+            この操作は取り消せません。評価期間の全データが完全に削除されます。
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>キャンセル</AlertDialogCancel>
+          <AlertDialogAction className="bg-destructive! hover:bg-destructive/90!">
+            削除する
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+
+function EditDialog({
+  evaluationPeriodName,
+  evaluationPeriodId,
+  isEditOpen,
+  setIsEditOpen,
+}: EditDialogProps) {
+  return (
+    <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle className="mb-2">
+            <div className="flex items-center">
+              <Icons.Pencil className="h-4 w-4 mr-2" />
+              <span>評価期間名を編集</span>
+            </div>
+          </DialogTitle>
+        </DialogHeader>
+        <form className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="name">評価期間名</Label>
+            <Input id="name" type="text" />
+          </div>
+          <div className="text-center">
+            <Button type="submit" size="lg" className="w-full sm:w-28">
+              更新
+            </Button>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+export default function EvaluationPeriodMenu() {
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  return (
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" size="icon" className="size-8">
+            <Icons.EllipsisVerticalIcon className="size-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onSelect={() => setIsEditOpen(true)}
+          >
+            <Icons.Pencil className="mr-2 size-4" />
+            編集
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="cursor-pointer text-destructive"
+            onSelect={() => setIsDeleteOpen(true)}
+          >
+            <Icons.Trash2 className="mr-2 size-4" />
+            削除
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <DeleteDialog
+        evaluationPeriodName="2026年3月〜4月"
+        evaluationPeriodId="2"
+        isDeleteOpen={isDeleteOpen}
+        setIsDeleteOpen={setIsDeleteOpen}
+      />
+
+      <EditDialog
+        evaluationPeriodName="2026年3月〜4月"
+        evaluationPeriodId="2"
+        isEditOpen={isEditOpen}
+        setIsEditOpen={setIsEditOpen}
+      />
+    </>
+  );
+}
