@@ -11,9 +11,9 @@ import { toast } from 'sonner';
 import { Icons } from '@/components/icon/icons';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tables } from '../../../../../../../types/supabase';
+import { Tables } from '../../../../../../types/supabase';
 import { EditStaffInput, editStaffSchema } from '@/lib/validations/schemas';
-import { editStaff } from '../../actions';
+import { editStaff } from '../actions';
 import { getErrorMessage } from '@/lib/utils/error-message';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
 import {

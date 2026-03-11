@@ -1,5 +1,5 @@
 import BackPageLink from '@/components/shared/back-page-link';
-import StaffProfile from '../components/shared/staff-profile';
+import StaffProfile from '../components/staff-profile';
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import EvaluationSection from '../../components/evaluation-section';
