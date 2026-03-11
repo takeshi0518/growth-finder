@@ -29,9 +29,16 @@ import {
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Tables } from '../../../../../types/supabase';
-import { deleteEvaluationPeriod } from '../actions';
+import { deleteEvaluationPeriod, editEvaluationPeriod } from '../actions';
 import { toast } from 'sonner';
 import { getErrorMessage } from '@/lib/utils/error-message';
+import { useForm } from 'react-hook-form';
+import {
+  EditEvaluationPeriodInput,
+  editEvaluationPeriodSchema,
+} from '@/lib/validations/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
+import LoaderCircleIcon from '@/components/shared/loader-circle';
 
 type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id' | 'name'>;
 
@@ -101,6 +108,29 @@ function EditDialog({
   isEditOpen,
   setIsEditOpen,
 }: EditDialogProps) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<EditEvaluationPeriodInput>({
+    resolver: zodResolver(editEvaluationPeriodSchema),
+    defaultValues: {
+      name: evaluationPeriodName,
+    },
+  });
+
+  const onSubmit = async (data: EditEvaluationPeriodInput) => {
+    try {
+      await editEvaluationPeriod(data, evaluationPeriodId);
+      toast.success('評価期間を変更しました');
+      setIsEditOpen(false);
+    } catch (error) {
+      toast.error('評価期間の更新に失敗しました', {
+        description: getErrorMessage(error),
+      });
+    }
+  };
+
   return (
     <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
       <DialogContent>
@@ -112,14 +142,22 @@ function EditDialog({
             </div>
           </DialogTitle>
         </DialogHeader>
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2">
             <Label htmlFor="name">評価期間名</Label>
-            <Input id="name" type="text" defaultValue={evaluationPeriodName} />
+            <Input id="name" type="text" {...register('name')} />
+            {errors.name && (
+              <p className="text-sm text-red-500">{errors.name?.message}</p>
+            )}
           </div>
           <div className="text-center">
-            <Button type="submit" size="lg" className="w-full sm:w-28">
-              更新
+            <Button
+              type="submit"
+              size="lg"
+              className="w-full sm:w-28"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? <LoaderCircleIcon /> : '更新'}
             </Button>
           </div>
         </form>
