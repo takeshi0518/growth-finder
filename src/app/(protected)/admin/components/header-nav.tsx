@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import MobileMenu from '../../../../components/shared/mobile-menu';
-import { useAuth } from '@/app/hooks/use-auth';
+import { useAuth } from '@/hooks/use-auth';
 import { cn } from '@/lib/utils';
 import { Button } from '../../../../components/ui/button';
 import { Icons } from '../../../../components/icon/icons';

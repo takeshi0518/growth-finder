@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useAuth } from '@/app/hooks/use-auth';
+import { useAuth } from '@/hooks/use-auth';
 import { cn } from '@/lib/utils';
 import MainLogo from '@/components/shared/main-logo';
 import { adminNavItems } from '../nav-items';
