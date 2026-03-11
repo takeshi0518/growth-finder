@@ -1,9 +1,9 @@
-import CallToAction from '@/components/landing/call-to-action';
-import Feature from '@/components/landing/feature';
-import Footer from '@/components/landing/footer';
-import Hero from '@/components/landing/hero';
-import RealScreen from '@/components/landing/real-screen';
-import Usage from '@/components/landing/usage';
+import CallToAction from './components/call-to-action';
+import Feature from './components/feature';
+import Footer from './components/footer';
+import Hero from './components/hero';
+import RealScreen from './components/real-screen';
+import Usage from './components/usage';
 
 export default function LandingPage() {
   return (

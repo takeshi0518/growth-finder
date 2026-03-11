@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import Container from '../shared/container';
+import Container from '../../app/(landing)/components/container';
 import MainLogo from '../shared/main-logo';
 import HeaderNav from './header-nav';
 

@@ -1,4 +1,4 @@
-import Header from '@/components/landing/header';
+import Header from '@/app/(landing)/components/header';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {

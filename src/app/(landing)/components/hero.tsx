@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
-import Container from '../shared/container';
+import Container from './container';
 
 export default function Hero() {
   return (
