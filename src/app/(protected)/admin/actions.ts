@@ -31,7 +31,6 @@ export async function createEvaluationPeriod(
 
   const { error } = await supabase.from('evaluation_periods').insert({
     name: validated.data.name,
-    is_current: true,
     organization_id: adminProfile.organization_id!,
   });
   if (error) throw new Error('評価期間の作成に失敗しました');
