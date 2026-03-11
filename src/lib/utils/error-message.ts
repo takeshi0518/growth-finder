@@ -15,6 +15,7 @@ export function getErrorMessage(error: unknown): string {
 //エラーメッセージの分離
 function translateErrorMessage(message: string): string {
   const customErrors = [
+    'この操作を行う権限がありません',
     '管理者アカウントでログインしてください',
     'スタッフアカウントでログインしてください',
     'ユーザー情報の取得に失敗しました',

@@ -1,6 +1,7 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
+import { requireAdmin } from '@/lib/utils/requireAdmin';
 import {
   CreateEvaluationPeriodInput,
   createEvaluationPeriodSchema,
@@ -14,24 +15,14 @@ export async function createEvaluationPeriod(
 ) {
   const supabase = await createClient();
 
+  const { profile } = await requireAdmin(supabase);
+
   const validated = createEvaluationPeriodSchema.safeParse(data);
   if (!validated.success) throw new Error('入力内容を確認してください');
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) throw new Error('認証エラーが発生しました');
-
-  const { data: adminProfile } = await supabase
-    .from('profiles')
-    .select('organization_id')
-    .eq('id', user.id)
-    .single();
-  if (!adminProfile) throw new Error('組織情報の取得に失敗しました');
-
   const { error } = await supabase.from('evaluation_periods').insert({
     name: validated.data.name,
-    organization_id: adminProfile.organization_id!,
+    organization_id: profile.organization_id!,
   });
   if (error) throw new Error('評価期間の作成に失敗しました');
 
@@ -41,10 +32,7 @@ export async function createEvaluationPeriod(
 export async function deleteEvaluationPeriod(evaluationId: string) {
   const supabase = await createClient();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) throw new Error('認証エラーが発生しました');
+  await requireAdmin(supabase);
 
   const { error } = await supabase
     .from('evaluation_periods')
@@ -62,13 +50,10 @@ export async function editEvaluationPeriod(
 ) {
   const supabase = await createClient();
 
+  await requireAdmin(supabase);
+
   const validated = editEvaluationPeriodSchema.safeParse(data);
   if (!validated.success) throw new Error('入力内容を確認してください');
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) throw new Error('認証エラーが発生しました');
 
   const { error } = await supabase
     .from('evaluation_periods')
