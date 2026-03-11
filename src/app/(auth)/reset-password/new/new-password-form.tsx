@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useAuth } from '../../hooks/use-auth';
+import { useAuth } from '../../../hooks/use-auth';
 import { NewPasswordInput, newPasswordSchema } from '@/lib/validations/schemas';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';

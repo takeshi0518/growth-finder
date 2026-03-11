@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/icon/icons';
 import { SignupInput, signupSchema } from '@/lib/validations/schemas';
-import { useAuth } from '../hooks/use-auth';
+import { useAuth } from '../../hooks/use-auth';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
 
 export default function SignupForm() {

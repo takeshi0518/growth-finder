@@ -9,7 +9,7 @@ import {
   ResetPasswordEmailInput,
   resetPasswordEmailSchema,
 } from '@/lib/validations/schemas';
-import { useAuth } from '../hooks/use-auth';
+import { useAuth } from '../../hooks/use-auth';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
 
 export default function ResetForm() {
