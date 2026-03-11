@@ -30,7 +30,7 @@ export async function createEvaluationPeriod(
   if (!adminProfile) throw new Error('組織情報の取得に失敗しました');
 
   const { error } = await supabase.from('evaluation_periods').insert({
-    name: data.name,
+    name: validated.data.name,
     is_current: true,
     organization_id: adminProfile.organization_id!,
   });
@@ -74,7 +74,7 @@ export async function editEvaluationPeriod(
   const { error } = await supabase
     .from('evaluation_periods')
     .update({
-      name: data.name,
+      name: validated.data.name,
     })
     .eq('id', evaluationPeriodId);
 
