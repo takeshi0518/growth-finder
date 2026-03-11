@@ -3,17 +3,17 @@ import CreateEvaluationPeriodDialog from './create-evaluation-period-dialog';
 import { Icons } from '@/components/icon/icons';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import EvaluationPeriodMenu from './evaluation-period-menu';
+import { Tables } from '../../../../../types/supabase';
 
-const dummyData = [
-  { name: '2025年3月〜2025年4月' },
-  { name: '2025年5月〜2025年6月' },
-  { name: '2025年7月〜2025年8月' },
-  { name: '2025年10月〜2025年11月' },
-  { name: '2026年1月〜2026年2月' },
-  { name: '2026年4月〜2026年5月' },
-];
+type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id' | 'name'>;
 
-export default function EvaluationPeriodList() {
+type EvaluationPeriodListProps = {
+  evaluationPeriods: EvaluationPeriod[];
+};
+
+export default function EvaluationPeriodList({
+  evaluationPeriods,
+}: EvaluationPeriodListProps) {
   return (
     <Card>
       <CardHeader className="flex justify-between items-center">
@@ -26,13 +26,16 @@ export default function EvaluationPeriodList() {
       <CardContent>
         <ScrollArea type="auto" className="max-h-44 rounded-md border">
           <div className="p-4">
-            {dummyData.map((period) => (
+            {evaluationPeriods.length === 0 && (
+              <p className="text-sm">評価期間がありません</p>
+            )}
+            {evaluationPeriods.map((period) => (
               <p
-                key={period.name}
+                key={period.id}
                 className="flex justify-between items-center text-sm p-2 border-b"
               >
                 {period.name}
-                <EvaluationPeriodMenu />
+                <EvaluationPeriodMenu evaluationPeriod={period} />
               </p>
             ))}
           </div>

@@ -170,6 +170,13 @@ export const createEvaluationPeriodSchema = z.object({
     .max(50, '評価期間名は50文字以内で入力してください'),
 });
 
+export const editEvaluationPeriodSchema = z.object({
+  name: z
+    .string()
+    .min(1, '評価期間名を入力してください')
+    .max(50, '評価期間名は50文字以内で入力してください'),
+});
+
 export type SignupInput = z.infer<typeof signupSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;
@@ -184,4 +191,7 @@ export type EditStaffInput = z.infer<typeof editStaffSchema>;
 export type EditStaffPasswordInput = z.infer<typeof editStaffPasswordSchema>;
 export type CreateEvaluationPeriodInput = z.infer<
   typeof createEvaluationPeriodSchema
+>;
+export type EditEvaluationPeriodInput = z.infer<
+  typeof editEvaluationPeriodSchema
 >;

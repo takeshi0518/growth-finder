@@ -18,10 +18,15 @@ export default async function AdminPage() {
     .single();
   if (!profile) redirect('/login');
 
+  const { data: evaluationPeriods } = await supabase
+    .from('evaluation_periods')
+    .select('id, name');
+  if (!evaluationPeriods) return;
+
   return (
     <div className="mt-20 md:mt-0 max-w-7xl mx-auto w-full py-6 px-4 space-y-6">
       <AdminProfile profile={profile} />
-      <EvaluationPeriodList />
+      <EvaluationPeriodList evaluationPeriods={evaluationPeriods} />
     </div>
   );
 }

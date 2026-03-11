@@ -28,6 +28,23 @@ import {
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import { Tables } from '../../../../../types/supabase';
+import { deleteEvaluationPeriod, editEvaluationPeriod } from '../actions';
+import { toast } from 'sonner';
+import { getErrorMessage } from '@/lib/utils/error-message';
+import { useForm } from 'react-hook-form';
+import {
+  EditEvaluationPeriodInput,
+  editEvaluationPeriodSchema,
+} from '@/lib/validations/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
+import LoaderCircleIcon from '@/components/shared/loader-circle';
+
+type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id' | 'name'>;
+
+type EvaluationPeriodMenuProps = {
+  evaluationPeriod: EvaluationPeriod;
+};
 
 type DeleteDialogProps = {
   evaluationPeriodName: string;
@@ -49,6 +66,17 @@ function DeleteDialog({
   isDeleteOpen,
   setIsDeleteOpen,
 }: DeleteDialogProps) {
+  const handleDelete = async () => {
+    try {
+      await deleteEvaluationPeriod(evaluationPeriodId);
+      toast.success('評価期間を削除しました');
+    } catch (error) {
+      toast.error('評価期間の削除に失敗しました', {
+        description: getErrorMessage(error),
+      });
+    }
+  };
+
   return (
     <AlertDialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
       <AlertDialogContent>
@@ -62,7 +90,10 @@ function DeleteDialog({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>キャンセル</AlertDialogCancel>
-          <AlertDialogAction className="bg-destructive! hover:bg-destructive/90!">
+          <AlertDialogAction
+            onClick={handleDelete}
+            className="bg-destructive! hover:bg-destructive/90!"
+          >
             削除する
           </AlertDialogAction>
         </AlertDialogFooter>
@@ -77,6 +108,29 @@ function EditDialog({
   isEditOpen,
   setIsEditOpen,
 }: EditDialogProps) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<EditEvaluationPeriodInput>({
+    resolver: zodResolver(editEvaluationPeriodSchema),
+    defaultValues: {
+      name: evaluationPeriodName,
+    },
+  });
+
+  const onSubmit = async (data: EditEvaluationPeriodInput) => {
+    try {
+      await editEvaluationPeriod(data, evaluationPeriodId);
+      toast.success('評価期間を変更しました');
+      setIsEditOpen(false);
+    } catch (error) {
+      toast.error('評価期間の更新に失敗しました', {
+        description: getErrorMessage(error),
+      });
+    }
+  };
+
   return (
     <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
       <DialogContent>
@@ -88,14 +142,22 @@ function EditDialog({
             </div>
           </DialogTitle>
         </DialogHeader>
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2">
             <Label htmlFor="name">評価期間名</Label>
-            <Input id="name" type="text" />
+            <Input id="name" type="text" {...register('name')} />
+            {errors.name && (
+              <p className="text-sm text-red-500">{errors.name?.message}</p>
+            )}
           </div>
           <div className="text-center">
-            <Button type="submit" size="lg" className="w-full sm:w-28">
-              更新
+            <Button
+              type="submit"
+              size="lg"
+              className="w-full sm:w-28"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? <LoaderCircleIcon /> : '更新'}
             </Button>
           </div>
         </form>
@@ -104,7 +166,9 @@ function EditDialog({
   );
 }
 
-export default function EvaluationPeriodMenu() {
+export default function EvaluationPeriodMenu({
+  evaluationPeriod,
+}: EvaluationPeriodMenuProps) {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   return (
@@ -134,15 +198,15 @@ export default function EvaluationPeriodMenu() {
       </DropdownMenu>
 
       <DeleteDialog
-        evaluationPeriodName="2026年3月〜4月"
-        evaluationPeriodId="2"
+        evaluationPeriodName={evaluationPeriod.name}
+        evaluationPeriodId={evaluationPeriod.id}
         isDeleteOpen={isDeleteOpen}
         setIsDeleteOpen={setIsDeleteOpen}
       />
 
       <EditDialog
-        evaluationPeriodName="2026年3月〜4月"
-        evaluationPeriodId="2"
+        evaluationPeriodName={evaluationPeriod.name}
+        evaluationPeriodId={evaluationPeriod.id}
         isEditOpen={isEditOpen}
         setIsEditOpen={setIsEditOpen}
       />
