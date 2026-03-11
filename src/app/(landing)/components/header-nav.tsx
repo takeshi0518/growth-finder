@@ -3,7 +3,7 @@
 import Link from 'next/link';
 
 import MobileMenu from '../../../components/shared/mobile-menu';
-import { useSmoothScroll } from '@/app/hooks/use-smooth-scroll';
+import { useSmoothScroll } from '@/app/(landing)/hooks/use-smooth-scroll';
 
 const guestNavItems = [
   { href: '#features', label: '機能' },
