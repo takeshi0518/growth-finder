@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import { useAuth } from '@/app/(auth)/hooks/use-auth';
 import { cn } from '@/lib/utils';
 import MainLogo from '@/components/shared/main-logo';
-import { adminNavItems } from './nav-items';
+import { adminNavItems } from '../nav-items';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/icon/icons';

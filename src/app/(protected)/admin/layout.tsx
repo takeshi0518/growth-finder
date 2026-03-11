@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 import Header from './components/header';
-import Sidebar from './sidebar';
+import Sidebar from './components/sidebar';
 
 export const metadata: Metadata = {
   title: 'Growth Finder',
