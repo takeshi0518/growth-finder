@@ -1,7 +1,7 @@
 import { LucideIcon } from 'lucide-react';
 import { Icons } from '@/components/icon/icons';
-import SectionTitle from '../shared/section-title';
-import Container from '../shared/container';
+import SectionTitle from './section-title';
+import Container from './container';
 
 const features = [
   {

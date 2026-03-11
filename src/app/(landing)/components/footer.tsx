@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
-import Container from '../shared/container';
-import { Icons } from '../icon/icons';
+import Container from './container';
+import { Icons } from '../../../components/icon/icons';
 
 const footerLinks = {
   sns: [

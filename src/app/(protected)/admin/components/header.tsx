@@ -1,6 +1,5 @@
 import { cn } from '@/lib/utils';
-import Container from '../shared/container';
-import MainLogo from '../shared/main-logo';
+import MainLogo from '../../../../components/shared/main-logo';
 import HeaderNav from './header-nav';
 
 type HeaderProps = {
@@ -15,11 +14,11 @@ export default function Header({ className }: HeaderProps) {
         className
       )}
     >
-      <Container className="px-5 sm:px-8 h-14 md:h-16 flex items-center justify-between bg-background/80 shadow-sm backdrop-blur-sm rounded-2xl border">
+      <div className="container mx-auto px-5 sm:px-8 h-14 md:h-16 flex items-center justify-between bg-background/80 shadow-sm backdrop-blur-sm rounded-2xl border">
         <MainLogo />
 
         <HeaderNav />
-      </Container>
+      </div>
     </header>
   );
 }

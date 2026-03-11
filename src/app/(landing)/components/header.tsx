@@ -1,6 +1,6 @@
-import HeaderNav from '@/components/landing/header-nav';
-import MainLogo from '../shared/main-logo';
-import Container from '../shared/container';
+import HeaderNav from '@/app/(landing)/components/header-nav';
+import MainLogo from '../../../components/shared/main-logo';
+import Container from './container';
 
 export default function Header() {
   return (

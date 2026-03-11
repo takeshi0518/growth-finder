@@ -3,11 +3,11 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import MobileMenu from '../shared/mobile-menu';
-import { useAuth } from '@/app/(auth)/hooks/use-auth';
+import MobileMenu from '../../../../components/shared/mobile-menu';
+import { useAuth } from '@/hooks/use-auth';
 import { cn } from '@/lib/utils';
-import { Button } from '../ui/button';
-import { Icons } from '../icon/icons';
+import { Button } from '../../../../components/ui/button';
+import { Icons } from '../../../../components/icon/icons';
 import { adminNavItems } from '@/app/(protected)/admin/nav-items';
 
 function AdminNavMobile({ onClose }: { onClose: () => void }) {
@@ -17,7 +17,7 @@ function AdminNavMobile({ onClose }: { onClose: () => void }) {
   return (
     <>
       {adminNavItems.map((item) => {
-        const Icon = item.icon; 
+        const Icon = item.icon;
 
         const isActive =
           item.href === '/admin'
