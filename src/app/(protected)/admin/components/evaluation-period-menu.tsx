@@ -29,6 +29,9 @@ import {
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Tables } from '../../../../../types/supabase';
+import { deleteEvaluationPeriod } from '../actions';
+import { toast } from 'sonner';
+import { getErrorMessage } from '@/lib/utils/error-message';
 
 type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id' | 'name'>;
 
@@ -56,6 +59,17 @@ function DeleteDialog({
   isDeleteOpen,
   setIsDeleteOpen,
 }: DeleteDialogProps) {
+  const handleDelete = async () => {
+    try {
+      await deleteEvaluationPeriod(evaluationPeriodId);
+      toast.success('評価期間を削除しました');
+    } catch (error) {
+      toast.error('評価期間の削除に失敗しました', {
+        description: getErrorMessage(error),
+      });
+    }
+  };
+
   return (
     <AlertDialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
       <AlertDialogContent>
@@ -69,7 +83,10 @@ function DeleteDialog({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>キャンセル</AlertDialogCancel>
-          <AlertDialogAction className="bg-destructive! hover:bg-destructive/90!">
+          <AlertDialogAction
+            onClick={handleDelete}
+            className="bg-destructive! hover:bg-destructive/90!"
+          >
             削除する
           </AlertDialogAction>
         </AlertDialogFooter>

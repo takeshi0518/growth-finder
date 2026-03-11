@@ -33,6 +33,7 @@ function translateErrorMessage(message: string): string {
     'スタッフの更新に失敗しました',
     'メールアドレスの更新に失敗しました',
     '評価期間の作成に失敗しました',
+    '評価期間の削除に失敗しました',
   ];
 
   if (customErrors.includes(message)) {

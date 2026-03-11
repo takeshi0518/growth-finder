@@ -36,3 +36,21 @@ export async function createEvaluationPeriod(
 
   revalidatePath('/admin');
 }
+
+export async function deleteEvaluationPeriod(evaluationId: string) {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error('認証エラーが発生しました');
+
+  const { error } = await supabase
+    .from('evaluation_periods')
+    .delete()
+    .eq('id', evaluationId);
+
+  if (error) throw new Error('評価期間の削除に失敗しました');
+
+  revalidatePath('/admin');
+}
