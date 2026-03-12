@@ -1,9 +1,9 @@
+import Image from 'next/image';
+
 import { Tables } from '../../../../../types/supabase';
 import { Icons } from '@/components/icon/icons';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import Image from 'next/image';
-import CreateEvaluationPeriodDialog from './create-evaluation-period-dialog';
 
 type Profile = Pick<
   Tables<'profiles'>,

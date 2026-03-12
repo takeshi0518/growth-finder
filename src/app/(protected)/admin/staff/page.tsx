@@ -1,10 +1,10 @@
-import Link from 'next/link';
+import { redirect } from 'next/navigation';
+
 import { Icons } from '@/components/icon/icons';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import StaffList from './components/staff-list';
 import StaffAddDialog from './components/staff-add-dialog';
 import { createClient } from '@/lib/supabase/server';
-import { redirect } from 'next/navigation';
 import BackPageLink from '@/components/shared/back-page-link';
 
 export default async function StaffManagementPage() {
