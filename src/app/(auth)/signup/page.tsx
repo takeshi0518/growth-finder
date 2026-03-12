@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import {
   Card,
   CardContent,
@@ -6,10 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import Link from 'next/link';
-
 import SignupForm from './signup-form';
-import { Icons } from '@/components/icon/icons';
 import BackPageLink from '@/components/shared/back-page-link';
 
 export default function Signup() {
