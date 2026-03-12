@@ -23,6 +23,8 @@ export default async function SettingPage() {
     .eq('id', user.id)
     .single();
 
+  if (!profile) redirect('/login');
+
   return (
     <div className="mt-20 md:mt-0 max-w-7xl mx-auto w-full py-6 px-4 space-y-6">
       <BackPageLink href="/admin" label="ダッシュボードへ戻る" />
@@ -36,7 +38,7 @@ export default async function SettingPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <SettingForm profile={profile} userId={user.id} />
+            <SettingForm profile={profile}/>
           </CardContent>
         </Card>
 

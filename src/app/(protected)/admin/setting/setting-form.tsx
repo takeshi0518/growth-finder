@@ -29,17 +29,16 @@ import { uploadAdminAvatar } from '@/lib/utils/upload';
 type Profile = Pick<
   Tables<'profiles'>,
   'name' | 'store_name' | 'email' | 'avatar_url'
-> | null;
+>;
 
 type SettingFormProps = {
   profile: Profile;
-  userId: string;
 };
 
 export default function SettingForm({ profile }: SettingFormProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(
-    profile?.avatar_url ?? null
+    profile.avatar_url ?? null
   );
   const [isUploading, setIsUploading] = useState(false);
 
@@ -80,9 +79,9 @@ export default function SettingForm({ profile }: SettingFormProps) {
   } = useForm<UpdateProfileInput>({
     resolver: zodResolver(updateProfileSchema),
     defaultValues: {
-      name: profile?.name ?? '',
-      storeName: profile?.store_name ?? '',
-      email: profile?.email ?? '',
+      name: profile.name ?? '',
+      storeName: profile.store_name ?? '',
+      email: profile.email ?? '',
     },
   });
 
