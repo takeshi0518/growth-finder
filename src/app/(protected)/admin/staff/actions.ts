@@ -2,6 +2,7 @@
 
 import { createAdminClient } from '@/lib/supabase/admin';
 import { createClient } from '@/lib/supabase/server';
+import { requireAdmin } from '@/lib/utils/requireAdmin';
 import {
   AddStaffInput,
   addStaffSchema,
@@ -16,29 +17,17 @@ export async function addStaff(data: AddStaffInput) {
   const supabase = await createClient();
   const supabaseAdmin = createAdminClient();
 
+  const { profile: adminProfile } = await requireAdmin(supabase);
+
   const validated = addStaffSchema.safeParse(data);
   if (!validated.success) throw new Error('入力内容を確認してください');
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) throw new Error('認証エラーが発生しました');
-
-  const { data: adminProfile } = await supabase
-    .from('profiles')
-    .select('organization_id, store_name')
-    .eq('id', user.id)
-    .single();
-  if (!adminProfile?.organization_id) {
-    throw new Error('組織情報の取得に失敗しました');
-  }
-
   const { error } = await supabaseAdmin.auth.admin.createUser({
-    email: data.email,
-    password: data.password,
+    email: validated.data.email,
+    password: validated.data.password,
     email_confirm: true,
     user_metadata: {
-      name: data.name,
+      name: validated.data.name,
       role: 'staff',
       organization_id: adminProfile.organization_id,
       store_name: adminProfile.store_name,
@@ -55,10 +44,7 @@ export async function deleteStaff(staffId: string) {
   const supabase = await createClient();
   const supabaseAdmin = createAdminClient();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) throw new Error('認証エラーが発生しました');
+  await requireAdmin(supabase);
 
   const { error } = await supabaseAdmin.auth.admin.deleteUser(staffId);
   if (error) throw new Error('スタッフの削除に失敗しました');
@@ -70,25 +56,22 @@ export async function editStaff(data: EditStaffInput, staffId: string) {
   const supabase = await createClient();
   const supabaseAdmin = createAdminClient();
 
+  await requireAdmin(supabase);
+
   const validated = editStaffSchema.safeParse(data);
   if (!validated.success) throw new Error('入力内容を確認してください');
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) throw new Error('認証エラーが発生しました');
-
   const { error: authError } = await supabaseAdmin.auth.admin.updateUserById(
     staffId,
-    { email: data.email }
+    { email: validated.data.email }
   );
   if (authError) throw new Error('メールアドレスの更新に失敗しました');
 
   const { error } = await supabase
     .from('profiles')
     .update({
-      name: data.name,
-      email: data.email,
+      name: validated.data.name,
+      email: validated.data.email,
     })
     .eq('id', staffId);
 
@@ -104,16 +87,13 @@ export async function editStaffPassword(
   const supabase = await createClient();
   const supabaseAdmin = createAdminClient();
 
+  await requireAdmin(supabase);
+
   const validated = editStaffPasswordSchema.safeParse(data);
   if (!validated.success) throw new Error('入力内容を確認してください');
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) throw new Error('認証エラーが発生しました');
-
   const { error } = await supabaseAdmin.auth.admin.updateUserById(staffId, {
-    password: data.password,
+    password: validated.data.password,
   });
 
   if (error) throw new Error('パスワードの更新に失敗しました');
