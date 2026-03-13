@@ -8,14 +8,17 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Icons } from '@/components/icon/icons';
+import { Tables } from '../../../../../types/supabase';
 
-const dummyPeriods = [
-  { id: '1', name: '2025年4月〜5月' },
-  { id: '2', name: '2025年6月〜7月' },
-  { id: '3', name: '2025年8月〜9月' },
-];
+type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id' | 'name'>;
 
-export default function EvaluationPeriodSelect() {
+type EvaluationPeriodSelectProps = {
+  evaluationPeriods: EvaluationPeriod[];
+};
+
+export default function EvaluationPeriodSelect({
+  evaluationPeriods,
+}: EvaluationPeriodSelectProps) {
   return (
     <Select>
       <SelectTrigger size="default">
@@ -25,10 +28,10 @@ export default function EvaluationPeriodSelect() {
       <SelectContent>
         <SelectGroup>
           <SelectLabel>評価期間を選択</SelectLabel>
-          {dummyPeriods.map((period) => (
+          {evaluationPeriods.map((period) => (
             <SelectItem
               key={period.id}
-              value={period.name}
+              value={period.id}
               className="cursor-pointer"
             >
               {period.name}
