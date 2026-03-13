@@ -6,6 +6,7 @@ import StaffList from './components/staff-list';
 import StaffAddDialog from './components/staff-add-dialog';
 import { createClient } from '@/lib/supabase/server';
 import BackPageLink from '@/components/shared/back-page-link';
+import AdminContainer from '../components/admin-contaimer';
 
 export default async function StaffManagementPage() {
   const supabase = await createClient();
@@ -27,7 +28,7 @@ export default async function StaffManagementPage() {
     .eq('role', 'staff');
 
   return (
-    <div className="mt-20 md:mt-0 max-w-7xl mx-auto w-full py-6 px-4 space-y-6">
+    <AdminContainer>
       <BackPageLink href="/admin" label="ダッシュボードへ戻る" />
 
       <Card>
@@ -43,6 +44,6 @@ export default async function StaffManagementPage() {
           <StaffList staffs={staffs ?? []} />
         </CardContent>
       </Card>
-    </div>
+    </AdminContainer>
   );
 }
