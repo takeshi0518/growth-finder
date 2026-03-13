@@ -66,3 +66,24 @@ export async function editEvaluationPeriod(
 
   revalidatePath('/admin');
 }
+
+export async function switchPeriod(selectId: string) {
+  const supabase = await createClient();
+  const { profile } = await requireAdmin(supabase);
+
+  const { error: resetError } = await supabase
+    .from('evaluation_periods')
+    .update({ is_current: false })
+    .eq('organization_id', profile.organization_id!);
+
+  if (resetError) throw new Error('評価期間の切り替えに失敗しました');
+
+  const { error } = await supabase
+    .from('evaluation_periods')
+    .update({ is_current: true })
+    .eq('id', selectId);
+
+  if (error) throw new Error('評価期間の切り替えに失敗しました');
+
+  revalidatePath('/admin');
+}
