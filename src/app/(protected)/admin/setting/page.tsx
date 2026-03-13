@@ -6,6 +6,7 @@ import SettingForm from './setting-form';
 import PasswordForm from './password-form';
 import { createClient } from '@/lib/supabase/server';
 import BackPageLink from '@/components/shared/back-page-link';
+import AdminContainer from '../components/admin-contaimer';
 
 export default async function SettingPage() {
   const supabase = await createClient();
@@ -26,9 +27,8 @@ export default async function SettingPage() {
   if (!profile) redirect('/login');
 
   return (
-    <div className="mt-20 md:mt-0 max-w-7xl mx-auto w-full py-6 px-4 space-y-6">
+    <AdminContainer>
       <BackPageLink href="/admin" label="ダッシュボードへ戻る" />
-
       <div className="flex flex-col lg:flex-row lg:items-start gap-6">
         <Card className="lg:flex-1">
           <CardHeader>
@@ -38,7 +38,7 @@ export default async function SettingPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <SettingForm profile={profile}/>
+            <SettingForm profile={profile} />
           </CardContent>
         </Card>
 
@@ -54,6 +54,6 @@ export default async function SettingPage() {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </AdminContainer>
   );
 }
