@@ -1,12 +1,19 @@
 import { Icons } from '@/components/icon/icons';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import EvaluationPeriodSelect from './evaluation-period-select';
+import { Tables } from '../../../../../types/supabase';
+
+type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id' | 'name'>;
 
 type EvaluationSectionProps = {
+  evaluationPeriods: EvaluationPeriod[];
   label: string;
 };
 
-export default function EvaluationSection({ label }: EvaluationSectionProps) {
+export default function EvaluationSection({
+  evaluationPeriods,
+  label,
+}: EvaluationSectionProps) {
   return (
     <Card>
       <CardHeader>
@@ -16,7 +23,7 @@ export default function EvaluationSection({ label }: EvaluationSectionProps) {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <EvaluationPeriodSelect />
+        <EvaluationPeriodSelect evaluationPeriods={evaluationPeriods} />
       </CardContent>
     </Card>
   );

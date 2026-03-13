@@ -36,6 +36,7 @@ function translateErrorMessage(message: string): string {
     '評価期間の作成に失敗しました',
     '評価期間の削除に失敗しました',
     '評価期間の更新に失敗しました',
+    '評価期間の切り替えに失敗しました',
   ];
 
   if (customErrors.includes(message)) {

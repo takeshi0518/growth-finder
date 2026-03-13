@@ -3,6 +3,7 @@ import AdminProfile from './components/admin-profile';
 import { redirect } from 'next/navigation';
 import EvaluationPeriodList from './components/evaluation-period-list';
 import AdminContainer from './components/admin-contaimer';
+import EvaluationSection from './components/evaluation-section';
 
 export default async function AdminPage() {
   const supabase = await createClient();
@@ -30,6 +31,7 @@ export default async function AdminPage() {
         <AdminProfile profile={profile} />
         <EvaluationPeriodList evaluationPeriods={evaluationPeriods} />
       </div>
+      <EvaluationSection evaluationPeriods={evaluationPeriods} label="評価" />
     </AdminContainer>
   );
 }
