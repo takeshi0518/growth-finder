@@ -26,8 +26,10 @@ export default async function AdminPage() {
 
   return (
     <AdminContainer>
-      <AdminProfile profile={profile} />
-      <EvaluationPeriodList evaluationPeriods={evaluationPeriods} />
+      <div className="flex flex-col lg:flex-row gap-6">
+        <AdminProfile profile={profile} />
+        <EvaluationPeriodList evaluationPeriods={evaluationPeriods} />
+      </div>
     </AdminContainer>
   );
 }

@@ -16,7 +16,7 @@ type AdminProfile = {
 
 export default function AdminProfile({ profile }: AdminProfile) {
   return (
-    <Card>
+    <Card className="lg:min-w-80">
       <CardHeader>
         <CardTitle>
           <div className="flex items-center gap-2">
@@ -42,7 +42,7 @@ export default function AdminProfile({ profile }: AdminProfile) {
             )}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-3 text-sm">
+          <div className="grid grid-cols-1 gap-y-3 text-sm">
             <div className="flex gap-2">
               <Label>店舗名</Label>
               <p className="text-muted-foreground">{profile.store_name}</p>

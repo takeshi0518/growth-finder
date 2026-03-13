@@ -54,7 +54,7 @@ export default function CreateEvaluationPeriodDialog() {
       <DialogTrigger asChild>
         <Button size="sm">
           <Icons.CalendarPlus className="w-4 h-4" />
-          <span className="hidden sm:block">評価期間を作成</span>
+          <span className="hidden sm:block">作成</span>
         </Button>
       </DialogTrigger>
 

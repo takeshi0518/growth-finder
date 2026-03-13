@@ -15,7 +15,7 @@ export default function EvaluationPeriodList({
   evaluationPeriods,
 }: EvaluationPeriodListProps) {
   return (
-    <Card>
+    <Card className="flex-1">
       <CardHeader className="flex justify-between items-center">
         <CardTitle className="flex items-center gap-2">
           <Icons.List className="w-4 h-4" />
