@@ -23,11 +23,11 @@ export async function addStaff(data: AddStaffInput) {
   if (!validated.success) throw new Error('入力内容を確認してください');
 
   const { error } = await supabaseAdmin.auth.admin.createUser({
-    email: data.email,
-    password: data.password,
+    email: validated.data.email,
+    password: validated.data.password,
     email_confirm: true,
     user_metadata: {
-      name: data.name,
+      name: validated.data.name,
       role: 'staff',
       organization_id: adminProfile.organization_id,
       store_name: adminProfile.store_name,
@@ -93,7 +93,7 @@ export async function editStaffPassword(
   if (!validated.success) throw new Error('入力内容を確認してください');
 
   const { error } = await supabaseAdmin.auth.admin.updateUserById(staffId, {
-    password: data.password,
+    password: validated.data.password,
   });
 
   if (error) throw new Error('パスワードの更新に失敗しました');
