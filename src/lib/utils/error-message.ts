@@ -15,7 +15,7 @@ export function getErrorMessage(error: unknown): string {
 //エラーメッセージの分離
 function translateErrorMessage(message: string): string {
   const customErrors = [
-    'この操作を行う権限がありません',
+    'この操作を行う権限または、組織設定がありません',
     '管理者アカウントでログインしてください',
     'スタッフアカウントでログインしてください',
     'ユーザー情報の取得に失敗しました',
@@ -37,6 +37,7 @@ function translateErrorMessage(message: string): string {
     '評価期間の削除に失敗しました',
     '評価期間の更新に失敗しました',
     '評価期間の切り替えに失敗しました',
+    '評価期間の取得に失敗しました',
   ];
 
   if (customErrors.includes(message)) {
