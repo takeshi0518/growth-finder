@@ -48,9 +48,13 @@ import {
 } from '@/lib/constants/upload';
 import { uploadStaffAvatar } from '@/lib/utils/upload';
 import Link from 'next/link';
+import { Tables } from '../../../../../../types/supabase';
+
+type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id'> | null;
 
 type StaffCardMenuProps = {
   staff: Staff;
+  selectedPeriod: EvaluationPeriod;
 };
 
 type DeleteDialogProps = {
@@ -337,7 +341,10 @@ function EditPasswordDialog({
   );
 }
 
-export default function StaffCardMenu({ staff }: StaffCardMenuProps) {
+export default function StaffCardMenu({
+  staff,
+  selectedPeriod,
+}: StaffCardMenuProps) {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isEditPasswordOpen, setIsEditPasswordOpen] = useState(false);
@@ -357,10 +364,21 @@ export default function StaffCardMenu({ staff }: StaffCardMenuProps) {
               詳細
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer">
-            <Icons.ClipboardList className="mr-2 size-4" />
-            評価
-          </DropdownMenuItem>
+          {selectedPeriod ? (
+            <DropdownMenuItem asChild className="cursor-pointer">
+              <Link
+                href={`/admin/staff/${staff.id}/evaluation?periodId=${selectedPeriod.id}`}
+              >
+                <Icons.ClipboardList className="mr-2 size-4" />
+                評価
+              </Link>
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem disabled>
+              <Icons.ClipboardList className="mr-2 size-4" />
+              評価(期間未選択)
+            </DropdownMenuItem>
+          )}
           <DropdownMenuItem
             className="cursor-pointer"
             onSelect={() => setIsEditOpen(true)}
