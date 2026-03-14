@@ -6,19 +6,23 @@ import Image from 'next/image';
 
 import StaffCardMenu from './staff-card-menu';
 import { Staff } from '../../../../../../types/staff';
+import { Tables } from '../../../../../../types/supabase';
+
+type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id'> | null;
 
 type StaffCardProps = {
   staff: Staff;
+  selectedPeriod: EvaluationPeriod;
 };
 
-export default function StaffCard({ staff }: StaffCardProps) {
+export default function StaffCard({ staff, selectedPeriod }: StaffCardProps) {
   return (
     <Card className="relative">
       <CardContent className="pb-4">
         <div className="absolute top-3 right-3">
-          <StaffCardMenu staff={staff} />
+          <StaffCardMenu staff={staff} selectedPeriod={selectedPeriod} />
         </div>
-        
+
         <div className="flex justify-center items-center">
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-full bg-card flex items-center justify-center overflow-hidden shrink-0">
