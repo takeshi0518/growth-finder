@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
-import AdminProfile from './components/admin-profile';
 import { redirect } from 'next/navigation';
+import ProfileCard from '@/components/shared/profile-card';
 import EvaluationPeriodList from './components/evaluation-period-list';
 import AdminContainer from './components/admin-contaimer';
 import EvaluationSection from './components/evaluation-section';
@@ -28,7 +28,9 @@ export default async function AdminPage() {
   return (
     <AdminContainer>
       <div className="flex flex-col lg:flex-row gap-6">
-        <AdminProfile profile={profile} />
+        <div className="lg:min-w-80">
+          <ProfileCard profile={profile} />
+        </div>
         <EvaluationPeriodList evaluationPeriods={evaluationPeriods} />
       </div>
       <EvaluationSection evaluationPeriods={evaluationPeriods} label="評価" />

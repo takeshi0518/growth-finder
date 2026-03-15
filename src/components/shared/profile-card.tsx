@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { Tables } from '../../../../../types/supabase';
+import { Tables } from '../../../types/supabase';
 import { Icons } from '@/components/icon/icons';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -10,13 +10,13 @@ type Profile = Pick<
   'name' | 'store_name' | 'role' | 'email' | 'avatar_url'
 >;
 
-type AdminProfile = {
+type ProfileInfo = {
   profile: Profile;
 };
 
-export default function AdminProfile({ profile }: AdminProfile) {
+export default function ProfileCard({ profile }: ProfileInfo) {
   return (
-    <Card className="lg:min-w-80">
+    <Card>
       <CardHeader>
         <CardTitle>
           <div className="flex items-center gap-2">
