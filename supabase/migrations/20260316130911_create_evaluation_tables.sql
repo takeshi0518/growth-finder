@@ -24,6 +24,56 @@ CREATE INDEX staff_id_idx ON evaluations(staff_id);
 CREATE INDEX evaluator_id_idx ON evaluations(evaluator_id);
 CREATE INDEX status_idx ON evaluations(status);
 
+-- RLSを有効化
+ALTER TABLE evaluations ENABLE ROW LEVEL SECURITY;
+
+-- 同じorganization_idの管理者は閲覧可能
+CREATE POLICY "admins can select evaluations"
+ON evaluations FOR SELECT
+TO authenticated
+USING (
+  organization_id = (
+    SELECT organization_id FROM profiles
+    WHERE id = auth.uid()
+  )
+);
+
+-- 同じorganization_idの管理者のみ作成可能
+CREATE POLICY "admins can insert evaluations"
+ON evaluations FOR INSERT
+TO authenticated
+WITH CHECK (
+  organization_id = (
+    SELECT organization_id FROM profiles
+    WHERE id = auth.uid()
+    AND role = 'admin'
+  )
+);
+
+-- 同じorganization_idの管理者のみ更新可能
+CREATE POLICY "admins can update evaluations"
+ON evaluations FOR UPDATE
+TO authenticated
+USING (
+  organization_id = (
+    SELECT organization_id FROM profiles
+    WHERE id = auth.uid()
+    AND role = 'admin'
+  )
+);
+
+-- 同じorganization_idの管理者のみ削除可能
+CREATE POLICY "admins can delete evaluations"
+ON evaluations FOR DELETE
+TO authenticated
+USING (
+  organization_id = (
+    SELECT organization_id FROM profiles
+    WHERE id = auth.uid()
+    AND role = 'admin'
+  )
+);
+
 -- evaluation_sectionsテーブル作成
 CREATE TABLE evaluation_sections (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -45,6 +95,56 @@ CREATE TABLE evaluation_sections (
 CREATE INDEX evaluation_id_idx ON evaluation_sections(evaluation_id);
 CREATE INDEX section_type_idx ON evaluation_sections(section_type);
 
+-- RLSを有効化
+ALTER TABLE evaluation_sections ENABLE ROW LEVEL SECURITY;
+
+-- 同じorganization_idの管理者は閲覧可能
+CREATE POLICY "admins can select evaluation_sections"
+ON evaluation_sections FOR SELECT
+TO authenticated
+USING (
+  organization_id = (
+    SELECT organization_id FROM profiles
+    WHERE id = auth.uid()
+  )
+);
+
+-- 同じorganization_idの管理者のみ作成可能
+CREATE POLICY "admins can insert evaluation_sections"
+ON evaluation_sections FOR INSERT
+TO authenticated
+WITH CHECK (
+  organization_id = (
+    SELECT organization_id FROM profiles
+    WHERE id = auth.uid()
+    AND role = 'admin'
+  )
+);
+
+-- 同じorganization_idの管理者のみ更新可能
+CREATE POLICY "admins can update evaluation_sections"
+ON evaluation_sections FOR UPDATE
+TO authenticated
+USING (
+  organization_id = (
+    SELECT organization_id FROM profiles
+    WHERE id = auth.uid()
+    AND role = 'admin'
+  )
+);
+
+-- 同じorganization_idの管理者のみ削除可能
+CREATE POLICY "admins can delete evaluation_sections"
+ON evaluation_sections FOR DELETE
+TO authenticated
+USING (
+  organization_id = (
+    SELECT organization_id FROM profiles
+    WHERE id = auth.uid()
+    AND role = 'admin'
+  )
+);
+
 -- evaluation_itemsテーブル作成
 CREATE TABLE evaluation_items (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -63,3 +163,53 @@ CREATE TABLE evaluation_items (
 -- インデックス作成
 CREATE INDEX evaluation_section_id_idx ON evaluation_items(evaluation_section_id);
 CREATE INDEX category_idx ON evaluation_items(category);
+
+-- RLSを有効化
+ALTER TABLE evaluation_items ENABLE ROW LEVEL SECURITY;
+
+-- 同じorganization_idの管理者は閲覧可能
+CREATE POLICY "admins can select evaluation_items"
+ON evaluation_items FOR SELECT
+TO authenticated
+USING (
+  organization_id = (
+    SELECT organization_id FROM profiles
+    WHERE id = auth.uid()
+  )
+);
+
+-- 同じorganization_idの管理者のみ作成可能
+CREATE POLICY "admins can insert evaluation_items"
+ON evaluation_items FOR INSERT
+TO authenticated
+WITH CHECK (
+  organization_id = (
+    SELECT organization_id FROM profiles
+    WHERE id = auth.uid()
+    AND role = 'admin'
+  )
+);
+
+-- 同じorganization_idの管理者のみ更新可能
+CREATE POLICY "admins can update evaluation_items"
+ON evaluation_items FOR UPDATE
+TO authenticated
+USING (
+  organization_id = (
+    SELECT organization_id FROM profiles
+    WHERE id = auth.uid()
+    AND role = 'admin'
+  )
+);
+
+-- 同じorganization_idの管理者のみ削除可能
+CREATE POLICY "admins can delete evaluation_items"
+ON evaluation_items FOR DELETE
+TO authenticated
+USING (
+  organization_id = (
+    SELECT organization_id FROM profiles
+    WHERE id = auth.uid()
+    AND role = 'admin'
+  )
+);
