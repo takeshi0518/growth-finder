@@ -2,7 +2,7 @@
 -- evaluationsテーブル作成
 CREATE TABLE evaluations (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  evaluation_period_id UUID NOT NULL REFERENCES evaluaiton_periods(id) ON DELETE CASCADE,
+  evaluation_period_id UUID NOT NULL REFERENCES evaluation_periods(id) ON DELETE CASCADE,
   staff_id UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE, 
   evaluator_id UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
   evaluation_date DATE NOT NULL,
@@ -11,8 +11,15 @@ CREATE TABLE evaluations (
   total_comment TEXT,
   future_vision TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
-  updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
+  updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  UNIQUE (staff_id, evaluation_period_id)
 );
+
+-- インデックス作成
+CREATE INDEX evaluation_period_id_idx ON evaluations(evaluation_period_id);
+CREATE INDEX staff_id_idx ON evaluations(staff_id);
+CREATE INDEX evaluator_id_idx ON evaluations(evaluator_id);
+CREATE INDEX status_idx ON evaluations(status);
 
 -- evaluation_sectionsテーブル作成
 CREATE TABLE evaluation_sections (
@@ -30,6 +37,10 @@ CREATE TABLE evaluation_sections (
   updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
 );
 
+-- インデックス作成
+CREATE INDEX evaluation_id_idx ON evaluation_sections(evaluation_id);
+CREATE INDEX section_type_idx ON evaluation_sections(section_type);
+
 -- evaluation_itemsテーブル作成
 CREATE TABLE evaluation_items (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -44,3 +55,6 @@ CREATE TABLE evaluation_items (
   updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
 );
 
+-- インデックス作成
+CREATE INDEX evaluation_section_id_idx ON evaluation_items(evaluation_section_id);
+CREATE INDEX category_idx ON evaluation_items(category);
