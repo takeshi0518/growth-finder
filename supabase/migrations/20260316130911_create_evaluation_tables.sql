@@ -2,6 +2,7 @@
 -- evaluationsテーブル作成
 CREATE TABLE evaluations (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  organization_id UUID NOT NULL,
   evaluation_period_id UUID NOT NULL REFERENCES evaluation_periods(id) ON DELETE CASCADE,
   staff_id UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE, 
   evaluator_id UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
@@ -15,6 +16,8 @@ CREATE TABLE evaluations (
   UNIQUE (staff_id, evaluation_period_id)
 );
 
+
+
 -- インデックス作成
 CREATE INDEX evaluation_period_id_idx ON evaluations(evaluation_period_id);
 CREATE INDEX staff_id_idx ON evaluations(staff_id);
@@ -25,6 +28,7 @@ CREATE INDEX status_idx ON evaluations(status);
 CREATE TABLE evaluation_sections (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   evaluation_id UUID NOT NULL REFERENCES evaluations(id) ON DELETE CASCADE,
+  organization_id UUID NOT NULL,
   section_type TEXT NOT NULL CHECK (section_type IN ('basic', 'cashier', 'barista')),
   skill_score INTEGER NOT NULL,
   skill_max INTEGER NOT NULL,
@@ -45,6 +49,7 @@ CREATE INDEX section_type_idx ON evaluation_sections(section_type);
 CREATE TABLE evaluation_items (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   evaluation_section_id UUID NOT NULL REFERENCES evaluation_sections(id) ON DELETE CASCADE,
+  organization_id UUID NOT NULL,
   item_key TEXT NOT NULL,
   item_name TEXT NOT NULL,
   category TEXT NOT NULL CHECK (category IN ('skill', 'hospitality', 'cleanliness')),
