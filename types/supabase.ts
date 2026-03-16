@@ -34,6 +34,56 @@ export type Database = {
   }
   public: {
     Tables: {
+      evaluation_items: {
+        Row: {
+          category: string
+          created_at: string
+          evaluation_section_id: string
+          good_points: string[] | null
+          id: string
+          improvement_points: string[] | null
+          item_key: string
+          item_name: string
+          organization_id: string
+          score: number | null
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          evaluation_section_id: string
+          good_points?: string[] | null
+          id?: string
+          improvement_points?: string[] | null
+          item_key: string
+          item_name: string
+          organization_id: string
+          score?: number | null
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          evaluation_section_id?: string
+          good_points?: string[] | null
+          id?: string
+          improvement_points?: string[] | null
+          item_key?: string
+          item_name?: string
+          organization_id?: string
+          score?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "evaluation_items_evaluation_section_id_fkey"
+            columns: ["evaluation_section_id"]
+            isOneToOne: false
+            referencedRelation: "evaluation_sections"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       evaluation_periods: {
         Row: {
           created_at: string
@@ -60,6 +110,129 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      evaluation_sections: {
+        Row: {
+          action_plan: string | null
+          cleanliness_max: number
+          cleanliness_score: number
+          created_at: string
+          evaluation_id: string
+          hospitality_max: number
+          hospitality_score: number
+          id: string
+          organization_id: string
+          section_type: string
+          skill_max: number
+          skill_score: number
+          updated_at: string
+        }
+        Insert: {
+          action_plan?: string | null
+          cleanliness_max: number
+          cleanliness_score: number
+          created_at?: string
+          evaluation_id: string
+          hospitality_max: number
+          hospitality_score: number
+          id?: string
+          organization_id: string
+          section_type: string
+          skill_max: number
+          skill_score: number
+          updated_at?: string
+        }
+        Update: {
+          action_plan?: string | null
+          cleanliness_max?: number
+          cleanliness_score?: number
+          created_at?: string
+          evaluation_id?: string
+          hospitality_max?: number
+          hospitality_score?: number
+          id?: string
+          organization_id?: string
+          section_type?: string
+          skill_max?: number
+          skill_score?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "evaluation_sections_evaluation_id_fkey"
+            columns: ["evaluation_id"]
+            isOneToOne: false
+            referencedRelation: "evaluations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      evaluations: {
+        Row: {
+          action_plan: string | null
+          created_at: string
+          evaluation_date: string
+          evaluation_period_id: string
+          evaluator_id: string
+          future_vision: string | null
+          id: string
+          organization_id: string
+          staff_id: string
+          status: string
+          total_comment: string | null
+          updated_at: string
+        }
+        Insert: {
+          action_plan?: string | null
+          created_at?: string
+          evaluation_date: string
+          evaluation_period_id: string
+          evaluator_id: string
+          future_vision?: string | null
+          id?: string
+          organization_id: string
+          staff_id: string
+          status: string
+          total_comment?: string | null
+          updated_at?: string
+        }
+        Update: {
+          action_plan?: string | null
+          created_at?: string
+          evaluation_date?: string
+          evaluation_period_id?: string
+          evaluator_id?: string
+          future_vision?: string | null
+          id?: string
+          organization_id?: string
+          staff_id?: string
+          status?: string
+          total_comment?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "evaluations_evaluation_period_id_fkey"
+            columns: ["evaluation_period_id"]
+            isOneToOne: false
+            referencedRelation: "evaluation_periods"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "evaluations_evaluator_id_fkey"
+            columns: ["evaluator_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "evaluations_staff_id_fkey"
+            columns: ["staff_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
