@@ -3,6 +3,7 @@
 import { Icons } from '@/components/icon/icons';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import SectionTab from './section-tab';
 
 export default function EvaluationForm() {
   return (
@@ -10,7 +11,7 @@ export default function EvaluationForm() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Icons.ClipboardPenLine className="w-4 h-4" />
-          各セクション評価
+          各セクション評価入力
         </CardTitle>
       </CardHeader>
 
@@ -44,7 +45,9 @@ export default function EvaluationForm() {
           </TabsList>
 
           <TabsContent value="all"></TabsContent>
-          <TabsContent value="basic"></TabsContent>
+          <TabsContent value="basic">
+            <SectionTab />
+          </TabsContent>
           <TabsContent value="cashier"></TabsContent>
           <TabsContent value="barista"></TabsContent>
         </Tabs>

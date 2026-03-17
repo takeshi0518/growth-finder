@@ -3,7 +3,7 @@ import AdminContainer from '../../../components/admin-contaimer';
 import { createClient } from '@/lib/supabase/server';
 import { requireAdmin } from '@/lib/utils/requireAdmin';
 import ProfileCard from '@/components/shared/profile-card';
-import EvaluationForm from './evaluation-form';
+import EvaluationForm from './components/evaluation-form';
 
 type EvaluationPageProps = {
   params: { staffId: string };
