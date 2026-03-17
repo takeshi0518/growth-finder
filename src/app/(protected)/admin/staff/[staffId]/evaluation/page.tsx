@@ -3,6 +3,7 @@ import AdminContainer from '../../../components/admin-contaimer';
 import { createClient } from '@/lib/supabase/server';
 import { requireAdmin } from '@/lib/utils/requireAdmin';
 import ProfileCard from '@/components/shared/profile-card';
+import EvaluationForm from './components/evaluation-form';
 
 type EvaluationPageProps = {
   params: { staffId: string };
@@ -27,6 +28,7 @@ export default async function EvaluationPage({ params }: EvaluationPageProps) {
     <AdminContainer>
       <BackPageLink href="/admin/staff" label="スタッフ一覧へ戻る" />
       <ProfileCard profile={staffProfile} />
+      <EvaluationForm />
     </AdminContainer>
   );
 }
