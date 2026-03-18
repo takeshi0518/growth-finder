@@ -7,19 +7,19 @@ export default function SectionTab() {
         <TabsList variant="line" className="h-auto w-full max-w-lg">
           <TabsTrigger
             value="skill"
-            className="data-[state=active]:after:bg-primary"
+            className="data-[state=active]:after:bg-primary data-[state=active]:after:w-1/2 data-[state=active]:after:mx-auto"
           >
             スキル
           </TabsTrigger>
           <TabsTrigger
             value="hospitality"
-            className="data-[state=active]:after:bg-primary"
+            className="data-[state=active]:after:bg-primary data-[state=active]:after:w-1/2 data-[state=active]:after:mx-auto"
           >
             ホスピタリティ
           </TabsTrigger>
           <TabsTrigger
             value="cleanliness"
-            className="data-[state=active]:after:bg-primary"
+            className="data-[state=active]:after:bg-primary data-[state=active]:after:w-1/2 data-[state=active]:after:mx-auto"
           >
             クレンリネス
           </TabsTrigger>
