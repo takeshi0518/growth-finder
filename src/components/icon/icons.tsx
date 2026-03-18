@@ -31,6 +31,8 @@ import {
 } from 'lucide-react';
 
 import { FaXTwitter, FaGithub } from 'react-icons/fa6';
+import { FaRunning, FaRegCommentDots } from 'react-icons/fa';
+import { PiShootingStar } from 'react-icons/pi';
 import { FcGoogle } from 'react-icons/fc';
 
 export const Icons = {
@@ -66,4 +68,7 @@ export const Icons = {
   FaXTwitter,
   FaGithub,
   FcGoogle,
+  FaRunning,
+  FaRegCommentDots,
+  PiShootingStar,
 };
