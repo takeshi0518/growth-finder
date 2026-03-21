@@ -22,7 +22,7 @@ export default function EvaluationForm() {
         </CardTitle>
       </CardHeader>
       <form>
-        <CardContent>
+        <CardContent className="mb-6">
           <Tabs defaultValue="all">
             <TabsList className="grid grid-cols-2 sm:grid-cols-4 h-auto w-full">
               <TabsTrigger

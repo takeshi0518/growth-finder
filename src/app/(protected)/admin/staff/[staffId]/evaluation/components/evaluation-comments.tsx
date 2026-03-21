@@ -4,7 +4,7 @@ import { Textarea } from '@/components/ui/textarea';
 
 export default function EvaluationComments() {
   return (
-    <div className="space-y-6 w-full max-w-200 mx-auto">
+    <div className="mt-6 space-y-6 w-full max-w-200 mx-auto">
       <div className="space-y-2">
         <Label htmlFor="actionPlan">
           <Icons.FaRunning className="w-4 h-4 text-primary" />
