@@ -1,5 +1,3 @@
-'use client';
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import EvaluationList from './evaluation-list';
 import EvaluationComments from './evaluation-comments';
