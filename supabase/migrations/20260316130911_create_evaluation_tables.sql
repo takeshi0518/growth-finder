@@ -154,6 +154,7 @@ CREATE TABLE evaluation_items (
   item_name TEXT NOT NULL,
   category TEXT NOT NULL CHECK (category IN ('skill', 'hospitality', 'cleanliness')),
   score INTEGER CHECK (score >= 1 AND score <= 4),
+  check_points TEXT[],
   good_points TEXT[],
   improvement_points TEXT[],
   created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
