@@ -16,7 +16,7 @@ export default function SectionTab({
 }: SectionTablProps) {
   return (
     <Tabs defaultValue="skill" className="mt-8">
-      <div className="sticky top-20 md:top-0 bg-card z-10 pb-4">
+      <div className="sticky top-20 md:top-5 bg-card z-10 pb-4">
         <div className="flex justify-center">
           <TabsList variant="line" className="h-auto w-full max-w-lg">
             <TabsTrigger
