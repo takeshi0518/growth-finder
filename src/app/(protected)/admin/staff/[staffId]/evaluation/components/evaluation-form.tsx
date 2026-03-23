@@ -11,8 +11,31 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import SectionTab from './section-tab';
 import { Button } from '@/components/ui/button';
+import { EvaluationItemConstant } from '../../../../../../../../types/evaluations';
 
-export default function EvaluationForm() {
+type EvaluationFormProps = {
+  basicSkillItems: EvaluationItemConstant[];
+  basicHospitalityItems: EvaluationItemConstant[];
+  basicCleanlinessItems: EvaluationItemConstant[];
+  cashierSkillItems: EvaluationItemConstant[];
+  cashierHospitalityItems: EvaluationItemConstant[];
+  cashierCleanlinessItems: EvaluationItemConstant[];
+  baristaSkillItems: EvaluationItemConstant[];
+  baristaHospitalityItems: EvaluationItemConstant[];
+  baristaCleanliness: EvaluationItemConstant[];
+};
+
+export default function EvaluationForm({
+  basicSkillItems,
+  basicHospitalityItems,
+  basicCleanlinessItems,
+  cashierSkillItems,
+  cashierHospitalityItems,
+  cashierCleanlinessItems,
+  baristaSkillItems,
+  baristaHospitalityItems,
+  baristaCleanliness,
+}: EvaluationFormProps) {
   return (
     <Card>
       <CardHeader>
@@ -53,10 +76,26 @@ export default function EvaluationForm() {
 
             <TabsContent value="all"></TabsContent>
             <TabsContent value="basic">
-              <SectionTab />
+              <SectionTab
+                skillItems={basicSkillItems}
+                hospitalityItems={basicHospitalityItems}
+                cleanlinessItems={basicCleanlinessItems}
+              />
             </TabsContent>
-            <TabsContent value="cashier"></TabsContent>
-            <TabsContent value="barista"></TabsContent>
+            <TabsContent value="cashier">
+              <SectionTab
+                skillItems={cashierSkillItems}
+                hospitalityItems={cashierHospitalityItems}
+                cleanlinessItems={cashierCleanlinessItems}
+              />
+            </TabsContent>
+            <TabsContent value="barista">
+              <SectionTab
+                skillItems={baristaSkillItems}
+                hospitalityItems={baristaHospitalityItems}
+                cleanlinessItems={baristaCleanliness}
+              />
+            </TabsContent>
           </Tabs>
         </CardContent>
         <CardFooter className="flex justify-around">
