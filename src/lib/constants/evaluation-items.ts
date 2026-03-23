@@ -1,9 +1,4 @@
-import { Tables } from '../../../types/supabase';
-
-type EvaluationItemConstant = Pick<
-  Tables<'evaluation_items'>,
-  'item_name' | 'category' | 'check_points'
->;
+import { EvaluationItemConstant } from '../../../types/evaluations';
 
 export const BASIC_SKILL_ITEMS: EvaluationItemConstant[] = [
   {
@@ -215,7 +210,7 @@ export const CASHIER_CLEANLINESS: EvaluationItemConstant[] = [
   },
 ];
 
-export const BALISTA_SKILL_ITEMS: EvaluationItemConstant[] = [
+export const BARISTA_SKILL_ITEMS: EvaluationItemConstant[] = [
   {
     item_name: 'ラテ作成/ドージング',
     category: 'skill',
@@ -242,7 +237,7 @@ export const BALISTA_SKILL_ITEMS: EvaluationItemConstant[] = [
     check_points: ['温度', 'キメの細やかさ'],
   },
   {
-    item_name: 'ラテ作成/ラテの見た目',
+    item_name: 'ラテ作成/見た目',
     category: 'skill',
     check_points: ['見た目のきれいさ', 'ツヤがあるか'],
   },
@@ -250,11 +245,6 @@ export const BALISTA_SKILL_ITEMS: EvaluationItemConstant[] = [
     item_name: '商品を正しい順番で作成できている',
     category: 'skill',
     check_points: ['注文を確認して順番に作成できる'],
-  },
-  {
-    item_name: 'ラテ作成/ラテの見た目',
-    category: 'skill',
-    check_points: ['見た目のきれいさ', 'ツヤがあるか'],
   },
   {
     item_name: '全商品を作成できる',
@@ -268,7 +258,7 @@ export const BALISTA_SKILL_ITEMS: EvaluationItemConstant[] = [
   },
 ];
 
-export const BALISTA_HOSPITALITY_ITEMS: EvaluationItemConstant[] = [
+export const BARISTA_HOSPITALITY_ITEMS: EvaluationItemConstant[] = [
   {
     item_name: '立ち振舞い',
     category: 'hospitality',
@@ -296,7 +286,7 @@ export const BALISTA_HOSPITALITY_ITEMS: EvaluationItemConstant[] = [
   },
 ];
 
-export const BALISTA_CLEANLINESS: EvaluationItemConstant[] = [
+export const BARISTA_CLEANLINESS: EvaluationItemConstant[] = [
   {
     item_name: '消費期限の確認',
     category: 'cleanliness',

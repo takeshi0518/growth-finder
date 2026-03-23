@@ -1,8 +1,19 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import EvaluationList from './evaluation-list';
 import EvaluationComments from './evaluation-comments';
+import { EvaluationItemConstant } from '../../../../../../../../types/evaluations';
 
-export default function SectionTab() {
+type SectionTablProps = {
+  skillItems: EvaluationItemConstant[];
+  hospitalityItems: EvaluationItemConstant[];
+  cleanlinessItems: EvaluationItemConstant[];
+};
+
+export default function SectionTab({
+  skillItems,
+  hospitalityItems,
+  cleanlinessItems,
+}: SectionTablProps) {
   return (
     <Tabs defaultValue="skill" className="mt-8">
       <div className="flex justify-center">
@@ -50,7 +61,17 @@ export default function SectionTab() {
       </div>
 
       <TabsContent value="skill">
-        <EvaluationList />
+        <EvaluationList evaluationItems={skillItems} />
+        <EvaluationComments />
+      </TabsContent>
+
+      <TabsContent value="hospitality">
+        <EvaluationList evaluationItems={hospitalityItems} />
+        <EvaluationComments />
+      </TabsContent>
+
+      <TabsContent value="cleanliness">
+        <EvaluationList evaluationItems={cleanlinessItems} />
         <EvaluationComments />
       </TabsContent>
     </Tabs>

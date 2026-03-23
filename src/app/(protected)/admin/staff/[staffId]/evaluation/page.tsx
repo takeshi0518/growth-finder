@@ -4,6 +4,17 @@ import { createClient } from '@/lib/supabase/server';
 import { requireAdmin } from '@/lib/utils/requireAdmin';
 import ProfileCard from '@/components/shared/profile-card';
 import EvaluationForm from './components/evaluation-form';
+import {
+  BARISTA_CLEANLINESS,
+  BARISTA_HOSPITALITY_ITEMS,
+  BARISTA_SKILL_ITEMS,
+  BASIC_CLEANLINESS_ITEMS,
+  BASIC_HOSPITALITY_ITEMS,
+  BASIC_SKILL_ITEMS,
+  CASHIER_CLEANLINESS,
+  CASHIER_HOSPITALITY_ITEMS,
+  CASHIER_SKILL_ITEMS,
+} from '@/lib/constants/evaluation-items';
 
 type EvaluationPageProps = {
   params: { staffId: string };
@@ -28,7 +39,17 @@ export default async function EvaluationPage({ params }: EvaluationPageProps) {
     <AdminContainer>
       <BackPageLink href="/admin/staff" label="スタッフ一覧へ戻る" />
       <ProfileCard profile={staffProfile} />
-      <EvaluationForm />
+      <EvaluationForm
+        basicSkillItems={BASIC_SKILL_ITEMS}
+        basicHospitalityItems={BASIC_HOSPITALITY_ITEMS}
+        basicCleanlinessItems={BASIC_CLEANLINESS_ITEMS}
+        cashierSkillItems={CASHIER_SKILL_ITEMS}
+        cashierHospitalityItems={CASHIER_HOSPITALITY_ITEMS}
+        cashierCleanlinessItems={CASHIER_CLEANLINESS}
+        baristaSkillItems={BARISTA_SKILL_ITEMS}
+        baristaHospitalityItems={BARISTA_HOSPITALITY_ITEMS}
+        baristaCleanliness={BARISTA_CLEANLINESS}
+      />
     </AdminContainer>
   );
 }
