@@ -16,7 +16,7 @@ export default function SectionTab({
 }: SectionTablProps) {
   return (
     <Tabs defaultValue="skill" className="mt-8">
-      <div className="sticky top-20 md:top-5 bg-card z-10 pb-4">
+      <div className="sticky top-20 rounded-2xl md:top-5 bg-card/80 backdrop-blur-sm z-10">
         <div className="flex justify-center">
           <TabsList variant="line" className="h-auto w-full max-w-lg">
             <TabsTrigger
@@ -39,7 +39,7 @@ export default function SectionTab({
             </TabsTrigger>
           </TabsList>
         </div>
-        <div className="flex flex-col items-center space-y-3 mt-6 mb-6">
+        <div className="flex flex-col items-center space-y-3 rounded-2xl mt-6 p-3 bg-muted-foreground/3">
           <h2 className="text-sm">スコア基準</h2>
           <div className="grid grid-cols-2 gap-y-1 gap-x-8 text-xs text-muted-foreground">
             <p className="flex items-center gap-1">

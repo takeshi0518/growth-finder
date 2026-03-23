@@ -11,7 +11,7 @@ export default function EvaluationList({
   evaluationItems,
 }: EvaluationListProps) {
   return (
-    <Card className="w-full max-w-200 mx-auto">
+    <Card className="w-full max-w-200 mx-auto mt-6">
       <CardContent>
         <Accordion type="single" collapsible>
           {evaluationItems.map((item) => (
