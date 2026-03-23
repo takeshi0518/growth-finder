@@ -40,9 +40,7 @@ export type Database = {
           check_points: string[] | null
           created_at: string
           evaluation_section_id: string
-          good_points: string[] | null
           id: string
-          improvement_points: string[] | null
           item_name: string
           organization_id: string
           score: number | null
@@ -53,9 +51,7 @@ export type Database = {
           check_points?: string[] | null
           created_at?: string
           evaluation_section_id: string
-          good_points?: string[] | null
           id?: string
-          improvement_points?: string[] | null
           item_name: string
           organization_id: string
           score?: number | null
@@ -66,9 +62,7 @@ export type Database = {
           check_points?: string[] | null
           created_at?: string
           evaluation_section_id?: string
-          good_points?: string[] | null
           id?: string
-          improvement_points?: string[] | null
           item_name?: string
           organization_id?: string
           score?: number | null
@@ -114,45 +108,63 @@ export type Database = {
       evaluation_sections: {
         Row: {
           action_plan: string | null
+          cleanliness_good_points: string[] | null
+          cleanliness_improvement_points: string[] | null
           cleanliness_max: number
           cleanliness_score: number
           created_at: string
           evaluation_id: string
+          hospitality_good_points: string[] | null
+          hospitality_improvement_points: string[] | null
           hospitality_max: number
           hospitality_score: number
           id: string
           organization_id: string
           section_type: string
+          skill_good_points: string[] | null
+          skill_improvement_points: string[] | null
           skill_max: number
           skill_score: number
           updated_at: string
         }
         Insert: {
           action_plan?: string | null
+          cleanliness_good_points?: string[] | null
+          cleanliness_improvement_points?: string[] | null
           cleanliness_max: number
           cleanliness_score: number
           created_at?: string
           evaluation_id: string
+          hospitality_good_points?: string[] | null
+          hospitality_improvement_points?: string[] | null
           hospitality_max: number
           hospitality_score: number
           id?: string
           organization_id: string
           section_type: string
+          skill_good_points?: string[] | null
+          skill_improvement_points?: string[] | null
           skill_max: number
           skill_score: number
           updated_at?: string
         }
         Update: {
           action_plan?: string | null
+          cleanliness_good_points?: string[] | null
+          cleanliness_improvement_points?: string[] | null
           cleanliness_max?: number
           cleanliness_score?: number
           created_at?: string
           evaluation_id?: string
+          hospitality_good_points?: string[] | null
+          hospitality_improvement_points?: string[] | null
           hospitality_max?: number
           hospitality_score?: number
           id?: string
           organization_id?: string
           section_type?: string
+          skill_good_points?: string[] | null
+          skill_improvement_points?: string[] | null
           skill_max?: number
           skill_score?: number
           updated_at?: string
