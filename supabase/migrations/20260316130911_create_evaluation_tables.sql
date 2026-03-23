@@ -150,7 +150,6 @@ CREATE TABLE evaluation_items (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   evaluation_section_id UUID NOT NULL REFERENCES evaluation_sections(id) ON DELETE CASCADE,
   organization_id UUID NOT NULL,
-  item_key TEXT NOT NULL,
   item_name TEXT NOT NULL,
   category TEXT NOT NULL CHECK (category IN ('skill', 'hospitality', 'cleanliness')),
   score INTEGER CHECK (score >= 1 AND score <= 4),
