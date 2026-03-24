@@ -28,6 +28,7 @@ import {
   CalendarDays,
   CalendarPlus,
   List,
+  MessageCirclePlus,
 } from 'lucide-react';
 
 import { FaXTwitter, FaGithub } from 'react-icons/fa6';
@@ -65,6 +66,7 @@ export const Icons = {
   CalendarDays,
   CalendarPlus,
   List,
+  MessageCirclePlus,
   FaXTwitter,
   FaGithub,
   FcGoogle,
