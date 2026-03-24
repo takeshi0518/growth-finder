@@ -2,6 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import EvaluationList from './evaluation-list';
 import EvaluationComments from './evaluation-comments';
 import { EvaluationItemConstant } from '../../../../../../../../types/evaluations';
+import { useRef } from 'react';
 
 type SectionTablProps = {
   skillItems: EvaluationItemConstant[];
@@ -14,8 +15,23 @@ export default function SectionTab({
   hospitalityItems,
   cleanlinessItems,
 }: SectionTablProps) {
+  const stickyRef = useRef<HTMLDivElement>(null);
+
+  const handleTabChange = () => {
+    const offset = window.innerWidth >= 768 ? 0 : 80;
+    if (stickyRef.current) {
+      const top =
+        stickyRef.current.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: top - offset, behavior: 'smooth' });
+    }
+  };
   return (
-    <Tabs defaultValue="skill" className="mt-8">
+    <Tabs
+      defaultValue="skill"
+      className="mt-8"
+      onValueChange={handleTabChange}
+      ref={stickyRef}
+    >
       <div className="sticky top-20 rounded-2xl md:top-5 bg-card/80 backdrop-blur-sm z-10">
         <div className="flex justify-center">
           <TabsList variant="line" className="h-auto w-full max-w-lg">
