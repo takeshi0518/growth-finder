@@ -55,7 +55,7 @@ export default function SectionTab({
             </TabsTrigger>
           </TabsList>
         </div>
-        <div className="flex flex-col items-center space-y-3 rounded-2xl mt-6 p-3 bg-muted-foreground/3">
+        <div className="flex flex-col max-w-200 mx-auto items-center space-y-3 rounded-2xl mt-6 p-3 bg-muted-foreground/3">
           <h2 className="text-sm">スコア基準</h2>
           <div className="grid grid-cols-2 gap-y-1 gap-x-8 text-xs text-muted-foreground">
             <p className="flex items-center gap-1">
