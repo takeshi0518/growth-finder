@@ -80,18 +80,16 @@ export default function SectionTab({
 
       <TabsContent value="skill">
         <EvaluationList evaluationItems={skillItems} />
-        <EvaluationComments />
       </TabsContent>
 
       <TabsContent value="hospitality">
         <EvaluationList evaluationItems={hospitalityItems} />
-        <EvaluationComments />
       </TabsContent>
 
       <TabsContent value="cleanliness">
         <EvaluationList evaluationItems={cleanlinessItems} />
-        <EvaluationComments />
       </TabsContent>
+      <EvaluationComments />
     </Tabs>
   );
 }
