@@ -2,6 +2,7 @@
 
 import { Icons } from '@/components/icon/icons';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Dialog,
   DialogContent,
@@ -89,6 +90,38 @@ export default function FeedbackCommets() {
             </form>
           </TabsContent>
         </Tabs>
+        <Card className="mt-3">
+          <CardHeader>
+            <CardTitle className="text-sm flex items-center gap-2">
+              <Icons.List className="w-4 h-4" />
+              コメント一覧
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col sm:flex-row gap-4">
+            <div className="flex-1 p-1">
+              <div className="flex items-center gap-2 text-xs mb-2 text-primary">
+                <Icons.ThumbsUp className="w-4 h-4" />
+                良かった点
+              </div>
+              <ul className="flex flex-wrap text-xs gap-2">
+                <li>・笑顔がよかった</li>
+                <li>・良く声掛けできている</li>
+                <li>・周りに気配りができる</li>
+              </ul>
+            </div>
+            <div className="flex-1 p-1">
+              <div className="flex items-center gap-2 text-xs mb-2 text-primary">
+                <Icons.Sprout className="h-4 w-4" />
+                もっと良くなる点
+              </div>
+              <ul className="flex flex-wrap text-xs gap-2">
+                <li>・ケアレスミスが多い</li>
+                <li>・先のことを意識すること</li>
+                <li>・判断が遅い</li>
+              </ul>
+            </div>
+          </CardContent>
+        </Card>
       </DialogContent>
     </Dialog>
   );
