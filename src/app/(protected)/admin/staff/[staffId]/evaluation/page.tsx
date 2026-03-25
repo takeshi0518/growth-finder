@@ -15,7 +15,6 @@ import {
   CASHIER_HOSPITALITY_ITEMS,
   CASHIER_SKILL_ITEMS,
 } from '@/lib/constants/evaluation-items';
-import FeedbackCommets from './components/feedback-commets';
 
 type EvaluationPageProps = {
   params: { staffId: string };
@@ -51,7 +50,6 @@ export default async function EvaluationPage({ params }: EvaluationPageProps) {
         baristaHospitalityItems={BARISTA_HOSPITALITY_ITEMS}
         baristaCleanliness={BARISTA_CLEANLINESS}
       />
-      <FeedbackCommets />
     </AdminContainer>
   );
 }

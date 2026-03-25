@@ -15,25 +15,58 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
 import { useState } from 'react';
 
-export default function FeedbackCommets() {
+type FeedbackCommentsProps = {
+  activeCategory: 'skill' | 'hospitality' | 'cleanliness';
+};
+
+export default function FeedbackCommets({
+  activeCategory,
+}: FeedbackCommentsProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [goodPoint, setGoodPoint] = useState('');
   const [improvementPoint, setImprovementPoint] = useState('');
-  const [goodPoints, setGoodPoints] = useState<string[]>([]);
-  const [improvementPoints, setImprovementPoints] = useState<string[]>([]);
+  const [goodPoints, setGoodPoints] = useState<Record<string, string[]>>({
+    skill: [],
+    hospitality: [],
+    cleanliness: [],
+  });
+  const [improvementPoints, setImprovementPoints] = useState<
+    Record<string, string[]>
+  >({
+    skill: [],
+    hospitality: [],
+    cleanliness: [],
+  });
+
+  const categoryLabel = {
+    skill: 'スキル',
+    hospitality: 'ホスピタリティ',
+    cleanliness: 'クレンリネス',
+  };
+
+  const categoryIcon = {
+    skill: <Icons.FaHammer className="w-4 h-4" />,
+    hospitality: <Icons.FaHandHoldingHeart className="w-4 h-4" />,
+    cleanliness: <Icons.MdCleaningServices className="w-4 h-4" />,
+  };
 
   const addGoodPoint = () => {
     if (!goodPoint) return;
 
-    setGoodPoints((prev) => [...prev, goodPoint]);
-
+    setGoodPoints((prev) => ({
+      ...prev,
+      [activeCategory]: [...prev[activeCategory], goodPoint],
+    }));
     setGoodPoint('');
   };
 
   const addImprovementPoint = () => {
     if (!improvementPoint) return;
 
-    setImprovementPoints((prev) => [...prev, improvementPoint]);
+    setImprovementPoints((prev) => ({
+      ...prev,
+      [activeCategory]: [...prev[activeCategory], improvementPoint],
+    }));
 
     setImprovementPoint('');
   };
@@ -47,8 +80,9 @@ export default function FeedbackCommets() {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-center text-sm">
-            思ったことを入力しよう
+          <DialogTitle className="flex items-center gap-2 text-md text-primary">
+            {categoryIcon[activeCategory]}
+            {categoryLabel[activeCategory]}
           </DialogTitle>
         </DialogHeader>
         <Tabs defaultValue="good">
@@ -140,7 +174,7 @@ export default function FeedbackCommets() {
                 良かった点
               </div>
               <ul className="flex flex-wrap text-xs gap-2">
-                {goodPoints.map((point, index) => (
+                {goodPoints[activeCategory].map((point, index) => (
                   <li
                     key={index}
                     className="flex items-center gap-2 bg-primary/10 rounded-2xl px-2 py-1"
@@ -149,9 +183,12 @@ export default function FeedbackCommets() {
                     <button
                       type="button"
                       onClick={() =>
-                        setGoodPoints((prev) =>
-                          prev.filter((_, i) => i !== index)
-                        )
+                        setGoodPoints((prev) => ({
+                          ...prev,
+                          [activeCategory]: [...prev[activeCategory]].filter(
+                            (_, i) => i !== index
+                          ),
+                        }))
                       }
                     >
                       <Icons.X className="w-3 h-3 text-red-500" />
@@ -166,7 +203,7 @@ export default function FeedbackCommets() {
                 もっと良くなる点
               </div>
               <ul className="flex flex-wrap text-xs gap-2">
-                {improvementPoints.map((point, index) => (
+                {improvementPoints[activeCategory].map((point, index) => (
                   <li
                     key={index}
                     className="flex items-center gap-2 bg-primary/10 rounded-2xl px-2 py-1"
@@ -175,9 +212,12 @@ export default function FeedbackCommets() {
                     <button
                       type="button"
                       onClick={() =>
-                        setImprovementPoints((prev) =>
-                          prev.filter((_, i) => i !== index)
-                        )
+                        setImprovementPoints((prev) => ({
+                          ...prev,
+                          [activeCategory]: [...prev[activeCategory]].filter(
+                            (_, i) => i !== index
+                          ),
+                        }))
                       }
                     >
                       <Icons.X className="w-3 h-3 text-red-500" />
