@@ -31,6 +31,7 @@ import {
   MessageCirclePlus,
   ThumbsUp,
   Sprout,
+  X,
 } from 'lucide-react';
 
 import { FaXTwitter, FaGithub } from 'react-icons/fa6';
@@ -71,6 +72,7 @@ export const Icons = {
   MessageCirclePlus,
   ThumbsUp,
   Sprout,
+  X,
   FaXTwitter,
   FaGithub,
   FcGoogle,

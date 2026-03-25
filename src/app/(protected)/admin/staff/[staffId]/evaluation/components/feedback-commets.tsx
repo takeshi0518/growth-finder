@@ -17,6 +17,27 @@ import { useState } from 'react';
 
 export default function FeedbackCommets() {
   const [isOpen, setIsOpen] = useState(false);
+  const [goodPoint, setGoodPoint] = useState('');
+  const [improvementPoint, setImprovementPoint] = useState('');
+  const [goodPoints, setGoodPoints] = useState<string[]>([]);
+  const [improvementPoints, setImprovementPoints] = useState<string[]>([]);
+
+  const addGoodPoint = () => {
+    if (!goodPoint) return;
+
+    setGoodPoints((prev) => [...prev, goodPoint]);
+
+    setGoodPoint('');
+  };
+
+  const addImprovementPoint = () => {
+    if (!improvementPoint) return;
+
+    setImprovementPoints((prev) => [...prev, improvementPoint]);
+
+    setImprovementPoint('');
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
@@ -37,7 +58,7 @@ export default function FeedbackCommets() {
           </TabsList>
 
           <TabsContent value="good" className="space-y-4 mt-6">
-            <form className="space-y-4">
+            <div className="space-y-4">
               <div className="space-y-2">
                 <Label
                   htmlFor="good-points"
@@ -46,7 +67,12 @@ export default function FeedbackCommets() {
                   <Icons.ThumbsUp className="w-4 h-4" />
                   良かった点
                 </Label>
-                <Textarea id="good-points" placeholder="例：笑顔が良かった" />
+                <Textarea
+                  id="good-points"
+                  value={goodPoint}
+                  placeholder="例：笑顔が良かった"
+                  onChange={(e) => setGoodPoint(e.target.value)}
+                />
               </div>
               <div className="flex justify-around">
                 <Button
@@ -56,13 +82,15 @@ export default function FeedbackCommets() {
                 >
                   キャンセル
                 </Button>
-                <Button variant="default">保存</Button>
+                <Button type="button" variant="default" onClick={addGoodPoint}>
+                  保存
+                </Button>
               </div>
-            </form>
+            </div>
           </TabsContent>
 
           <TabsContent value="improvement" className="space-y-4 mt-6">
-            <form className="space-y-4">
+            <div className="space-y-4">
               <div className="space-y-2">
                 <Label
                   htmlFor="improvement-points"
@@ -74,6 +102,8 @@ export default function FeedbackCommets() {
                 <Textarea
                   id="improvement-points"
                   placeholder="例：視線を上げると更によくなる"
+                  value={improvementPoint}
+                  onChange={(e) => setImprovementPoint(e.target.value)}
                 />
               </div>
 
@@ -85,9 +115,15 @@ export default function FeedbackCommets() {
                 >
                   キャンセル
                 </Button>
-                <Button variant="default">保存</Button>
+                <Button
+                  type="button"
+                  variant="default"
+                  onClick={addImprovementPoint}
+                >
+                  保存
+                </Button>
               </div>
-            </form>
+            </div>
           </TabsContent>
         </Tabs>
         <Card className="mt-3">
@@ -104,9 +140,24 @@ export default function FeedbackCommets() {
                 良かった点
               </div>
               <ul className="flex flex-wrap text-xs gap-2">
-                <li>・笑顔がよかった</li>
-                <li>・良く声掛けできている</li>
-                <li>・周りに気配りができる</li>
+                {goodPoints.map((point, index) => (
+                  <li
+                    key={index}
+                    className="flex items-center gap-2 bg-primary/10 rounded-2xl px-2 py-1"
+                  >
+                    {point}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setGoodPoints((prev) =>
+                          prev.filter((_, i) => i !== index)
+                        )
+                      }
+                    >
+                      <Icons.X className="w-3 h-3 text-red-500" />
+                    </button>
+                  </li>
+                ))}
               </ul>
             </div>
             <div className="flex-1 p-1">
@@ -115,9 +166,24 @@ export default function FeedbackCommets() {
                 もっと良くなる点
               </div>
               <ul className="flex flex-wrap text-xs gap-2">
-                <li>・ケアレスミスが多い</li>
-                <li>・先のことを意識すること</li>
-                <li>・判断が遅い</li>
+                {improvementPoints.map((point, index) => (
+                  <li
+                    key={index}
+                    className="flex items-center gap-2 bg-primary/10 rounded-2xl px-2 py-1"
+                  >
+                    {point}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setImprovementPoints((prev) =>
+                          prev.filter((_, i) => i !== index)
+                        )
+                      }
+                    >
+                      <Icons.X className="w-3 h-3 text-red-500" />
+                    </button>
+                  </li>
+                ))}
               </ul>
             </div>
           </CardContent>
