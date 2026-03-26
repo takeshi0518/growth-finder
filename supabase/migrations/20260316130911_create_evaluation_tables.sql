@@ -92,7 +92,6 @@ CREATE TABLE evaluation_sections (
   hospitality_max INTEGER NOT NULL,
   cleanliness_score  INTEGER NOT NULL,
   cleanliness_max INTEGER NOT NULL,
-  action_plan TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
   updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
 );

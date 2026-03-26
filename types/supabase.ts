@@ -107,7 +107,6 @@ export type Database = {
       }
       evaluation_sections: {
         Row: {
-          action_plan: string | null
           cleanliness_good_points: string[] | null
           cleanliness_improvement_points: string[] | null
           cleanliness_max: number
@@ -128,7 +127,6 @@ export type Database = {
           updated_at: string
         }
         Insert: {
-          action_plan?: string | null
           cleanliness_good_points?: string[] | null
           cleanliness_improvement_points?: string[] | null
           cleanliness_max: number
@@ -149,7 +147,6 @@ export type Database = {
           updated_at?: string
         }
         Update: {
-          action_plan?: string | null
           cleanliness_good_points?: string[] | null
           cleanliness_improvement_points?: string[] | null
           cleanliness_max?: number
