@@ -177,6 +177,34 @@ export const editEvaluationPeriodSchema = z.object({
     .max(50, '評価期間名は50文字以内で入力してください'),
 });
 
+export const evaluationSchema = z.object({
+  basic: z.object({
+    skill: z.record(z.string(), z.number().min(1).max(4)),
+    hospitality: z.record(z.string(), z.number().min(1).max(4)),
+    cleanliness: z.record(z.string(), z.number().min(1).max(4)),
+    good_points: z.record(z.string(), z.array(z.string())),
+    improvement_points: z.record(z.string(), z.array(z.string())),
+  }),
+  barista: z.object({
+    skill: z.record(z.string(), z.number().min(1).max(4)),
+    hospitality: z.record(z.string(), z.number().min(1).max(4)),
+    cleanliness: z.record(z.string(), z.number().min(1).max(4)),
+    good_points: z.record(z.string(), z.array(z.string())),
+    improvement_points: z.record(z.string(), z.array(z.string())),
+  }),
+  cashier: z.object({
+    skill: z.record(z.string(), z.number().min(1).max(4)),
+    hospitality: z.record(z.string(), z.number().min(1).max(4)),
+    cleanliness: z.record(z.string(), z.number().min(1).max(4)),
+    good_points: z.record(z.string(), z.array(z.string())),
+    improvement_points: z.record(z.string(), z.array(z.string())),
+  }),
+
+  action_plan: z.string().optional(),
+  total_comment: z.string().optional(),
+  future_vision: z.string().optional(),
+});
+
 export type SignupInput = z.infer<typeof signupSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;
@@ -195,3 +223,4 @@ export type CreateEvaluationPeriodInput = z.infer<
 export type EditEvaluationPeriodInput = z.infer<
   typeof editEvaluationPeriodSchema
 >;
+export type EvaluationInput = z.infer<typeof evaluationSchema>;
