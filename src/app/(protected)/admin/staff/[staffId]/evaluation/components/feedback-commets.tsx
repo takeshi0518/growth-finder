@@ -19,6 +19,18 @@ type FeedbackCommentsProps = {
   activeCategory: 'skill' | 'hospitality' | 'cleanliness';
 };
 
+const categoryLabel = {
+  skill: 'スキル',
+  hospitality: 'ホスピタリティ',
+  cleanliness: 'クレンリネス',
+};
+
+const categoryIcon = {
+  skill: <Icons.FaHammer className="w-4 h-4" />,
+  hospitality: <Icons.FaHandHoldingHeart className="w-4 h-4" />,
+  cleanliness: <Icons.MdCleaningServices className="w-4 h-4" />,
+};
+
 export default function FeedbackCommets({
   activeCategory,
 }: FeedbackCommentsProps) {
@@ -37,18 +49,6 @@ export default function FeedbackCommets({
     hospitality: [],
     cleanliness: [],
   });
-
-  const categoryLabel = {
-    skill: 'スキル',
-    hospitality: 'ホスピタリティ',
-    cleanliness: 'クレンリネス',
-  };
-
-  const categoryIcon = {
-    skill: <Icons.FaHammer className="w-4 h-4" />,
-    hospitality: <Icons.FaHandHoldingHeart className="w-4 h-4" />,
-    cleanliness: <Icons.MdCleaningServices className="w-4 h-4" />,
-  };
 
   const addGoodPoint = () => {
     if (!goodPoint) return;
