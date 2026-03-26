@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import SectionTab from './section-tab';
 import { Button } from '@/components/ui/button';
 import { EvaluationItemConstant } from '../../../../../../../../types/evaluations';
+import EvaluationComments from './evaluation-comments';
 
 type EvaluationFormProps = {
   basicSkillItems: EvaluationItemConstant[];
@@ -74,7 +75,9 @@ export default function EvaluationForm({
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="all"></TabsContent>
+            <TabsContent value="all">
+              <EvaluationComments />
+            </TabsContent>
             <TabsContent value="basic">
               <SectionTab
                 skillItems={basicSkillItems}

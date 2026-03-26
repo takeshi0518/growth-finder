@@ -1,6 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import EvaluationList from './evaluation-list';
-import EvaluationComments from './evaluation-comments';
 import { EvaluationItemConstant } from '../../../../../../../../types/evaluations';
 import { useRef, useState } from 'react';
 import FeedbackCommets from './feedback-commets';
@@ -97,7 +96,6 @@ export default function SectionTab({
         <TabsContent value="cleanliness">
           <EvaluationList evaluationItems={cleanlinessItems} />
         </TabsContent>
-        <EvaluationComments />
       </Tabs>
       <FeedbackCommets activeCategory={activeTab} />
     </>
