@@ -4,16 +4,24 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Tables } from '../../../../../../../../types/supabase';
+import { EvaluationInput } from '@/lib/validations/schemas';
+import { UseFormSetValue } from 'react-hook-form';
 
-type EvaluationItemProps = Pick<
+type EvaluationItemData = Pick<
   Tables<'evaluation_items'>,
   'item_name' | 'check_points'
 >;
 
+type EvaluationItemProps = {
+  setValue: UseFormSetValue<EvaluationInput>;
+} & EvaluationItemData;
+
 export default function EvaluationItem({
   item_name,
   check_points,
+  setValue,
 }: EvaluationItemProps) {
+  console.log(setValue);
   return (
     <AccordionItem value={item_name} className="border-b last:border-b-0">
       <AccordionTrigger className="no-underline hover:no-underline">

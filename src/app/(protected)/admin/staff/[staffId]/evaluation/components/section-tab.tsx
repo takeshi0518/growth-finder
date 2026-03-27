@@ -3,17 +3,21 @@ import EvaluationList from './evaluation-list';
 import { EvaluationItemConstant } from '../../../../../../../../types/evaluations';
 import { useRef, useState } from 'react';
 import FeedbackCommets from './feedback-commets';
+import { UseFormSetValue } from 'react-hook-form';
+import { EvaluationInput } from '@/lib/validations/schemas';
 
 type SectionTablProps = {
   skillItems: EvaluationItemConstant[];
   hospitalityItems: EvaluationItemConstant[];
   cleanlinessItems: EvaluationItemConstant[];
+  setValue: UseFormSetValue<EvaluationInput>;
 };
 
 export default function SectionTab({
   skillItems,
   hospitalityItems,
   cleanlinessItems,
+  setValue,
 }: SectionTablProps) {
   const [activeTab, setActiveTab] = useState<
     'skill' | 'hospitality' | 'cleanliness'
@@ -86,15 +90,21 @@ export default function SectionTab({
         </div>
 
         <TabsContent value="skill">
-          <EvaluationList evaluationItems={skillItems} />
+          <EvaluationList evaluationItems={skillItems} setValue={setValue} />
         </TabsContent>
 
         <TabsContent value="hospitality">
-          <EvaluationList evaluationItems={hospitalityItems} />
+          <EvaluationList
+            evaluationItems={hospitalityItems}
+            setValue={setValue}
+          />
         </TabsContent>
 
         <TabsContent value="cleanliness">
-          <EvaluationList evaluationItems={cleanlinessItems} />
+          <EvaluationList
+            evaluationItems={cleanlinessItems}
+            setValue={setValue}
+          />
         </TabsContent>
       </Tabs>
       <FeedbackCommets activeCategory={activeTab} />

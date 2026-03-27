@@ -13,6 +13,8 @@ import SectionTab from './section-tab';
 import { Button } from '@/components/ui/button';
 import { EvaluationItemConstant } from '../../../../../../../../types/evaluations';
 import EvaluationComments from './evaluation-comments';
+import { useForm } from 'react-hook-form';
+import { EvaluationInput } from '@/lib/validations/schemas';
 
 type EvaluationFormProps = {
   basicSkillItems: EvaluationItemConstant[];
@@ -37,6 +39,34 @@ export default function EvaluationForm({
   baristaHospitalityItems,
   baristaCleanliness,
 }: EvaluationFormProps) {
+  const { setValue, handleSubmit } = useForm<EvaluationInput>({
+    defaultValues: {
+      basic: {
+        skill: {},
+        hospitality: {},
+        cleanliness: {},
+        good_points: {},
+        improvement_points: {},
+      },
+      barista: {
+        skill: {},
+        hospitality: {},
+        cleanliness: {},
+        good_points: {},
+        improvement_points: {},
+      },
+      cashier: {
+        skill: {},
+        hospitality: {},
+        cleanliness: {},
+        good_points: {},
+        improvement_points: {},
+      },
+      action_plan: '',
+      total_comment: '',
+      future_vision: '',
+    },
+  });
   return (
     <Card>
       <CardHeader>
@@ -83,6 +113,7 @@ export default function EvaluationForm({
                 skillItems={basicSkillItems}
                 hospitalityItems={basicHospitalityItems}
                 cleanlinessItems={basicCleanlinessItems}
+                setValue={setValue}
               />
             </TabsContent>
             <TabsContent value="cashier">
@@ -90,6 +121,7 @@ export default function EvaluationForm({
                 skillItems={cashierSkillItems}
                 hospitalityItems={cashierHospitalityItems}
                 cleanlinessItems={cashierCleanlinessItems}
+                setValue={setValue}
               />
             </TabsContent>
             <TabsContent value="barista">
@@ -97,6 +129,7 @@ export default function EvaluationForm({
                 skillItems={baristaSkillItems}
                 hospitalityItems={baristaHospitalityItems}
                 cleanlinessItems={baristaCleanliness}
+                setValue={setValue}
               />
             </TabsContent>
           </Tabs>
