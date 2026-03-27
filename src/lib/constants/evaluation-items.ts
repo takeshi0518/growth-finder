@@ -1,5 +1,7 @@
 import { EvaluationItemConstant } from '../../../types/evaluations';
 
+export const SCORE_OPTIONS = [1, 2, 3, 4] as const;
+
 export const BASIC_SKILL_ITEMS: EvaluationItemConstant[] = [
   {
     item_name: '経営理念に沿った行動',

@@ -11,6 +11,7 @@ import {
   SectionType,
 } from '../../../../../../../../types/evaluations';
 import { useState } from 'react';
+import { SCORE_OPTIONS } from '@/lib/constants/evaluation-items';
 
 type EvaluationItemData = Pick<
   Tables<'evaluation_items'>,
@@ -50,7 +51,7 @@ export default function EvaluationItem({
           <div className="text-xs text-left ">{item_name}</div>
         </AccordionTrigger>
         <div className="flex items-center justify-center py-2 gap-4 sm:px-4 sm:py-0 lg:gap-6">
-          {[1, 2, 3, 4].map((score) => (
+          {SCORE_OPTIONS.map((score) => (
             <button
               key={score}
               type="button"
