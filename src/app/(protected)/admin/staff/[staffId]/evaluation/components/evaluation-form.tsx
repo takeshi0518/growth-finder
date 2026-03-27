@@ -114,6 +114,7 @@ export default function EvaluationForm({
                 hospitalityItems={basicHospitalityItems}
                 cleanlinessItems={basicCleanlinessItems}
                 setValue={setValue}
+                sectionType="basic"
               />
             </TabsContent>
             <TabsContent value="cashier">
@@ -122,6 +123,7 @@ export default function EvaluationForm({
                 hospitalityItems={cashierHospitalityItems}
                 cleanlinessItems={cashierCleanlinessItems}
                 setValue={setValue}
+                sectionType="cashier"
               />
             </TabsContent>
             <TabsContent value="barista">
@@ -130,6 +132,7 @@ export default function EvaluationForm({
                 hospitalityItems={baristaHospitalityItems}
                 cleanlinessItems={baristaCleanliness}
                 setValue={setValue}
+                sectionType="barista"
               />
             </TabsContent>
           </Tabs>

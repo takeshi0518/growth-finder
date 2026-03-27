@@ -1,6 +1,9 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import EvaluationList from './evaluation-list';
-import { EvaluationItemConstant } from '../../../../../../../../types/evaluations';
+import {
+  EvaluationItemConstant,
+  SectionType,
+} from '../../../../../../../../types/evaluations';
 import { useRef, useState } from 'react';
 import FeedbackCommets from './feedback-commets';
 import { UseFormSetValue } from 'react-hook-form';
@@ -10,6 +13,7 @@ type SectionTablProps = {
   skillItems: EvaluationItemConstant[];
   hospitalityItems: EvaluationItemConstant[];
   cleanlinessItems: EvaluationItemConstant[];
+  sectionType: SectionType;
   setValue: UseFormSetValue<EvaluationInput>;
 };
 
@@ -17,6 +21,7 @@ export default function SectionTab({
   skillItems,
   hospitalityItems,
   cleanlinessItems,
+  sectionType,
   setValue,
 }: SectionTablProps) {
   const [activeTab, setActiveTab] = useState<
@@ -68,7 +73,7 @@ export default function SectionTab({
           </div>
           <div className="flex flex-col max-w-200 mx-auto items-center space-y-3 rounded-2xl mt-6 p-3 bg-muted-foreground/3">
             <h2 className="text-sm">スコア基準</h2>
-            <div className="grid grid-cols-2 gap-y-1 gap-x-8 text-xs text-muted-foreground">
+            <div className="grid grid-cols-2 gap-y-1 gap-x-8 text-[8px] sm:text-xs text-muted-foreground">
               <p className="flex items-center gap-1">
                 <span className="w-2 h-2 rounded-full bg-green-500 inline-block" />
                 指導できる…4点
@@ -90,13 +95,20 @@ export default function SectionTab({
         </div>
 
         <TabsContent value="skill">
-          <EvaluationList evaluationItems={skillItems} setValue={setValue} />
+          <EvaluationList
+            evaluationItems={skillItems}
+            setValue={setValue}
+            sectionType={sectionType}
+            category="skill"
+          />
         </TabsContent>
 
         <TabsContent value="hospitality">
           <EvaluationList
             evaluationItems={hospitalityItems}
             setValue={setValue}
+            sectionType={sectionType}
+            category="hospitality"
           />
         </TabsContent>
 
@@ -104,6 +116,8 @@ export default function SectionTab({
           <EvaluationList
             evaluationItems={cleanlinessItems}
             setValue={setValue}
+            sectionType={sectionType}
+            category="cleanliness"
           />
         </TabsContent>
       </Tabs>

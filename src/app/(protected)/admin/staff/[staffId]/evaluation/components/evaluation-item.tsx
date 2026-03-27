@@ -6,6 +6,10 @@ import {
 import { Tables } from '../../../../../../../../types/supabase';
 import { EvaluationInput } from '@/lib/validations/schemas';
 import { UseFormSetValue } from 'react-hook-form';
+import {
+  Category,
+  SectionType,
+} from '../../../../../../../../types/evaluations';
 
 type EvaluationItemData = Pick<
   Tables<'evaluation_items'>,
@@ -14,31 +18,38 @@ type EvaluationItemData = Pick<
 
 type EvaluationItemProps = {
   setValue: UseFormSetValue<EvaluationInput>;
+  sectionType: SectionType;
+  category: Category;
 } & EvaluationItemData;
 
 export default function EvaluationItem({
   item_name,
   check_points,
+  sectionType,
+  category,
   setValue,
 }: EvaluationItemProps) {
-  console.log(setValue);
   return (
     <AccordionItem value={item_name} className="border-b last:border-b-0">
-      <AccordionTrigger className="no-underline hover:no-underline">
-        <div className="w-full flex flex-col justify-center sm:flex-row sm:items-center gap-3">
-          <div className="text-xs text-left sm:flex-1">{item_name}</div>
-          <div className="flex sm:flex-1 items-center justify-center gap-3 lg:gap-6">
-            {[1, 2, 3, 4].map((score) => (
-              <div
-                key={score}
-                className="w-7 h-7 rounded-full border text-xs flex items-center justify-center"
-              >
-                {score}
-              </div>
-            ))}
-          </div>
+      <div className="flex flex-col sm:grid grid-cols-[1fr_auto] sm:items-center">
+        <AccordionTrigger className="sm:pr-4 no-underline hover:no-underline">
+          <div className="text-xs text-left ">{item_name}</div>
+        </AccordionTrigger>
+        <div className="flex items-center justify-center py-2 gap-4 sm:px-4 sm:py-0 lg:gap-6">
+          {[1, 2, 3, 4].map((score) => (
+            <button
+              key={score}
+              type="button"
+              onClick={() =>
+                setValue(`${sectionType}.${category}.${item_name}`, score)
+              }
+              className="w-7 h-7 rounded-full border text-xs flex items-center justify-center"
+            >
+              {score}
+            </button>
+          ))}
         </div>
-      </AccordionTrigger>
+      </div>
       <AccordionContent>
         <div className="text-xs flex flex-wrap gap-2">
           {check_points?.map((point, index) => (
