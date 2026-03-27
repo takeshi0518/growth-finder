@@ -14,7 +14,11 @@ import { Button } from '@/components/ui/button';
 import { EvaluationItemConstant } from '../../../../../../../../types/evaluations';
 import EvaluationComments from './evaluation-comments';
 import { useForm } from 'react-hook-form';
-import { EvaluationInput } from '@/lib/validations/schemas';
+import { EvaluationInput, evaluationSchema } from '@/lib/validations/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'sonner';
+import { getErrorMessage } from '@/lib/utils/error-message';
+import LoaderCircleIcon from '@/components/shared/loader-circle';
 
 type EvaluationFormProps = {
   basicSkillItems: EvaluationItemConstant[];
@@ -39,7 +43,13 @@ export default function EvaluationForm({
   baristaHospitalityItems,
   baristaCleanliness,
 }: EvaluationFormProps) {
-  const { setValue, handleSubmit } = useForm<EvaluationInput>({
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<EvaluationInput>({
+    resolver: zodResolver(evaluationSchema),
     defaultValues: {
       basic: {
         skill: {},
@@ -67,6 +77,18 @@ export default function EvaluationForm({
       future_vision: '',
     },
   });
+
+  const onSubmit = async (data: EvaluationInput) => {
+    try {
+      //Todo DBへ登録処理
+      toast.success('評価を登録しました');
+    } catch (error) {
+      toast.error('評価の登録に失敗しました', {
+        description: getErrorMessage(error),
+      });
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -75,7 +97,7 @@ export default function EvaluationForm({
           各セクション評価入力
         </CardTitle>
       </CardHeader>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <CardContent className="mb-6">
           <Tabs defaultValue="all">
             <TabsList className="grid grid-cols-2 sm:grid-cols-4 h-auto w-full">
@@ -106,7 +128,7 @@ export default function EvaluationForm({
             </TabsList>
 
             <TabsContent value="all">
-              <EvaluationComments />
+              <EvaluationComments register={register} />
             </TabsContent>
             <TabsContent value="basic">
               <SectionTab
@@ -139,7 +161,9 @@ export default function EvaluationForm({
         </CardContent>
         <CardFooter className="flex justify-around">
           <Button variant="secondary">下書き</Button>
-          <Button variant="default">保存</Button>
+          <Button variant="default" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? <LoaderCircleIcon /> : '保存'}
+          </Button>
         </CardFooter>
       </form>
     </Card>

@@ -121,7 +121,11 @@ export default function SectionTab({
           />
         </TabsContent>
       </Tabs>
-      <FeedbackCommets activeCategory={activeTab} />
+      <FeedbackCommets
+        activeCategory={activeTab}
+        setValue={setValue}
+        sectionType={sectionType}
+      />
     </>
   );
 }

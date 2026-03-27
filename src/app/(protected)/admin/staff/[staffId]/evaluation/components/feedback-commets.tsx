@@ -13,10 +13,15 @@ import {
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
+import { EvaluationInput } from '@/lib/validations/schemas';
 import { useState } from 'react';
+import { UseFormSetValue } from 'react-hook-form';
+import { SectionType } from '../../../../../../../../types/evaluations';
 
 type FeedbackCommentsProps = {
   activeCategory: 'skill' | 'hospitality' | 'cleanliness';
+  sectionType: SectionType;
+  setValue: UseFormSetValue<EvaluationInput>;
 };
 
 const categoryLabel = {
@@ -33,6 +38,8 @@ const categoryIcon = {
 
 export default function FeedbackCommets({
   activeCategory,
+  sectionType,
+  setValue,
 }: FeedbackCommentsProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [goodPoint, setGoodPoint] = useState('');
@@ -53,24 +60,32 @@ export default function FeedbackCommets({
   const addGoodPoint = () => {
     if (!goodPoint) return;
 
+    const newPoints = [...goodPoints[activeCategory], goodPoint];
     setGoodPoints((prev) => ({
       ...prev,
-      [activeCategory]: [...prev[activeCategory], goodPoint],
+      [activeCategory]: newPoints,
     }));
+
+    setValue(`${sectionType}.good_points.${activeCategory}`, newPoints);
+
     setGoodPoint('');
   };
 
   const addImprovementPoint = () => {
     if (!improvementPoint) return;
 
+    const newPoints = [...improvementPoints[activeCategory], improvementPoint];
     setImprovementPoints((prev) => ({
       ...prev,
-      [activeCategory]: [...prev[activeCategory], improvementPoint],
+      [activeCategory]: newPoints,
     }));
+
+    setValue(`${sectionType}.improvement_points.${activeCategory}`, newPoints);
 
     setImprovementPoint('');
   };
 
+  console.log(goodPoints);
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
@@ -182,14 +197,19 @@ export default function FeedbackCommets({
                     {point}
                     <button
                       type="button"
-                      onClick={() =>
+                      onClick={() => {
+                        const newPoints = goodPoints[activeCategory].filter(
+                          (_, i) => i !== index
+                        );
                         setGoodPoints((prev) => ({
                           ...prev,
-                          [activeCategory]: [...prev[activeCategory]].filter(
-                            (_, i) => i !== index
-                          ),
-                        }))
-                      }
+                          [activeCategory]: newPoints,
+                        }));
+                        setValue(
+                          `${sectionType}.good_points.${activeCategory}`,
+                          newPoints
+                        );
+                      }}
                     >
                       <Icons.X className="w-3 h-3 text-red-500" />
                     </button>
@@ -211,14 +231,19 @@ export default function FeedbackCommets({
                     {point}
                     <button
                       type="button"
-                      onClick={() =>
+                      onClick={() => {
+                        const newPoints = improvementPoints[
+                          activeCategory
+                        ].filter((_, i) => i !== index);
                         setImprovementPoints((prev) => ({
                           ...prev,
-                          [activeCategory]: [...prev[activeCategory]].filter(
-                            (_, i) => i !== index
-                          ),
-                        }))
-                      }
+                          [activeCategory]: newPoints,
+                        }));
+                        setValue(
+                          `${sectionType}.improvement_points.${activeCategory}`,
+                          newPoints
+                        );
+                      }}
                     >
                       <Icons.X className="w-3 h-3 text-red-500" />
                     </button>
