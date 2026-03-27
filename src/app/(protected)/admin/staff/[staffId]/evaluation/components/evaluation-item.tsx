@@ -10,6 +10,7 @@ import {
   Category,
   SectionType,
 } from '../../../../../../../../types/evaluations';
+import { useState } from 'react';
 
 type EvaluationItemData = Pick<
   Tables<'evaluation_items'>,
@@ -29,6 +30,19 @@ export default function EvaluationItem({
   category,
   setValue,
 }: EvaluationItemProps) {
+  const [selectedScore, setSelectedScore] = useState<number | null>(null);
+
+  const handleScoring = (score: number) => {
+    setSelectedScore(score);
+    setValue(`${sectionType}.${category}.${item_name}`, score);
+  };
+
+  const scoreColors: Record<number, string> = {
+    1: 'bg-red-100 text-red-600 border-red-300',
+    2: 'bg-yellow-100 text-yellow-600 border-yellow-300',
+    3: 'bg-blue-100 text-blue-600 border-blue-300',
+    4: 'bg-green-100 text-green-600 border-green-300',
+  };
   return (
     <AccordionItem value={item_name} className="border-b last:border-b-0">
       <div className="flex flex-col sm:grid grid-cols-[1fr_auto] sm:items-center">
@@ -40,10 +54,10 @@ export default function EvaluationItem({
             <button
               key={score}
               type="button"
-              onClick={() =>
-                setValue(`${sectionType}.${category}.${item_name}`, score)
-              }
-              className="w-7 h-7 rounded-full border text-xs flex items-center justify-center"
+              onClick={() => handleScoring(score)}
+              className={`w-7 h-7 rounded-full border text-xs flex items-center justify-center ${
+                selectedScore === score ? scoreColors[score] : ''
+              }`}
             >
               {score}
             </button>
