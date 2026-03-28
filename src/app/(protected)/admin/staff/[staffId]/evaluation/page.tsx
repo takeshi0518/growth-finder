@@ -18,10 +18,15 @@ import {
 
 type EvaluationPageProps = {
   params: { staffId: string };
+  searchParams: { periodId: string };
 };
 
-export default async function EvaluationPage({ params }: EvaluationPageProps) {
+export default async function EvaluationPage({
+  params,
+  searchParams,
+}: EvaluationPageProps) {
   const { staffId } = await params;
+  const { periodId } = await searchParams;
 
   const supabase = await createClient();
 
@@ -40,6 +45,8 @@ export default async function EvaluationPage({ params }: EvaluationPageProps) {
       <BackPageLink href="/admin/staff" label="スタッフ一覧へ戻る" />
       <ProfileCard profile={staffProfile} />
       <EvaluationForm
+        staffId={staffId}
+        periodId={periodId}
         basicSkillItems={BASIC_SKILL_ITEMS}
         basicHospitalityItems={BASIC_HOSPITALITY_ITEMS}
         basicCleanlinessItems={BASIC_CLEANLINESS_ITEMS}

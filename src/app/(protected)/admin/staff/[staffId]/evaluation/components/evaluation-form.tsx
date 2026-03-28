@@ -19,8 +19,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import { getErrorMessage } from '@/lib/utils/error-message';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
+import { addEvaluations } from '../actions';
 
 type EvaluationFormProps = {
+  staffId: string;
+  periodId: string;
   basicSkillItems: EvaluationItemConstant[];
   basicHospitalityItems: EvaluationItemConstant[];
   basicCleanlinessItems: EvaluationItemConstant[];
@@ -33,6 +36,8 @@ type EvaluationFormProps = {
 };
 
 export default function EvaluationForm({
+  staffId,
+  periodId,
   basicSkillItems,
   basicHospitalityItems,
   basicCleanlinessItems,
@@ -81,7 +86,7 @@ export default function EvaluationForm({
 
   const onSubmit = async (data: EvaluationInput) => {
     try {
-      //Todo DBへ登録処理
+      await addEvaluations(data, staffId, periodId);
       toast.success('評価を登録しました');
     } catch (error) {
       toast.error('評価の登録に失敗しました', {
