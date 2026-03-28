@@ -6,11 +6,12 @@ import {
   EvaluationItemConstant,
   SectionType,
 } from '../../../../../../../../types/evaluations';
-import { UseFormSetValue } from 'react-hook-form';
+import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { EvaluationInput } from '@/lib/validations/schemas';
 
 type EvaluationListProps = {
   evaluationItems: EvaluationItemConstant[];
+  watch: UseFormWatch<EvaluationInput>;
   category: Category;
   sectionType: SectionType;
   setValue: UseFormSetValue<EvaluationInput>;
@@ -18,6 +19,7 @@ type EvaluationListProps = {
 
 export default function EvaluationList({
   evaluationItems,
+  watch,
   sectionType,
   category,
   setValue,
@@ -32,6 +34,7 @@ export default function EvaluationList({
               item_name={item.item_name}
               check_points={item.check_points}
               setValue={setValue}
+              watch={watch}
               sectionType={sectionType}
               category={category}
             />

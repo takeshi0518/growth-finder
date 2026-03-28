@@ -84,8 +84,6 @@ export default function FeedbackCommets({
 
     setImprovementPoint('');
   };
-
-  console.log(goodPoints);
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>

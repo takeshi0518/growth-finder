@@ -46,6 +46,7 @@ export default function EvaluationForm({
   const {
     register,
     setValue,
+    watch,
     handleSubmit,
     formState: { isSubmitting },
   } = useForm<EvaluationInput>({
@@ -136,6 +137,7 @@ export default function EvaluationForm({
                 hospitalityItems={basicHospitalityItems}
                 cleanlinessItems={basicCleanlinessItems}
                 setValue={setValue}
+                watch={watch}
                 sectionType="basic"
               />
             </TabsContent>
@@ -145,6 +147,7 @@ export default function EvaluationForm({
                 hospitalityItems={cashierHospitalityItems}
                 cleanlinessItems={cashierCleanlinessItems}
                 setValue={setValue}
+                watch={watch}
                 sectionType="cashier"
               />
             </TabsContent>
@@ -154,6 +157,7 @@ export default function EvaluationForm({
                 hospitalityItems={baristaHospitalityItems}
                 cleanlinessItems={baristaCleanliness}
                 setValue={setValue}
+                watch={watch}
                 sectionType="barista"
               />
             </TabsContent>

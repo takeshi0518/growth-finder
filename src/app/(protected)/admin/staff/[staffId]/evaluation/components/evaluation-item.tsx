@@ -5,7 +5,7 @@ import {
 } from '@/components/ui/accordion';
 import { Tables } from '../../../../../../../../types/supabase';
 import { EvaluationInput } from '@/lib/validations/schemas';
-import { UseFormSetValue } from 'react-hook-form';
+import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import {
   Category,
   SectionType,
@@ -20,21 +20,21 @@ type EvaluationItemData = Pick<
 
 type EvaluationItemProps = {
   setValue: UseFormSetValue<EvaluationInput>;
+  watch: UseFormWatch<EvaluationInput>;
   sectionType: SectionType;
   category: Category;
 } & EvaluationItemData;
 
 export default function EvaluationItem({
   item_name,
+  watch,
   check_points,
   sectionType,
   category,
   setValue,
 }: EvaluationItemProps) {
-  const [selectedScore, setSelectedScore] = useState<number | null>(null);
-
+  const currentScore = watch(`${sectionType}.${category}.${item_name}`);
   const handleScoring = (score: number) => {
-    setSelectedScore(score);
     setValue(`${sectionType}.${category}.${item_name}`, score);
   };
 
@@ -57,7 +57,7 @@ export default function EvaluationItem({
               type="button"
               onClick={() => handleScoring(score)}
               className={`w-7 h-7 rounded-full border text-xs flex items-center justify-center ${
-                selectedScore === score ? scoreColors[score] : ''
+                currentScore === score ? scoreColors[score] : ''
               }`}
             >
               {score}

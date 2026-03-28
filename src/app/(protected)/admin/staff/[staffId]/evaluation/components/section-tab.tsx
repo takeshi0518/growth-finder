@@ -6,13 +6,14 @@ import {
 } from '../../../../../../../../types/evaluations';
 import { useRef, useState } from 'react';
 import FeedbackCommets from './feedback-commets';
-import { UseFormSetValue } from 'react-hook-form';
+import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { EvaluationInput } from '@/lib/validations/schemas';
 
 type SectionTablProps = {
   skillItems: EvaluationItemConstant[];
   hospitalityItems: EvaluationItemConstant[];
   cleanlinessItems: EvaluationItemConstant[];
+  watch: UseFormWatch<EvaluationInput>;
   sectionType: SectionType;
   setValue: UseFormSetValue<EvaluationInput>;
 };
@@ -21,6 +22,7 @@ export default function SectionTab({
   skillItems,
   hospitalityItems,
   cleanlinessItems,
+  watch,
   sectionType,
   setValue,
 }: SectionTablProps) {
@@ -99,6 +101,7 @@ export default function SectionTab({
             evaluationItems={skillItems}
             setValue={setValue}
             sectionType={sectionType}
+            watch={watch}
             category="skill"
           />
         </TabsContent>
@@ -108,6 +111,7 @@ export default function SectionTab({
             evaluationItems={hospitalityItems}
             setValue={setValue}
             sectionType={sectionType}
+            watch={watch}
             category="hospitality"
           />
         </TabsContent>
@@ -117,6 +121,7 @@ export default function SectionTab({
             evaluationItems={cleanlinessItems}
             setValue={setValue}
             sectionType={sectionType}
+            watch={watch}
             category="cleanliness"
           />
         </TabsContent>
