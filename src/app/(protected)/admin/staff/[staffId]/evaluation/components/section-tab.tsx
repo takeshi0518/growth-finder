@@ -129,6 +129,7 @@ export default function SectionTab({
       <FeedbackCommets
         activeCategory={activeTab}
         setValue={setValue}
+        watch={watch}
         sectionType={sectionType}
       />
     </>

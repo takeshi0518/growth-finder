@@ -15,12 +15,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
 import { EvaluationInput } from '@/lib/validations/schemas';
 import { useState } from 'react';
-import { UseFormSetValue } from 'react-hook-form';
+import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { SectionType } from '../../../../../../../../types/evaluations';
 
 type FeedbackCommentsProps = {
   activeCategory: 'skill' | 'hospitality' | 'cleanliness';
   sectionType: SectionType;
+  watch: UseFormWatch<EvaluationInput>;
   setValue: UseFormSetValue<EvaluationInput>;
 };
 
@@ -39,34 +40,27 @@ const categoryIcon = {
 export default function FeedbackCommets({
   activeCategory,
   sectionType,
+  watch,
   setValue,
 }: FeedbackCommentsProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [goodPoint, setGoodPoint] = useState('');
   const [improvementPoint, setImprovementPoint] = useState('');
-  const [goodPoints, setGoodPoints] = useState<Record<string, string[]>>({
-    skill: [],
-    hospitality: [],
-    cleanliness: [],
-  });
-  const [improvementPoints, setImprovementPoints] = useState<
-    Record<string, string[]>
-  >({
-    skill: [],
-    hospitality: [],
-    cleanliness: [],
-  });
+
+  const goodPoints = watch(`${sectionType}.good_points`) ?? {};
+  const improvementPoints = watch(`${sectionType}.improvement_points`) ?? {};
+
+  //使用時にフォールバックを設定
+  const currentGoodPoints = goodPoints[activeCategory] ?? [];
+  const currentImprovementPoints = improvementPoints[activeCategory] ?? [];
 
   const addGoodPoint = () => {
     if (!goodPoint) return;
 
-    const newPoints = [...goodPoints[activeCategory], goodPoint];
-    setGoodPoints((prev) => ({
-      ...prev,
-      [activeCategory]: newPoints,
-    }));
-
-    setValue(`${sectionType}.good_points.${activeCategory}`, newPoints);
+    setValue(`${sectionType}.good_points.${activeCategory}`, [
+      ...currentGoodPoints,
+      goodPoint,
+    ]);
 
     setGoodPoint('');
   };
@@ -74,13 +68,10 @@ export default function FeedbackCommets({
   const addImprovementPoint = () => {
     if (!improvementPoint) return;
 
-    const newPoints = [...improvementPoints[activeCategory], improvementPoint];
-    setImprovementPoints((prev) => ({
-      ...prev,
-      [activeCategory]: newPoints,
-    }));
-
-    setValue(`${sectionType}.improvement_points.${activeCategory}`, newPoints);
+    setValue(`${sectionType}.improvement_points.${activeCategory}`, [
+      ...currentImprovementPoints,
+      improvementPoint,
+    ]);
 
     setImprovementPoint('');
   };
@@ -187,7 +178,7 @@ export default function FeedbackCommets({
                 良かった点
               </div>
               <ul className="flex flex-wrap text-xs gap-2">
-                {goodPoints[activeCategory].map((point, index) => (
+                {currentGoodPoints.map((point, index) => (
                   <li
                     key={index}
                     className="flex items-center gap-2 bg-primary/10 rounded-2xl px-2 py-1"
@@ -196,13 +187,9 @@ export default function FeedbackCommets({
                     <button
                       type="button"
                       onClick={() => {
-                        const newPoints = goodPoints[activeCategory].filter(
+                        const newPoints = currentGoodPoints.filter(
                           (_, i) => i !== index
                         );
-                        setGoodPoints((prev) => ({
-                          ...prev,
-                          [activeCategory]: newPoints,
-                        }));
                         setValue(
                           `${sectionType}.good_points.${activeCategory}`,
                           newPoints
@@ -221,7 +208,7 @@ export default function FeedbackCommets({
                 もっと良くなる点
               </div>
               <ul className="flex flex-wrap text-xs gap-2">
-                {improvementPoints[activeCategory].map((point, index) => (
+                {currentImprovementPoints.map((point, index) => (
                   <li
                     key={index}
                     className="flex items-center gap-2 bg-primary/10 rounded-2xl px-2 py-1"
@@ -230,13 +217,9 @@ export default function FeedbackCommets({
                     <button
                       type="button"
                       onClick={() => {
-                        const newPoints = improvementPoints[
-                          activeCategory
-                        ].filter((_, i) => i !== index);
-                        setImprovementPoints((prev) => ({
-                          ...prev,
-                          [activeCategory]: newPoints,
-                        }));
+                        const newPoints = currentImprovementPoints.filter(
+                          (_, i) => i !== index
+                        );
                         setValue(
                           `${sectionType}.improvement_points.${activeCategory}`,
                           newPoints

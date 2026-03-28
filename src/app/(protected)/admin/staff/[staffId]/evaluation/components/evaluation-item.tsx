@@ -10,7 +10,6 @@ import {
   Category,
   SectionType,
 } from '../../../../../../../../types/evaluations';
-import { useState } from 'react';
 import { SCORE_OPTIONS } from '@/lib/constants/evaluation-items';
 
 type EvaluationItemData = Pick<
