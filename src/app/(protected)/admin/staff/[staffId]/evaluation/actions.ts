@@ -32,4 +32,12 @@ export async function addEvaluations(
     .select('id')
     .single();
   if (evaluationError) throw new Error('評価の登録に失敗しました');
+
+  const calcScore = (scores: Record<string, number>) =>
+    Object.values(scores).reduce((sum, score) => sum + score, 0);
+
+  const calcMax = (scores: Record<string, number>) =>
+    Object.keys(scores).length * 4;
+
+  //Todo: 登録するsectionを配列で定義
 }
