@@ -224,3 +224,4 @@ export type EditEvaluationPeriodInput = z.infer<
   typeof editEvaluationPeriodSchema
 >;
 export type EvaluationInput = z.infer<typeof evaluationSchema>;
+export type SectionData = z.infer<typeof evaluationSchema>['basic']
