@@ -89,7 +89,8 @@ CREATE TABLE evaluation_sections (
   cleanliness_score  INTEGER NOT NULL,
   cleanliness_max INTEGER NOT NULL,
   created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
-  updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
+  updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  UNIQUE (evaluation_id, section_type)
 );
 
 -- インデックス作成

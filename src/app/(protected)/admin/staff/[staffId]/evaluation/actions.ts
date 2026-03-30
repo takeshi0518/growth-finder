@@ -96,7 +96,7 @@ export async function addEvaluations(
 
   const { data: evaluationSections, error: sectionsError } = await supabase
     .from('evaluation_sections')
-    .upsert(sections)
+    .upsert(sections, { onConflict: 'evaluation_id,section_type' })
     .select('id, section_type');
 
   if (sectionsError) throw new Error('セクションの登録に失敗しました');
