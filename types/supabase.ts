@@ -107,61 +107,49 @@ export type Database = {
       }
       evaluation_sections: {
         Row: {
-          cleanliness_good_points: string[] | null
-          cleanliness_improvement_points: string[] | null
           cleanliness_max: number
           cleanliness_score: number
           created_at: string
           evaluation_id: string
-          hospitality_good_points: string[] | null
-          hospitality_improvement_points: string[] | null
+          good_points: string[] | null
           hospitality_max: number
           hospitality_score: number
           id: string
+          improvement_points: string[] | null
           organization_id: string
           section_type: string
-          skill_good_points: string[] | null
-          skill_improvement_points: string[] | null
           skill_max: number
           skill_score: number
           updated_at: string
         }
         Insert: {
-          cleanliness_good_points?: string[] | null
-          cleanliness_improvement_points?: string[] | null
           cleanliness_max: number
           cleanliness_score: number
           created_at?: string
           evaluation_id: string
-          hospitality_good_points?: string[] | null
-          hospitality_improvement_points?: string[] | null
+          good_points?: string[] | null
           hospitality_max: number
           hospitality_score: number
           id?: string
+          improvement_points?: string[] | null
           organization_id: string
           section_type: string
-          skill_good_points?: string[] | null
-          skill_improvement_points?: string[] | null
           skill_max: number
           skill_score: number
           updated_at?: string
         }
         Update: {
-          cleanliness_good_points?: string[] | null
-          cleanliness_improvement_points?: string[] | null
           cleanliness_max?: number
           cleanliness_score?: number
           created_at?: string
           evaluation_id?: string
-          hospitality_good_points?: string[] | null
-          hospitality_improvement_points?: string[] | null
+          good_points?: string[] | null
           hospitality_max?: number
           hospitality_score?: number
           id?: string
+          improvement_points?: string[] | null
           organization_id?: string
           section_type?: string
-          skill_good_points?: string[] | null
-          skill_improvement_points?: string[] | null
           skill_max?: number
           skill_score?: number
           updated_at?: string
