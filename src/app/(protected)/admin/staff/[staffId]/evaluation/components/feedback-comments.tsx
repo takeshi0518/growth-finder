@@ -37,7 +37,7 @@ const categoryIcon = {
   cleanliness: <Icons.MdCleaningServices className="w-4 h-4" />,
 };
 
-export default function FeedbackCommets({
+export default function FeedbackComments({
   activeCategory,
   sectionType,
   watch,

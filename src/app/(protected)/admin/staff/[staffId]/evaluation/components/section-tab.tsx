@@ -5,7 +5,7 @@ import {
   SectionType,
 } from '../../../../../../../../types/evaluations';
 import { useRef, useState } from 'react';
-import FeedbackCommets from './feedback-commets';
+import FeedbackComments from './feedback-comments';
 import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { EvaluationInput } from '@/lib/validations/schemas';
 
@@ -126,7 +126,7 @@ export default function SectionTab({
           />
         </TabsContent>
       </Tabs>
-      <FeedbackCommets
+      <FeedbackComments
         activeCategory={activeTab}
         setValue={setValue}
         watch={watch}
