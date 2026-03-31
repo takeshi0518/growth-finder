@@ -15,6 +15,10 @@ import {
   CASHIER_HOSPITALITY_ITEMS,
   CASHIER_SKILL_ITEMS,
 } from '@/lib/constants/evaluation-items';
+import {
+  FormattedEvalution,
+  SectionType,
+} from '../../../../../../../types/evaluations';
 
 type EvaluationPageProps = {
   params: { staffId: string };
@@ -40,6 +44,50 @@ export default async function EvaluationPage({
     .single();
   if (error) throw new Error('スタッフ情報の取得に失敗しました');
 
+  const { data: existingEvaluation, error: evaluationError } = await supabase
+    .from('evaluations')
+    .select(
+      `
+        id,
+        action_plan,
+          total_comment,
+          future_vision,
+        evaluation_sections (
+          id,
+          section_type,
+          good_points,
+          improvement_points,
+          evaluation_items (
+            item_name,
+            category,
+            score
+          )
+        )
+      `
+    )
+    .eq('staff_id', staffId)
+    .eq('evaluation_period_id', periodId)
+    .eq('organization_id', orgId)
+    .single();
+
+  if (!existingEvaluation) throw new Error('評価の取得に失敗しました');
+
+  const formattedEvaluationData = existingEvaluation.evaluation_sections.reduce(
+    (acc, cur) => {
+      acc[cur.section_type] = {
+        ...cur.evaluation_items.reduce((acc, cur) => {
+          if (!acc[cur.category]) acc[cur.category] = {};
+          acc[cur.category][cur.item_name] = cur.score;
+
+          return acc;
+        }, {}),
+        good_points: cur.good_points,
+        improvement_points: cur.improvement_points,
+      };
+      return acc;
+    },
+    {}
+  );
   return (
     <AdminContainer>
       <BackPageLink href="/admin/staff" label="スタッフ一覧へ戻る" />
