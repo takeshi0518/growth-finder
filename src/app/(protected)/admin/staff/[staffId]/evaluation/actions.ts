@@ -164,7 +164,7 @@ export async function addEvaluations(
 
   const { error: itemsError } = await supabase
     .from('evaluation_items')
-    .upsert(items);
+    .upsert(items, { onConflict: 'evaluation_section_id,item_name' });
 
   if (itemsError) throw new Error('評価項目の登録に失敗しました');
 }

@@ -157,7 +157,8 @@ CREATE TABLE evaluation_items (
   score INTEGER CHECK (score >= 1 AND score <= 4),
   check_points TEXT[],
   created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
-  updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
+  updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  UNIQUE(evaluation_section_id, item_name)
 );
 
 -- インデックス作成
