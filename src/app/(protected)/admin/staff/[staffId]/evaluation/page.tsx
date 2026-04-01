@@ -72,25 +72,23 @@ export default async function EvaluationPage({
     .eq('organization_id', orgId)
     .single();
 
-  if (!existingEvaluation) throw new Error('評価の取得に失敗しました');
+  const formattedEvaluationData = existingEvaluation
+    ? existingEvaluation.evaluation_sections.reduce((acc, cur) => {
+        acc[cur.section_type as SectionType] = {
+          ...cur.evaluation_items.reduce((acc, cur) => {
+            if (!acc[cur.category as Category])
+              acc[cur.category as Category] = {};
+            acc[cur.category as Category][cur.item_name] = cur.score ?? 0;
 
-  const formattedEvaluationData = existingEvaluation.evaluation_sections.reduce(
-    (acc, cur) => {
-      acc[cur.section_type as SectionType] = {
-        ...cur.evaluation_items.reduce((acc, cur) => {
-          if (!acc[cur.category as Category])
-            acc[cur.category as Category] = {};
-          acc[cur.category as Category][cur.item_name] = cur.score ?? 0;
+            return acc;
+          }, {} as SectionData),
+          good_points: (cur.good_points ?? []) as string[],
+          improvement_points: (cur.improvement_points ?? []) as string[],
+        };
+        return acc;
+      }, {} as FormattedEvaluation)
+    : null;
 
-          return acc;
-        }, {} as SectionData),
-        good_points: (cur.good_points ?? []) as string[],
-        improvement_points: (cur.improvement_points ?? []) as string[],
-      };
-      return acc;
-    },
-    {} as FormattedEvaluation
-  );
   return (
     <AdminContainer>
       <BackPageLink href="/admin/staff" label="スタッフ一覧へ戻る" />
