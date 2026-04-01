@@ -15,12 +15,7 @@ import {
   CASHIER_HOSPITALITY_ITEMS,
   CASHIER_SKILL_ITEMS,
 } from '@/lib/constants/evaluation-items';
-import {
-  Category,
-  FormattedEvaluation,
-  SectionType,
-} from '../../../../../../../types/evaluations';
-import { SectionData } from '@/lib/validations/schemas';
+import { formatEvaluationData } from './utils';
 
 type EvaluationPageProps = {
   params: { staffId: string };
@@ -46,7 +41,7 @@ export default async function EvaluationPage({
     .single();
   if (error) throw new Error('スタッフ情報の取得に失敗しました');
 
-  const { data: existingEvaluation, error: evaluationError } = await supabase
+  const { data: existingEvaluation } = await supabase
     .from('evaluations')
     .select(
       `
@@ -73,21 +68,10 @@ export default async function EvaluationPage({
     .single();
 
   const formattedEvaluationData = existingEvaluation
-    ? existingEvaluation.evaluation_sections.reduce((acc, cur) => {
-        acc[cur.section_type as SectionType] = {
-          ...cur.evaluation_items.reduce((acc, cur) => {
-            if (!acc[cur.category as Category])
-              acc[cur.category as Category] = {};
-            acc[cur.category as Category][cur.item_name] = cur.score ?? 0;
-
-            return acc;
-          }, {} as SectionData),
-          good_points: (cur.good_points ?? []) as string[],
-          improvement_points: (cur.improvement_points ?? []) as string[],
-        };
-        return acc;
-      }, {} as FormattedEvaluation)
+    ? formatEvaluationData(existingEvaluation)
     : null;
+
+  console.log(formattedEvaluationData);
 
   return (
     <AdminContainer>
