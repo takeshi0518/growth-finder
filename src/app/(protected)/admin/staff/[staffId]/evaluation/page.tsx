@@ -16,9 +16,11 @@ import {
   CASHIER_SKILL_ITEMS,
 } from '@/lib/constants/evaluation-items';
 import {
-  FormattedEvalution,
+  Category,
+  FormattedEvaluation,
   SectionType,
 } from '../../../../../../../types/evaluations';
+import { SectionData } from '@/lib/validations/schemas';
 
 type EvaluationPageProps = {
   params: { staffId: string };
@@ -74,19 +76,20 @@ export default async function EvaluationPage({
 
   const formattedEvaluationData = existingEvaluation.evaluation_sections.reduce(
     (acc, cur) => {
-      acc[cur.section_type] = {
+      acc[cur.section_type as SectionType] = {
         ...cur.evaluation_items.reduce((acc, cur) => {
-          if (!acc[cur.category]) acc[cur.category] = {};
-          acc[cur.category][cur.item_name] = cur.score;
+          if (!acc[cur.category as Category])
+            acc[cur.category as Category] = {};
+          acc[cur.category as Category][cur.item_name] = cur.score ?? 0;
 
           return acc;
-        }, {}),
+        }, {} as SectionData),
         good_points: cur.good_points,
         improvement_points: cur.improvement_points,
       };
       return acc;
     },
-    {}
+    {} as FormattedEvaluation
   );
   return (
     <AdminContainer>
