@@ -71,7 +71,11 @@ export default async function EvaluationPage({
     ? formatEvaluationData(existingEvaluation)
     : null;
 
-  console.log(formattedEvaluationData);
+  const existingComment = {
+    action_plan: existingEvaluation?.action_plan ?? '',
+    total_comment: existingEvaluation?.total_comment ?? '',
+    future_vision: existingEvaluation?.future_vision ?? '',
+  };
 
   return (
     <AdminContainer>
@@ -80,6 +84,8 @@ export default async function EvaluationPage({
       <EvaluationForm
         staffId={staffId}
         periodId={periodId}
+        existingComments={existingComment}
+        existingEvaluationData={formattedEvaluationData}
         basicSkillItems={BASIC_SKILL_ITEMS}
         basicHospitalityItems={BASIC_HOSPITALITY_ITEMS}
         basicCleanlinessItems={BASIC_CLEANLINESS_ITEMS}

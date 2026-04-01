@@ -11,7 +11,10 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import SectionTab from './section-tab';
 import { Button } from '@/components/ui/button';
-import { EvaluationItemConstant } from '../../../../../../../../types/evaluations';
+import {
+  EvaluationItemConstant,
+  FormattedEvaluation,
+} from '../../../../../../../../types/evaluations';
 import EvaluationComments from './evaluation-comments';
 import { useForm } from 'react-hook-form';
 import { EvaluationInput, evaluationSchema } from '@/lib/validations/schemas';
@@ -24,6 +27,12 @@ import { addEvaluations } from '../actions';
 type EvaluationFormProps = {
   staffId: string;
   periodId: string;
+  existingEvaluationData: FormattedEvaluation | null;
+  existingComments: {
+    action_plan: string | null;
+    total_comment: string | null;
+    future_vision: string | null;
+  } | null;
   basicSkillItems: EvaluationItemConstant[];
   basicHospitalityItems: EvaluationItemConstant[];
   basicCleanlinessItems: EvaluationItemConstant[];
@@ -38,6 +47,8 @@ type EvaluationFormProps = {
 export default function EvaluationForm({
   staffId,
   periodId,
+  existingComments,
+  existingEvaluationData,
   basicSkillItems,
   basicHospitalityItems,
   basicCleanlinessItems,
@@ -56,32 +67,39 @@ export default function EvaluationForm({
     formState: { isSubmitting },
   } = useForm<EvaluationInput>({
     resolver: zodResolver(evaluationSchema),
-    defaultValues: {
-      basic: {
-        skill: {},
-        hospitality: {},
-        cleanliness: {},
-        good_points: [],
-        improvement_points: [],
-      },
-      barista: {
-        skill: {},
-        hospitality: {},
-        cleanliness: {},
-        good_points: [],
-        improvement_points: [],
-      },
-      cashier: {
-        skill: {},
-        hospitality: {},
-        cleanliness: {},
-        good_points: [],
-        improvement_points: [],
-      },
-      action_plan: '',
-      total_comment: '',
-      future_vision: '',
-    },
+    defaultValues: existingEvaluationData
+      ? {
+          ...existingEvaluationData,
+          action_plan: existingComments?.action_plan ?? '',
+          total_comment: existingComments?.total_comment ?? '',
+          future_vision: existingComments?.future_vision ?? '',
+        }
+      : {
+          basic: {
+            skill: {},
+            hospitality: {},
+            cleanliness: {},
+            good_points: [],
+            improvement_points: [],
+          },
+          barista: {
+            skill: {},
+            hospitality: {},
+            cleanliness: {},
+            good_points: [],
+            improvement_points: [],
+          },
+          cashier: {
+            skill: {},
+            hospitality: {},
+            cleanliness: {},
+            good_points: [],
+            improvement_points: [],
+          },
+          action_plan: '',
+          total_comment: '',
+          future_vision: '',
+        },
   });
 
   const onSubmit = async (data: EvaluationInput) => {
