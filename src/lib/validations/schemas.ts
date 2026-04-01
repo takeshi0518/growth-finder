@@ -182,22 +182,22 @@ export const evaluationSchema = z.object({
     skill: z.record(z.string(), z.number().min(1).max(4)),
     hospitality: z.record(z.string(), z.number().min(1).max(4)),
     cleanliness: z.record(z.string(), z.number().min(1).max(4)),
-    good_points: z.record(z.string(), z.array(z.string())),
-    improvement_points: z.record(z.string(), z.array(z.string())),
+    good_points: z.array(z.string()),
+    improvement_points: z.array(z.string()),
   }),
   barista: z.object({
     skill: z.record(z.string(), z.number().min(1).max(4)),
     hospitality: z.record(z.string(), z.number().min(1).max(4)),
     cleanliness: z.record(z.string(), z.number().min(1).max(4)),
-    good_points: z.record(z.string(), z.array(z.string())),
-    improvement_points: z.record(z.string(), z.array(z.string())),
+    good_points: z.array(z.string()),
+    improvement_points: z.array(z.string()),
   }),
   cashier: z.object({
     skill: z.record(z.string(), z.number().min(1).max(4)),
     hospitality: z.record(z.string(), z.number().min(1).max(4)),
     cleanliness: z.record(z.string(), z.number().min(1).max(4)),
-    good_points: z.record(z.string(), z.array(z.string())),
-    improvement_points: z.record(z.string(), z.array(z.string())),
+    good_points: z.array(z.string()),
+    improvement_points: z.array(z.string()),
   }),
 
   action_plan: z.string().optional(),
@@ -224,4 +224,4 @@ export type EditEvaluationPeriodInput = z.infer<
   typeof editEvaluationPeriodSchema
 >;
 export type EvaluationInput = z.infer<typeof evaluationSchema>;
-export type SectionData = z.infer<typeof evaluationSchema>['basic']
+export type SectionData = z.infer<typeof evaluationSchema>['basic'];

@@ -84,8 +84,8 @@ export default async function EvaluationPage({
 
           return acc;
         }, {} as SectionData),
-        good_points: cur.good_points,
-        improvement_points: cur.improvement_points,
+        good_points: (cur.good_points ?? []) as string[],
+        improvement_points: (cur.improvement_points ?? []) as string[],
       };
       return acc;
     },

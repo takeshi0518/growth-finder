@@ -84,8 +84,8 @@ export async function addEvaluations(
     hospitality_max: calcMax(sectionData.hospitality),
     cleanliness_score: calcScore(sectionData.cleanliness),
     cleanliness_max: calcMax(sectionData.cleanliness),
-    good_points: Object.values(sectionData.good_points).flat(),
-    improvement_points: Object.values(sectionData.improvement_points).flat(),
+    good_points: sectionData.good_points,
+    improvement_points: sectionData.improvement_points,
   });
 
   const sections = [

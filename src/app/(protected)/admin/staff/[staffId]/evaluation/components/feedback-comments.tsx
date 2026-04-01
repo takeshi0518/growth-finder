@@ -47,20 +47,13 @@ export default function FeedbackComments({
   const [goodPoint, setGoodPoint] = useState('');
   const [improvementPoint, setImprovementPoint] = useState('');
 
-  const goodPoints = watch(`${sectionType}.good_points`) ?? {};
-  const improvementPoints = watch(`${sectionType}.improvement_points`) ?? {};
-
-  //使用時にフォールバックを設定
-  const currentGoodPoints = goodPoints[activeCategory] ?? [];
-  const currentImprovementPoints = improvementPoints[activeCategory] ?? [];
+  const goodPoints = watch(`${sectionType}.good_points`) ?? [];
+  const improvementPoints = watch(`${sectionType}.improvement_points`) ?? [];
 
   const addGoodPoint = () => {
     if (!goodPoint) return;
 
-    setValue(`${sectionType}.good_points.${activeCategory}`, [
-      ...currentGoodPoints,
-      goodPoint,
-    ]);
+    setValue(`${sectionType}.good_points`, [...goodPoints, goodPoint]);
 
     setGoodPoint('');
   };
@@ -68,8 +61,8 @@ export default function FeedbackComments({
   const addImprovementPoint = () => {
     if (!improvementPoint) return;
 
-    setValue(`${sectionType}.improvement_points.${activeCategory}`, [
-      ...currentImprovementPoints,
+    setValue(`${sectionType}.improvement_points`, [
+      ...improvementPoints,
       improvementPoint,
     ]);
 
@@ -178,7 +171,7 @@ export default function FeedbackComments({
                 良かった点
               </div>
               <ul className="flex flex-wrap text-xs gap-2">
-                {currentGoodPoints.map((point, index) => (
+                {goodPoints.map((point, index) => (
                   <li
                     key={index}
                     className="flex items-center gap-2 bg-primary/10 rounded-2xl px-2 py-1"
@@ -187,13 +180,10 @@ export default function FeedbackComments({
                     <button
                       type="button"
                       onClick={() => {
-                        const newPoints = currentGoodPoints.filter(
+                        const newPoints = goodPoints.filter(
                           (_, i) => i !== index
                         );
-                        setValue(
-                          `${sectionType}.good_points.${activeCategory}`,
-                          newPoints
-                        );
+                        setValue(`${sectionType}.good_points`, newPoints);
                       }}
                     >
                       <Icons.X className="w-3 h-3 text-red-500" />
@@ -208,7 +198,7 @@ export default function FeedbackComments({
                 もっと良くなる点
               </div>
               <ul className="flex flex-wrap text-xs gap-2">
-                {currentImprovementPoints.map((point, index) => (
+                {improvementPoints.map((point, index) => (
                   <li
                     key={index}
                     className="flex items-center gap-2 bg-primary/10 rounded-2xl px-2 py-1"
@@ -217,11 +207,11 @@ export default function FeedbackComments({
                     <button
                       type="button"
                       onClick={() => {
-                        const newPoints = currentImprovementPoints.filter(
+                        const newPoints = improvementPoints.filter(
                           (_, i) => i !== index
                         );
                         setValue(
-                          `${sectionType}.improvement_points.${activeCategory}`,
+                          `${sectionType}.improvement_points`,
                           newPoints
                         );
                       }}
