@@ -23,17 +23,14 @@ import { toast } from 'sonner';
 import { getErrorMessage } from '@/lib/utils/error-message';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
 import { addEvaluations } from '../actions';
+import { TOTAL_EVALUATION_ITEMS } from '@/lib/constants/evaluation-items';
 import {
-  BARISTA_CLEANLINESS,
-  BARISTA_HOSPITALITY_ITEMS,
-  BARISTA_SKILL_ITEMS,
-  BASIC_CLEANLINESS_ITEMS,
-  BASIC_HOSPITALITY_ITEMS,
-  BASIC_SKILL_ITEMS,
-  CASHIER_CLEANLINESS,
-  CASHIER_HOSPITALITY_ITEMS,
-  CASHIER_SKILL_ITEMS,
-} from '@/lib/constants/evaluation-items';
+  SectionType,
+  Category,
+} from '../../../../../../../../types/evaluations';
+
+const SECTION_TYPES: SectionType[] = ['basic', 'barista', 'cashier'];
+const CATEGORIES: Category[] = ['skill', 'hospitality', 'cleanliness'];
 
 type EvaluationFormProps = {
   staffId: string;
@@ -54,17 +51,6 @@ type EvaluationFormProps = {
   baristaHospitalityItems: EvaluationItemConstant[];
   baristaCleanliness: EvaluationItemConstant[];
 };
-
-const totalEvaluationItems =
-  BASIC_SKILL_ITEMS.length +
-  BASIC_HOSPITALITY_ITEMS.length +
-  BASIC_CLEANLINESS_ITEMS.length +
-  BARISTA_SKILL_ITEMS.length +
-  BARISTA_HOSPITALITY_ITEMS.length +
-  BARISTA_CLEANLINESS.length +
-  CASHIER_SKILL_ITEMS.length +
-  CASHIER_HOSPITALITY_ITEMS.length +
-  CASHIER_CLEANLINESS.length;
 
 export default function EvaluationForm({
   staffId,
@@ -124,19 +110,20 @@ export default function EvaluationForm({
         },
   });
 
-  const validateEvaluation = () => {
-    const currentEvaluationItems =
-      Object.keys(watch('basic.skill')).length +
-      Object.keys(watch('basic.hospitality')).length +
-      Object.keys(watch('basic.cleanliness')).length +
-      Object.keys(watch('barista.skill')).length +
-      Object.keys(watch('barista.hospitality')).length +
-      Object.keys(watch('barista.cleanliness')).length +
-      Object.keys(watch('cashier.skill')).length +
-      Object.keys(watch('cashier.hospitality')).length +
-      Object.keys(watch('cashier.cleanliness')).length;
+  const countScoredItems = () => {
+    let result = 0;
 
-    return totalEvaluationItems === currentEvaluationItems;
+    for (const section of SECTION_TYPES) {
+      for (const category of CATEGORIES) {
+        result += Object.keys(watch(`${section}.${category}`)).length;
+      }
+    }
+    return result;
+  };
+
+  const validateEvaluation = () => {
+    const currentEvaluationItems = countScoredItems();
+    return TOTAL_EVALUATION_ITEMS === currentEvaluationItems;
   };
 
   const onSubmit = async (data: EvaluationInput) => {
