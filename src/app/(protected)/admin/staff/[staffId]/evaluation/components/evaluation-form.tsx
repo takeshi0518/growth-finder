@@ -23,6 +23,17 @@ import { toast } from 'sonner';
 import { getErrorMessage } from '@/lib/utils/error-message';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
 import { addEvaluations } from '../actions';
+import {
+  BARISTA_CLEANLINESS,
+  BARISTA_HOSPITALITY_ITEMS,
+  BARISTA_SKILL_ITEMS,
+  BASIC_CLEANLINESS_ITEMS,
+  BASIC_HOSPITALITY_ITEMS,
+  BASIC_SKILL_ITEMS,
+  CASHIER_CLEANLINESS,
+  CASHIER_HOSPITALITY_ITEMS,
+  CASHIER_SKILL_ITEMS,
+} from '@/lib/constants/evaluation-items';
 
 type EvaluationFormProps = {
   staffId: string;
@@ -43,6 +54,17 @@ type EvaluationFormProps = {
   baristaHospitalityItems: EvaluationItemConstant[];
   baristaCleanliness: EvaluationItemConstant[];
 };
+
+const totalEvaluationItems =
+  BASIC_SKILL_ITEMS.length +
+  BASIC_HOSPITALITY_ITEMS.length +
+  BASIC_CLEANLINESS_ITEMS.length +
+  BARISTA_SKILL_ITEMS.length +
+  BARISTA_HOSPITALITY_ITEMS.length +
+  BARISTA_CLEANLINESS.length +
+  CASHIER_SKILL_ITEMS.length +
+  CASHIER_HOSPITALITY_ITEMS.length +
+  CASHIER_CLEANLINESS.length;
 
 export default function EvaluationForm({
   staffId,
@@ -102,7 +124,26 @@ export default function EvaluationForm({
         },
   });
 
+  const validateEvaluation = () => {
+    const currentEvaluationItems =
+      Object.keys(watch('basic.skill')).length +
+      Object.keys(watch('basic.hospitality')).length +
+      Object.keys(watch('basic.cleanliness')).length +
+      Object.keys(watch('barista.skill')).length +
+      Object.keys(watch('barista.hospitality')).length +
+      Object.keys(watch('barista.cleanliness')).length +
+      Object.keys(watch('cashier.skill')).length +
+      Object.keys(watch('cashier.hospitality')).length +
+      Object.keys(watch('cashier.cleanliness')).length;
+
+    return totalEvaluationItems === currentEvaluationItems;
+  };
+
   const onSubmit = async (data: EvaluationInput) => {
+    if (!validateEvaluation()) {
+      toast.error('未評価項目があります');
+      return;
+    }
     try {
       await addEvaluations(data, staffId, periodId);
       toast.success('評価を登録しました');
