@@ -22,7 +22,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import { getErrorMessage } from '@/lib/utils/error-message';
 import LoaderCircleIcon from '@/components/shared/loader-circle';
-import { addEvaluations } from '../actions';
+import { addEvaluations, saveDraft } from '../actions';
 import { TOTAL_EVALUATION_ITEMS } from '@/lib/constants/evaluation-items';
 import {
   SectionType,
@@ -141,6 +141,18 @@ export default function EvaluationForm({
     }
   };
 
+  const saveDraftEvaluations = async () => {
+    const draftEvaluations = watch();
+    try {
+      await saveDraft(draftEvaluations, staffId, periodId);
+      toast.success('評価を下書き保存しました');
+    } catch (error) {
+      toast.error('評価の下書きに失敗しました', {
+        description: getErrorMessage(error),
+      });
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -215,7 +227,13 @@ export default function EvaluationForm({
           </Tabs>
         </CardContent>
         <CardFooter className="flex justify-around">
-          <Button variant="secondary">下書き</Button>
+          <Button
+            variant="secondary"
+            type="button"
+            onClick={saveDraftEvaluations}
+          >
+            下書き
+          </Button>
           <Button variant="default" type="submit" disabled={isSubmitting}>
             {isSubmitting ? <LoaderCircleIcon /> : '保存'}
           </Button>

@@ -10,6 +10,7 @@ import {
 import {
   Category,
   EvaluationItemConstant,
+  FormattedEvaluation,
   SectionType,
 } from '../../../../../../../types/evaluations';
 import {
@@ -167,4 +168,14 @@ export async function addEvaluations(
     .upsert(items, { onConflict: 'evaluation_section_id,item_name' });
 
   if (itemsError) throw new Error('評価項目の登録に失敗しました');
+}
+
+export async function saveDraft(
+  draftEvaluations: FormattedEvaluation,
+  staffId: string,
+  periodId: string
+) {
+  console.log('draftEvaluations: ', draftEvaluations);
+  console.log('staffId', staffId);
+  console.log('periodId: ', periodId);
 }
