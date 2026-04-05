@@ -19,12 +19,20 @@ export type EvaluationItem = Pick<
 
 export type ExistingEvaluationSection = Pick<
   Tables<'evaluation_sections'>,
-  'section_type' | 'good_points' | 'improvement_points'
+  | 'section_type'
+  | 'good_points'
+  | 'improvement_points'
+  | 'skill_score'
+  | 'skill_max'
+  | 'hospitality_score'
+  | 'hospitality_max'
+  | 'cleanliness_score'
+  | 'cleanliness_max'
 > & {
   evaluation_items: EvaluationItem[];
 };
 
 export type ExistingEvaluation = Pick<
   Tables<'evaluations'>,
-  'id' | 'action_plan' | 'total_comment' | 'future_vision'
+  'id' | 'status' | 'action_plan' | 'total_comment' | 'future_vision'
 > & { evaluation_sections: ExistingEvaluationSection[] };

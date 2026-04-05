@@ -46,18 +46,25 @@ export default async function EvaluationPage({
     .select(
       `
         id,
+        status,
         action_plan,
-          total_comment,
-          future_vision,
-        evaluation_sections (
-          id,
-          section_type,
-          good_points,
-          improvement_points,
-          evaluation_items (
-            item_name,
-            category,
-            score
+        total_comment,
+        future_vision,
+            evaluation_sections (
+            id,
+            section_type,
+            good_points,
+            improvement_points,
+            skill_score,
+            skill_max,
+            hospitality_score,
+            hospitality_max,
+            cleanliness_score,
+            cleanliness_max,
+              evaluation_items (
+                item_name,
+                category,
+                score
           )
         )
       `
