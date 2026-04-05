@@ -13,6 +13,7 @@ import SectionTab from './section-tab';
 import { Button } from '@/components/ui/button';
 import {
   EvaluationItemConstant,
+  ExistingEvaluation,
   FormattedEvaluation,
 } from '../../../../../../../../types/evaluations';
 import EvaluationComments from './evaluation-comments';
@@ -28,6 +29,7 @@ import {
   SectionType,
   Category,
 } from '../../../../../../../../types/evaluations';
+import Summary from './sumarry';
 
 const SECTION_TYPES: SectionType[] = ['basic', 'barista', 'cashier'];
 const CATEGORIES: Category[] = ['skill', 'hospitality', 'cleanliness'];
@@ -35,6 +37,7 @@ const CATEGORIES: Category[] = ['skill', 'hospitality', 'cleanliness'];
 type EvaluationFormProps = {
   staffId: string;
   periodId: string;
+  existingEvaluations: ExistingEvaluation | null;
   existingEvaluationData: FormattedEvaluation | null;
   existingComments: {
     action_plan: string | null;
@@ -55,6 +58,7 @@ type EvaluationFormProps = {
 export default function EvaluationForm({
   staffId,
   periodId,
+  existingEvaluations,
   existingComments,
   existingEvaluationData,
   basicSkillItems,
@@ -192,6 +196,13 @@ export default function EvaluationForm({
             </TabsList>
 
             <TabsContent value="all">
+              {existingEvaluations?.status === 'completed' ? (
+                <Summary existingEvaluations={existingEvaluations} />
+              ) : existingEvaluations?.status === 'draft' ? (
+                <p>下書き保存中のため表示できません</p>
+              ) : (
+                <p>まだ評価が登録されていません</p>
+              )}
               <EvaluationComments register={register} />
             </TabsContent>
             <TabsContent value="basic">

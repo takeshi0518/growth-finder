@@ -91,6 +91,7 @@ export default async function EvaluationPage({
       <EvaluationForm
         staffId={staffId}
         periodId={periodId}
+        existingEvaluations={existingEvaluation}
         existingComments={existingComment}
         existingEvaluationData={formattedEvaluationData}
         basicSkillItems={BASIC_SKILL_ITEMS}
