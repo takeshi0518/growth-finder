@@ -2,10 +2,81 @@ import { Card, CardContent } from '@/components/ui/card';
 import { ExistingEvaluation } from '../../../../../../../../types/evaluations';
 import { calcEvaluation } from '@/lib/utils/evaluation-calc';
 import { Label } from '@/components/ui/label';
+import { Icons } from '@/components/icon/icons';
 
 type SummaryProps = {
   existingEvaluations: ExistingEvaluation;
 };
+
+function SectionSummaryCard() {
+  return (
+    <div className="mt-6 max-w-200 mx-auto">
+      <Label>基本動作</Label>
+      <Card className="mt-2">
+        <CardContent>
+          <div className="grid grid-cols-2 gap-8">
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-[9px] sm:text-[10px] text-muted-foreground">
+                総合評価
+              </p>
+              <p className="text-2xl font-bold">A</p>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-[9px] sm:text-[10px] text-muted-foreground">
+                総合達成率
+              </p>
+              <p className="text-2xl font-bold">100%</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mt-4 pt-4 border-t">
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-[9px] sm:text-[10px] text-muted-foreground">
+                スキル達成率
+              </p>
+              <p className="text-2xl font-bold">100%</p>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-[9px] sm:text-[10px] text-muted-foreground">
+                ホスピタリティ達成率
+              </p>
+              <p className="text-2xl font-bold">100%</p>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-[9px] sm:text-[10px] text-muted-foreground">
+                クレンリネス達成率
+              </p>
+              <p className="text-2xl font-bold">100%</p>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 mt-6 pt-4 border-t">
+            <div className="flex-1 p-1">
+              <div className="flex items-center gap-2 text-xs mb-4 text-primary">
+                <Icons.ThumbsUp className="w-4 h-4" />
+                良かった点
+              </div>
+              <ul className="flex flex-wrap text-xs gap-2">
+                <li className="flex items-center gap-2 bg-primary/10 rounded-2xl px-2 py-1">
+                  笑顔
+                </li>
+              </ul>
+            </div>
+            <div className="flex-1 p-1">
+              <div className="flex items-center gap-2 text-xs mb-4 text-primary">
+                <Icons.Sprout className="w-4 h-4" />
+                もっと良くなる点
+              </div>
+              <ul className="flex flex-wrap text-xs gap-2">
+                <li className="flex items-center gap-2 bg-primary/10 rounded-2xl px-2 py-1">
+                  姿勢
+                </li>
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
 
 export default function Summary({ existingEvaluations }: SummaryProps) {
   const { rate: completionRate, rank: overallEvaluations } = calcEvaluation(
@@ -13,56 +84,17 @@ export default function Summary({ existingEvaluations }: SummaryProps) {
   );
   return (
     <>
-      <div className="mt-6 max-w-200 mx-auto">
+      <div className="mt-10 max-w-200 mx-auto">
         <Label>サマリー</Label>
         <Card className="mt-2">
           <CardContent className="flex justify-around items-center py-4">
-            <div className="flex flex-col items-center gap-1">
+            <div className="flex flex-col flex-1 items-center gap-1 border-r">
               <p className="text-sm text-muted-foreground">総合評価</p>
               <p className="text-2xl font-bold">{overallEvaluations}</p>
             </div>
-            <div className="flex flex-col items-center gap-1">
+            <div className="flex flex-col flex-1 items-center gap-1">
               <p className="text-sm text-muted-foreground">総合達成率</p>
               <p className="text-2xl font-bold">{`${completionRate}%`}</p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-      <div className="mt-6 max-w-200 mx-auto">
-        <Label>基本動作</Label>
-        <Card className="mt-2">
-          <CardContent>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-5">
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-[9px] sm:text-[10px] text-muted-foreground">
-                  総合評価
-                </p>
-                <p className="text-2xl font-bold">A</p>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-[9px] sm:text-[10px] text-muted-foreground">
-                  総合達成率
-                </p>
-                <p className="text-2xl font-bold">100%</p>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-[9px] sm:text-[10px] text-muted-foreground">
-                  スキル達成率
-                </p>
-                <p className="text-2xl font-bold">100%</p>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-[9px] sm:text-[10px] text-muted-foreground">
-                  ホスピタリティ達成率
-                </p>
-                <p className="text-2xl font-bold">100%</p>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-[9px] sm:text-[10px] text-muted-foreground">
-                  クレンリネス達成率
-                </p>
-                <p className="text-2xl font-bold">100%</p>
-              </div>
             </div>
           </CardContent>
         </Card>
