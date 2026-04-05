@@ -11,7 +11,7 @@ export default function Summary({ existingEvaluations }: SummaryProps) {
     existingEvaluations.evaluation_sections
   );
   return (
-    <Card className="mt-10">
+    <Card className="mt-10 max-w-200 mx-auto">
       <CardContent className="flex justify-around items-center py-4">
         <div className="flex flex-col items-center gap-1">
           <p className="text-sm text-muted-foreground">総合評価</p>
