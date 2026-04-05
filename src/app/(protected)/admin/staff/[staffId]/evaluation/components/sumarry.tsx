@@ -1,5 +1,9 @@
 import { Card, CardContent } from '@/components/ui/card';
-import { ExistingEvaluation } from '../../../../../../../../types/evaluations';
+import {
+  ExistingEvaluation,
+  ExistingEvaluationSection,
+  SectionType,
+} from '../../../../../../../../types/evaluations';
 import { calcEvaluation } from '@/lib/utils/evaluation-calc';
 import { Label } from '@/components/ui/label';
 import { Icons } from '@/components/icon/icons';
@@ -8,10 +12,22 @@ type SummaryProps = {
   existingEvaluations: ExistingEvaluation;
 };
 
-function SectionSummaryCard() {
+type SectionSummaryCardProps = {
+  section: ExistingEvaluationSection;
+};
+
+const sectionLabel = {
+  basic: '基本動作',
+  barista: 'バリスタ',
+  cashier: 'キャッシャー',
+};
+
+function SectionSummaryCard({ section }: SectionSummaryCardProps) {
+  const { rate, rank } = calcEvaluation([section]);
+  
   return (
     <div className="mt-6 max-w-200 mx-auto">
-      <Label>基本動作</Label>
+      <Label>{sectionLabel[section.section_type as SectionType]}</Label>
       <Card className="mt-2">
         <CardContent>
           <div className="grid grid-cols-2 gap-8">
@@ -19,13 +35,13 @@ function SectionSummaryCard() {
               <p className="text-[9px] sm:text-[10px] text-muted-foreground">
                 総合評価
               </p>
-              <p className="text-2xl font-bold">A</p>
+              <p className="text-2xl font-bold">{rank}</p>
             </div>
             <div className="flex flex-col items-center gap-1">
               <p className="text-[9px] sm:text-[10px] text-muted-foreground">
                 総合達成率
               </p>
-              <p className="text-2xl font-bold">100%</p>
+              <p className="text-2xl font-bold">{`${rate}%`}</p>
             </div>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mt-4 pt-4 border-t">
@@ -55,9 +71,14 @@ function SectionSummaryCard() {
                 良かった点
               </div>
               <ul className="flex flex-wrap text-xs gap-2">
-                <li className="flex items-center gap-2 bg-primary/10 rounded-2xl px-2 py-1">
-                  笑顔
-                </li>
+                {section.good_points?.map((point, index) => (
+                  <li
+                    key={index}
+                    className="flex items-center gap-2 bg-primary/10 rounded-2xl px-2 py-1"
+                  >
+                    {point}
+                  </li>
+                ))}
               </ul>
             </div>
             <div className="flex-1 p-1">
@@ -66,9 +87,14 @@ function SectionSummaryCard() {
                 もっと良くなる点
               </div>
               <ul className="flex flex-wrap text-xs gap-2">
-                <li className="flex items-center gap-2 bg-primary/10 rounded-2xl px-2 py-1">
-                  姿勢
-                </li>
+                {section.improvement_points?.map((point, index) => (
+                  <li
+                    key={index}
+                    className="flex items-center gap-2 bg-primary/10 rounded-2xl px-2 py-1"
+                  >
+                    {point}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -99,6 +125,9 @@ export default function Summary({ existingEvaluations }: SummaryProps) {
           </CardContent>
         </Card>
       </div>
+      {existingEvaluations.evaluation_sections.map((section) => (
+        <SectionSummaryCard key={section.section_type} section={section} />
+      ))}
     </>
   );
 }
