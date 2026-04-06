@@ -21,6 +21,7 @@ export default function EvaluationComments({
         <Textarea
           id="actionPlan"
           {...register('action_plan')}
+          className="text-xs sm:text-base"
           placeholder="基本動作・バリスタ・キャッシャーに分類して簡潔にまとめましょう"
         />
       </div>
@@ -32,6 +33,7 @@ export default function EvaluationComments({
         <Textarea
           id="generalComment"
           {...register('total_comment')}
+          className="text-xs sm:text-base"
           placeholder="総合的に見てのコメントを書きましょう"
         />
       </div>
@@ -43,6 +45,7 @@ export default function EvaluationComments({
         <Textarea
           id="futureImage"
           {...register('future_vision')}
+          className="text-xs sm:text-base"
           placeholder="3ヵ月後の想像を具体的に書きましょう"
         />
       </div>
