@@ -23,8 +23,9 @@ const sectionLabel = {
 };
 
 function SectionSummaryCard({ section }: SectionSummaryCardProps) {
-  const { rate, rank } = calcEvaluation([section]);
-  
+  const { rate, rank, skillRate, hospitalityRate, cleanlinessRate } =
+    calcEvaluation([section]);
+
   return (
     <div className="mt-6 max-w-200 mx-auto">
       <Label>{sectionLabel[section.section_type as SectionType]}</Label>
@@ -49,19 +50,19 @@ function SectionSummaryCard({ section }: SectionSummaryCardProps) {
               <p className="text-[9px] sm:text-[10px] text-muted-foreground">
                 スキル達成率
               </p>
-              <p className="text-2xl font-bold">100%</p>
+              <p className="text-2xl font-bold">{`${skillRate}%`}</p>
             </div>
             <div className="flex flex-col items-center gap-1">
               <p className="text-[9px] sm:text-[10px] text-muted-foreground">
                 ホスピタリティ達成率
               </p>
-              <p className="text-2xl font-bold">100%</p>
+              <p className="text-2xl font-bold">{`${hospitalityRate}%`}</p>
             </div>
             <div className="flex flex-col items-center gap-1">
               <p className="text-[9px] sm:text-[10px] text-muted-foreground">
                 クレンリネス達成率
               </p>
-              <p className="text-2xl font-bold">100%</p>
+              <p className="text-2xl font-bold">{`${cleanlinessRate}%`}</p>
             </div>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 mt-6 pt-4 border-t">
@@ -105,7 +106,7 @@ function SectionSummaryCard({ section }: SectionSummaryCardProps) {
 }
 
 export default function Summary({ existingEvaluations }: SummaryProps) {
-  const { rate: completionRate, rank: overallEvaluations } = calcEvaluation(
+  const { rate, rank } = calcEvaluation(
     existingEvaluations.evaluation_sections
   );
   return (
@@ -116,11 +117,11 @@ export default function Summary({ existingEvaluations }: SummaryProps) {
           <CardContent className="flex justify-around items-center py-4">
             <div className="flex flex-col flex-1 items-center gap-1 border-r">
               <p className="text-sm text-muted-foreground">総合評価</p>
-              <p className="text-2xl font-bold">{overallEvaluations}</p>
+              <p className="text-2xl font-bold">{rank}</p>
             </div>
             <div className="flex flex-col flex-1 items-center gap-1">
               <p className="text-sm text-muted-foreground">総合達成率</p>
-              <p className="text-2xl font-bold">{`${completionRate}%`}</p>
+              <p className="text-2xl font-bold">{`${rate}%`}</p>
             </div>
           </CardContent>
         </Card>

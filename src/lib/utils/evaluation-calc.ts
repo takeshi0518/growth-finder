@@ -8,24 +8,42 @@ type SectionScores = {
 };
 
 export const calcRate = (sections: SectionScores[]) => {
-  const totalScore = sections.reduce(
-    (sum, section) =>
-      sum +
-      section.skill_score +
-      section.hospitality_score +
-      section.cleanliness_score,
+  const totalSkillScore = sections.reduce((sum, s) => sum + s.skill_score, 0);
+  const totalHospitalityScore = sections.reduce(
+    (sum, s) => sum + s.hospitality_score,
     0
   );
-  const totalMax = sections.reduce(
-    (sum, section) =>
-      sum +
-      section.skill_max +
-      section.hospitality_max +
-      section.cleanliness_max,
+  const totalCleanlinessScore = sections.reduce(
+    (sum, s) => sum + s.cleanliness_score,
     0
   );
+  const totalSkillMax = sections.reduce((sum, s) => sum + s.skill_max, 0);
+  const totalHospitalityMax = sections.reduce(
+    (sum, s) => sum + s.hospitality_max,
+    0
+  );
+  const totalCleanlinessMax = sections.reduce(
+    (sum, s) => sum + s.cleanliness_max,
+    0
+  );
+  const totalScore =
+    totalSkillScore + totalHospitalityScore + totalCleanlinessScore;
+  const totalMax = totalSkillMax + totalHospitalityMax + totalCleanlinessMax;
 
-  return Math.floor((totalScore / totalMax) * 100);
+  return {
+    skillScore: totalSkillScore,
+    hospitalityScore: totalHospitalityScore,
+    cleanlinessScore: totalCleanlinessScore,
+    skillRate: Math.floor((totalSkillScore / totalSkillMax) * 100),
+    hospitalityRate: Math.floor(
+      (totalHospitalityScore / totalHospitalityMax) * 100
+    ),
+    cleanlinessRate: Math.floor(
+      (totalCleanlinessScore / totalCleanlinessMax) * 100
+    ),
+    totalScore,
+    totalRate: Math.floor((totalScore / totalMax) * 100),
+  };
 };
 
 export const calcRank = (rate: number) => {
@@ -36,8 +54,13 @@ export const calcRank = (rate: number) => {
 };
 
 export const calcEvaluation = (sections: SectionScores[]) => {
-  const rate = calcRate(sections);
+  const {
+    totalRate: rate,
+    skillRate,
+    hospitalityRate,
+    cleanlinessRate,
+  } = calcRate(sections);
   const rank = calcRank(rate);
 
-  return { rate, rank };
+  return { rate, rank, skillRate, hospitalityRate, cleanlinessRate };
 };
