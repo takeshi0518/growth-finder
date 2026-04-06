@@ -2,7 +2,7 @@ import { Icons } from '@/components/icon/icons';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { EvaluationInput } from '@/lib/validations/schemas';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { UseFormRegister } from 'react-hook-form';
 
 type EvaluationCommentsProps = {
   register: UseFormRegister<EvaluationInput>;

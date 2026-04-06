@@ -28,7 +28,10 @@ function SectionSummaryCard({ section }: SectionSummaryCardProps) {
 
   return (
     <div className="mt-6 max-w-200 mx-auto">
-      <Label>{sectionLabel[section.section_type as SectionType]}</Label>
+      <Label>
+        <div className="size-2 bg-primary rounded-full" />
+        {sectionLabel[section.section_type as SectionType]}
+      </Label>
       <Card className="mt-2">
         <CardContent>
           <div className="grid grid-cols-2 gap-8">
@@ -112,7 +115,10 @@ export default function Summary({ existingEvaluations }: SummaryProps) {
   return (
     <>
       <div className="mt-10 max-w-200 mx-auto">
-        <Label>サマリー</Label>
+        <Label>
+          <div className="size-2 bg-primary rounded-full" />
+          サマリー
+        </Label>
         <Card className="mt-2">
           <CardContent className="flex justify-around items-center py-4">
             <div className="flex flex-col flex-1 items-center gap-1 border-r">

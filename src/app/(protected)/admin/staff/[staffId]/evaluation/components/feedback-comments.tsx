@@ -83,7 +83,7 @@ export default function FeedbackComments({
           </DialogTitle>
         </DialogHeader>
         <Tabs defaultValue="good">
-          <TabsList className="grid grid-cols-2 w-full">
+          <TabsList className="grid grid-cols-2 w-full bg-primary/10">
             <TabsTrigger value="good">良かった点</TabsTrigger>
             <TabsTrigger value="improvement">もっと良くなる点</TabsTrigger>
           </TabsList>
@@ -103,6 +103,7 @@ export default function FeedbackComments({
                   value={goodPoint}
                   placeholder="例：笑顔が良かった"
                   onChange={(e) => setGoodPoint(e.target.value)}
+                  className="bg-primary-foreground"
                 />
               </div>
               <div className="flex justify-around">
@@ -135,6 +136,7 @@ export default function FeedbackComments({
                   placeholder="例：視線を上げると更によくなる"
                   value={improvementPoint}
                   onChange={(e) => setImprovementPoint(e.target.value)}
+                  className="bg-primary-foreground"
                 />
               </div>
 
