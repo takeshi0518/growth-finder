@@ -197,13 +197,15 @@ export default function EvaluationForm({
 
             <TabsContent value="all">
               {existingEvaluations?.status === 'completed' ? (
-                <Summary existingEvaluations={existingEvaluations} />
+                <>
+                  <Summary existingEvaluations={existingEvaluations} />
+                  <EvaluationComments register={register} />
+                </>
               ) : existingEvaluations?.status === 'draft' ? (
                 <p>下書き保存中のため表示できません</p>
               ) : (
                 <p>まだ評価が登録されていません</p>
               )}
-              <EvaluationComments register={register} />
             </TabsContent>
             <TabsContent value="basic">
               <SectionTab
