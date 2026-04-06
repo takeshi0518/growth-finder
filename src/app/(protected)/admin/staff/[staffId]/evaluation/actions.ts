@@ -23,6 +23,7 @@ import {
   CASHIER_HOSPITALITY_ITEMS,
   CASHIER_SKILL_ITEMS,
 } from '@/lib/constants/evaluation-items';
+import { revalidatePath } from 'next/cache';
 
 const getSectionId = (
   sections: { id: string; section_type: string }[],
@@ -168,6 +169,8 @@ const upsertEvaluations = async (
     .upsert(items, { onConflict: 'evaluation_section_id,item_name' });
 
   if (itemsError) throw new Error('評価項目の登録に失敗しました');
+
+  revalidatePath(`/admin/staff/${staffId}/evaluation`);
 };
 
 export async function addEvaluations(
