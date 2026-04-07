@@ -22,6 +22,13 @@ const sectionLabel = {
   cashier: 'キャッシャー',
 };
 
+const rankColor: Record<string, string> = {
+  A: 'text-green-500',
+  B: 'text-blue-500',
+  C: 'text-yellow-500',
+  D: 'text-red-500',
+};
+
 function SectionSummaryCard({ section }: SectionSummaryCardProps) {
   const { rate, rank, skillRate, hospitalityRate, cleanlinessRate } =
     calcEvaluation([section]);
@@ -34,21 +41,27 @@ function SectionSummaryCard({ section }: SectionSummaryCardProps) {
         </Label>
         <Card className="mt-2">
           <CardContent>
-            <div className="grid grid-cols-2 gap-8">
-              <div className="flex flex-col items-center gap-1">
+            <div className="flex justify-around items-center py-4">
+              <div className="flex flex-1 flex-col items-center gap-1 border-r">
                 <p className="text-[9px] sm:text-[10px] text-muted-foreground">
                   総合評価
                 </p>
-                <p className="text-2xl font-bold">{rank}</p>
+                <p className={`text-2xl font-bold ${rankColor[rank]}`}>
+                  {rank}
+                </p>
               </div>
-              <div className="flex flex-col items-center gap-1">
+              <div className="flex flex-1 flex-col items-center gap-1">
                 <p className="text-[9px] sm:text-[10px] text-muted-foreground">
                   総合達成率
                 </p>
                 <p className="text-2xl font-bold">{`${rate}%`}</p>
               </div>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mt-4 pt-4 border-t">
+          </CardContent>
+        </Card>
+        <Card className="mt-5">
+          <CardContent>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mt-4 pt-4">
               <div className="flex flex-col items-center gap-1">
                 <p className="text-[9px] sm:text-[10px] text-muted-foreground">
                   スキル達成率
@@ -124,7 +137,7 @@ export default function Summary({ existingEvaluations }: SummaryProps) {
           <CardContent className="flex justify-around items-center py-4">
             <div className="flex flex-col flex-1 items-center gap-1 border-r">
               <p className="text-sm text-muted-foreground">総合評価</p>
-              <p className="text-2xl font-bold">{rank}</p>
+              <p className={`text-2xl font-bold ${rankColor[rank]}`}>{rank}</p>
             </div>
             <div className="flex flex-col flex-1 items-center gap-1">
               <p className="text-sm text-muted-foreground">総合達成率</p>
@@ -134,7 +147,7 @@ export default function Summary({ existingEvaluations }: SummaryProps) {
         </Card>
       </div>
       <Tabs defaultValue="basic" className="mt-8">
-        <TabsList variant="line" className="h-auto w-full max-w-lg">
+        <TabsList variant="line" className="h-auto w-full max-w-lg mx-auto">
           <TabsTrigger
             value="basic"
             className="data-[state=active]:after:bg-primary data-[state=active]:after:w-1/2 data-[state=active]:after:mx-auto"
