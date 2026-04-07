@@ -38,7 +38,11 @@ export default function PasswordForm({ isOAuthUser }: PasswordFormProps) {
 
   const onSubmit = async (data: UpdatePasswordInput) => {
     try {
-      await updatePassword(data);
+      const result = await updatePassword(data);
+      if (result?.error) {
+        toast.error(result.error);
+        return;
+      }
       toast.success('パスワードを更新しました');
     } catch (error) {
       toast.error('パスワードの更新に失敗しました', {

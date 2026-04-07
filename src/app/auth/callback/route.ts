@@ -21,7 +21,11 @@ export async function GET(request: Request) {
 
   const {
     data: { user },
+    error: authError,
   } = await supabase.auth.getUser();
+
+  if (authError)
+    return NextResponse.redirect(new URL('/login?error=no_user', origin));
 
   if (!user) {
     console.error('No User found after OAuth');
@@ -34,7 +38,7 @@ export async function GET(request: Request) {
     .eq('id', user.id)
     .single();
 
-  if (profileError) {
+  if (profileError || !profile) {
     console.error('Profile fetch error:', profileError);
     return NextResponse.redirect(new URL('/login?error=profile', origin));
   }
@@ -42,9 +46,7 @@ export async function GET(request: Request) {
   //ログイン用OAuth
   if (intent === 'login') {
     const isValidAdmin =
-      profile !== null &&
-      profile.role === 'admin' &&
-      profile.is_setup_complete === true;
+      profile.role === 'admin' && profile.is_setup_complete === true;
 
     //未登録ユーザーはブロック
     if (!profile.is_setup_complete) {

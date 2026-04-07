@@ -34,14 +34,16 @@ export default async function EvaluationPage({
 
   const { orgId } = await requireAdmin(supabase);
 
-  const { data: staffProfile, error } = await supabase
+  const { data: staffProfile, error: staffProfileError } = await supabase
     .from('profiles')
     .select('name, store_name, role, email, avatar_url')
     .eq('organization_id', orgId)
     .eq('id', staffId)
     .single();
-  if (error) throw new Error('スタッフ情報の取得に失敗しました');
+  if (staffProfileError) throw new Error('スタッフ情報の取得に失敗しました');
 
+  //初回評価時はデータが存在しないためnullになるケースがある
+  //.single()はデータが存在しない場合もerrorを返すため意図的にerrorを無視している
   const { data: existingEvaluation } = (await supabase
     .from('evaluations')
     .select(

@@ -10,20 +10,21 @@ export default async function AdminPage() {
 
   const {
     data: { user },
+    error: authError,
   } = await supabase.auth.getUser();
-  if (!user) redirect('/login');
+  if (authError || !user) redirect('/login');
 
-  const { data: profile } = await supabase
+  const { data: profile, error: profileError } = await supabase
     .from('profiles')
     .select('name, store_name, role ,email, avatar_url')
     .eq('id', user.id)
     .single();
-  if (!profile) redirect('/login');
+  if (profileError || !profile) redirect('/login');
 
-  const { data: evaluationPeriods } = await supabase
+  const { data: evaluationPeriods, error: periodsError } = await supabase
     .from('evaluation_periods')
     .select('id, name');
-  if (!evaluationPeriods) return;
+  if (periodsError || !evaluationPeriods) return;
 
   return (
     <AdminContainer>

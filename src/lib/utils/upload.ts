@@ -10,7 +10,10 @@ export async function uploadStaffAvatar(formData: FormData, staffId: string) {
 
   const {
     data: { user },
+    error: authError,
   } = await supabase.auth.getUser();
+
+  if (authError) throw new Error('認証エラーが発生しました');
   if (!user) throw new Error('認証エラーが発生しました');
 
   const file = formData.get('avatar') as File;
@@ -52,7 +55,10 @@ export async function uploadAdminAvatar(formData: FormData) {
 
   const {
     data: { user },
+    error: authError,
   } = await supabase.auth.getUser();
+
+  if (authError) throw new Error('認証エラーが発生しました');
   if (!user) throw new Error('認証エラーが発生しました');
 
   const file = formData.get('avatar') as File;

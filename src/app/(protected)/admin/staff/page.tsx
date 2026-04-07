@@ -6,24 +6,29 @@ import { createClient } from '@/lib/supabase/server';
 import BackPageLink from '@/components/shared/back-page-link';
 import AdminContainer from '../components/admin-contaimer';
 import { requireAdmin } from '@/lib/utils/requireAdmin';
+import { redirect } from 'next/navigation';
 
 export default async function StaffManagementPage() {
   const supabase = await createClient();
 
   const { orgId } = await requireAdmin(supabase);
 
-  const { data: staffs } = await supabase
+  const { data: staffs, error: staffsError } = await supabase
     .from('profiles')
     .select('id, name, role, store_name, avatar_url, email')
     .eq('organization_id', orgId)
     .eq('role', 'staff');
 
-  const { data: selectedPeriod } = await supabase
+  if (staffsError) redirect('/admin');
+
+  const { data: selectedPeriod, error: periodError } = await supabase
     .from('evaluation_periods')
     .select('id')
     .eq('organization_id', orgId)
     .eq('is_current', true)
     .maybeSingle();
+
+  if (staffsError) redirect('/admin');
 
   return (
     <AdminContainer>
