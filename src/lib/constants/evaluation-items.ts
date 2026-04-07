@@ -1,5 +1,7 @@
 import { EvaluationItemConstant } from '../../../types/evaluations';
 
+export const SCORE_OPTIONS = [1, 2, 3, 4] as const;
+
 export const BASIC_SKILL_ITEMS: EvaluationItemConstant[] = [
   {
     item_name: '経営理念に沿った行動',
@@ -310,3 +312,14 @@ export const BARISTA_CLEANLINESS: EvaluationItemConstant[] = [
     check_points: ['ゴミなどが作業台に無い', '調理器具、容器などの破損がない'],
   },
 ];
+
+export const TOTAL_EVALUATION_ITEMS =
+  BASIC_SKILL_ITEMS.length +
+  BASIC_HOSPITALITY_ITEMS.length +
+  BASIC_CLEANLINESS_ITEMS.length +
+  BARISTA_SKILL_ITEMS.length +
+  BARISTA_HOSPITALITY_ITEMS.length +
+  BARISTA_CLEANLINESS.length +
+  CASHIER_SKILL_ITEMS.length +
+  CASHIER_HOSPITALITY_ITEMS.length +
+  CASHIER_CLEANLINESS.length;

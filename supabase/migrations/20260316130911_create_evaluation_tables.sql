@@ -80,21 +80,17 @@ CREATE TABLE evaluation_sections (
   evaluation_id UUID NOT NULL REFERENCES evaluations(id) ON DELETE CASCADE,
   organization_id UUID NOT NULL,
   section_type TEXT NOT NULL CHECK (section_type IN ('basic', 'cashier', 'barista')),
-  skill_good_points TEXT[],
-  skill_improvement_points TEXT[],
-  hospitality_good_points TEXT[],
-  hospitality_improvement_points TEXT[],
-  cleanliness_good_points TEXT[],
-  cleanliness_improvement_points TEXT[],
+  good_points TEXT[],
+  improvement_points TEXT[],
   skill_score INTEGER NOT NULL,
   skill_max INTEGER NOT NULL,
   hospitality_score INTEGER NOT NULL,
   hospitality_max INTEGER NOT NULL,
   cleanliness_score  INTEGER NOT NULL,
   cleanliness_max INTEGER NOT NULL,
-  action_plan TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
-  updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
+  updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  UNIQUE (evaluation_id, section_type)
 );
 
 -- インデックス作成
@@ -161,7 +157,8 @@ CREATE TABLE evaluation_items (
   score INTEGER CHECK (score >= 1 AND score <= 4),
   check_points TEXT[],
   created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
-  updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
+  updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  UNIQUE(evaluation_section_id, item_name)
 );
 
 -- インデックス作成

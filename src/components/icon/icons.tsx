@@ -28,12 +28,23 @@ import {
   CalendarDays,
   CalendarPlus,
   List,
+  MessageCirclePlus,
+  ThumbsUp,
+  Sprout,
+  X,
+  CircleAlert,
 } from 'lucide-react';
 
 import { FaXTwitter, FaGithub } from 'react-icons/fa6';
-import { FaRunning, FaRegCommentDots } from 'react-icons/fa';
+import {
+  FaRunning,
+  FaRegCommentDots,
+  FaHammer,
+  FaHandHoldingHeart,
+} from 'react-icons/fa';
 import { PiShootingStar } from 'react-icons/pi';
 import { FcGoogle } from 'react-icons/fc';
+import { MdCleaningServices } from 'react-icons/md';
 
 export const Icons = {
   Menu,
@@ -65,10 +76,18 @@ export const Icons = {
   CalendarDays,
   CalendarPlus,
   List,
+  MessageCirclePlus,
+  ThumbsUp,
+  Sprout,
+  X,
+  CircleAlert,
   FaXTwitter,
   FaGithub,
   FcGoogle,
   FaRunning,
   FaRegCommentDots,
   PiShootingStar,
+  FaHammer,
+  FaHandHoldingHeart,
+  MdCleaningServices,
 };

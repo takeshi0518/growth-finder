@@ -39,6 +39,9 @@ function translateErrorMessage(message: string): string {
     '評価期間の切り替えに失敗しました',
     '評価期間の取得に失敗しました',
     'スタッフ情報の取得に失敗しました',
+    '評価の登録に失敗しました',
+    'セクションが見つかりません',
+    '評価項目の登録に失敗しました',
   ];
 
   if (customErrors.includes(message)) {

@@ -15,13 +15,19 @@ import {
   CASHIER_HOSPITALITY_ITEMS,
   CASHIER_SKILL_ITEMS,
 } from '@/lib/constants/evaluation-items';
+import { formatEvaluationData } from './utils';
 
 type EvaluationPageProps = {
   params: { staffId: string };
+  searchParams: { periodId: string };
 };
 
-export default async function EvaluationPage({ params }: EvaluationPageProps) {
+export default async function EvaluationPage({
+  params,
+  searchParams,
+}: EvaluationPageProps) {
   const { staffId } = await params;
+  const { periodId } = await searchParams;
 
   const supabase = await createClient();
 
@@ -35,11 +41,59 @@ export default async function EvaluationPage({ params }: EvaluationPageProps) {
     .single();
   if (error) throw new Error('スタッフ情報の取得に失敗しました');
 
+  const { data: existingEvaluation } = await supabase
+    .from('evaluations')
+    .select(
+      `
+        id,
+        status,
+        action_plan,
+        total_comment,
+        future_vision,
+            evaluation_sections (
+            id,
+            section_type,
+            good_points,
+            improvement_points,
+            skill_score,
+            skill_max,
+            hospitality_score,
+            hospitality_max,
+            cleanliness_score,
+            cleanliness_max,
+              evaluation_items (
+                item_name,
+                category,
+                score
+          )
+        )
+      `
+    )
+    .eq('staff_id', staffId)
+    .eq('evaluation_period_id', periodId)
+    .eq('organization_id', orgId)
+    .single();
+
+  const formattedEvaluationData = existingEvaluation
+    ? formatEvaluationData(existingEvaluation)
+    : null;
+
+  const existingComment = {
+    action_plan: existingEvaluation?.action_plan ?? '',
+    total_comment: existingEvaluation?.total_comment ?? '',
+    future_vision: existingEvaluation?.future_vision ?? '',
+  };
+
   return (
     <AdminContainer>
       <BackPageLink href="/admin/staff" label="スタッフ一覧へ戻る" />
       <ProfileCard profile={staffProfile} />
       <EvaluationForm
+        staffId={staffId}
+        periodId={periodId}
+        existingEvaluations={existingEvaluation}
+        existingComments={existingComment}
+        existingEvaluationData={formattedEvaluationData}
         basicSkillItems={BASIC_SKILL_ITEMS}
         basicHospitalityItems={BASIC_HOSPITALITY_ITEMS}
         basicCleanlinessItems={BASIC_CLEANLINESS_ITEMS}
