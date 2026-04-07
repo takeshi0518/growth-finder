@@ -13,18 +13,19 @@ export default async function SettingPage() {
 
   const {
     data: { user },
+    error: authError,
   } = await supabase.auth.getUser();
 
-  if (!user) redirect('/login');
+  if (authError || !user) redirect('/login');
 
   const isOAuthUser = user?.app_metadata?.provider === 'google';
-  const { data: profile } = await supabase
+  const { data: profile, error: profileError } = await supabase
     .from('profiles')
     .select('name, store_name, email, avatar_url')
     .eq('id', user.id)
     .single();
 
-  if (!profile) redirect('/login');
+  if (profileError || !profile) redirect('/login');
 
   return (
     <AdminContainer>
