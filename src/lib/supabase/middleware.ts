@@ -43,19 +43,17 @@ export async function updateSession(request: NextRequest) {
 export async function getUserRole(
   supabase: SupabaseClient<Database>,
   userId: string
-): Promise<'admin' | 'staff' | null> {
+): Promise<'admin' | 'staff' | undefined> {
   const { data: profile, error } = await supabase
     .from('profiles')
     .select('role')
     .eq('id', userId)
     .single();
 
-  if (error) {
-    console.error('Get role error: ', error);
-    return null;
-  }
+  if (error) return undefined;
+  if (!profile) return undefined;
 
-  return profile?.role || null;
+  return profile.role as 'admin' | 'staff';
 }
 
 export async function isAdmin(

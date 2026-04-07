@@ -44,11 +44,14 @@ export async function middleware(request: NextRequest) {
   // /setupへのアクセス制御
   //追加情報入力後の/setupへアクセス制御
   if (pathname === '/setup' && user) {
-    const { data: profile } = await supabase
+    const { data: profile, error } = await supabase
       .from('profiles')
       .select('is_setup_complete')
       .eq('id', user.id)
       .single();
+
+    if (error) return supabaseResponse;
+    if (!profile) return supabaseResponse;
 
     if (profile?.is_setup_complete) {
       const role = await getUserRole(supabase, user.id);

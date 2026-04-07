@@ -25,7 +25,6 @@ export default function ResetMailForm() {
   });
   return (
     <form className="space-y-4" onSubmit={handleSubmit(resendConfirmation)}>
-      {/* メールアドレス */}
       <div className="space-y-2">
         <Label htmlFor="email">メールアドレス</Label>
         <Input
@@ -39,7 +38,6 @@ export default function ResetMailForm() {
         )}
       </div>
 
-      {/* 送信ボタン */}
       <Button
         type="submit"
         className="w-full"
