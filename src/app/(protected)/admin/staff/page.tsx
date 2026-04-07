@@ -21,7 +21,7 @@ export default async function StaffManagementPage() {
 
   if (staffsError) redirect('/admin');
 
-  const { data: selectedPeriod, error: periodError } = await supabase
+  const { data: selectedPeriod } = await supabase
     .from('evaluation_periods')
     .select('id')
     .eq('organization_id', orgId)
