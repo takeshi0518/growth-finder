@@ -48,7 +48,7 @@ export async function updatePassword(data: UpdatePasswordInput) {
   const validated = updatePasswordSchema.safeParse(data);
 
   if (!validated.success) {
-    throw { error: '入力内容を確認してください' };
+    throw new Error('入力内容を確認してください');
   }
 
   const { error: signInError } = await supabase.auth.signInWithPassword({
@@ -61,7 +61,7 @@ export async function updatePassword(data: UpdatePasswordInput) {
     password: validated.data.password,
   });
 
-  if (error) throw { error: 'パスワードの更新に失敗しました' };
+  if (error) throw new Error('パスワードの更新に失敗しました');
 
   return { success: true };
 }
