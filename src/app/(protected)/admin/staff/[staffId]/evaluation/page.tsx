@@ -16,6 +16,7 @@ import {
   CASHIER_SKILL_ITEMS,
 } from '@/lib/constants/evaluation-items';
 import { formatEvaluationData } from './utils';
+import { ExistingEvaluation } from '../../../../../../../types/evaluations';
 
 type EvaluationPageProps = {
   params: { staffId: string };
@@ -41,7 +42,7 @@ export default async function EvaluationPage({
     .single();
   if (error) throw new Error('スタッフ情報の取得に失敗しました');
 
-  const { data: existingEvaluation } = await supabase
+  const { data: existingEvaluation } = (await supabase
     .from('evaluations')
     .select(
       `
@@ -72,7 +73,8 @@ export default async function EvaluationPage({
     .eq('staff_id', staffId)
     .eq('evaluation_period_id', periodId)
     .eq('organization_id', orgId)
-    .single();
+    //DBのCHECK制約によりsection_typeはSectionTypeのいずれかであることが保証されている
+    .single()) as { data: ExistingEvaluation | null; error: unknown };
 
   const formattedEvaluationData = existingEvaluation
     ? formatEvaluationData(existingEvaluation)

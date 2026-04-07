@@ -14,12 +14,13 @@ export type FormattedEvaluation = Record<SectionType, SectionData>;
 
 export type EvaluationItem = Pick<
   Tables<'evaluation_items'>,
-  'item_name' | 'category' | 'score'
->;
+  'item_name' | 'score'
+> & {
+  category: Category;
+};
 
 export type ExistingEvaluationSection = Pick<
   Tables<'evaluation_sections'>,
-  | 'section_type'
   | 'good_points'
   | 'improvement_points'
   | 'skill_score'
@@ -29,6 +30,7 @@ export type ExistingEvaluationSection = Pick<
   | 'cleanliness_score'
   | 'cleanliness_max'
 > & {
+  section_type: SectionType;
   evaluation_items: EvaluationItem[];
 };
 
