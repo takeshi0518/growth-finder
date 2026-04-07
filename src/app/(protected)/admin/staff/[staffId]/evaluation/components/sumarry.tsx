@@ -30,7 +30,7 @@ function SectionSummaryCard({ section }: SectionSummaryCardProps) {
     <div className="mt-6 max-w-200 mx-auto">
       <Label>
         <div className="size-2 bg-primary rounded-full" />
-        {sectionLabel[section.section_type as SectionType]}
+        {sectionLabel[section.section_type]}
       </Label>
       <Card className="mt-2">
         <CardContent>
