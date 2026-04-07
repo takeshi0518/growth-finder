@@ -6,8 +6,7 @@ export async function requireAdmin(supabase: SupabaseClient<Database>) {
     data: { user },
     error: authError,
   } = await supabase.auth.getUser();
-  if (!user) throw new Error('認証エラーが発生しました');
-  if (!user) throw new Error('認証エラーが発生しました');
+  if (authError || !user) throw new Error('認証エラーが発生しました');
 
   const { data: profile, error: profileError } = await supabase
     .from('profiles')
