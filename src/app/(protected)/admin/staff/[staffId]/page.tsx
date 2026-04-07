@@ -19,12 +19,12 @@ export default async function StaffDetailPage({
 
   const { orgId } = await requireAdmin(supabase);
 
-  const { data: targetStaff } = await supabase
+  const { data: targetStaff, error: targetStaffError } = await supabase
     .from('profiles')
     .select('name, store_name, role, email, avatar_url')
     .eq('id', staffId)
     .single();
-  if (!targetStaff) redirect('/admin/staff');
+  if (targetStaffError || !targetStaff) redirect('/admin/staff');
 
   const { data: selectedPeriod, error } = await supabase
     .from('evaluation_periods')
