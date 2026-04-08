@@ -5,15 +5,21 @@ import StaffCard from './staff-card';
 import StaffSearch from './staff-search';
 import { Staff } from '../../../../../../types/staff';
 import { Tables } from '../../../../../../types/supabase';
+import { ExistingEvaluationForStaffCard } from '../../../../../../types/evaluations';
 
 type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id'> | null;
 
 type StaffListProps = {
   staffs: Staff[];
   selectedPeriod: EvaluationPeriod;
+  existingEvaluations: ExistingEvaluationForStaffCard[];
 };
 
-export default function StaffList({ staffs, selectedPeriod }: StaffListProps) {
+export default function StaffList({
+  staffs,
+  selectedPeriod,
+  existingEvaluations,
+}: StaffListProps) {
   const [search, setSearch] = useState('');
 
   const filterdStaffs = staffs.filter((staff) => staff.name.includes(search));
@@ -32,13 +38,19 @@ export default function StaffList({ staffs, selectedPeriod }: StaffListProps) {
           </p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filterdStaffs.map((staff) => (
-              <StaffCard
-                key={staff.id}
-                staff={staff}
-                selectedPeriod={selectedPeriod}
-              />
-            ))}
+            {filterdStaffs.map((staff) => {
+              const staffEvaluation = existingEvaluations.find(
+                (s) => s.staff_id === staff.id
+              );
+              return (
+                <StaffCard
+                  key={staff.id}
+                  staff={staff}
+                  selectedPeriod={selectedPeriod}
+                  staffEvaluation={staffEvaluation}
+                />
+              );
+            })}
           </div>
         )}
       </div>

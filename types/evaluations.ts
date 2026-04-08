@@ -38,3 +38,19 @@ export type ExistingEvaluation = Pick<
   Tables<'evaluations'>,
   'id' | 'status' | 'action_plan' | 'total_comment' | 'future_vision'
 > & { evaluation_sections: ExistingEvaluationSection[] };
+
+export type ExistingEvaluationForStaffCard = Pick<
+  Tables<'evaluations'>,
+  'id' | 'staff_id'
+> &
+  {
+    evaluation_sections: Pick<
+      ExistingEvaluationSection,
+      | 'skill_score'
+      | 'skill_max'
+      | 'hospitality_score'
+      | 'hospitality_max'
+      | 'cleanliness_score'
+      | 'cleanliness_max'
+    >[];
+  }
