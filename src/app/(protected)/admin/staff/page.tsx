@@ -65,7 +65,11 @@ export default async function StaffManagementPage() {
         </CardHeader>
 
         <CardContent className="space-y-6">
-          <StaffList staffs={staffs ?? []} selectedPeriod={selectedPeriod} />
+          <StaffList
+            staffs={staffs ?? []}
+            selectedPeriod={selectedPeriod}
+            existingEvaluations={existingEvaluations}
+          />
         </CardContent>
       </Card>
     </AdminContainer>

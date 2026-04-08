@@ -5,15 +5,26 @@ import Image from 'next/image';
 import StaffCardMenu from './staff-card-menu';
 import { Staff } from '../../../../../../types/staff';
 import { Tables } from '../../../../../../types/supabase';
+import { ExistingEvaluationForStaffCard } from '../../../../../../types/evaluations';
+import { calcEvaluation } from '@/lib/utils/evaluation-calc';
 
 type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id'> | null;
 
 type StaffCardProps = {
   staff: Staff;
   selectedPeriod: EvaluationPeriod;
+  staffEvaluation: ExistingEvaluationForStaffCard | undefined;
 };
 
-export default function StaffCard({ staff, selectedPeriod }: StaffCardProps) {
+export default function StaffCard({
+  staff,
+  selectedPeriod,
+  staffEvaluation,
+}: StaffCardProps) {
+  const evaluation = staffEvaluation
+    ? calcEvaluation(staffEvaluation.evaluation_sections)
+    : null;
+
   return (
     <Card className="relative">
       <CardContent className="pb-4">
@@ -44,20 +55,30 @@ export default function StaffCard({ staff, selectedPeriod }: StaffCardProps) {
           <p>役職 {staff.role}</p>
           <p>店舗名 {staff.store_name}</p>
         </div>
-        {/* 現在の評価はダミー */}
-        <div className="mt-3 pt-3 border-t space-y-2">
-          <p className="text-xs font-medium text-muted-foreground">
-            現在の評価
-          </p>
-          <div className="flex flex-wrap gap-2">
-            <span className="text-xs text-muted-foreground mt-1 bg-primary/10 rounded-xl p-2">
-              総合評価: B
-            </span>
-            <span className="text-xs text-muted-foreground mt-1 bg-primary/10 rounded-xl p-2">
-              総合達成率78%
+        {staffEvaluation && evaluation ? (
+          <div className="mt-3 pt-3 border-t space-y-2">
+            <p className="text-xs font-medium text-muted-foreground">
+              現在の評価
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <span className="text-xs text-muted-foreground mt-1 bg-primary/10 rounded-xl p-2">
+                {`総合評価: ${evaluation.rank}`}
+              </span>
+              <span className="text-xs text-muted-foreground mt-1 bg-primary/10 rounded-xl p-2">
+                {`総合達成率: ${evaluation.rate}%`}
+              </span>
+            </div>
+          </div>
+        ) : (
+          <div className="mt-3 pt-3 border-t space-y-2">
+            <p className="text-xs font-medium text-muted-foreground">
+              現在の評価
+            </p>
+            <span className="text-xs text-muted-foreground mt-1 bg-red-100 rounded-xl p-2">
+              未評価
             </span>
           </div>
-        </div>
+        )}
       </CardContent>
     </Card>
   );
