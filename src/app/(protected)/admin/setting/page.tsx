@@ -1,5 +1,3 @@
-import { redirect } from 'next/navigation';
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Icons } from '@/components/icon/icons';
 import SettingForm from './setting-form';
@@ -7,25 +5,14 @@ import PasswordForm from './password-form';
 import { createClient } from '@/lib/supabase/server';
 import BackPageLink from '@/components/shared/back-page-link';
 import AdminContainer from '../components/admin-contaimer';
+import { requireAdmin } from '@/lib/utils/requireAdmin';
 
 export default async function SettingPage() {
   const supabase = await createClient();
 
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser();
-
-  if (authError || !user) redirect('/login');
+  const { user, profile } = await requireAdmin(supabase);
 
   const isOAuthUser = user?.app_metadata?.provider === 'google';
-  const { data: profile, error: profileError } = await supabase
-    .from('profiles')
-    .select('name, store_name, email, avatar_url')
-    .eq('id', user.id)
-    .single();
-
-  if (profileError || !profile) redirect('/login');
 
   return (
     <AdminContainer>
