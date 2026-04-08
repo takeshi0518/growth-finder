@@ -1,5 +1,3 @@
-'use client';
-
 import { Icons } from '@/components/icon/icons';
 import { Card, CardContent } from '@/components/ui/card';
 import Image from 'next/image';
