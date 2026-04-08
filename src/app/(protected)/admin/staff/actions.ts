@@ -17,7 +17,7 @@ export async function addStaff(data: AddStaffInput) {
   const supabase = await createClient();
   const supabaseAdmin = createAdminClient();
 
-  const { profile: adminProfile } = await requireAdmin(supabase);
+  const { profile: adminProfile, orgId } = await requireAdmin(supabase);
 
   const validated = addStaffSchema.safeParse(data);
   if (!validated.success) throw new Error('入力内容を確認してください');
@@ -29,7 +29,7 @@ export async function addStaff(data: AddStaffInput) {
     user_metadata: {
       name: validated.data.name,
       role: 'staff',
-      organization_id: adminProfile.organization_id,
+      organization_id: orgId,
       store_name: adminProfile.store_name,
       is_setup_complete: true,
     },
@@ -44,7 +44,16 @@ export async function deleteStaff(staffId: string) {
   const supabase = await createClient();
   const supabaseAdmin = createAdminClient();
 
-  await requireAdmin(supabase);
+  const { orgId } = await requireAdmin(supabase);
+
+  const { data: staff, error: staffError } = await supabase
+    .from('profiles')
+    .select('id')
+    .eq('id', staffId)
+    .eq('organization_id', orgId)
+    .single();
+
+  if (staffError || !staff) throw new Error('スタッフが見つかりません');
 
   const { error } = await supabaseAdmin.auth.admin.deleteUser(staffId);
   if (error) throw new Error('スタッフの削除に失敗しました');
@@ -56,7 +65,7 @@ export async function editStaff(data: EditStaffInput, staffId: string) {
   const supabase = await createClient();
   const supabaseAdmin = createAdminClient();
 
-  await requireAdmin(supabase);
+  const { orgId } = await requireAdmin(supabase);
 
   const validated = editStaffSchema.safeParse(data);
   if (!validated.success) throw new Error('入力内容を確認してください');
@@ -73,6 +82,7 @@ export async function editStaff(data: EditStaffInput, staffId: string) {
       name: validated.data.name,
       email: validated.data.email,
     })
+    .eq('organization_id', orgId)
     .eq('id', staffId);
 
   if (error) throw new Error('スタッフの更新に失敗しました');
@@ -87,7 +97,16 @@ export async function editStaffPassword(
   const supabase = await createClient();
   const supabaseAdmin = createAdminClient();
 
-  await requireAdmin(supabase);
+  const { orgId } = await requireAdmin(supabase);
+
+  const { data: staff, error: staffError } = await supabase
+    .from('profiles')
+    .select('id')
+    .eq('id', staffId)
+    .eq('organization_id', orgId)
+    .single();
+
+  if (staffError || !staff) throw new Error('スタッフが見つかりません');
 
   const validated = editStaffPasswordSchema.safeParse(data);
   if (!validated.success) throw new Error('入力内容を確認してください');

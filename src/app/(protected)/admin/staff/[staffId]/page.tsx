@@ -23,6 +23,7 @@ export default async function StaffDetailPage({
     .from('profiles')
     .select('name, store_name, role, email, avatar_url')
     .eq('id', staffId)
+    .eq('organization_id', orgId)
     .single();
   if (targetStaffError || !targetStaff) redirect('/admin/staff');
 

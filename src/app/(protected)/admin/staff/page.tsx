@@ -21,14 +21,14 @@ export default async function StaffManagementPage() {
 
   if (staffsError) redirect('/admin');
 
-  const { data: selectedPeriod } = await supabase
+  const { data: selectedPeriod, error: selectedPeriodError } = await supabase
     .from('evaluation_periods')
     .select('id')
     .eq('organization_id', orgId)
     .eq('is_current', true)
     .maybeSingle();
 
-  if (staffsError) redirect('/admin');
+  if (selectedPeriodError) redirect('/admin');
 
   const { data: existingEvaluations, error: exisgintError } = await supabase
     .from('evaluations')
@@ -68,7 +68,7 @@ export default async function StaffManagementPage() {
           <StaffList
             staffs={staffs ?? []}
             selectedPeriod={selectedPeriod}
-            existingEvaluations={existingEvaluations}
+            existingEvaluations={existingEvaluations ?? []}
           />
         </CardContent>
       </Card>

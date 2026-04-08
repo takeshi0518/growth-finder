@@ -10,7 +10,7 @@ export async function requireAdmin(supabase: SupabaseClient<Database>) {
 
   const { data: profile, error: profileError } = await supabase
     .from('profiles')
-    .select('store_name, role, organization_id')
+    .select('store_name, role, organization_id, email, avatar_url, name')
     .eq('id', user.id)
     .single();
 

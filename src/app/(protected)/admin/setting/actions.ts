@@ -12,7 +12,7 @@ import {
 export async function updateProfile(data: UpdateProfileInput) {
   const supabase = await createClient();
 
-  const { user } = await requireAdmin(supabase);
+  const { user, orgId } = await requireAdmin(supabase);
 
   const validated = updateProfileSchema.safeParse(data);
   if (!validated.success) {
@@ -33,6 +33,7 @@ export async function updateProfile(data: UpdateProfileInput) {
       store_name: validated.data.storeName,
       email: validated.data.email,
     })
+    .eq('organization_id', orgId)
     .eq('id', user.id);
 
   if (error) throw new Error('プロフィールの更新に失敗しました');
