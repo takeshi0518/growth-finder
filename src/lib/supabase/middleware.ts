@@ -51,9 +51,11 @@ export async function getUserRole(
     .single();
 
   if (error) return undefined;
-  if (!profile) return undefined;
 
-  return profile.role as 'admin' | 'staff';
+  const role = profile?.role;
+  if (role !== 'admin' && role !== 'staff') return undefined;
+
+  return role;
 }
 
 export async function isAdmin(

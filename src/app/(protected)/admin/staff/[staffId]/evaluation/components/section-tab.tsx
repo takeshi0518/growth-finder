@@ -32,7 +32,8 @@ export default function SectionTab({
   const stickyRef = useRef<HTMLDivElement>(null);
 
   const handleTabChange = (v: string) => {
-    setActiveTab(v as 'skill' | 'hospitality' | 'cleanliness');
+    if (v !== 'skill' && v !== 'hospitality' && v !== 'cleanliness') return;
+    setActiveTab(v);
 
     const offset = window.innerWidth >= 768 ? 0 : 80;
     if (stickyRef.current) {

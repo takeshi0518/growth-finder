@@ -16,8 +16,8 @@ export async function uploadStaffAvatar(formData: FormData, staffId: string) {
   if (authError) throw new Error('認証エラーが発生しました');
   if (!user) throw new Error('認証エラーが発生しました');
 
-  const file = formData.get('avatar') as File;
-  if (!file) throw new Error('ファイルが選択されていません');
+  const file = formData.get('avatar');
+  if (!(file instanceof File)) throw new Error('ファイルが選択されていません');
 
   if (!AVATAR_ALLOWED_TYPES.includes(file.type)) {
     throw new Error('jpeg・png・webp形式の画像を選択してください');
@@ -61,8 +61,8 @@ export async function uploadAdminAvatar(formData: FormData) {
   if (authError) throw new Error('認証エラーが発生しました');
   if (!user) throw new Error('認証エラーが発生しました');
 
-  const file = formData.get('avatar') as File;
-  if (!file) throw new Error('ファイルが選択されていません');
+  const file = formData.get('avatar');
+  if (!(file instanceof File)) throw new Error('ファイルが選択されていません');
 
   if (!AVATAR_ALLOWED_TYPES.includes(file.type)) {
     throw new Error('jpeg・png・webp形式の画像を選択してください');

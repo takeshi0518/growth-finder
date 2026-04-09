@@ -5,8 +5,13 @@ export function getErrorMessage(error: unknown): string {
   }
 
   //SupabaseのAuthError
-  if (typeof error === 'object' && error !== null && 'message' in error) {
-    return translateErrorMessage(error.message as string);
+  if (
+    typeof error === 'object' &&
+    error !== null &&
+    'message' in error &&
+    typeof error.message === 'string'
+  ) {
+    return translateErrorMessage(error.message);
   }
 
   return '予期しないエラーが発生しました';
