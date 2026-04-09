@@ -15,12 +15,14 @@ export async function requireAdmin(supabase: SupabaseClient<Database>) {
     .single();
 
   if (profileError) throw new Error('プロフィールの取得に失敗しました');
-  if (!profile || profile.role !== 'admin' || !profile.organization_id) {
+
+  const organizationId = profile?.organization_id;
+
+  if (!profile || profile.role !== 'admin' || !organizationId) {
     throw new Error('この操作を行う権限または、組織設定がありません');
   }
 
-  //organization_idはnullチェック済みのためstring型にアサーション
-  const orgId = profile.organization_id as string;
+  const orgId = organizationId;
 
   return { user, profile, orgId };
 }
