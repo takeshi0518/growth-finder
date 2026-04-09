@@ -76,13 +76,21 @@ export default async function StaffDetailPage({
     <AdminContainer>
       <BackPageLink href="/admin/staff" label="スタッフ一覧に戻る" />
       <StaffProfile targetStaff={targetStaff} staffId={staffId} />
-      {selectedPeriod ? (
-        <StaffEvaluationSection selectedPeriod={selectedPeriod} />
-      ) : (
+      {!selectedPeriod ? (
         <p className="flex items-center gap-2 text-sm text-muted-foreground">
           <Icons.CircleAlert />
           評価期間が設定されていません
         </p>
+      ) : !targetEvaluation ? (
+        <p className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Icons.CircleAlert />
+          まだ評価が登録されていません
+        </p>
+      ) : (
+        <StaffEvaluationSection
+          selectedPeriod={selectedPeriod}
+          targetEvaluation={targetEvaluation}
+        />
       )}
     </AdminContainer>
   );
