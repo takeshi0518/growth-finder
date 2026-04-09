@@ -33,21 +33,21 @@ export default function LoginForm() {
 
   useEffect(() => {
     const method = localStorage.getItem('lastLoginMethod');
-    const tab = localStorage.getItem('lastLoginTab') as LoginTabValue;
+    const tab = localStorage.getItem('lastLoginTab');
 
     setLastLoginMethod(method);
 
-    if (tab === 'admin' || tab === 'staff') {
-      setActiveTab(tab);
-    }
+    if (tab !== 'admin' && tab !== 'staff') return;
+
+    setActiveTab(tab);
   }, []);
 
   const handleTabChange = (value: string) => {
-    const newTab = value as LoginTabValue;
-    setActiveTab(newTab);
+    if (value !== 'admin' && value !== 'staff') return;
+    setActiveTab(value);
     reset();
 
-    localStorage.setItem('lastLoginTab', newTab);
+    localStorage.setItem('lastLoginTab', value);
   };
 
   return (
