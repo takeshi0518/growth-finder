@@ -55,7 +55,8 @@ export async function middleware(request: NextRequest) {
 
     if (profile?.is_setup_complete) {
       const role = await getUserRole(supabase, user.id);
-      const redirectTo = role === 'admin' ? '/admin' : '/staff';
+      const redirectTo =
+        role === 'admin' ? '/admin' : role === 'staff' ? '/staff' : '/login';
       return NextResponse.redirect(new URL(redirectTo, request.url));
     }
   }
@@ -66,7 +67,8 @@ export async function middleware(request: NextRequest) {
 
   if (isAuthPath && user && isEmailConfirmed(user)) {
     const role = await getUserRole(supabase, user.id);
-    const redirectTo = role === 'admin' ? '/admin' : '/staff';
+    const redirectTo =
+      role === 'admin' ? '/admin' : role === 'staff' ? '/staff' : '/login';
     return NextResponse.redirect(new URL(redirectTo, request.url));
   }
 
