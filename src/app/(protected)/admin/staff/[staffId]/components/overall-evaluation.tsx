@@ -10,8 +10,15 @@ type OverallEvaluationProps = {
 export default function OverallEvaluation({
   targetEvaluation,
 }: OverallEvaluationProps) {
-  const { rank, rate, skillRate, hospitalityRate, cleanlinessRate } =
-    calcEvaluation(targetEvaluation.evaluation_sections);
+  const {
+    rank,
+    rate,
+    skillRate,
+    hospitalityRate,
+    cleanlinessRate,
+    sectionRates,
+  } = calcEvaluation(targetEvaluation.evaluation_sections);
+  console.log(sectionRates);
   return (
     <div className="mt-15 max-w-200 mx-auto">
       <div className="flex flex-col space-y-10 lg:flex-row lg:gap-20 lg:space-y-0">
