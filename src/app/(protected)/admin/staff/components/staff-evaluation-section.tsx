@@ -29,7 +29,7 @@ export default function StaffEvaluationSection({
         </p>
       </CardHeader>
       <CardContent className="mt-6">
-        <p className="flex items-center gap-2 mb-4 text-md font-bold">
+        <p className="flex items-center gap-2 mb-6 text-md font-bold">
           <Icons.ClipboardPenLine className="w-5 h-5" />
           <span>各セクション評価</span>
         </p>

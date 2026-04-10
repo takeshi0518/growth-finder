@@ -1,5 +1,6 @@
 import { calcEvaluation } from '@/lib/utils/evaluation-calc';
 import { ExistingEvaluation } from '../../../../../../../types/evaluations';
+import RateCircleChart from '@/components/evaluation/rate-circle-chart';
 
 type OverallEvaluationProps = {
   targetEvaluation: ExistingEvaluation;
@@ -8,13 +9,10 @@ type OverallEvaluationProps = {
 export default function OverallEvaluation({
   targetEvaluation,
 }: OverallEvaluationProps) {
-  const { rank } = calcEvaluation(targetEvaluation.evaluation_sections);
+  const { rank, rate } = calcEvaluation(targetEvaluation.evaluation_sections);
   return (
     <div className="mt-10 max-w-200 mx-auto">
-      <div className="flex items-center gap-5 justify-center">
-        <div className="text-4xl">総合評価</div>
-        <div className="text-5xl">{rank}</div>
-      </div>
+      <RateCircleChart rate={rate} rank={rank}/>
     </div>
   );
 }
