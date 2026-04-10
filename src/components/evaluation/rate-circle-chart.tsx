@@ -35,6 +35,9 @@ export default function RateCircleChart({ rate, rank }: RateCircleChartProps) {
             endAngle={endAngle}
             dataKey="value"
             fill={CHART_COLORS.primary}
+            isAnimationActive={true}
+            animationDuration={1800}
+            animationEasing="ease-in-out"
           />
         </PieChart>
         <div className="absolute text-3xl font-bold">{rate}%</div>
