@@ -30,7 +30,7 @@ export default function CategoryRadarChart({
     <div>
       <Label>
         <span className="size-2 bg-primary rounded-full" />
-        カテゴリ別達成率
+        スキルグラフ
       </Label>
       <ResponsiveContainer width="100%" height={300}>
         <RadarChart
