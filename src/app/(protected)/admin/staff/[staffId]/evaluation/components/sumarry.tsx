@@ -7,6 +7,7 @@ import { calcEvaluation } from '@/lib/utils/evaluation-calc';
 import { Label } from '@/components/ui/label';
 import { Icons } from '@/components/icon/icons';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { RANKCOLOR } from '@/lib/constants/rank-color';
 
 type SummaryProps = {
   existingEvaluations: ExistingEvaluation;
@@ -20,13 +21,6 @@ const sectionLabel = {
   basic: '基本動作',
   barista: 'バリスタ',
   cashier: 'キャッシャー',
-};
-
-const rankColor: Record<string, string> = {
-  A: 'text-green-500',
-  B: 'text-blue-500',
-  C: 'text-yellow-500',
-  D: 'text-red-500',
 };
 
 function SectionSummaryCard({ section }: SectionSummaryCardProps) {
@@ -46,7 +40,7 @@ function SectionSummaryCard({ section }: SectionSummaryCardProps) {
                 <p className="text-[9px] sm:text-[10px] text-muted-foreground">
                   総合評価
                 </p>
-                <p className={`text-2xl font-bold ${rankColor[rank]}`}>
+                <p className={`text-2xl font-bold ${RANKCOLOR[rank]}`}>
                   {rank}
                 </p>
               </div>
@@ -137,7 +131,7 @@ export default function Summary({ existingEvaluations }: SummaryProps) {
           <CardContent className="flex justify-around items-center py-4">
             <div className="flex flex-col flex-1 items-center gap-1 border-r">
               <p className="text-sm text-muted-foreground">総合評価</p>
-              <p className={`text-2xl font-bold ${rankColor[rank]}`}>{rank}</p>
+              <p className={`text-2xl font-bold ${RANKCOLOR[rank]}`}>{rank}</p>
             </div>
             <div className="flex flex-col flex-1 items-center gap-1">
               <p className="text-sm text-muted-foreground">総合達成率</p>

@@ -7,6 +7,7 @@ import {
   formatCategoryRates,
   formatSectionRates,
 } from '@/lib/utils/evaluation-format';
+import OverallScore from '@/components/evaluation/overall-score';
 
 type OverallEvaluationProps = {
   targetEvaluation: ExistingEvaluation;
@@ -33,11 +34,8 @@ export default function OverallEvaluation({
   );
 
   return (
-    <div className="mt-15 max-w-200 mx-auto">
-      <div className="flex items-center gap-5 mb-10 justify-center">
-        <div className="text-2xl sm:text-3xl">総合評価</div>
-        <div className="text-3xl sm:text-4xl">{rank}</div>
-      </div>
+    <div className="mt-15 max-w-200 mx-auto space-y-10">
+      <OverallScore rank={rank} />
       <div className="flex flex-col space-y-10 lg:flex-row lg:gap-20 lg:space-y-0">
         <div className="flex-1">
           <RateCircleChart rate={rate} />
