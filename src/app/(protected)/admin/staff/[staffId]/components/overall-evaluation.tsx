@@ -8,6 +8,12 @@ type OverallEvaluationProps = {
   targetEvaluation: ExistingEvaluation;
 };
 
+const sectionLabel: Record<string, string> = {
+  basic: '基本動作',
+  barista: 'バリスタ',
+  cashier: 'キャッシャー',
+};
+
 export default function OverallEvaluation({
   targetEvaluation,
 }: OverallEvaluationProps) {
@@ -19,6 +25,17 @@ export default function OverallEvaluation({
     cleanlinessRate,
     sectionRates,
   } = calcEvaluation(targetEvaluation.evaluation_sections);
+
+  const sectionItems = sectionRates.map((s) => ({
+    label: sectionLabel[s.sectionType],
+    rate: s.rate,
+  }));
+
+  const categoryItems = [
+    { label: 'スキル', rate: skillRate },
+    { label: 'ホスピタリティ', rate: hospitalityRate },
+    { label: 'クレンリネス', rate: cleanlinessRate },
+  ];
   return (
     <div className="mt-15 max-w-200 mx-auto">
       <div className="flex items-center gap-5 mb-10 justify-center">
@@ -37,10 +54,14 @@ export default function OverallEvaluation({
           />
         </div>
       </div>
-      <div>
+      <div className="flex flex-col lg:flex-row lg:gap-10 space-y-10 lg:space-y-0">
         <ProgressBar
           label="各セクション総合達成率"
-          sectionRates={sectionRates}
+          sectionRates={sectionItems}
+        />
+        <ProgressBar
+          label="各カテゴリ総合達成率"
+          sectionRates={categoryItems}
         />
       </div>
     </div>
