@@ -3,15 +3,13 @@ import { ExistingEvaluation } from '../../../../../../../types/evaluations';
 import RateCircleChart from '@/components/evaluation/rate-circle-chart';
 import CategoryRadarChart from '@/components/evaluation/category-radar-chart';
 import ProgressBar from '@/components/evaluation/progress-bar';
+import {
+  formatCategoryRates,
+  formatSectionRates,
+} from '@/lib/utils/evaluation-format';
 
 type OverallEvaluationProps = {
   targetEvaluation: ExistingEvaluation;
-};
-
-const sectionLabel: Record<string, string> = {
-  basic: '基本動作',
-  barista: 'バリスタ',
-  cashier: 'キャッシャー',
 };
 
 export default function OverallEvaluation({
@@ -26,16 +24,14 @@ export default function OverallEvaluation({
     sectionRates,
   } = calcEvaluation(targetEvaluation.evaluation_sections);
 
-  const sectionItems = sectionRates.map((s) => ({
-    label: sectionLabel[s.sectionType],
-    rate: s.rate,
-  }));
+  const sectionItems = formatSectionRates(sectionRates);
 
-  const categoryItems = [
-    { label: 'スキル', rate: skillRate },
-    { label: 'ホスピタリティ', rate: hospitalityRate },
-    { label: 'クレンリネス', rate: cleanlinessRate },
-  ];
+  const categoryItems = formatCategoryRates(
+    skillRate,
+    hospitalityRate,
+    cleanlinessRate
+  );
+
   return (
     <div className="mt-15 max-w-200 mx-auto">
       <div className="flex items-center gap-5 mb-10 justify-center">

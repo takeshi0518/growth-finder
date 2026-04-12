@@ -1,6 +1,5 @@
 'use client';
 
-import { CHART_COLORS } from '@/lib/constants/chart-colors';
 import { Label } from '../ui/label';
 
 type ProgressBarProps = {
