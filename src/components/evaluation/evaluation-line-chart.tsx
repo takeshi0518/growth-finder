@@ -10,14 +10,15 @@ import {
   YAxis,
 } from 'recharts';
 import { Label } from '../ui/label';
+import { ChartDataPoint } from '../../../types/evaluations';
 
-const chartData = [
-  { name: '2025年12月~2026年2月', value: 65 },
-  { name: '2026年6月~2026年7月', value: 78 },
-  { name: '2026年8月~2026年10月', value: 89 },
-];
+type EvaluationLineChart = {
+  chartData: ChartDataPoint[];
+};
 
-export default function EvaluationLineChart() {
+export default function EvaluationLineChart({
+  chartData,
+}: EvaluationLineChart) {
   return (
     <div>
       <Label>

@@ -1,7 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tables } from '../../../../../../types/supabase';
 import { Icons } from '@/components/icon/icons';
-import { ExistingEvaluation } from '../../../../../../types/evaluations';
+import {
+  ChartDataPoint,
+  ExistingEvaluation,
+} from '../../../../../../types/evaluations';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import OverallEvaluation from '../[staffId]/components/overall-evaluation';
 
@@ -10,11 +13,13 @@ type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id' | 'name'>;
 type StaffEvaluationSectionProps = {
   selectedPeriod: EvaluationPeriod;
   targetEvaluation: ExistingEvaluation;
+  chartData: ChartDataPoint[];
 };
 
 export default function StaffEvaluationSection({
   selectedPeriod,
   targetEvaluation,
+  chartData,
 }: StaffEvaluationSectionProps) {
   return (
     <Card>
@@ -62,7 +67,10 @@ export default function StaffEvaluationSection({
             </TabsTrigger>
           </TabsList>
           <TabsContent value="all">
-            <OverallEvaluation targetEvaluation={targetEvaluation} />
+            <OverallEvaluation
+              targetEvaluation={targetEvaluation}
+              chartData={chartData}
+            />
           </TabsContent>
           <TabsContent value="basic"></TabsContent>
           <TabsContent value="barista"></TabsContent>

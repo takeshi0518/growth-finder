@@ -1,5 +1,8 @@
 import { calcEvaluation } from '@/lib/utils/evaluation-calc';
-import { ExistingEvaluation } from '../../../../../../../types/evaluations';
+import {
+  ChartDataPoint,
+  ExistingEvaluation,
+} from '../../../../../../../types/evaluations';
 import RateCircleChart from '@/components/evaluation/rate-circle-chart';
 import CategoryRadarChart from '@/components/evaluation/category-radar-chart';
 import ProgressBar from '@/components/evaluation/progress-bar';
@@ -12,10 +15,12 @@ import EvaluationLineChart from '@/components/evaluation/evaluation-line-chart';
 
 type OverallEvaluationProps = {
   targetEvaluation: ExistingEvaluation;
+  chartData: ChartDataPoint[];
 };
 
 export default function OverallEvaluation({
   targetEvaluation,
+  chartData,
 }: OverallEvaluationProps) {
   const {
     rank,
@@ -59,7 +64,7 @@ export default function OverallEvaluation({
           sectionRates={categoryItems}
         />
       </div>
-      <EvaluationLineChart />
+      <EvaluationLineChart chartData={chartData} />
     </div>
   );
 }

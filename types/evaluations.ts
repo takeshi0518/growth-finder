@@ -62,7 +62,7 @@ export type EvaluationSectionScores = Pick<
   | 'hospitality_max'
   | 'cleanliness_score'
   | 'cleanliness_max'
-> & {section_type: SectionType}
+> & { section_type: SectionType };
 
 export type EvaluationForChart = {
   evaluation_sections: EvaluationSectionScores[];
@@ -73,4 +73,9 @@ export type PeriodForChart = Pick<
   'id' | 'name'
 > & {
   evaluations: EvaluationForChart[];
+};
+
+export type ChartDataPoint = {
+  name: string;
+  value: number;
 };

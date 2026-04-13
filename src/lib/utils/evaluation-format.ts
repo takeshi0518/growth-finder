@@ -1,4 +1,5 @@
 import {
+  ChartDataPoint,
   EvaluationForChart,
   PeriodForChart,
   SectionType,
@@ -30,7 +31,7 @@ export const formatCategoryRates = (
 ];
 
 export const formatChartData = (periods: PeriodForChart[]) =>
-  periods.map((period) => ({
+  periods.map<ChartDataPoint>((period) => ({
     name: period.name,
     value: calcRate(period.evaluations[0].evaluation_sections).totalRate,
   }));

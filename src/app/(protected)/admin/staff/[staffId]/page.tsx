@@ -7,7 +7,6 @@ import { requireAdmin } from '@/lib/utils/requireAdmin';
 import StaffEvaluationSection from '../components/staff-evaluation-section';
 import { ExistingEvaluation } from '../../../../../../types/evaluations';
 import { Icons } from '@/components/icon/icons';
-import { calcRate } from '@/lib/utils/evaluation-calc';
 import { formatChartData } from '@/lib/utils/evaluation-format';
 
 type StaffDetailPageProps = {
@@ -99,7 +98,6 @@ export default async function StaffDetailPage({
 
   const chartData = formatChartData(data ?? []);
 
-
   return (
     <AdminContainer>
       <BackPageLink href="/admin/staff" label="スタッフ一覧に戻る" />
@@ -118,6 +116,7 @@ export default async function StaffDetailPage({
         <StaffEvaluationSection
           selectedPeriod={selectedPeriod}
           targetEvaluation={targetEvaluation}
+          chartData={chartData}
         />
       )}
     </AdminContainer>
