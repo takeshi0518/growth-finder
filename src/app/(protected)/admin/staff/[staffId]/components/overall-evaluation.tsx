@@ -8,6 +8,7 @@ import {
   formatSectionRates,
 } from '@/lib/utils/evaluation-format';
 import OverallScore from '@/components/evaluation/overall-score';
+import EvaluationLineChart from '@/components/evaluation/evaluation-line-chart';
 
 type OverallEvaluationProps = {
   targetEvaluation: ExistingEvaluation;
@@ -58,6 +59,7 @@ export default function OverallEvaluation({
           sectionRates={categoryItems}
         />
       </div>
+      <EvaluationLineChart />
     </div>
   );
 }
