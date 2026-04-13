@@ -7,6 +7,8 @@ import { requireAdmin } from '@/lib/utils/requireAdmin';
 import StaffEvaluationSection from '../components/staff-evaluation-section';
 import { ExistingEvaluation } from '../../../../../../types/evaluations';
 import { Icons } from '@/components/icon/icons';
+import { calcRate } from '@/lib/utils/evaluation-calc';
+import { formatChartData } from '@/lib/utils/evaluation-format';
 
 type StaffDetailPageProps = {
   params: { staffId: string };
@@ -71,6 +73,32 @@ export default async function StaffDetailPage({
         .eq('organization_id', orgId)
         .single()) as { data: ExistingEvaluation | null; error: unknown })
     : { data: null };
+
+  const { data } = await supabase
+    .from('evaluation_periods')
+    .select(
+      `
+      id, name,
+      evaluations!inner (
+        evaluation_sections (
+          section_type,
+          skill_score,
+          skill_max,
+          hospitality_score,
+          hospitality_max,
+          cleanliness_score,
+          cleanliness_max
+        )
+      )
+      `
+    )
+    .eq('organization_id', orgId)
+    .eq('evaluations.staff_id', staffId)
+    .order('created_at', { ascending: true })
+    .limit(4);
+
+  const chartData = formatChartData(data ?? []);
+
 
   return (
     <AdminContainer>

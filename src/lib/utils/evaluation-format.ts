@@ -1,4 +1,9 @@
-import { SectionType } from '../../../types/evaluations';
+import {
+  EvaluationForChart,
+  PeriodForChart,
+  SectionType,
+} from '../../../types/evaluations';
+import { calcRate } from './evaluation-calc';
 
 const sectionLabel: Record<string, string> = {
   basic: '基本動作',
@@ -23,3 +28,9 @@ export const formatCategoryRates = (
   { label: 'ホスピタリティ', rate: hospitalityRate },
   { label: 'クレンリネス', rate: cleanlinessRate },
 ];
+
+export const formatChartData = (periods: PeriodForChart[]) =>
+  periods.map((period) => ({
+    name: period.name,
+    value: calcRate(period.evaluations[0].evaluation_sections).totalRate,
+  }));
