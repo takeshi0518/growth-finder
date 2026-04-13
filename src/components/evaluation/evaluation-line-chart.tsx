@@ -25,7 +25,7 @@ export default function EvaluationLineChart({
         <span className="size-2 bg-primary rounded-full" />
         総合達成率推移グラフ
       </Label>
-      <span className="text-muted-foreground text-[10px]">
+      <span className="text-muted-foreground text-[8px] sm:text-[10px]">
         ※最新から過去4件のデータを表示
       </span>
 
