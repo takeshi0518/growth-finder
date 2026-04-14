@@ -69,6 +69,7 @@ export const calcEvaluation = (sections: SectionScores[]) => {
   const sectionRates = sections.map((section) => ({
     sectionType: section.section_type,
     rate: calcRate([section]).totalRate,
+    rank: calcRank(calcRate([section]).totalRate),
   }));
 
   return {
@@ -80,3 +81,8 @@ export const calcEvaluation = (sections: SectionScores[]) => {
     sectionRates,
   };
 };
+
+export const getSectionRate = (
+  sectionRates: { sectionType: SectionType; rate: number; rank: string }[],
+  type: SectionType
+) => sectionRates.find((sectionRate) => sectionRate.sectionType === type);

@@ -7,6 +7,7 @@ import {
 } from '../../../../../../types/evaluations';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import OverallEvaluation from '../[staffId]/components/overall-evaluation';
+import BasicEvaluation from '../[staffId]/components/basic-evaluation';
 
 type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id' | 'name'>;
 
@@ -72,7 +73,9 @@ export default function StaffEvaluationSection({
               chartData={chartData}
             />
           </TabsContent>
-          <TabsContent value="basic"></TabsContent>
+          <TabsContent value="basic">
+            <BasicEvaluation targetEvaluation={targetEvaluation} />
+          </TabsContent>
           <TabsContent value="barista"></TabsContent>
           <TabsContent value="cashier"></TabsContent>
         </Tabs>
