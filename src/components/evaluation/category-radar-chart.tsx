@@ -42,8 +42,8 @@ export default function CategoryRadarChart({
           <Radar
             dataKey="value"
             fill={CHART_COLORS.primary}
-            stroke={CHART_COLORS.accent}
-            fillOpacity={0.3}
+            stroke={CHART_COLORS.primary}
+            fillOpacity={0.2}
             isAnimationActive={true}
             animationDuration={1800}
             animationEasing="ease-in-out"

@@ -21,7 +21,7 @@ export default function ProgressBar({ label, sectionRates }: ProgressBarProps) {
               <span className="text-xs w-22 sm:w-24 shrink-0">
                 {section.label}
               </span>
-              <div className="flex-1 bg-pink-100 rounded-full h-5 md:h-7">
+              <div className="flex-1 rounded-full h-5 md:h-7 bg-primary/10">
                 <div
                   className="bg-primary h-5 md:h-7 rounded-full flex items-center justify-end pr-2"
                   style={{ width: `${section.rate}%` }}

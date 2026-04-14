@@ -11,7 +11,6 @@ const EMPTY_COMMENT = 'コメントが入力されていません';
 export default function SummaryComments({
   summaryComments,
 }: SummaryCommentsProps) {
-  console.log(summaryComments.action_plan);
   return (
     <div className="mt-6 space-y-6 w-full max-w-200 mx-auto">
       <div className="space-y-2">
