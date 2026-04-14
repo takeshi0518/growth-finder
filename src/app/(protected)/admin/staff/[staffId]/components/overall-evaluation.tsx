@@ -12,6 +12,7 @@ import {
 } from '@/lib/utils/evaluation-format';
 import OverallScore from '@/components/evaluation/overall-score';
 import EvaluationLineChart from '@/components/evaluation/evaluation-line-chart';
+import SummaryComments from '@/components/evaluation/summary-commets';
 
 type OverallEvaluationProps = {
   targetEvaluation: ExistingEvaluation;
@@ -65,6 +66,7 @@ export default function OverallEvaluation({
         />
       </div>
       <EvaluationLineChart chartData={chartData} />
+      <SummaryComments />
     </div>
   );
 }
