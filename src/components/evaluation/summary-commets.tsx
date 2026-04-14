@@ -1,7 +1,17 @@
+import { SummaryComment } from '../../../types/evaluations';
 import { Icons } from '../icon/icons';
 import { Label } from '../ui/label';
 
-export default function SummaryComments() {
+type SummaryCommentsProps = {
+  summaryComments: SummaryComment;
+};
+
+const EMPTY_COMMENT = 'コメントが入力されていません';
+
+export default function SummaryComments({
+  summaryComments,
+}: SummaryCommentsProps) {
+  console.log(summaryComments.action_plan);
   return (
     <div className="mt-6 space-y-6 w-full max-w-200 mx-auto">
       <div className="space-y-2">
@@ -10,7 +20,7 @@ export default function SummaryComments() {
           アクションプラン
         </Label>
         <div className="min-h-10 p-3 border rounded-md text-[10px]">
-          コメントが入ります
+          {summaryComments.action_plan || EMPTY_COMMENT}
         </div>
       </div>
       <div className="space-y-2">
@@ -19,7 +29,7 @@ export default function SummaryComments() {
           総括コメント
         </Label>
         <div className="min-h-10 p-3 border rounded-md text-[10px]">
-          コメントが入ります
+          {summaryComments.total_comment || EMPTY_COMMENT}
         </div>
       </div>
       <div className="space-y-2">
@@ -28,7 +38,7 @@ export default function SummaryComments() {
           3ヶ月後の未来
         </Label>
         <div className="min-h-10 p-3 border rounded-md text-[10px]">
-          コメントが入ります
+          {summaryComments.future_vision || EMPTY_COMMENT}
         </div>
       </div>
     </div>

@@ -79,3 +79,8 @@ export type ChartDataPoint = {
   name: string;
   value: number;
 };
+
+export type SummaryComment = Pick<
+  Tables<'evaluations'>,
+  'action_plan' | 'total_comment' | 'future_vision'
+>;

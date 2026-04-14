@@ -66,7 +66,7 @@ export default function OverallEvaluation({
         />
       </div>
       <EvaluationLineChart chartData={chartData} />
-      <SummaryComments />
+      <SummaryComments summaryComments={targetEvaluation} />
     </div>
   );
 }
