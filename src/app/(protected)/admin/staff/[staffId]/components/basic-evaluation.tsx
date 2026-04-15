@@ -2,6 +2,7 @@ import { ExistingEvaluation } from '../../../../../../../types/evaluations';
 import { calcEvaluation, getSectionRate } from '@/lib/utils/evaluation-calc';
 import SectionEvaluationDetail from '@/components/evaluation/section-evaluation-detail';
 import { formatCategoryRates } from '@/lib/utils/evaluation-format';
+import SectionEvaluationLayout from '@/components/evaluation/section-evaluation-layout';
 
 type BasicEvaluationProps = {
   targetEvaluation: ExistingEvaluation;
@@ -21,7 +22,7 @@ export default function BasicEvaluation({
     basicSection.cleanlinessRate
   );
   return (
-    <div className="mt-15 max-w-200 mx-auto space-y-10">
+    <SectionEvaluationLayout>
       <SectionEvaluationDetail
         rank={basicSection.rank}
         rate={basicSection.rate}
@@ -30,6 +31,6 @@ export default function BasicEvaluation({
         hospitalityRate={basicSection.hospitalityRate}
         cleanlinessRate={basicSection.cleanlinessRate}
       />
-    </div>
+    </SectionEvaluationLayout>
   );
 }
