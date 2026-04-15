@@ -10,7 +10,7 @@ type SectionEvaluationDetailProps = {
   skillRate: number;
   hospitalityRate: number;
   cleanlinessRate: number;
-  sectionItems: FormattedSectionRate[];
+  sectionItems?: FormattedSectionRate[];
   categoryItems: FormattedSectionRate[];
 };
 
@@ -39,10 +39,12 @@ export default function SectionEvaluationDetail({
         </div>
       </div>
       <div className="flex flex-col lg:flex-row lg:gap-10 space-y-10 lg:space-y-0">
-        <ProgressBar
-          label="各セクション総合達成率"
-          sectionRates={sectionItems}
-        />
+        {sectionItems && (
+          <ProgressBar
+            label="各セクション総合達成率"
+            sectionRates={sectionItems}
+          />
+        )}
         <ProgressBar
           label="各カテゴリ総合達成率"
           sectionRates={categoryItems}
