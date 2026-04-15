@@ -10,7 +10,7 @@ export default function SectionEvaluationLayout({
   className = '',
 }: SectionEvaluationLayoutProps) {
   return (
-    <div className={cn('mt-15 max-w-200 mx-auto space-y-10', className)}>
+    <div className={cn('mt-15 max-w-200 mx-auto space-y-16', className)}>
       {children}
     </div>
   );

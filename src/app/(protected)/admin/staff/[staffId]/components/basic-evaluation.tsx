@@ -3,6 +3,12 @@ import { calcEvaluation, getSectionRate } from '@/lib/utils/evaluation-calc';
 import SectionEvaluationDetail from '@/components/evaluation/section-evaluation-detail';
 import { formatCategoryRates } from '@/lib/utils/evaluation-format';
 import SectionEvaluationLayout from '@/components/evaluation/section-evaluation-layout';
+import SectionTab from '@/components/evaluation/section-tab';
+import {
+  BASIC_CLEANLINESS_ITEMS,
+  BASIC_HOSPITALITY_ITEMS,
+  BASIC_SKILL_ITEMS,
+} from '@/lib/constants/evaluation-items';
 
 type BasicEvaluationProps = {
   targetEvaluation: ExistingEvaluation;
@@ -30,6 +36,11 @@ export default function BasicEvaluation({
         skillRate={basicSection.skillRate}
         hospitalityRate={basicSection.hospitalityRate}
         cleanlinessRate={basicSection.cleanlinessRate}
+      />
+      <SectionTab
+        skillItems={BASIC_SKILL_ITEMS}
+        hospitalityItems={BASIC_HOSPITALITY_ITEMS}
+        cleanlinessItems={BASIC_CLEANLINESS_ITEMS}
       />
     </SectionEvaluationLayout>
   );
