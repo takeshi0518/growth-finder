@@ -1,6 +1,5 @@
 import {
   ChartDataPoint,
-  EvaluationForChart,
   PeriodForChart,
   SectionType,
 } from '../../../types/evaluations';
@@ -12,10 +11,15 @@ const sectionLabel: Record<string, string> = {
   cashier: 'キャッシャー',
 };
 
+export type FormattedSectionRate = {
+  label: string;
+  rate: number;
+};
+
 export const formatSectionRates = (
   sectionRates: { sectionType: SectionType; rate: number }[]
 ) =>
-  sectionRates.map((section) => ({
+  sectionRates.map<FormattedSectionRate>((section) => ({
     label: sectionLabel[section.sectionType],
     rate: section.rate,
   }));
@@ -24,7 +28,7 @@ export const formatCategoryRates = (
   skillRate: number,
   hospitalityRate: number,
   cleanlinessRate: number
-) => [
+): FormattedSectionRate[] => [
   { label: 'スキル', rate: skillRate },
   { label: 'ホスピタリティ', rate: hospitalityRate },
   { label: 'クレンリネス', rate: cleanlinessRate },
