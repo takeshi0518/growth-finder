@@ -8,44 +8,45 @@ import { formatCategoryRates } from '@/lib/utils/evaluation-format';
 import SectionEvaluationLayout from '@/components/evaluation/section-evaluation-layout';
 import SectionTab from '@/components/evaluation/section-tab';
 import {
-  BASIC_CLEANLINESS_ITEMS,
-  BASIC_HOSPITALITY_ITEMS,
-  BASIC_SKILL_ITEMS,
+
+  CASHIER_CLEANLINESS,
+  CASHIER_HOSPITALITY_ITEMS,
+  CASHIER_SKILL_ITEMS,
 } from '@/lib/constants/evaluation-items';
 
-type BasicEvaluationProps = {
+type CashierEvaluationProps = {
   targetEvaluation: ExistingEvaluation;
   targetEvaluationItems: EvaluationItem[];
 };
 
-export default function BasicEvaluation({
+export default function CashierEvaluation({
   targetEvaluation,
   targetEvaluationItems,
-}: BasicEvaluationProps) {
+}: CashierEvaluationProps) {
   const { sectionRates } = calcEvaluation(targetEvaluation.evaluation_sections);
-  const basicSection = getSectionRate(sectionRates, 'basic');
+  const cashierSection = getSectionRate(sectionRates, 'cashier');
 
-  if (!basicSection) throw new Error('基本動作のデータが見つかりません');
+  if (!cashierSection) throw new Error('基本動作のデータが見つかりません');
 
   const categoryItems = formatCategoryRates(
-    basicSection.skillRate,
-    basicSection.hospitalityRate,
-    basicSection.cleanlinessRate
+    cashierSection.skillRate,
+    cashierSection.hospitalityRate,
+    cashierSection.cleanlinessRate
   );
   return (
     <SectionEvaluationLayout>
       <SectionEvaluationDetail
-        rank={basicSection.rank}
-        rate={basicSection.rate}
+        rank={cashierSection.rank}
+        rate={cashierSection.rate}
         categoryItems={categoryItems}
-        skillRate={basicSection.skillRate}
-        hospitalityRate={basicSection.hospitalityRate}
-        cleanlinessRate={basicSection.cleanlinessRate}
+        skillRate={cashierSection.skillRate}
+        hospitalityRate={cashierSection.hospitalityRate}
+        cleanlinessRate={cashierSection.cleanlinessRate}
       />
       <SectionTab
-        skillItems={BASIC_SKILL_ITEMS}
-        hospitalityItems={BASIC_HOSPITALITY_ITEMS}
-        cleanlinessItems={BASIC_CLEANLINESS_ITEMS}
+        skillItems={CASHIER_SKILL_ITEMS}
+        hospitalityItems={CASHIER_HOSPITALITY_ITEMS}
+        cleanlinessItems={CASHIER_CLEANLINESS}
         targetEvaluationItems={targetEvaluationItems}
       />
     </SectionEvaluationLayout>

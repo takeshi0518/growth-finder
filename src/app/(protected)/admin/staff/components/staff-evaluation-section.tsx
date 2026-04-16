@@ -1,13 +1,20 @@
+'use client';
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tables } from '../../../../../../types/supabase';
 import { Icons } from '@/components/icon/icons';
 import {
   ChartDataPoint,
   ExistingEvaluation,
+  ExistingEvaluationSection,
+  SectionType,
 } from '../../../../../../types/evaluations';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import OverallEvaluation from '../[staffId]/components/overall-evaluation';
 import BasicEvaluation from '../[staffId]/components/basic-evaluation';
+import { useState } from 'react';
+import BaristaEvaluation from '../[staffId]/components/barista-evaluation';
+import CashierEvaluation from '../[staffId]/components/cashier-evaluation';
 
 type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id' | 'name'>;
 
@@ -17,11 +24,32 @@ type StaffEvaluationSectionProps = {
   chartData: ChartDataPoint[];
 };
 
+function getTargetEvaluationItems(
+  sections: ExistingEvaluationSection[],
+  label: SectionType
+) {
+  return sections.find((section) => section.section_type === label)
+    ?.evaluation_items;
+}
+
 export default function StaffEvaluationSection({
   selectedPeriod,
   targetEvaluation,
   chartData,
 }: StaffEvaluationSectionProps) {
+  const [activeTab, setActiveTab] = useState<SectionType>('basic');
+  const handleTabChange = (v: string) => {
+    if (v !== 'basic' && v !== 'barista' && v !== 'cashier') return;
+
+    setActiveTab(v);
+  };
+  const targetEvaluationItems = getTargetEvaluationItems(
+    targetEvaluation.evaluation_sections,
+    activeTab
+  );
+
+  if (!targetEvaluationItems) throw new Error('評価項目が見つかりません');
+
   return (
     <Card>
       <CardHeader>
@@ -40,7 +68,7 @@ export default function StaffEvaluationSection({
           <span>各セクション評価</span>
         </p>
 
-        <Tabs defaultValue="all">
+        <Tabs defaultValue="all" onValueChange={(v) => handleTabChange(v)}>
           <TabsList className="grid grid-cols-2 sm:grid-cols-4 h-auto w-full">
             <TabsTrigger
               value="all"
@@ -74,10 +102,23 @@ export default function StaffEvaluationSection({
             />
           </TabsContent>
           <TabsContent value="basic">
-            <BasicEvaluation targetEvaluation={targetEvaluation} />
+            <BasicEvaluation
+              targetEvaluation={targetEvaluation}
+              targetEvaluationItems={targetEvaluationItems}
+            />
           </TabsContent>
-          <TabsContent value="barista"></TabsContent>
-          <TabsContent value="cashier"></TabsContent>
+          <TabsContent value="barista">
+            <BaristaEvaluation
+              targetEvaluation={targetEvaluation}
+              targetEvaluationItems={targetEvaluationItems}
+            />
+          </TabsContent>
+          <TabsContent value="cashier">
+            <CashierEvaluation
+              targetEvaluation={targetEvaluation}
+              targetEvaluationItems={targetEvaluationItems}
+            />
+          </TabsContent>
         </Tabs>
       </CardContent>
     </Card>

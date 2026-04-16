@@ -1,4 +1,4 @@
-import { SCORE_OPTIONS } from '@/lib/constants/evaluation-items';
+import { SCORE_COLORS, SCORE_OPTIONS } from '@/lib/constants/evaluation-items';
 import {
   Accordion,
   AccordionContent,
@@ -7,83 +7,68 @@ import {
 } from '../ui/accordion';
 import { Card, CardContent } from '../ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
-import { EvaluationItemConstant } from '../../../types/evaluations';
+import {
+  EvaluationItem as EvaluationItemType,
+  EvaluationItemConstant,
+  Category,
+} from '../../../types/evaluations';
 import { Label } from '../ui/label';
+import { useState } from 'react';
 
 type SectionTabProps = {
   skillItems: EvaluationItemConstant[];
   hospitalityItems: EvaluationItemConstant[];
   cleanlinessItems: EvaluationItemConstant[];
+  targetEvaluationItems: EvaluationItemType[];
 };
 
 type EvaluationListProps = {
   evaluationItems: EvaluationItemConstant[];
+  evaluatedItems: EvaluationItemType[];
 };
 
 type EvaluationItemProps = {
   itemName: string;
   checkPoints: string[] | null;
+  evaluatedItems: EvaluationItemType[];
 };
 
-function EvaluationItem({ itemName, checkPoints }: EvaluationItemProps) {
-  return (
-    <AccordionItem value={itemName} className="border-b last:border-b-0">
-      <div className="flex flex-col sm:grid grid-cols-[1fr_auto] sm:items-center">
-        <AccordionTrigger className="sm:pr-4 no-underline hover:no-underline">
-          <div className="text-xs text-left">{itemName}</div>
-        </AccordionTrigger>
-        <div className="flex items-center justify-center py-2 gap-4 sm:px-4 sm:py-0 lg:gap-6">
-          {SCORE_OPTIONS.map((score) => (
-            <div
-              key={score}
-              className="w-7 h-7 rounded-full border text-xs flex items-center justify-center"
-            >
-              {score}
-            </div>
-          ))}
-        </div>
-      </div>
-      <AccordionContent>
-        <div className="text-xs flex flex-wrap gap-2">
-          {checkPoints?.map((point, index) => (
-            <span key={index}>{`・${point}`}</span>
-          ))}
-        </div>
-      </AccordionContent>
-    </AccordionItem>
-  );
-}
-
-function EvaluationList({ evaluationItems }: EvaluationListProps) {
-  return (
-    <Card className="w-full max-w-200 mx-auto mt-6">
-      <CardContent>
-        <Accordion type="single" collapsible>
-          {evaluationItems.map((item) => (
-            <EvaluationItem
-              key={item.item_name}
-              itemName={item.item_name}
-              checkPoints={item.check_points ?? []}
-            />
-          ))}
-        </Accordion>
-      </CardContent>
-    </Card>
-  );
+function getTargetEvaluationItems(
+  evaluationItems: EvaluationItemType[],
+  section: Category
+) {
+  return evaluationItems.filter((items) => items.category === section);
 }
 
 export default function SectionTab({
   skillItems,
   hospitalityItems,
   cleanlinessItems,
+  targetEvaluationItems,
 }: SectionTabProps) {
+  const [activeTab, setActiveTab] = useState<Category>('skill');
+  const evaluationItems = getTargetEvaluationItems(
+    targetEvaluationItems,
+    activeTab
+  );
+  if (!evaluationItems) throw new Error('評価項目が見つかりません');
+
+  const handleTabChange = (v: string) => {
+    if (v !== 'skill' && v !== 'hospitality' && v !== 'cleanliness') return;
+
+    setActiveTab(v);
+  };
   return (
     <div>
       <Label>
         <span className="size-2 bg-primary rounded-full" />
         各セクション詳細スコア
       </Label>
-      <Tabs defaultValue="skill" className="mt-8">
+      <Tabs
+        defaultValue="skill"
+        className="mt-8"
+        onValueChange={(v) => handleTabChange(v)}
+      >
         <div className="rounded-2xl">
           <div className="flex justify-center">
             <TabsList variant="line" className="h-auto w-full max-w-lg">
@@ -131,15 +116,84 @@ export default function SectionTab({
         </div>
 
         <TabsContent value="skill">
-          <EvaluationList evaluationItems={skillItems} />
+          <EvaluationList
+            evaluationItems={skillItems}
+            evaluatedItems={evaluationItems}
+          />
         </TabsContent>
         <TabsContent value="hospitality">
-          <EvaluationList evaluationItems={hospitalityItems} />
+          <EvaluationList
+            evaluationItems={hospitalityItems}
+            evaluatedItems={evaluationItems}
+          />
         </TabsContent>
         <TabsContent value="cleanliness">
-          <EvaluationList evaluationItems={cleanlinessItems} />
+          <EvaluationList
+            evaluationItems={cleanlinessItems}
+            evaluatedItems={evaluationItems}
+          />
         </TabsContent>
       </Tabs>
     </div>
+  );
+}
+
+function EvaluationList({
+  evaluationItems,
+  evaluatedItems,
+}: EvaluationListProps) {
+  return (
+    <Card className="w-full max-w-200 mx-auto mt-6">
+      <CardContent>
+        <Accordion type="single" collapsible>
+          {evaluationItems.map((item) => (
+            <EvaluationItem
+              key={item.item_name}
+              itemName={item.item_name}
+              checkPoints={item.check_points ?? []}
+              evaluatedItems={evaluatedItems}
+            />
+          ))}
+        </Accordion>
+      </CardContent>
+    </Card>
+  );
+}
+
+function EvaluationItem({
+  itemName,
+  checkPoints,
+  evaluatedItems,
+}: EvaluationItemProps) {
+  const currentScore = evaluatedItems.find(
+    (item) => item.item_name === itemName
+  )?.score;
+  return (
+    <AccordionItem value={itemName} className="border-b last:border-b-0">
+      <div className="flex flex-col sm:grid grid-cols-[1fr_auto] sm:items-center">
+        <AccordionTrigger className="sm:pr-4 no-underline hover:no-underline">
+          <div className="text-xs text-left">{itemName}</div>
+        </AccordionTrigger>
+        <div className="flex items-center justify-center py-2 gap-4 sm:px-4 sm:py-0 lg:gap-6">
+          {SCORE_OPTIONS.map((score) => (
+            <div
+              key={score}
+              className={`w-7 h-7 rounded-full border text-xs flex items-center justify-center ${
+                currentScore === score ? SCORE_COLORS[score] : ''
+              }`}
+            >
+              {score}
+            </div>
+          ))}
+        </div>
+      </div>
+      <AccordionContent>
+        <div className="text-xs flex flex-wrap gap-2">
+          {checkPoints?.map((point, index) => (
+            <span key={index}>{`・${point}`}</span>
+          ))}
+        </div>
+      </AccordionContent>
+    </AccordionItem>
   );
 }

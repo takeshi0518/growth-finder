@@ -10,7 +10,7 @@ import {
   Category,
   SectionType,
 } from '../../../../../../../../types/evaluations';
-import { SCORE_OPTIONS } from '@/lib/constants/evaluation-items';
+import { SCORE_OPTIONS, SCORE_COLORS } from '@/lib/constants/evaluation-items';
 
 type EvaluationItemData = Pick<
   Tables<'evaluation_items'>,
@@ -37,12 +37,6 @@ export default function EvaluationItem({
     setValue(`${sectionType}.${category}.${item_name}`, score);
   };
 
-  const scoreColors: Record<number, string> = {
-    1: 'bg-red-100 text-red-600 border-red-300',
-    2: 'bg-yellow-100 text-yellow-600 border-yellow-300',
-    3: 'bg-blue-100 text-blue-600 border-blue-300',
-    4: 'bg-green-100 text-green-600 border-green-300',
-  };
   return (
     <AccordionItem value={item_name} className="border-b last:border-b-0">
       <div className="flex flex-col sm:grid grid-cols-[1fr_auto] sm:items-center">
@@ -56,7 +50,7 @@ export default function EvaluationItem({
               type="button"
               onClick={() => handleScoring(score)}
               className={`w-7 h-7 rounded-full border text-xs flex items-center justify-center ${
-                currentScore === score ? scoreColors[score] : ''
+                currentScore === score ? SCORE_COLORS[score] : ''
               }`}
             >
               {score}
