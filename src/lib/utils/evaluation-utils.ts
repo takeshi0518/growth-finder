@@ -3,6 +3,25 @@ import {
   SectionType,
 } from '../../../types/evaluations';
 
+export const getSectionStats = (
+  sectionRates: {
+    sectionType: SectionType;
+    rate: number;
+    rank: string;
+    skillRate: number;
+    hospitalityRate: number;
+    cleanlinessRate: number;
+  }[],
+  type: SectionType
+) => {
+  const section = sectionRates.find(
+    (sectionRate) => sectionRate.sectionType === type
+  );
+  if (!section) throw new Error(`${type}のセクションが見つかりません`);
+
+  return section;
+};
+
 export const getEvaluationItemsBySection = (
   sections: ExistingEvaluationSection[],
   sectionType: SectionType

@@ -10,11 +10,9 @@ import {
 } from '../../../../../../types/evaluations';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import OverallEvaluation from '../[staffId]/components/overall-evaluation';
-import BasicEvaluation from '../[staffId]/components/basic-evaluation';
 import { useState } from 'react';
-import BaristaEvaluation from '../[staffId]/components/barista-evaluation';
-import CashierEvaluation from '../[staffId]/components/cashier-evaluation';
 import { getEvaluationItemsBySection } from '@/lib/utils/evaluation-utils';
+import SectionEvaluationContent from '../[staffId]/components/section-evaluation-content';
 
 type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id' | 'name'>;
 
@@ -92,21 +90,24 @@ export default function StaffEvaluationSection({
             />
           </TabsContent>
           <TabsContent value="basic">
-            <BasicEvaluation
+            <SectionEvaluationContent
               targetEvaluation={targetEvaluation}
               targetEvaluationItems={targetEvaluationItems}
+              sectionType={activeTab}
             />
           </TabsContent>
           <TabsContent value="barista">
-            <BaristaEvaluation
+            <SectionEvaluationContent
               targetEvaluation={targetEvaluation}
               targetEvaluationItems={targetEvaluationItems}
+              sectionType={activeTab}
             />
           </TabsContent>
           <TabsContent value="cashier">
-            <CashierEvaluation
+            <SectionEvaluationContent
               targetEvaluation={targetEvaluation}
               targetEvaluationItems={targetEvaluationItems}
+              sectionType={activeTab}
             />
           </TabsContent>
         </Tabs>

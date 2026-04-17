@@ -330,3 +330,21 @@ export const TOTAL_EVALUATION_ITEMS =
   CASHIER_SKILL_ITEMS.length +
   CASHIER_HOSPITALITY_ITEMS.length +
   CASHIER_CLEANLINESS.length;
+
+export const SECTION_ITEMS = {
+  basic: {
+    skill: BASIC_SKILL_ITEMS,
+    hospitality: BASIC_HOSPITALITY_ITEMS,
+    cleanliness: BASIC_CLEANLINESS_ITEMS,
+  },
+  barista: {
+    skill: BARISTA_SKILL_ITEMS,
+    hospitality: BARISTA_HOSPITALITY_ITEMS,
+    cleanliness: BARISTA_CLEANLINESS,
+  },
+  cashier: {
+    skill: CASHIER_SKILL_ITEMS,
+    hospitality: CASHIER_HOSPITALITY_ITEMS,
+    cleanliness: CASHIER_CLEANLINESS,
+  },
+};

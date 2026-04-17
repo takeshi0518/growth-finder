@@ -90,15 +90,3 @@ export const calcEvaluation = (sections: SectionScores[]) => {
     sectionRates,
   };
 };
-
-export const getSectionRate = (
-  sectionRates: {
-    sectionType: SectionType;
-    rate: number;
-    rank: string;
-    skillRate: number;
-    hospitalityRate: number;
-    cleanlinessRate: number;
-  }[],
-  type: SectionType
-) => sectionRates.find((sectionRate) => sectionRate.sectionType === type);

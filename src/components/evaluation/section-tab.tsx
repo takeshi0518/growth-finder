@@ -16,9 +16,11 @@ import { Label } from '../ui/label';
 import { useState } from 'react';
 
 type SectionTabProps = {
-  skillItems: EvaluationItemConstant[];
-  hospitalityItems: EvaluationItemConstant[];
-  cleanlinessItems: EvaluationItemConstant[];
+  items: {
+    skill: EvaluationItemConstant[];
+    hospitality: EvaluationItemConstant[];
+    cleanliness: EvaluationItemConstant[];
+  };
   targetEvaluationItems: EvaluationItemType[];
 };
 
@@ -41,11 +43,14 @@ function getTargetEvaluationItems(
 }
 
 export default function SectionTab({
-  skillItems,
-  hospitalityItems,
-  cleanlinessItems,
+  items,
   targetEvaluationItems,
 }: SectionTabProps) {
+  const {
+    skill: skillItems,
+    hospitality: hospitalityItems,
+    cleanliness: cleanlinessItems,
+  } = items;
   const [activeTab, setActiveTab] = useState<Category>('skill');
   const evaluationItems = getTargetEvaluationItems(
     targetEvaluationItems,
