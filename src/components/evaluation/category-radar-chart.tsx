@@ -1,0 +1,57 @@
+'use client';
+
+import {
+  PolarAngleAxis,
+  PolarGrid,
+  PolarRadiusAxis,
+  Radar,
+  RadarChart,
+  ResponsiveContainer,
+} from 'recharts';
+import { Label } from '../ui/label';
+import { CHART_COLORS } from '@/lib/constants/chart-colors';
+
+type CategoryRadarChartProps = {
+  skillRate: number;
+  hospitalityRate: number;
+  cleanlinessRate: number;
+};
+
+export default function CategoryRadarChart({
+  skillRate,
+  hospitalityRate,
+  cleanlinessRate,
+}: CategoryRadarChartProps) {
+  const data = [
+    { category: 'スキル', value: skillRate },
+    { category: 'ホスピタリティ', value: hospitalityRate },
+    { category: 'クレンリネス', value: cleanlinessRate },
+  ];
+  return (
+    <div>
+      <Label>
+        <span className="size-2 bg-primary rounded-full" />
+        スキルグラフ
+      </Label>
+      <ResponsiveContainer width="100%" height={300}>
+        <RadarChart
+          data={data}
+          margin={{ top: 10, right: 30, bottom: 10, left: 30 }}
+        >
+          <PolarGrid />
+          <PolarAngleAxis dataKey="category" tick={{ fontSize: 8 }} />
+          <PolarRadiusAxis domain={[0, 100]} tick={false} />
+          <Radar
+            dataKey="value"
+            fill={CHART_COLORS.primary}
+            stroke={CHART_COLORS.primary}
+            fillOpacity={0.2}
+            isAnimationActive={true}
+            animationDuration={1800}
+            animationEasing="ease-in-out"
+          />
+        </RadarChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}

@@ -1,5 +1,12 @@
 import { EvaluationItemConstant } from '../../../types/evaluations';
 
+export const SCORE_COLORS: Record<number, string> = {
+  1: 'bg-red-100 text-red-600 border-red-300',
+  2: 'bg-yellow-100 text-yellow-600 border-yellow-300',
+  3: 'bg-blue-100 text-blue-600 border-blue-300',
+  4: 'bg-green-100 text-green-600 border-green-300',
+};
+
 export const SCORE_OPTIONS = [1, 2, 3, 4] as const;
 
 export const BASIC_SKILL_ITEMS: EvaluationItemConstant[] = [
@@ -323,3 +330,21 @@ export const TOTAL_EVALUATION_ITEMS =
   CASHIER_SKILL_ITEMS.length +
   CASHIER_HOSPITALITY_ITEMS.length +
   CASHIER_CLEANLINESS.length;
+
+export const SECTION_ITEMS = {
+  basic: {
+    skill: BASIC_SKILL_ITEMS,
+    hospitality: BASIC_HOSPITALITY_ITEMS,
+    cleanliness: BASIC_CLEANLINESS_ITEMS,
+  },
+  barista: {
+    skill: BARISTA_SKILL_ITEMS,
+    hospitality: BARISTA_HOSPITALITY_ITEMS,
+    cleanliness: BARISTA_CLEANLINESS,
+  },
+  cashier: {
+    skill: CASHIER_SKILL_ITEMS,
+    hospitality: CASHIER_HOSPITALITY_ITEMS,
+    cleanliness: CASHIER_CLEANLINESS,
+  },
+};

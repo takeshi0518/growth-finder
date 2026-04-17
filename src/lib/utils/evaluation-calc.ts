@@ -1,4 +1,7 @@
+import { SectionType } from '../../../types/evaluations';
+
 type SectionScores = {
+  section_type: SectionType;
   skill_score: number;
   skill_max: number;
   hospitality_score: number;
@@ -60,7 +63,30 @@ export const calcEvaluation = (sections: SectionScores[]) => {
     hospitalityRate,
     cleanlinessRate,
   } = calcRate(sections);
+
   const rank = calcRank(rate);
 
-  return { rate, rank, skillRate, hospitalityRate, cleanlinessRate };
+  const sectionRates = sections.map((section) => {
+    const { totalRate, skillRate, hospitalityRate, cleanlinessRate } = calcRate(
+      [section]
+    );
+
+    return {
+      sectionType: section.section_type,
+      rate: totalRate,
+      rank: calcRank(totalRate),
+      skillRate,
+      hospitalityRate,
+      cleanlinessRate,
+    };
+  });
+
+  return {
+    rate,
+    rank,
+    skillRate,
+    hospitalityRate,
+    cleanlinessRate,
+    sectionRates,
+  };
 };
