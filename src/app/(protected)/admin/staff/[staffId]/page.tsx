@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import AdminContainer from '../../components/admin-contaimer';
 import { requireAdmin } from '@/lib/utils/requireAdmin';
-import StaffEvaluationSection from '../components/staff-evaluation-section';
+import StaffEvaluationSection from './components/staff-evaluation-section';
 import { ExistingEvaluation } from '../../../../../../types/evaluations';
 import { Icons } from '@/components/icon/icons';
 import { formatChartData } from '@/lib/utils/evaluation-format';

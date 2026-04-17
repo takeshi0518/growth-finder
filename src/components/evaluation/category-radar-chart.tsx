@@ -3,6 +3,7 @@
 import {
   PolarAngleAxis,
   PolarGrid,
+  PolarRadiusAxis,
   Radar,
   RadarChart,
   ResponsiveContainer,
@@ -39,6 +40,7 @@ export default function CategoryRadarChart({
         >
           <PolarGrid />
           <PolarAngleAxis dataKey="category" tick={{ fontSize: 8 }} />
+          <PolarRadiusAxis domain={[0, 100]} tick={false} />
           <Radar
             dataKey="value"
             fill={CHART_COLORS.primary}
