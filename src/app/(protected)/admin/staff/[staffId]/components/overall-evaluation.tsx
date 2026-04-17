@@ -10,6 +10,7 @@ import {
 import EvaluationLineChart from '@/components/evaluation/evaluation-line-chart';
 import SummaryComments from '@/components/evaluation/summary-comments';
 import SectionEvaluationDetail from '@/components/evaluation/section-evaluation-detail';
+import SectionEvaluationLayout from '@/components/evaluation/section-evaluation-layout';
 
 type OverallEvaluationProps = {
   targetEvaluation: ExistingEvaluation;
@@ -38,7 +39,7 @@ export default function OverallEvaluation({
   );
 
   return (
-    <div className="mt-15 max-w-200 mx-auto space-y-10">
+    <SectionEvaluationLayout>
       <SectionEvaluationDetail
         rank={rank}
         rate={rate}
@@ -50,6 +51,6 @@ export default function OverallEvaluation({
       />
       <EvaluationLineChart chartData={chartData} />
       <SummaryComments summaryComments={targetEvaluation} />
-    </div>
+    </SectionEvaluationLayout>
   );
 }
