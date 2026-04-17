@@ -6,7 +6,6 @@ import { Icons } from '@/components/icon/icons';
 import {
   ChartDataPoint,
   ExistingEvaluation,
-  ExistingEvaluationSection,
   SectionType,
 } from '../../../../../../types/evaluations';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -15,6 +14,7 @@ import BasicEvaluation from '../[staffId]/components/basic-evaluation';
 import { useState } from 'react';
 import BaristaEvaluation from '../[staffId]/components/barista-evaluation';
 import CashierEvaluation from '../[staffId]/components/cashier-evaluation';
+import { getEvaluationItemsBySection } from '@/lib/utils/evaluation-utils';
 
 type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id' | 'name'>;
 
@@ -23,14 +23,6 @@ type StaffEvaluationSectionProps = {
   targetEvaluation: ExistingEvaluation;
   chartData: ChartDataPoint[];
 };
-
-function getTargetEvaluationItems(
-  sections: ExistingEvaluationSection[],
-  label: SectionType
-) {
-  return sections.find((section) => section.section_type === label)
-    ?.evaluation_items;
-}
 
 export default function StaffEvaluationSection({
   selectedPeriod,
@@ -43,12 +35,10 @@ export default function StaffEvaluationSection({
 
     setActiveTab(v);
   };
-  const targetEvaluationItems = getTargetEvaluationItems(
+  const targetEvaluationItems = getEvaluationItemsBySection(
     targetEvaluation.evaluation_sections,
     activeTab
   );
-
-  if (!targetEvaluationItems) throw new Error('評価項目が見つかりません');
 
   return (
     <Card>
