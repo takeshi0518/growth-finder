@@ -1,4 +1,6 @@
 import {
+  Category,
+  EvaluationItem,
   ExistingEvaluationSection,
   SectionType,
 } from '../../../types/evaluations';
@@ -29,4 +31,11 @@ export const getEvaluationItemsBySection = (
   const section = sections.find((s) => s.section_type === sectionType);
   if (!section) throw new Error(`${sectionType}のセクションが見つかりません`);
   return section.evaluation_items;
+};
+
+export const filterEvaluationItemsByCategory = (
+  evaluationItems: EvaluationItem[],
+  section: Category
+) => {
+  return evaluationItems.filter((items) => items.category === section);
 };

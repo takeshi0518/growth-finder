@@ -14,6 +14,7 @@ import {
 } from '../../../types/evaluations';
 import { Label } from '../ui/label';
 import { useState } from 'react';
+import { filterEvaluationItemsByCategory } from '@/lib/utils/evaluation-utils';
 
 type SectionTabProps = {
   items: {
@@ -35,13 +36,6 @@ type EvaluationItemProps = {
   evaluatedItems: EvaluationItemType[];
 };
 
-function getTargetEvaluationItems(
-  evaluationItems: EvaluationItemType[],
-  section: Category
-) {
-  return evaluationItems.filter((items) => items.category === section);
-}
-
 export default function SectionTab({
   items,
   targetEvaluationItems,
@@ -52,11 +46,10 @@ export default function SectionTab({
     cleanliness: cleanlinessItems,
   } = items;
   const [activeTab, setActiveTab] = useState<Category>('skill');
-  const evaluationItems = getTargetEvaluationItems(
+  const evaluationItems = filterEvaluationItemsByCategory(
     targetEvaluationItems,
     activeTab
   );
-  if (!evaluationItems) throw new Error('評価項目が見つかりません');
 
   const handleTabChange = (v: string) => {
     if (v !== 'skill' && v !== 'hospitality' && v !== 'cleanliness') return;

@@ -23,22 +23,22 @@ export default function SectionEvaluationContent({
   sectionType,
 }: SectionEvaluationContentProps) {
   const { sectionRates } = calcEvaluation(targetEvaluation.evaluation_sections);
-  const currentSection = getSectionStats(sectionRates, sectionType);
+  const sectionStats = getSectionStats(sectionRates, sectionType);
 
   const categoryItems = formatCategoryRates(
-    currentSection.skillRate,
-    currentSection.hospitalityRate,
-    currentSection.cleanlinessRate
+    sectionStats.skillRate,
+    sectionStats.hospitalityRate,
+    sectionStats.cleanlinessRate
   );
   return (
     <SectionEvaluationLayout>
       <SectionEvaluationDetail
-        rank={currentSection.rank}
-        rate={currentSection.rate}
+        rank={sectionStats.rank}
+        rate={sectionStats.rate}
         categoryItems={categoryItems}
-        skillRate={currentSection.skillRate}
-        hospitalityRate={currentSection.hospitalityRate}
-        cleanlinessRate={currentSection.cleanlinessRate}
+        skillRate={sectionStats.skillRate}
+        hospitalityRate={sectionStats.hospitalityRate}
+        cleanlinessRate={sectionStats.cleanlinessRate}
       />
       <SectionTab
         items={SECTION_ITEMS[sectionType]}
