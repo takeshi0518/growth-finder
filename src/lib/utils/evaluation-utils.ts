@@ -45,5 +45,5 @@ export const isSectionType = (v: string): v is SectionType => {
 };
 
 export const isCategoryType = (v: string): v is Category => {
-  return ['skill', 'hospitality', 'cleanlienss'].includes(v);
+  return ['skill', 'hospitality', 'cleanliness'].includes(v);
 };
