@@ -14,7 +14,10 @@ import {
 } from '../../../types/evaluations';
 import { Label } from '../ui/label';
 import { useState } from 'react';
-import { filterEvaluationItemsByCategory } from '@/lib/utils/evaluation-utils';
+import {
+  filterEvaluationItemsByCategory,
+  isCategoryType,
+} from '@/lib/utils/evaluation-utils';
 
 type SectionTabProps = {
   items: {
@@ -52,10 +55,11 @@ export default function SectionTab({
   );
 
   const handleTabChange = (v: string) => {
-    if (v !== 'skill' && v !== 'hospitality' && v !== 'cleanliness') return;
-
-    setActiveTab(v);
+    if (isCategoryType(v)) {
+      setActiveTab(v);
+    }
   };
+
   return (
     <div>
       <Label>

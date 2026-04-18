@@ -39,3 +39,11 @@ export const filterEvaluationItemsByCategory = (
 ) => {
   return evaluationItems.filter((items) => items.category === section);
 };
+
+export const isSectionType = (v: string): v is SectionType => {
+  return ['basic', 'barista', 'cashier'].includes(v);
+};
+
+export const isCategoryType = (v: string): v is Category => {
+  return ['skill', 'hospitality', 'cleanliness'].includes(v);
+};

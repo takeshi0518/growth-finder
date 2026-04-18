@@ -11,7 +11,10 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import OverallEvaluation from './overall-evaluation';
 import { useState } from 'react';
-import { getEvaluationItemsBySection } from '@/lib/utils/evaluation-utils';
+import {
+  getEvaluationItemsBySection,
+  isSectionType,
+} from '@/lib/utils/evaluation-utils';
 import SectionEvaluationContent from './section-evaluation-content';
 
 type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id' | 'name'>;
@@ -29,10 +32,13 @@ export default function StaffEvaluationSection({
 }: StaffEvaluationSectionProps) {
   const [activeTab, setActiveTab] = useState<SectionType>('basic');
   const handleTabChange = (v: string) => {
-    if (v !== 'basic' && v !== 'barista' && v !== 'cashier') return;
+    if (v === 'all') return;
 
-    setActiveTab(v);
+    if (isSectionType(v)) {
+      setActiveTab(v);
+    }
   };
+
   const targetEvaluationItems = getEvaluationItemsBySection(
     targetEvaluation.evaluation_sections,
     activeTab
