@@ -4,11 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:all": "supabase start && next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "check": "npm run lint && npm run typecheck"
+    "check": "npm run lint && npm run typecheck",
+    "db:types": "supabase gen types typescript --local > types/supabase.ts",
+    "db:migrate": "supabase migration up && npm run db:types",
+    "db:reset": "supabase db reset && npm run db:types"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
