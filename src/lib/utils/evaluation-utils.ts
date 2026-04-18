@@ -39,3 +39,7 @@ export const filterEvaluationItemsByCategory = (
 ) => {
   return evaluationItems.filter((items) => items.category === section);
 };
+
+export const isSectionType = (v: string): v is SectionType => {
+  return ['basic', 'barista', 'cashier'].includes(v);
+};
