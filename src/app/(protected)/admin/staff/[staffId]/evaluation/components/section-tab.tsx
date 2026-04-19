@@ -8,6 +8,7 @@ import { useRef, useState } from 'react';
 import FeedbackComments from './feedback-comments';
 import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { EvaluationInput } from '@/lib/validations/schemas';
+import { isCategoryType } from '@/lib/utils/evaluation-utils';
 
 type SectionTablProps = {
   skillItems: EvaluationItemConstant[];
@@ -32,8 +33,9 @@ export default function SectionTab({
   const stickyRef = useRef<HTMLDivElement>(null);
 
   const handleTabChange = (v: string) => {
-    if (v !== 'skill' && v !== 'hospitality' && v !== 'cleanliness') return;
-    setActiveTab(v);
+    if (isCategoryType(v)) {
+      setActiveTab(v);
+    }
 
     const offset = window.innerWidth >= 768 ? 0 : 80;
     if (stickyRef.current) {
