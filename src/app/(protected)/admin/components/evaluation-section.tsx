@@ -6,6 +6,7 @@ import SectionEvaluationLayout from '@/components/evaluation/section-evaluation-
 import SectionEvaluationDetail from '@/components/evaluation/section-evaluation-detail';
 import { Label } from '@/components/ui/label';
 import ProgressBar from '@/components/evaluation/progress-bar';
+import { Button } from '@/components/ui/button';
 
 type EvaluationPeriod = Pick<
   Tables<'evaluation_periods'>,
@@ -91,6 +92,28 @@ export default function EvaluationSection({
                 9人
               </span>
             </div>
+          </div>
+          <Label>
+            <span className="size-2 bg-primary rounded-full" />
+            未評価スタッフ一覧
+          </Label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <Card>
+              <CardContent className="pb-4">
+                <div className="flex flex-col justify-center gap-y-5">
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="w-10 h-10 rounded-full bg-card flex items-center justify-center overflow-hidden shrink-0">
+                      <Icons.UserCircle className="h-10 w-10 text-muted-foreground" />
+                    </div>
+                    <span className="font-medium text-sm">山田太郎</span>
+                  </div>
+                  <Button size="sm" variant="ghost" className="text-primary">
+                    <span>評価する</span>
+                    <Icons.ArrowBigRight className="w-5 h-5" />
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </CardContent>

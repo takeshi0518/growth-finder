@@ -34,6 +34,7 @@ import {
   X,
   CircleAlert,
   Check,
+  ArrowBigRight
 } from 'lucide-react';
 
 import { FaXTwitter, FaGithub } from 'react-icons/fa6';
@@ -83,6 +84,7 @@ export const Icons = {
   X,
   CircleAlert,
   Check,
+  ArrowBigRight,
   FaXTwitter,
   FaGithub,
   FcGoogle,
