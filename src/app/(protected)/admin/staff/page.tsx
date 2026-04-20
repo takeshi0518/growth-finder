@@ -30,24 +30,27 @@ export default async function StaffManagementPage() {
 
   if (selectedPeriodError) redirect('/admin');
 
-  const { data: existingEvaluations, error: exisgintError } = await supabase
-    .from('evaluations')
-    .select(
-      `
-      id,
-      staff_id,
-        evaluation_sections (
-          skill_score,
-            skill_max,
-            hospitality_score,
-            hospitality_max,
-            cleanliness_score,
-            cleanliness_max
+  const { data: existingEvaluations, error: exisgintError } = selectedPeriod
+    ? await supabase
+        .from('evaluations')
+        .select(
+          `
+    id,
+    staff_id,
+      evaluation_sections (
+        skill_score,
+          skill_max,
+          hospitality_score,
+          hospitality_max,
+          cleanliness_score,
+          cleanliness_max
+      )
+    `
         )
-      `
-    )
-    .eq('organization_id', orgId)
-    .eq('status', 'completed');
+        .eq('organization_id', orgId)
+        .eq('evaluation_period_id', selectedPeriod.id)
+        .eq('status', 'completed')
+    : { data: [], error: null };
 
   if (exisgintError) throw new Error('評価データの取得に失敗しました');
 

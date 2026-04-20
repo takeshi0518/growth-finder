@@ -25,6 +25,8 @@ export default function StaffCard({
     ? calcEvaluation(staffEvaluation.evaluation_sections)
     : null;
 
+    console.log(evaluation)
+
   return (
     <Card className="relative">
       <CardContent className="pb-4">
