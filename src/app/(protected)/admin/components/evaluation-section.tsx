@@ -33,18 +33,16 @@ export default function EvaluationSection({
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-10">
-        <div>
+        <div className="flex flex-col gap-1">
+          <Label>
+            <Icons.CalendarDays className="w-5 h-5" />
+            現在の評価期間
+          </Label>
+
           <p className="text-sm text-muted-foreground">
-            現在の期間:
-            {currentEvaluationPeriod ? (
-              <span className="font-medium text-foreground">
-                {currentEvaluationPeriod.name}
-              </span>
-            ) : (
-              <span className="font-medium text-foreground">
-                評価期間を作成して設定してください
-              </span>
-            )}
+            {currentEvaluationPeriod
+              ? currentEvaluationPeriod.name
+              : '評価期間を作成して設定してください'}
           </p>
         </div>
         <EvaluationPeriodSelect evaluationPeriods={evaluationPeriods} />
