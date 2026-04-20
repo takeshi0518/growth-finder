@@ -12,7 +12,7 @@ export default async function AdminPage() {
 
   const { data: evaluationPeriods, error: periodsError } = await supabase
     .from('evaluation_periods')
-    .select('id, name')
+    .select('id, name, is_current')
     .eq('organization_id', orgId);
 
   if (periodsError || !evaluationPeriods) return;
@@ -25,7 +25,10 @@ export default async function AdminPage() {
         </div>
         <EvaluationPeriodList evaluationPeriods={evaluationPeriods} />
       </div>
-      <EvaluationSection evaluationPeriods={evaluationPeriods} label="評価" />
+      <EvaluationSection
+        evaluationPeriods={evaluationPeriods}
+        label="評価"
+      />
     </AdminContainer>
   );
 }
