@@ -34,7 +34,7 @@ export default function EvaluationSection({
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <SectionEvaluationLayout>
+        <div className="mt-15 max-w-200 mx-auto space-y-16">
           <div className="flex flex-col-reverse gap-y-8 sm:flex-row sm:justify-between">
             <div className="flex flex-col gap-1">
               <Label>
@@ -54,23 +54,25 @@ export default function EvaluationSection({
             <span className="size-2 bg-primary rounded-full" />
             店舗全体評価
           </Label>
-          <SectionEvaluationDetail
-            rank="A"
-            rate={100}
-            skillRate={100}
-            hospitalityRate={100}
-            cleanlinessRate={100}
-            categoryItems={[
-              { label: 'スキル', rate: 100 },
-              { label: 'ホスピタリティ', rate: 100 },
-              { label: 'クレンリネス', rate: 100 },
-            ]}
-          />
+          <SectionEvaluationLayout>
+            <SectionEvaluationDetail
+              rank="A"
+              rate={100}
+              skillRate={100}
+              hospitalityRate={100}
+              cleanlinessRate={100}
+              categoryItems={[
+                { label: 'スキル', rate: 100 },
+                { label: 'ホスピタリティ', rate: 100 },
+                { label: 'クレンリネス', rate: 100 },
+              ]}
+            />
+          </SectionEvaluationLayout>
           <ProgressBar
             sectionRates={[{ label: '進捗率', rate: 100 }]}
             label="評価進捗"
           />
-        </SectionEvaluationLayout>
+        </div>
       </CardContent>
     </Card>
   );
