@@ -72,6 +72,26 @@ export default function EvaluationSection({
             sectionRates={[{ label: '進捗率', rate: 100 }]}
             label="評価進捗"
           />
+          <div className="flex gap-10 justify-around">
+            <div className="flex flex-col aspect-square w-full max-w-45 items-center justify-center gap-1 border rounded-xl p-5">
+              <span className="flex gap-1 items-center text-sm sm:text-lg text-green-400">
+                <Icons.Check className="w-5 h-5" />
+                完了
+              </span>
+              <span className="text-2xl sm:text-3xl text-muted-foreground font-bold">
+                21人
+              </span>
+            </div>
+            <div className="flex flex-col aspect-square w-full max-w-45 items-center justify-center gap-1 border rounded-xl p-5">
+              <span className="flex gap-1 items-center text-sm sm:text-lg text-gray-400">
+                <Icons.Users className="w-5 h-5" />
+                未完了
+              </span>
+              <span className="text-2xl sm:text-3xl text-muted-foreground font-bold">
+                9人
+              </span>
+            </div>
+          </div>
         </div>
       </CardContent>
     </Card>
