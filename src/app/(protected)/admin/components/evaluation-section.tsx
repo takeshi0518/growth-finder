@@ -5,6 +5,7 @@ import { Tables } from '../../../../../types/supabase';
 import SectionEvaluationLayout from '@/components/evaluation/section-evaluation-layout';
 import SectionEvaluationDetail from '@/components/evaluation/section-evaluation-detail';
 import { Label } from '@/components/ui/label';
+import ProgressBar from '@/components/evaluation/progress-bar';
 
 type EvaluationPeriod = Pick<
   Tables<'evaluation_periods'>,
@@ -32,27 +33,27 @@ export default function EvaluationSection({
           {label}
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-10">
-        <div className="flex flex-col-reverse gap-y-8 sm:flex-row sm:justify-between">
-          <div className="flex flex-col gap-1">
-            <Label>
-              <Icons.CalendarDays className="w-5 h-5" />
-              現在の評価期間
-            </Label>
-
-            <p className="text-sm text-muted-foreground">
-              {currentEvaluationPeriod
-                ? currentEvaluationPeriod.name
-                : '評価期間を作成して設定してください'}
-            </p>
-          </div>
-          <EvaluationPeriodSelect evaluationPeriods={evaluationPeriods} />
-        </div>
-        <Label>
-          <span className="size-2 bg-primary rounded-full" />
-          店舗全体評価
-        </Label>
+      <CardContent>
         <SectionEvaluationLayout>
+          <div className="flex flex-col-reverse gap-y-8 sm:flex-row sm:justify-between">
+            <div className="flex flex-col gap-1">
+              <Label>
+                <Icons.CalendarDays className="w-5 h-5" />
+                現在の評価期間
+              </Label>
+
+              <p className="text-sm text-muted-foreground">
+                {currentEvaluationPeriod
+                  ? currentEvaluationPeriod.name
+                  : '評価期間を作成して設定してください'}
+              </p>
+            </div>
+            <EvaluationPeriodSelect evaluationPeriods={evaluationPeriods} />
+          </div>
+          <Label>
+            <span className="size-2 bg-primary rounded-full" />
+            店舗全体評価
+          </Label>
           <SectionEvaluationDetail
             rank="A"
             rate={100}
@@ -64,6 +65,10 @@ export default function EvaluationSection({
               { label: 'ホスピタリティ', rate: 100 },
               { label: 'クレンリネス', rate: 100 },
             ]}
+          />
+          <ProgressBar
+            sectionRates={[{ label: '進捗率', rate: 100 }]}
+            label="評価進捗"
           />
         </SectionEvaluationLayout>
       </CardContent>
