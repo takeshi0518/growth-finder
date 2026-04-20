@@ -38,6 +38,7 @@ export default async function StaffManagementPage() {
     id,
     staff_id,
       evaluation_sections (
+        section_type,
         skill_score,
           skill_max,
           hospitality_score,

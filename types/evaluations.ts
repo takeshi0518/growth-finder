@@ -45,6 +45,7 @@ export type ExistingEvaluationForStaffCard = Pick<
 > & {
   evaluation_sections: Pick<
     ExistingEvaluationSection,
+    | 'section_type'
     | 'skill_score'
     | 'skill_max'
     | 'hospitality_score'
