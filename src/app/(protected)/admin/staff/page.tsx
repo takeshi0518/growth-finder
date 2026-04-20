@@ -7,6 +7,7 @@ import BackPageLink from '@/components/shared/back-page-link';
 import AdminContainer from '../components/admin-contaimer';
 import { requireAdmin } from '@/lib/utils/requireAdmin';
 import { redirect } from 'next/navigation';
+import { ExistingEvaluationForStaffCard } from '../../../../../types/evaluations';
 
 export default async function StaffManagementPage() {
   const supabase = await createClient();
@@ -31,7 +32,7 @@ export default async function StaffManagementPage() {
   if (selectedPeriodError) redirect('/admin');
 
   const { data: existingEvaluations, error: exisgintError } = selectedPeriod
-    ? await supabase
+    ? ((await supabase
         .from('evaluations')
         .select(
           `
@@ -50,7 +51,10 @@ export default async function StaffManagementPage() {
         )
         .eq('organization_id', orgId)
         .eq('evaluation_period_id', selectedPeriod.id)
-        .eq('status', 'completed')
+        .eq('status', 'completed')) as {
+        data: ExistingEvaluationForStaffCard[] | null;
+        error: unknown;
+      })
     : { data: [], error: null };
 
   if (exisgintError) throw new Error('評価データの取得に失敗しました');
