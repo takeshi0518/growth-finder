@@ -33,19 +33,21 @@ export default function EvaluationSection({
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-10">
-        <div className="flex flex-col gap-1">
-          <Label>
-            <Icons.CalendarDays className="w-5 h-5" />
-            現在の評価期間
-          </Label>
+        <div className="flex flex-col-reverse gap-y-8 sm:flex-row sm:justify-between">
+          <div className="flex flex-col gap-1">
+            <Label>
+              <Icons.CalendarDays className="w-5 h-5" />
+              現在の評価期間
+            </Label>
 
-          <p className="text-sm text-muted-foreground">
-            {currentEvaluationPeriod
-              ? currentEvaluationPeriod.name
-              : '評価期間を作成して設定してください'}
-          </p>
+            <p className="text-sm text-muted-foreground">
+              {currentEvaluationPeriod
+                ? currentEvaluationPeriod.name
+                : '評価期間を作成して設定してください'}
+            </p>
+          </div>
+          <EvaluationPeriodSelect evaluationPeriods={evaluationPeriods} />
         </div>
-        <EvaluationPeriodSelect evaluationPeriods={evaluationPeriods} />
         <Label>
           <span className="size-2 bg-primary rounded-full" />
           店舗全体評価
