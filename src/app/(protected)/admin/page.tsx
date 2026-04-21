@@ -4,6 +4,7 @@ import EvaluationPeriodList from './components/evaluation-period-list';
 import AdminContainer from './components/admin-contaimer';
 import EvaluationSection from './components/evaluation-section';
 import { requireAdmin } from '@/lib/utils/requireAdmin';
+import { TotalEvaluations } from '../../../../types/evaluations';
 
 export default async function AdminPage() {
   const supabase = await createClient();
@@ -21,8 +22,8 @@ export default async function AdminPage() {
     (period) => period.is_current
   );
 
-  const { data } = currentEvaluationPeriod
-    ? await supabase
+  const { data: totalEvaluations } = currentEvaluationPeriod
+    ? ((await supabase
         .from('evaluations')
         .select(
           `
@@ -36,17 +37,15 @@ export default async function AdminPage() {
       hospitality_score,
       hospitality_max,
       cleanliness_score,
-      cleanliness_max,
-        evaluation_items(
-          item_name,
-          category,
-          score
-        )
+      cleanliness_max
       )
     `
         )
         .eq('evaluation_period_id', currentEvaluationPeriod.id)
-        .eq('organization_id', orgId)
+        .eq('organization_id', orgId)) as {
+        data: TotalEvaluations[] | null;
+        error: unknown;
+      })
     : { data: null };
 
   return (

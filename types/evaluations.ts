@@ -85,3 +85,19 @@ export type SummaryComment = Pick<
   Tables<'evaluations'>,
   'action_plan' | 'total_comment' | 'future_vision'
 >;
+
+export type TotalEvaluations = Pick<Tables<'evaluations'>, 'id' | 'status'> & {
+  evaluation_sections: Pick<
+    Tables<'evaluation_sections'>,
+    | 'id'
+    | 'skill_score'
+    | 'skill_max'
+    | 'hospitality_score'
+    | 'hospitality_max'
+    | 'cleanliness_score'
+    | 'cleanliness_max'
+  > &
+    {
+      section_type: SectionType;
+    }[];
+};
