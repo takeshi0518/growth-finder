@@ -15,17 +15,15 @@ type EvaluationPeriod = Pick<
 
 type EvaluationSectionProps = {
   evaluationPeriods: EvaluationPeriod[];
+  currentEvaluationPeriod?: EvaluationPeriod;
   label: string;
 };
 
 export default function EvaluationSection({
   evaluationPeriods,
+  currentEvaluationPeriod,
   label,
 }: EvaluationSectionProps) {
-  const currentEvaluationPeriod = evaluationPeriods.find(
-    (period) => period.is_current
-  );
-
   return (
     <Card>
       <CardHeader>

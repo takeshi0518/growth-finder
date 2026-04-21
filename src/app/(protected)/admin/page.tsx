@@ -57,7 +57,11 @@ export default async function AdminPage() {
         </div>
         <EvaluationPeriodList evaluationPeriods={evaluationPeriods} />
       </div>
-      <EvaluationSection evaluationPeriods={evaluationPeriods} label="評価" />
+      <EvaluationSection
+        evaluationPeriods={evaluationPeriods}
+        currentEvaluationPeriod={currentEvaluationPeriod}
+        label="評価"
+      />
     </AdminContainer>
   );
 }
