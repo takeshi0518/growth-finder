@@ -17,6 +17,38 @@ export default async function AdminPage() {
 
   if (periodsError || !evaluationPeriods) return;
 
+  const currentEvaluationPeriod = evaluationPeriods.find(
+    (period) => period.is_current
+  );
+
+  const { data } = currentEvaluationPeriod
+    ? await supabase
+        .from('evaluations')
+        .select(
+          `
+    id,
+    status,
+      evaluation_sections (
+      id,
+      section_type,
+      skill_score,
+      skill_max,
+      hospitality_score,
+      hospitality_max,
+      cleanliness_score,
+      cleanliness_max,
+        evaluation_items(
+          item_name,
+          category,
+          score
+        )
+      )
+    `
+        )
+        .eq('evaluation_period_id', currentEvaluationPeriod.id)
+        .eq('organization_id', orgId)
+    : { data: null };
+
   return (
     <AdminContainer>
       <div className="flex flex-col lg:flex-row gap-6">
@@ -25,10 +57,7 @@ export default async function AdminPage() {
         </div>
         <EvaluationPeriodList evaluationPeriods={evaluationPeriods} />
       </div>
-      <EvaluationSection
-        evaluationPeriods={evaluationPeriods}
-        label="評価"
-      />
+      <EvaluationSection evaluationPeriods={evaluationPeriods} label="評価" />
     </AdminContainer>
   );
 }
