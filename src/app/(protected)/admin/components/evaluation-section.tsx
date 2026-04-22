@@ -11,6 +11,8 @@ import { TotalEvaluations } from '../../../../../types/evaluations';
 import { calcEvaluation } from '@/lib/utils/evaluation-calc';
 import { formatCategoryRates } from '@/lib/utils/evaluation-format';
 import { Staff } from '../../../../../types/staff';
+import Image from 'next/image';
+import Link from 'next/link';
 
 type EvaluationPeriod = Pick<
   Tables<'evaluation_periods'>,
@@ -44,6 +46,10 @@ export default function EvaluationSection({
   const progressRate =
     totalStaffs > 0 ? Math.round((evaluatedStaffs / totalStaffs) * 100) : 0;
   const unevaluatedStaffs = totalStaffs - evaluatedStaffs;
+  const unevaluatedStaffLists = staffLists.filter(
+    (staff) =>
+      !totalEvaluations.some((evaluation) => evaluation.staff_id === staff.id)
+  );
   return (
     <Card>
       <CardHeader>
@@ -112,22 +118,43 @@ export default function EvaluationSection({
             未評価スタッフ一覧
           </Label>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <Card>
-              <CardContent className="pb-4">
-                <div className="flex flex-col justify-center gap-y-5">
-                  <div className="flex items-center justify-center gap-2">
-                    <div className="w-10 h-10 rounded-full bg-card flex items-center justify-center overflow-hidden shrink-0">
-                      <Icons.UserCircle className="h-10 w-10 text-muted-foreground" />
+            {unevaluatedStaffLists.map((staff) => (
+              <Card key={staff.id}>
+                <CardContent className="pb-4">
+                  <div className="flex flex-col justify-center gap-y-5">
+                    <div className="flex items-center justify-center gap-2">
+                      <div className="w-10 h-10 rounded-full bg-card flex items-center justify-center overflow-hidden shrink-0">
+                        {staff.avatar_url ? (
+                          <Image
+                            src={staff.avatar_url}
+                            alt={staff.name}
+                            width={40}
+                            height={40}
+                            className="object-cover"
+                          />
+                        ) : (
+                          <Icons.UserCircle className="h-10 w-10 text-muted-foreground" />
+                        )}
+                      </div>
+                      <span className="font-medium text-sm">{staff.name}</span>
                     </div>
-                    <span className="font-medium text-sm">山田太郎</span>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="text-primary"
+                      asChild
+                    >
+                      <Link
+                        href={`/admin/staff/${staff.id}/evaluation?periodId=${currentEvaluationPeriod?.id}`}
+                      >
+                        評価する
+                        <Icons.ArrowBigRight className="w-5 h-5" />
+                      </Link>
+                    </Button>
                   </div>
-                  <Button size="sm" variant="ghost" className="text-primary">
-                    <span>評価する</span>
-                    <Icons.ArrowBigRight className="w-5 h-5" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </CardContent>

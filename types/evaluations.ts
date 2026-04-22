@@ -86,7 +86,10 @@ export type SummaryComment = Pick<
   'action_plan' | 'total_comment' | 'future_vision'
 >;
 
-export type TotalEvaluations = Pick<Tables<'evaluations'>, 'id' | 'status'> & {
+export type TotalEvaluations = Pick<
+  Tables<'evaluations'>,
+  'id' | 'staff_id'
+> & {
   evaluation_sections: (Pick<
     Tables<'evaluation_sections'>,
     | 'id'

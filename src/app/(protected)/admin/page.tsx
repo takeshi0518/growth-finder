@@ -36,7 +36,7 @@ export default async function AdminPage() {
         .select(
           `
     id,
-    status,
+    staff_id,
       evaluation_sections (
       id,
       section_type,
