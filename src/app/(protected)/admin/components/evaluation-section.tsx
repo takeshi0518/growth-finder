@@ -43,6 +43,7 @@ export default function EvaluationSection({
   const evaluatedStaffs = totalEvaluations.length;
   const progressRate =
     totalStaffs > 0 ? Math.round((evaluatedStaffs / totalStaffs) * 100) : 0;
+  const unevaluatedStaffs = totalStaffs - evaluatedStaffs;
   return (
     <Card>
       <CardHeader>
@@ -93,7 +94,7 @@ export default function EvaluationSection({
                 完了
               </span>
               <span className="text-2xl sm:text-3xl text-muted-foreground font-bold">
-                21人
+                {evaluatedStaffs}
               </span>
             </div>
             <div className="flex flex-col aspect-square w-full max-w-45 items-center justify-center gap-1 border rounded-xl p-5">
@@ -102,7 +103,7 @@ export default function EvaluationSection({
                 未完了
               </span>
               <span className="text-2xl sm:text-3xl text-muted-foreground font-bold">
-                9人
+                {unevaluatedStaffs}
               </span>
             </div>
           </div>
