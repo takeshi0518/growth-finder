@@ -5,11 +5,19 @@ import AdminContainer from './components/admin-contaimer';
 import EvaluationSection from './components/evaluation-section';
 import { requireAdmin } from '@/lib/utils/requireAdmin';
 import { TotalEvaluations } from '../../../../types/evaluations';
+import { redirect } from 'next/navigation';
 
 export default async function AdminPage() {
   const supabase = await createClient();
 
   const { orgId, profile } = await requireAdmin(supabase);
+
+  const { data: staffs, error: staffError } = await supabase
+    .from('profiles')
+    .select('id, name, role, store_name, avatar_url, email')
+    .eq('organization_id', orgId)
+    .eq('role', 'staff');
+  if (staffError) redirect('/admin');
 
   const { data: evaluationPeriods, error: periodsError } = await supabase
     .from('evaluation_periods')
@@ -60,6 +68,7 @@ export default async function AdminPage() {
         evaluationPeriods={evaluationPeriods}
         currentEvaluationPeriod={currentEvaluationPeriod}
         totalEvaluations={totalEvaluations ?? []}
+        staffLists={staffs ?? []}
         label="評価"
       />
     </AdminContainer>

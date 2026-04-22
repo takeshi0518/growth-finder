@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { TotalEvaluations } from '../../../../../types/evaluations';
 import { calcEvaluation } from '@/lib/utils/evaluation-calc';
 import { formatCategoryRates } from '@/lib/utils/evaluation-format';
+import { Staff } from '../../../../../types/staff';
 
 type EvaluationPeriod = Pick<
   Tables<'evaluation_periods'>,
@@ -20,6 +21,7 @@ type EvaluationSectionProps = {
   evaluationPeriods: EvaluationPeriod[];
   totalEvaluations: TotalEvaluations[];
   currentEvaluationPeriod?: EvaluationPeriod;
+  staffLists: Staff[];
   label: string;
 };
 
@@ -27,6 +29,7 @@ export default function EvaluationSection({
   evaluationPeriods,
   currentEvaluationPeriod,
   totalEvaluations,
+  staffLists,
   label,
 }: EvaluationSectionProps) {
   const allSections = totalEvaluations.flatMap((v) => v.evaluation_sections);
@@ -36,6 +39,10 @@ export default function EvaluationSection({
     totalEvaluation.hospitalityRate,
     totalEvaluation.cleanlinessRate
   );
+  const totalStaffs = staffLists.length;
+  const evaluatedStaffs = totalEvaluations.length;
+  const progressRate =
+    totalStaffs > 0 ? Math.round((evaluatedStaffs / totalStaffs) * 100) : 0;
   return (
     <Card>
       <CardHeader>
@@ -76,7 +83,7 @@ export default function EvaluationSection({
             />
           </SectionEvaluationLayout>
           <ProgressBar
-            sectionRates={[{ label: '進捗率', rate: 100 }]}
+            sectionRates={[{ label: '進捗率', rate: progressRate }]}
             label="評価進捗"
           />
           <div className="flex gap-10 justify-around">
