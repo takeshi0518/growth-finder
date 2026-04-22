@@ -59,6 +59,7 @@ export default async function AdminPage() {
       <EvaluationSection
         evaluationPeriods={evaluationPeriods}
         currentEvaluationPeriod={currentEvaluationPeriod}
+        totalEvaluations={totalEvaluations ?? []}
         label="評価"
       />
     </AdminContainer>

@@ -7,6 +7,9 @@ import SectionEvaluationDetail from '@/components/evaluation/section-evaluation-
 import { Label } from '@/components/ui/label';
 import ProgressBar from '@/components/evaluation/progress-bar';
 import { Button } from '@/components/ui/button';
+import { TotalEvaluations } from '../../../../../types/evaluations';
+import { calcEvaluation } from '@/lib/utils/evaluation-calc';
+import { formatCategoryRates } from '@/lib/utils/evaluation-format';
 
 type EvaluationPeriod = Pick<
   Tables<'evaluation_periods'>,
@@ -15,6 +18,7 @@ type EvaluationPeriod = Pick<
 
 type EvaluationSectionProps = {
   evaluationPeriods: EvaluationPeriod[];
+  totalEvaluations: TotalEvaluations[];
   currentEvaluationPeriod?: EvaluationPeriod;
   label: string;
 };
@@ -22,8 +26,16 @@ type EvaluationSectionProps = {
 export default function EvaluationSection({
   evaluationPeriods,
   currentEvaluationPeriod,
+  totalEvaluations,
   label,
 }: EvaluationSectionProps) {
+  const allSections = totalEvaluations.flatMap((v) => v.evaluation_sections);
+  const totalEvaluation = calcEvaluation(allSections);
+  const formattedData = formatCategoryRates(
+    totalEvaluation.skillRate,
+    totalEvaluation.hospitalityRate,
+    totalEvaluation.cleanlinessRate
+  );
   return (
     <Card>
       <CardHeader>
@@ -55,16 +67,12 @@ export default function EvaluationSection({
           </Label>
           <SectionEvaluationLayout>
             <SectionEvaluationDetail
-              rank="A"
-              rate={100}
-              skillRate={100}
-              hospitalityRate={100}
-              cleanlinessRate={100}
-              categoryItems={[
-                { label: 'スキル', rate: 100 },
-                { label: 'ホスピタリティ', rate: 100 },
-                { label: 'クレンリネス', rate: 100 },
-              ]}
+              rank={totalEvaluation.rank}
+              rate={totalEvaluation.rate}
+              skillRate={totalEvaluation.skillRate}
+              hospitalityRate={totalEvaluation.hospitalityRate}
+              cleanlinessRate={totalEvaluation.cleanlinessRate}
+              categoryItems={formattedData}
             />
           </SectionEvaluationLayout>
           <ProgressBar
