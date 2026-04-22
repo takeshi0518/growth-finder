@@ -27,6 +27,11 @@ type EvaluationSectionProps = {
   label: string;
 };
 
+type UnevaluatedStaffCardProps = {
+  staff: Staff;
+  periodId?: string;
+};
+
 export default function EvaluationSection({
   evaluationPeriods,
   currentEvaluationPeriod,
@@ -119,43 +124,48 @@ export default function EvaluationSection({
           </Label>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {unevaluatedStaffLists.map((staff) => (
-              <Card key={staff.id}>
-                <CardContent className="pb-4">
-                  <div className="flex flex-col justify-center gap-y-5">
-                    <div className="flex items-center justify-center gap-2">
-                      <div className="w-10 h-10 rounded-full bg-card flex items-center justify-center overflow-hidden shrink-0">
-                        {staff.avatar_url ? (
-                          <Image
-                            src={staff.avatar_url}
-                            alt={staff.name}
-                            width={40}
-                            height={40}
-                            className="object-cover"
-                          />
-                        ) : (
-                          <Icons.UserCircle className="h-10 w-10 text-muted-foreground" />
-                        )}
-                      </div>
-                      <span className="font-medium text-sm">{staff.name}</span>
-                    </div>
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      className="text-primary"
-                      asChild
-                    >
-                      <Link
-                        href={`/admin/staff/${staff.id}/evaluation?periodId=${currentEvaluationPeriod?.id}`}
-                      >
-                        評価する
-                        <Icons.ArrowBigRight className="w-5 h-5" />
-                      </Link>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+              <UnevaluatedStaffCard
+                key={staff.id}
+                staff={staff}
+                periodId={currentEvaluationPeriod?.id}
+              />
             ))}
           </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function UnevaluatedStaffCard({ staff, periodId }: UnevaluatedStaffCardProps) {
+  return (
+    <Card>
+      <CardContent className="pb-4">
+        <div className="flex flex-col justify-center gap-y-5">
+          <div className="flex items-center justify-center gap-2">
+            <div className="w-10 h-10 rounded-full bg-card flex items-center justify-center overflow-hidden shrink-0">
+              {staff.avatar_url ? (
+                <Image
+                  src={staff.avatar_url}
+                  alt={staff.name}
+                  width={40}
+                  height={40}
+                  className="object-cover"
+                />
+              ) : (
+                <Icons.UserCircle className="h-10 w-10 text-muted-foreground" />
+              )}
+            </div>
+            <span className="font-medium text-sm">{staff.name}</span>
+          </div>
+          <Button size="sm" variant="ghost" className="text-primary" asChild>
+            <Link
+              href={`/admin/staff/${staff.id}/evaluation?periodId=${periodId}`}
+            >
+              評価する
+              <Icons.ArrowBigRight className="w-5 h-5" />
+            </Link>
+          </Button>
         </div>
       </CardContent>
     </Card>
