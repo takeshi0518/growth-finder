@@ -87,7 +87,7 @@ export type SummaryComment = Pick<
 >;
 
 export type TotalEvaluations = Pick<Tables<'evaluations'>, 'id' | 'status'> & {
-  evaluation_sections: Pick<
+  evaluation_sections: (Pick<
     Tables<'evaluation_sections'>,
     | 'id'
     | 'skill_score'
@@ -96,8 +96,7 @@ export type TotalEvaluations = Pick<Tables<'evaluations'>, 'id' | 'status'> & {
     | 'hospitality_max'
     | 'cleanliness_score'
     | 'cleanliness_max'
-  > &
-    {
-      section_type: SectionType;
-    }[];
+  > & {
+    section_type: SectionType;
+  })[];
 };
