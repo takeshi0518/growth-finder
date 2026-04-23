@@ -1,3 +1,5 @@
+'use client';
+
 import { Icons } from '@/components/icon/icons';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import EvaluationPeriodSelect from './evaluation-period-select';
@@ -13,6 +15,15 @@ import { formatCategoryRates } from '@/lib/utils/evaluation-format';
 import { Staff } from '../../../../../types/staff';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination';
 
 type EvaluationPeriod = Pick<
   Tables<'evaluation_periods'>,
@@ -55,6 +66,15 @@ export default function EvaluationSection({
     (staff) =>
       !totalEvaluations.some((evaluation) => evaluation.staff_id === staff.id)
   );
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 4;
+  const startIndex = (currentPage - 1) * pageSize;
+  const currentItems = unevaluatedStaffLists.slice(
+    startIndex,
+    startIndex + pageSize
+  );
+  const totalPage = Math.ceil(unevaluatedStaffLists.length / pageSize);
+
   return (
     <Card>
       <CardHeader>
@@ -123,7 +143,7 @@ export default function EvaluationSection({
             未評価スタッフ一覧
           </Label>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {unevaluatedStaffLists.map((staff) => (
+            {currentItems.map((staff) => (
               <UnevaluatedStaffCard
                 key={staff.id}
                 staff={staff}
@@ -131,6 +151,32 @@ export default function EvaluationSection({
               />
             ))}
           </div>
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                />
+              </PaginationItem>
+              {[...Array(totalPage)].map((_, i) => (
+                <PaginationItem key={i}>
+                  <PaginationLink
+                    isActive={currentPage === i + 1}
+                    onClick={() => setCurrentPage(i + 1)}
+                  >
+                    {i + 1}
+                  </PaginationLink>
+                </PaginationItem>
+              ))}
+              <PaginationItem>
+                <PaginationNext
+                  onClick={() =>
+                    setCurrentPage((p) => Math.min(totalPage, p + 1))
+                  }
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
         </div>
       </CardContent>
     </Card>
