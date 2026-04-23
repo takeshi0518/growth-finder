@@ -21,8 +21,6 @@ import {
   PaginationContent,
   PaginationItem,
   PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
 } from '@/components/ui/pagination';
 
 type EvaluationPeriod = Pick<
@@ -67,7 +65,7 @@ export default function EvaluationSection({
       !totalEvaluations.some((evaluation) => evaluation.staff_id === staff.id)
   );
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 4;
+  const pageSize = 6;
   const startIndex = (currentPage - 1) * pageSize;
   const currentItems = unevaluatedStaffLists.slice(
     startIndex,
@@ -154,9 +152,13 @@ export default function EvaluationSection({
           <Pagination>
             <PaginationContent>
               <PaginationItem>
-                <PaginationPrevious
+                <button
                   onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                />
+                  disabled={currentPage === 1}
+                  className="disabled:opacity-50"
+                >
+                  <Icons.ChevronLeft className="w-4 h-4" />
+                </button>
               </PaginationItem>
               {[...Array(totalPage)].map((_, i) => (
                 <PaginationItem key={i}>
@@ -169,11 +171,15 @@ export default function EvaluationSection({
                 </PaginationItem>
               ))}
               <PaginationItem>
-                <PaginationNext
+                <button
                   onClick={() =>
                     setCurrentPage((p) => Math.min(totalPage, p + 1))
                   }
-                />
+                  disabled={currentPage === totalPage}
+                  className="disabled:opacity-50"
+                >
+                  <Icons.ChevronRight className="w-4 h-4" />
+                </button>
               </PaginationItem>
             </PaginationContent>
           </Pagination>
