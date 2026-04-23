@@ -6,6 +6,8 @@ import EvaluationSection from './components/evaluation-section';
 import { requireAdmin } from '@/lib/utils/requireAdmin';
 import { TotalEvaluations } from '../../../../types/evaluations';
 import { redirect } from 'next/navigation';
+import { calcEvaluation } from '@/lib/utils/evaluation-calc';
+import { formatCategoryRates } from '@/lib/utils/evaluation-format';
 
 export default async function AdminPage() {
   const supabase = await createClient();
@@ -56,6 +58,25 @@ export default async function AdminPage() {
       })
     : { data: null };
 
+  const allSections =
+    totalEvaluations?.flatMap((v) => v.evaluation_sections) ?? [];
+  const totalEvaluation = calcEvaluation(allSections);
+  const formattedData = formatCategoryRates(
+    totalEvaluation.skillRate,
+    totalEvaluation.hospitalityRate,
+    totalEvaluation.cleanlinessRate
+  );
+
+  const totalStaffs = staffs.length;
+  const evaluatedStaffs = totalEvaluations?.length ?? 0;
+  const progressRate =
+    totalStaffs > 0 ? Math.round((evaluatedStaffs / totalStaffs) * 100) : 0;
+  const unevaluatedStaffs = totalStaffs - evaluatedStaffs;
+  const unevaluatedStaffLists = staffs.filter(
+    (staff) =>
+      !totalEvaluations?.some((evaluation) => evaluation.staff_id === staff.id)
+  );
+
   return (
     <AdminContainer>
       <div className="flex flex-col lg:flex-row gap-6">
@@ -67,8 +88,16 @@ export default async function AdminPage() {
       <EvaluationSection
         evaluationPeriods={evaluationPeriods}
         currentEvaluationPeriod={currentEvaluationPeriod}
-        totalEvaluations={totalEvaluations ?? []}
-        staffLists={staffs ?? []}
+        rank={totalEvaluation.rank}
+        rate={totalEvaluation.rate}
+        skillRate={totalEvaluation.skillRate}
+        hospitalityRate={totalEvaluation.hospitalityRate}
+        cleanlinessRate={totalEvaluation.cleanlinessRate}
+        formattedData={formattedData}
+        progressRate={progressRate}
+        evaluatedStaffs={evaluatedStaffs}
+        unevaluatedStaffs={unevaluatedStaffs}
+        unevaluatedStaffLists={unevaluatedStaffLists}
         label="評価"
       />
     </AdminContainer>

@@ -9,9 +9,7 @@ import SectionEvaluationDetail from '@/components/evaluation/section-evaluation-
 import { Label } from '@/components/ui/label';
 import ProgressBar from '@/components/evaluation/progress-bar';
 import { Button } from '@/components/ui/button';
-import { TotalEvaluations } from '../../../../../types/evaluations';
-import { calcEvaluation } from '@/lib/utils/evaluation-calc';
-import { formatCategoryRates } from '@/lib/utils/evaluation-format';
+import { FormattedSectionRate } from '@/lib/utils/evaluation-format';
 import { Staff } from '../../../../../types/staff';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -30,9 +28,17 @@ type EvaluationPeriod = Pick<
 
 type EvaluationSectionProps = {
   evaluationPeriods: EvaluationPeriod[];
-  totalEvaluations: TotalEvaluations[];
   currentEvaluationPeriod?: EvaluationPeriod;
-  staffLists: Staff[];
+  rate: number;
+  rank: string;
+  skillRate: number;
+  hospitalityRate: number;
+  cleanlinessRate: number;
+  formattedData: FormattedSectionRate[];
+  progressRate: number;
+  evaluatedStaffs: number;
+  unevaluatedStaffs: number;
+  unevaluatedStaffLists: Staff[];
   label: string;
 };
 
@@ -49,27 +55,18 @@ type UnevaluatedStaffListProps = {
 export default function EvaluationSection({
   evaluationPeriods,
   currentEvaluationPeriod,
-  totalEvaluations,
-  staffLists,
+  rank,
+  rate,
+  skillRate,
+  hospitalityRate,
+  cleanlinessRate,
+  formattedData,
+  progressRate,
+  evaluatedStaffs,
+  unevaluatedStaffs,
+  unevaluatedStaffLists,
   label,
 }: EvaluationSectionProps) {
-  const allSections = totalEvaluations.flatMap((v) => v.evaluation_sections);
-  const totalEvaluation = calcEvaluation(allSections);
-  const formattedData = formatCategoryRates(
-    totalEvaluation.skillRate,
-    totalEvaluation.hospitalityRate,
-    totalEvaluation.cleanlinessRate
-  );
-  const totalStaffs = staffLists.length;
-  const evaluatedStaffs = totalEvaluations.length;
-  const progressRate =
-    totalStaffs > 0 ? Math.round((evaluatedStaffs / totalStaffs) * 100) : 0;
-  const unevaluatedStaffs = totalStaffs - evaluatedStaffs;
-  const unevaluatedStaffLists = staffLists.filter(
-    (staff) =>
-      !totalEvaluations.some((evaluation) => evaluation.staff_id === staff.id)
-  );
-
   return (
     <Card>
       <CardHeader>
@@ -101,11 +98,11 @@ export default function EvaluationSection({
           </Label>
           <SectionEvaluationLayout>
             <SectionEvaluationDetail
-              rank={totalEvaluation.rank}
-              rate={totalEvaluation.rate}
-              skillRate={totalEvaluation.skillRate}
-              hospitalityRate={totalEvaluation.hospitalityRate}
-              cleanlinessRate={totalEvaluation.cleanlinessRate}
+              rank={rank}
+              rate={rate}
+              skillRate={skillRate}
+              hospitalityRate={hospitalityRate}
+              cleanlinessRate={cleanlinessRate}
               categoryItems={formattedData}
             />
           </SectionEvaluationLayout>
