@@ -41,6 +41,11 @@ type UnevaluatedStaffCardProps = {
   periodId?: string;
 };
 
+type UnevaluatedStaffListProps = {
+  unevaluatedStaffLists: Staff[];
+  currentEvaluationPeriod?: string;
+};
+
 export default function EvaluationSection({
   evaluationPeriods,
   currentEvaluationPeriod,
@@ -64,14 +69,6 @@ export default function EvaluationSection({
     (staff) =>
       !totalEvaluations.some((evaluation) => evaluation.staff_id === staff.id)
   );
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 6;
-  const startIndex = (currentPage - 1) * pageSize;
-  const currentItems = unevaluatedStaffLists.slice(
-    startIndex,
-    startIndex + pageSize
-  );
-  const totalPage = Math.ceil(unevaluatedStaffLists.length / pageSize);
 
   return (
     <Card>
@@ -140,49 +137,10 @@ export default function EvaluationSection({
             <span className="size-2 bg-primary rounded-full" />
             未評価スタッフ一覧
           </Label>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {currentItems.map((staff) => (
-              <UnevaluatedStaffCard
-                key={staff.id}
-                staff={staff}
-                periodId={currentEvaluationPeriod?.id}
-              />
-            ))}
-          </div>
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <button
-                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                  disabled={currentPage === 1}
-                  className="disabled:opacity-50"
-                >
-                  <Icons.ChevronLeft className="w-4 h-4" />
-                </button>
-              </PaginationItem>
-              {[...Array(totalPage)].map((_, i) => (
-                <PaginationItem key={i}>
-                  <PaginationLink
-                    isActive={currentPage === i + 1}
-                    onClick={() => setCurrentPage(i + 1)}
-                  >
-                    {i + 1}
-                  </PaginationLink>
-                </PaginationItem>
-              ))}
-              <PaginationItem>
-                <button
-                  onClick={() =>
-                    setCurrentPage((p) => Math.min(totalPage, p + 1))
-                  }
-                  disabled={currentPage === totalPage}
-                  className="disabled:opacity-50"
-                >
-                  <Icons.ChevronRight className="w-4 h-4" />
-                </button>
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
+          <UnevaluatedStaffList
+            currentEvaluationPeriod={currentEvaluationPeriod?.id}
+            unevaluatedStaffLists={unevaluatedStaffLists}
+          />
         </div>
       </CardContent>
     </Card>
@@ -221,5 +179,64 @@ function UnevaluatedStaffCard({ staff, periodId }: UnevaluatedStaffCardProps) {
         </div>
       </CardContent>
     </Card>
+  );
+}
+
+function UnevaluatedStaffList({
+  unevaluatedStaffLists,
+  currentEvaluationPeriod,
+}: UnevaluatedStaffListProps) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 6;
+  const startIndex = (currentPage - 1) * pageSize;
+  const currentItems = unevaluatedStaffLists.slice(
+    startIndex,
+    startIndex + pageSize
+  );
+  const totalPage = Math.ceil(unevaluatedStaffLists.length / pageSize);
+  return (
+    <>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {currentItems.map((staff) => (
+          <UnevaluatedStaffCard
+            key={staff.id}
+            staff={staff}
+            periodId={currentEvaluationPeriod}
+          />
+        ))}
+      </div>
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              className="disabled:opacity-50"
+            >
+              <Icons.ChevronLeft className="w-4 h-4" />
+            </button>
+          </PaginationItem>
+          {[...Array(totalPage)].map((_, i) => (
+            <PaginationItem key={i}>
+              <PaginationLink
+                isActive={currentPage === i + 1}
+                onClick={() => setCurrentPage(i + 1)}
+              >
+                {i + 1}
+              </PaginationLink>
+            </PaginationItem>
+          ))}
+          <PaginationItem>
+            <button
+              onClick={() => setCurrentPage((p) => Math.min(totalPage, p + 1))}
+              disabled={currentPage === totalPage}
+              className="disabled:opacity-50"
+            >
+              <Icons.ChevronRight className="w-4 h-4" />
+            </button>
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    </>
   );
 }
