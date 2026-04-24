@@ -55,7 +55,7 @@ export default function EvaluationSection({
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="mt-15 max-w-200 mx-auto space-y-16">
+        <div className="max-w-200 mx-auto space-y-16">
           <div className="flex flex-col-reverse gap-y-8 sm:flex-row sm:justify-between">
             <div className="flex flex-col gap-1">
               <Label>
