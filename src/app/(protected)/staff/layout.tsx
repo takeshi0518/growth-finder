@@ -13,7 +13,7 @@ export default function StaffLayout({
 }>) {
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
-      <Header className="md:hidden" />
+      <Header />
       <div className="flex flex-col flex-1">
         <main className="flex-1 p-4">{children}</main>
         <footer className="bg-card py-4">
