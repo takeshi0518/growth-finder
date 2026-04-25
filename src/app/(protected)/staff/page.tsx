@@ -3,6 +3,9 @@ import { createClient } from '@/lib/supabase/server';
 import { requireStaff } from '@/lib/utils/requireStaff';
 import PeriodSelector from './components/period-selector';
 import { ExistingEvaluation } from '../../../../types/evaluations';
+import { formatChartData } from '@/lib/utils/evaluation-format';
+import { Icons } from '@/components/icon/icons';
+import StaffEvaluationSection from '@/components/evaluation/staff-evaluation-section';
 
 export default async function StaffPage({
   searchParams,
@@ -19,6 +22,10 @@ export default async function StaffPage({
     .select('id, name')
     .eq('organization_id', orgId);
   if (periodError || !evaluationPeriods) return;
+
+  const selectedPeriod = evaluationPeriods.find(
+    (period) => period.id === periodId
+  );
 
   const { data: targetEvaluation } = periodId
     ? ((await supabase
@@ -55,10 +62,52 @@ export default async function StaffPage({
         .single()) as { data: ExistingEvaluation | null; error: unknown })
     : { data: null };
 
+  const { data } = await supabase
+    .from('evaluation_periods')
+    .select(
+      `
+      id, name,
+      evaluations!inner (
+        evaluation_sections (
+          section_type,
+          skill_score,
+          skill_max,
+          hospitality_score,
+          hospitality_max,
+          cleanliness_score,
+          cleanliness_max
+        )
+      )
+      `
+    )
+    .eq('organization_id', orgId)
+    .eq('evaluations.staff_id', user.id)
+    .order('created_at', { ascending: true })
+    .limit(4);
+
+  const chartData = formatChartData(data ?? []);
+
   return (
     <div className="mt-20 max-w-7xl mx-auto w-full py-6 px-4 space-y-6">
       <ProfileCard profile={profile} />
       <PeriodSelector evaluationPeriods={evaluationPeriods} />
+      {!selectedPeriod ? (
+        <p className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Icons.CircleAlert />
+          評価期間が選択されていません
+        </p>
+      ) : !targetEvaluation ? (
+        <p className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Icons.CircleAlert />
+          まだ評価が登録されていません
+        </p>
+      ) : (
+        <StaffEvaluationSection
+          selectedPeriod={selectedPeriod}
+          targetEvaluation={targetEvaluation}
+          chartData={chartData}
+        />
+      )}
     </div>
   );
 }
