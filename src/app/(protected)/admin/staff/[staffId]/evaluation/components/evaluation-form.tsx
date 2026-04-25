@@ -17,7 +17,7 @@ import {
   FormattedEvaluation,
 } from '../../../../../../../../types/evaluations';
 import EvaluationComments from './evaluation-comments';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { EvaluationInput, evaluationSchema } from '@/lib/validations/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
@@ -75,6 +75,7 @@ export default function EvaluationForm({
     register,
     setValue,
     watch,
+    control,
     handleSubmit,
     formState: { isSubmitting },
   } = useForm<EvaluationInput>({
@@ -114,12 +115,14 @@ export default function EvaluationForm({
         },
   });
 
+  const formValues = useWatch({ control });
+
   const countScoredItems = () => {
     let result = 0;
 
     for (const section of SECTION_TYPES) {
       for (const category of CATEGORIES) {
-        result += Object.keys(watch(`${section}.${category}`)).length;
+        result += Object.keys(formValues[section]?.[category] ?? {}).length;
       }
     }
     return result;
@@ -146,9 +149,8 @@ export default function EvaluationForm({
   };
 
   const saveDraftEvaluations = async () => {
-    const draftEvaluations = watch();
     try {
-      await saveDraft(draftEvaluations, staffId, periodId);
+      await saveDraft(formValues as EvaluationInput, staffId, periodId);
       toast.success('評価を下書き保存しました');
     } catch (error) {
       toast.error('評価の下書きに失敗しました', {
