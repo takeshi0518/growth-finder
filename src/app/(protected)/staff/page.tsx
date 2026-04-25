@@ -6,6 +6,7 @@ import { ExistingEvaluation } from '../../../../types/evaluations';
 import { formatChartData } from '@/lib/utils/evaluation-format';
 import { Icons } from '@/components/icon/icons';
 import StaffEvaluationSection from '@/components/evaluation/staff-evaluation-section';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default async function StaffPage({
   searchParams,
@@ -90,7 +91,17 @@ export default async function StaffPage({
   return (
     <div className="mt-20 max-w-7xl mx-auto w-full py-6 px-4 space-y-6">
       <ProfileCard profile={profile} />
-      <PeriodSelector evaluationPeriods={evaluationPeriods} />
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex gap-2">
+            <Icons.MousePointer className="w-5 h-5" />
+            評価期間を選択
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <PeriodSelector evaluationPeriods={evaluationPeriods} />
+        </CardContent>
+      </Card>
       {!selectedPeriod ? (
         <p className="flex items-center gap-2 text-sm text-muted-foreground">
           <Icons.CircleAlert />

@@ -37,6 +37,7 @@ import {
   ArrowBigRight,
   ChevronLeft,
   ChevronRight,
+  MousePointer,
 } from 'lucide-react';
 
 import { FaXTwitter, FaGithub } from 'react-icons/fa6';
@@ -89,6 +90,7 @@ export const Icons = {
   ArrowBigRight,
   ChevronLeft,
   ChevronRight,
+  MousePointer,
   FaXTwitter,
   FaGithub,
   FcGoogle,
