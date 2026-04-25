@@ -1,9 +1,5 @@
 import { calcEvaluation } from '@/lib/utils/evaluation-calc';
 import {
-  ChartDataPoint,
-  ExistingEvaluation,
-} from '../../../../../../../types/evaluations';
-import {
   formatCategoryRates,
   formatSectionRates,
 } from '@/lib/utils/evaluation-format';
@@ -11,6 +7,7 @@ import EvaluationLineChart from '@/components/evaluation/evaluation-line-chart';
 import SummaryComments from '@/components/evaluation/summary-comments';
 import SectionEvaluationDetail from '@/components/evaluation/section-evaluation-detail';
 import SectionEvaluationLayout from '@/components/evaluation/section-evaluation-layout';
+import { ChartDataPoint, ExistingEvaluation } from '../../../types/evaluations';
 
 type OverallEvaluationProps = {
   targetEvaluation: ExistingEvaluation;

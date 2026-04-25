@@ -1,13 +1,7 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tables } from '../../../../../../../types/supabase';
 import { Icons } from '@/components/icon/icons';
-import {
-  ChartDataPoint,
-  ExistingEvaluation,
-  SectionType,
-} from '../../../../../../../types/evaluations';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import OverallEvaluation from './overall-evaluation';
 import { useState } from 'react';
@@ -16,6 +10,12 @@ import {
   isSectionType,
 } from '@/lib/utils/evaluation-utils';
 import SectionEvaluationContent from './section-evaluation-content';
+import { Tables } from '../../../types/supabase';
+import {
+  ChartDataPoint,
+  ExistingEvaluation,
+  SectionType,
+} from '../../../types/evaluations';
 
 type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id' | 'name'>;
 
