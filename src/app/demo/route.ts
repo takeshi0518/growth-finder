@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
-import { redirect } from 'next/navigation';
+import { NextResponse } from 'next/server';
 
-export default async function DemoPage() {
+export async function GET() {
   const supabase = await createClient();
 
   await supabase.auth.signInWithPassword({
@@ -9,5 +9,7 @@ export default async function DemoPage() {
     password: process.env.DEMO_PASSWORD!,
   });
 
-  redirect('/admin');
+  return NextResponse.redirect(
+    new URL('/admin', process.env.NEXT_PUBLIC_SITE_URL!)
+  );
 }
