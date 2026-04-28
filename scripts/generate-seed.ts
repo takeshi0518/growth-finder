@@ -24,6 +24,11 @@ const generateSeed = (sectionId: string, sectionType: SectionType): string => {
   for (const category of categories) {
     const items = SECTION_ITEMS[sectionType][category];
     for (const item of items) {
+      const checkPointSql = item.check_points
+        ? `ARRAY[${item.check_points
+            .map((p) => `'${p.replace(/'/g, "''")}'`)
+            .join(', ')}]`
+        : `ARRAY[]::text[]`;
       sql += `
 INSERT INTO evaluation_items (
   id,
@@ -31,14 +36,16 @@ INSERT INTO evaluation_items (
   evaluation_section_id,
   item_name,
   category,
-  score
+  score,
+  check_points
 ) VALUES (
   gen_random_uuid(),
   '${ORG_ID}',
   '${sectionId}',
   '${item.item_name}',
   '${category}',
-  3
+  3,
+  ${checkPointSql}
 );\n`;
     }
   }

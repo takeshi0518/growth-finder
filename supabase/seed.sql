@@ -452,3 +452,1772 @@ INSERT INTO evaluation_sections (
   21,
   28
 );
+> growth-finder@0.1.0 generate-seed
+> tsx scripts/generate-seed.ts
+
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a1a1a1a1-a1a1-a1a1-a1a1-a1a1a1a1a1a1',
+  '経営理念に沿った行動',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a1a1a1a1-a1a1-a1a1-a1a1-a1a1a1a1a1a1',
+  '出退勤ができる',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a1a1a1a1-a1a1-a1a1-a1a1-a1a1a1a1a1a1',
+  'シフトを期限内に提出できる',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a1a1a1a1-a1a1-a1a1-a1a1-a1a1a1a1a1a1',
+  '早退、欠勤の連絡ができる',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a1a1a1a1-a1a1-a1a1-a1a1-a1a1a1a1a1a1',
+  '自店舗の正しい情報',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a1a1a1a1-a1a1-a1a1-a1a1-a1a1a1a1a1a1',
+  '守秘義務を理解し守っている',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a1a1a1a1-a1a1-a1a1-a1a1-a1a1a1a1a1a1',
+  'シフトインのときのコーヒーテイスティング',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a1a1a1a1-a1a1-a1a1-a1a1-a1a1a1a1a1a1',
+  '電話番号対応ができる',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a1a1a1a1-a1a1-a1a1-a1a1-a1a1a1a1a1a1',
+  'アレルギー対応',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a1a1a1a1-a1a1-a1a1-a1a1-a1a1a1a1a1a1',
+  '接客用語に間違いは無いか',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a1a1a1a1-a1a1-a1a1-a1a1-a1a1a1a1a1a1',
+  'クレーム対応',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a1a1a1a1-a1a1-a1a1-a1a1-a1a1a1a1a1a1',
+  '従業員同士の声掛け',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a1a1a1a1-a1a1-a1a1-a1a1-a1a1a1a1a1a1',
+  '仲間とのやり取り',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a1a1a1a1-a1a1-a1a1-a1a1-a1a1a1a1a1a1',
+  'ドレスコードを遵守している',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a1a1a1a1-a1a1-a1a1-a1a1-a1a1a1a1a1a1',
+  '正しい手洗いができる',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a1a1a1a1-a1a1-a1a1-a1a1-a1a1a1a1a1a1',
+  '店内環境の整備',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a1a1a1a1-a1a1-a1a1-a1a1-a1a1a1a1a1a1',
+  '腸内検査は毎回提出している',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a1a1a1a1-a1a1-a1a1-a1a1-a1a1a1a1a1a1',
+  '厨房内は走らない',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a1a1a1a1-a1a1-a1a1-a1a1-a1a1a1a1a1a1',
+  '周囲の安全確認',
+  'cleanliness',
+  3
+);
+
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a3a3a3a3-a3a3-a3a3-a3a3-a3a3a3a3a3a3',
+  'POSレジの基本動作',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a3a3a3a3-a3a3-a3a3-a3a3-a3a3a3a3a3a3',
+  '現金での決済ができる',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a3a3a3a3-a3a3-a3a3-a3a3-a3a3a3a3a3a3',
+  'キャッシュレス決済ができる',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a3a3a3a3-a3a3-a3a3-a3a3-a3a3a3a3a3a3',
+  '領収書の発行',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a3a3a3a3-a3a3-a3a3-a3a3-a3a3a3a3a3a3',
+  '商品券の取扱い',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a3a3a3a3-a3a3-a3a3-a3a3-a3a3a3a3a3a3',
+  '感じの良いあいさつ',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a3a3a3a3-a3a3-a3a3-a3a3-a3a3a3a3a3a3',
+  '感じの良い話し方',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a3a3a3a3-a3a3-a3a3-a3a3-a3a3a3a3a3a3',
+  '立ち振舞い',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a3a3a3a3-a3a3-a3a3-a3a3-a3a3a3a3a3a3',
+  '心のこもった感謝の言葉',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a3a3a3a3-a3a3-a3a3-a3a3-a3a3a3a3a3a3',
+  'お客様に沿ったおすすめ',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a3a3a3a3-a3a3-a3a3-a3a3-a3a3a3a3a3a3',
+  'バリスタとの連携',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a3a3a3a3-a3a3-a3a3-a3a3-a3a3a3a3a3a3',
+  'ショーケース内の整理整頓',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a3a3a3a3-a3a3-a3a3-a3a3-a3a3a3a3a3a3',
+  'POSレジ周りの整理整頓',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a3a3a3a3-a3a3-a3a3-a3a3-a3a3a3a3a3a3',
+  'POSレジ周りの清掃',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a3a3a3a3-a3a3-a3a3-a3a3-a3a3a3a3a3a3',
+  '提供時の消費期限の確認',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a3a3a3a3-a3a3-a3a3-a3a3-a3a3a3a3a3a3',
+  '異物混入に対しての意識',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a3a3a3a3-a3a3-a3a3-a3a3-a3a3a3a3a3a3',
+  '動線、転倒防止への配慮',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a3a3a3a3-a3a3-a3a3-a3a3-a3a3a3a3a3a3',
+  'お客様情報の保護',
+  'cleanliness',
+  3
+);
+
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2',
+  'ラテ作成/ドージング',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2',
+  'ラテ作成/タンピング',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2',
+  'ラテ作成/エスプレッソ抽出',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2',
+  'ラテ作成/適切なスチーミング',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2',
+  'ラテ作成/スチームミルクの仕上がり',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2',
+  'ラテ作成/見た目',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2',
+  '商品を正しい順番で作成できている',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2',
+  '全商品を作成できる',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2',
+  '機械の操作ができる',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2',
+  '立ち振舞い',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2',
+  '感じの良い提供',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2',
+  'お見送り',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2',
+  '声掛け',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2',
+  '強力したオペレーション',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2',
+  '消費期限の確認',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2',
+  '作業台の清潔さ',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2',
+  '顔、髪に触れていない',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'a2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2',
+  '異物混入への意識',
+  'cleanliness',
+  3
+);
+
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b1b1b1b1-b1b1-b1b1-b1b1-b1b1b1b1b1b1',
+  '経営理念に沿った行動',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b1b1b1b1-b1b1-b1b1-b1b1-b1b1b1b1b1b1',
+  '出退勤ができる',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b1b1b1b1-b1b1-b1b1-b1b1-b1b1b1b1b1b1',
+  'シフトを期限内に提出できる',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b1b1b1b1-b1b1-b1b1-b1b1-b1b1b1b1b1b1',
+  '早退、欠勤の連絡ができる',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b1b1b1b1-b1b1-b1b1-b1b1-b1b1b1b1b1b1',
+  '自店舗の正しい情報',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b1b1b1b1-b1b1-b1b1-b1b1-b1b1b1b1b1b1',
+  '守秘義務を理解し守っている',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b1b1b1b1-b1b1-b1b1-b1b1-b1b1b1b1b1b1',
+  'シフトインのときのコーヒーテイスティング',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b1b1b1b1-b1b1-b1b1-b1b1-b1b1b1b1b1b1',
+  '電話番号対応ができる',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b1b1b1b1-b1b1-b1b1-b1b1-b1b1b1b1b1b1',
+  'アレルギー対応',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b1b1b1b1-b1b1-b1b1-b1b1-b1b1b1b1b1b1',
+  '接客用語に間違いは無いか',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b1b1b1b1-b1b1-b1b1-b1b1-b1b1b1b1b1b1',
+  'クレーム対応',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b1b1b1b1-b1b1-b1b1-b1b1-b1b1b1b1b1b1',
+  '従業員同士の声掛け',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b1b1b1b1-b1b1-b1b1-b1b1-b1b1b1b1b1b1',
+  '仲間とのやり取り',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b1b1b1b1-b1b1-b1b1-b1b1-b1b1b1b1b1b1',
+  'ドレスコードを遵守している',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b1b1b1b1-b1b1-b1b1-b1b1-b1b1b1b1b1b1',
+  '正しい手洗いができる',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b1b1b1b1-b1b1-b1b1-b1b1-b1b1b1b1b1b1',
+  '店内環境の整備',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b1b1b1b1-b1b1-b1b1-b1b1-b1b1b1b1b1b1',
+  '腸内検査は毎回提出している',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b1b1b1b1-b1b1-b1b1-b1b1-b1b1b1b1b1b1',
+  '厨房内は走らない',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b1b1b1b1-b1b1-b1b1-b1b1-b1b1b1b1b1b1',
+  '周囲の安全確認',
+  'cleanliness',
+  3
+);
+
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3',
+  'POSレジの基本動作',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3',
+  '現金での決済ができる',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3',
+  'キャッシュレス決済ができる',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3',
+  '領収書の発行',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3',
+  '商品券の取扱い',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3',
+  '感じの良いあいさつ',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3',
+  '感じの良い話し方',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3',
+  '立ち振舞い',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3',
+  '心のこもった感謝の言葉',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3',
+  'お客様に沿ったおすすめ',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3',
+  'バリスタとの連携',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3',
+  'ショーケース内の整理整頓',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3',
+  'POSレジ周りの整理整頓',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3',
+  'POSレジ周りの清掃',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3',
+  '提供時の消費期限の確認',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3',
+  '異物混入に対しての意識',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3',
+  '動線、転倒防止への配慮',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3',
+  'お客様情報の保護',
+  'cleanliness',
+  3
+);
+
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b2b2b2b2-b2b2-b2b2-b2b2-b2b2b2b2b2b2',
+  'ラテ作成/ドージング',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b2b2b2b2-b2b2-b2b2-b2b2-b2b2b2b2b2b2',
+  'ラテ作成/タンピング',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b2b2b2b2-b2b2-b2b2-b2b2-b2b2b2b2b2b2',
+  'ラテ作成/エスプレッソ抽出',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b2b2b2b2-b2b2-b2b2-b2b2-b2b2b2b2b2b2',
+  'ラテ作成/適切なスチーミング',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b2b2b2b2-b2b2-b2b2-b2b2-b2b2b2b2b2b2',
+  'ラテ作成/スチームミルクの仕上がり',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b2b2b2b2-b2b2-b2b2-b2b2-b2b2b2b2b2b2',
+  'ラテ作成/見た目',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b2b2b2b2-b2b2-b2b2-b2b2-b2b2b2b2b2b2',
+  '商品を正しい順番で作成できている',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b2b2b2b2-b2b2-b2b2-b2b2-b2b2b2b2b2b2',
+  '全商品を作成できる',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b2b2b2b2-b2b2-b2b2-b2b2-b2b2b2b2b2b2',
+  '機械の操作ができる',
+  'skill',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b2b2b2b2-b2b2-b2b2-b2b2-b2b2b2b2b2b2',
+  '立ち振舞い',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b2b2b2b2-b2b2-b2b2-b2b2-b2b2b2b2b2b2',
+  '感じの良い提供',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b2b2b2b2-b2b2-b2b2-b2b2-b2b2b2b2b2b2',
+  'お見送り',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b2b2b2b2-b2b2-b2b2-b2b2-b2b2b2b2b2b2',
+  '声掛け',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b2b2b2b2-b2b2-b2b2-b2b2-b2b2b2b2b2b2',
+  '強力したオペレーション',
+  'hospitality',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b2b2b2b2-b2b2-b2b2-b2b2-b2b2b2b2b2b2',
+  '消費期限の確認',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b2b2b2b2-b2b2-b2b2-b2b2-b2b2b2b2b2b2',
+  '作業台の清潔さ',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b2b2b2b2-b2b2-b2b2-b2b2-b2b2b2b2b2b2',
+  '顔、髪に触れていない',
+  'cleanliness',
+  3
+);
+
+INSERT INTO evaluation_items (
+  id,
+  organization_id,
+  evaluation_section_id,
+  item_name,
+  category,
+  score
+) VALUES (
+  gen_random_uuid(),
+  '11111111-1111-1111-1111-111111111111',
+  'b2b2b2b2-b2b2-b2b2-b2b2-b2b2b2b2b2b2',
+  '異物混入への意識',
+  'cleanliness',
+  3
+);
+
