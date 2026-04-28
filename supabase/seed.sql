@@ -236,3 +236,51 @@ INSERT INTO evaluation_periods (
   '2026年7月',
   true
 );
+
+INSERT INTO evaluations (
+  id,
+  organization_id,
+  evaluation_period_id,
+  staff_id,
+  evaluator_id,
+  evaluation_date,
+  status,
+  action_plan,
+  total_comment,
+  future_vision
+) VALUES (
+  'e1e1e1e1-e1e1-e1e1-e1e1-e1e1e1e1e1e1',
+  '11111111-1111-1111-1111-111111111111',
+  'f1f1f1f1-f1f1-f1f1-f1f1-f1f1f1f1f1f1',
+  'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb',
+  'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+  NOW(),
+  'completed',
+  '基本動作：自分から後輩へ声をかけて良い関係を築く。バリスタ：毎日カフェラテの練習をする。 キャッシャー：お客さまへ、天気や注文されたものなど些細なことでもいいので声をかける。',
+  '総合的にみて仕事はある程度できます。仕事がとても丁寧で好感がもてます。次のステップとして後輩を指導してお店の中心になっていきましょう。',
+  'キャッシャーでは自らお客様へ商品を進めることができる。バリスタでは忙しい時間帯でもカフェラテをきれいに作成できるようになっている。後輩を指導できている。'
+);
+
+INSERT INTO evaluations (
+  id,
+  organization_id,
+  evaluation_period_id,
+  staff_id,
+  evaluator_id,
+  evaluation_date,
+  status,
+  action_plan,
+  total_comment,
+  future_vision
+) VALUES (
+  'e2e2e2e2-e2e2-e2e2-e2e2-e2e2e2e2e2e2',
+  '11111111-1111-1111-1111-111111111111',
+  'f1f1f1f1-f1f1-f1f1-f1f1-f1f1f1f1f1f1',
+  'cccccccc-cccc-cccc-cccc-cccccccccccc',
+  'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+  NOW(),
+  'completed',
+  '基本動作：腸内検査、シフト提出期限を守りましょう。信頼につながります。バリスタ：マニュアルを暗記できていないところがあるので、勤務前にしっかりと確認しましょう。キャッシャー：緊張で声が小さくなる場面があるので、徐々に声のボリュームを上げましょう。',
+  '勤務スタートから６ヶ月。基本的な作業は出来るようになりました。真面目に仕事を取り組んでいてとても好感が持てます。先輩の後ろ姿を参考にして、マニュアルに無い仕事の動きなど、応用的な力をつけていきましょう。',
+  'キャッシャーでは堂々とした対応でお客様へ安心感を届けることができる。バリスタでは商品の作成ミスを無くし、正確に作業ができるようになっている。'
+);
