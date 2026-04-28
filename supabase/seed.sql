@@ -212,3 +212,27 @@ UPDATE profiles SET
   is_demo = true,
   is_setup_complete = true
 WHERE id = 'eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee';
+
+INSERT INTO evaluation_periods (
+  id,
+  organization_id,
+  name,
+  is_current
+) VALUES (
+  'f1f1f1f1-f1f1-f1f1-f1f1-f1f1f1f1f1f1',
+  '11111111-1111-1111-1111-111111111111',
+  '2026年4月',
+  false
+);
+
+INSERT INTO evaluation_periods (
+  id,
+  organization_id,
+  name,
+  is_current
+) VALUES (
+  'f2f2f2f2-f2f2-f2f2-f2f2-f2f2f2f2f2f2',
+  '11111111-1111-1111-1111-111111111111',
+  '2026年7月',
+  true
+);
