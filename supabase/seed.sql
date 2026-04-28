@@ -284,3 +284,171 @@ INSERT INTO evaluations (
   '勤務スタートから６ヶ月。基本的な作業は出来るようになりました。真面目に仕事を取り組んでいてとても好感が持てます。先輩の後ろ姿を参考にして、マニュアルに無い仕事の動きなど、応用的な力をつけていきましょう。',
   'キャッシャーでは堂々とした対応でお客様へ安心感を届けることができる。バリスタでは商品の作成ミスを無くし、正確に作業ができるようになっている。'
 );
+
+INSERT INTO evaluation_sections (
+  id,
+  organization_id,
+  evaluation_id,
+  section_type,
+  good_points,
+  improvement_points,
+  skill_score,
+  skill_max,
+  hospitality_score,
+  hospitality_max,
+  cleanliness_score,
+  cleanliness_max
+) VALUES (
+  'a1a1a1a1-a1a1-a1a1-a1a1-a1a1a1a1a1a1',
+  '11111111-1111-1111-1111-111111111111',
+  'e1e1e1e1-e1e1-e1e1-e1e1-e1e1e1e1e1e1',
+  'basic',
+  ARRAY['返事が明るくて良い', '遅刻なし', '姿勢が良い', '仲間に対して優しい'],
+  ARRAY[],
+  24,
+  32,
+  15,
+  20,
+  18,
+  24
+);
+
+INSERT INTO evaluation_sections (
+  id,
+  organization_id,
+  evaluation_id,
+  section_type,
+  good_points,
+  improvement_points,
+  skill_score,
+  skill_max,
+  hospitality_score,
+  hospitality_max,
+  cleanliness_score,
+  cleanliness_max
+) VALUES (
+  'a2a2a2a2-a2a2-a2a2-a2a2-a2a2a2a2a2a2',
+  '11111111-1111-1111-1111-111111111111',
+  'e1e1e1e1-e1e1-e1e1-e1e1-e1e1e1e1e1e1',
+  'barista',
+  ARRAY['レジの打ち間違いが無い', '所作がきれい', '笑顔がいい感じ！'],
+  ARRAY['お客さまへの提案が少ない'],
+  27,
+  36,
+  15,
+  20,
+  12,
+  16
+);
+
+INSERT INTO evaluation_sections (
+  id,
+  organization_id,
+  evaluation_id,
+  section_type,
+  good_points,
+  improvement_points,
+  skill_score,
+  skill_max,
+  hospitality_score,
+  hospitality_max,
+  cleanliness_score,
+  cleanliness_max
+) VALUES (
+  'a3a3a3a3-a3a3-a3a3-a3a3-a3a3a3a3a3a3',
+  '11111111-1111-1111-1111-111111111111',
+  'e1e1e1e1-e1e1-e1e1-e1e1-e1e1e1e1e1e1',
+  'cashier',
+  ARRAY['ドリンクの作成が丁寧', '料理の盛り付けが上手'],
+  ARRAY['作業台が少しきたない'],
+  15,
+  20,
+  18,
+  24,
+  21,
+  28
+);
+
+INSERT INTO evaluation_sections (
+  id,
+  organization_id,
+  evaluation_id,
+  section_type,
+  good_points,
+  improvement_points,
+  skill_score,
+  skill_max,
+  hospitality_score,
+  hospitality_max,
+  cleanliness_score,
+  cleanliness_max
+) VALUES (
+  'b1b1b1b1-b1b1-b1b1-b1b1-b1b1b1b1b1b1',
+  '11111111-1111-1111-1111-111111111111',
+  'e2e2e2e2-e2e2-e2e2-e2e2-e2e2e2e2e2e2',
+  'basic',
+  ARRAY['返事が明るくて良い', '元気がある！'],
+  ARRAY['遅刻が多い', 'アレルギー対応に不安がある', '腸内検査提出遅れ'],
+  24,
+  32,
+  15,
+  20,
+  18,
+  24
+);
+
+INSERT INTO evaluation_sections (
+  id,
+  organization_id,
+  evaluation_id,
+  section_type,
+  good_points,
+  improvement_points,
+  skill_score,
+  skill_max,
+  hospitality_score,
+  hospitality_max,
+  cleanliness_score,
+  cleanliness_max
+) VALUES (
+  'b2b2b2b2-b2b2-b2b2-b2b2-b2b2b2b2b2b2',
+  '11111111-1111-1111-1111-111111111111',
+  'e2e2e2e2-e2e2-e2e2-e2e2-e2e2e2e2e2e2',
+  'barista',
+  ARRAY['丁寧な接客', 'レジの打ち間違いが無い'],
+  ARRAY['挨拶の声がちょっと小さい', '目線が低い', '商品券対応に不安がある'],
+  27,
+  36,
+  15,
+  20,
+  12,
+  16
+);
+
+INSERT INTO evaluation_sections (
+  id,
+  organization_id,
+  evaluation_id,
+  section_type,
+  good_points,
+  improvement_points,
+  skill_score,
+  skill_max,
+  hospitality_score,
+  hospitality_max,
+  cleanliness_score,
+  cleanliness_max
+) VALUES (
+  'b3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3',
+  '11111111-1111-1111-1111-111111111111',
+  'e2e2e2e2-e2e2-e2e2-e2e2-e2e2e2e2e2e2',
+  'cashier',
+  ARRAY['ひとつひとつの作業が丁寧', 'マニュアルを遵守している'],
+  ARRAY['スチームミルクが荒い', '作業台がきたない', '片付けながら作業ができていない'],
+  15,
+  20,
+  18,
+  24,
+  21,
+  28
+);
