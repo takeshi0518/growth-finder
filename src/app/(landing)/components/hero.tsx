@@ -36,7 +36,7 @@ export default function Hero() {
           </div>
           <div className="lg:flex-1">
             <Image
-              src="/images/growth-finder5.png"
+              src="/images/growth-finder-main.png"
               alt="Growth Finder ダッシュボード画像"
               width={800}
               height={500}
