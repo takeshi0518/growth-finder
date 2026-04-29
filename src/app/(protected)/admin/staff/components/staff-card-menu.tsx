@@ -418,13 +418,23 @@ export default function StaffCardMenu({
               パスワード変更
             </DropdownMenuItem>
           )}
-          <DropdownMenuItem
-            onSelect={() => setIsDeleteOpen(true)}
-            className="cursor-pointer text-destructive"
-          >
-            <Icons.Trash2 className="mr-2 size-4" />
-            削除
-          </DropdownMenuItem>
+          {isDemo ? (
+            <DropdownMenuItem
+              disabled
+              className="cursor-not-allowed text-muted-foreground"
+            >
+              <Icons.Trash2 className="mr-2 size-4" />
+              削除（デモモードのため不可）
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem
+              onSelect={() => setIsDeleteOpen(true)}
+              className="cursor-pointer text-destructive"
+            >
+              <Icons.Trash2 className="mr-2 size-4" />
+              削除
+            </DropdownMenuItem>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
 
