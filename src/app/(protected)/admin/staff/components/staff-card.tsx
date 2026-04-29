@@ -11,12 +11,14 @@ import { calcEvaluation } from '@/lib/utils/evaluation-calc';
 type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id'> | null;
 
 type StaffCardProps = {
+  isDemo: boolean;
   staff: Staff;
   selectedPeriod: EvaluationPeriod;
   staffEvaluation: ExistingEvaluationForStaffCard | undefined;
 };
 
 export default function StaffCard({
+  isDemo,
   staff,
   selectedPeriod,
   staffEvaluation,
@@ -29,7 +31,11 @@ export default function StaffCard({
     <Card className="relative">
       <CardContent className="pb-4">
         <div className="absolute top-3 right-3">
-          <StaffCardMenu staff={staff} selectedPeriod={selectedPeriod} />
+          <StaffCardMenu
+            isDemo={isDemo}
+            staff={staff}
+            selectedPeriod={selectedPeriod}
+          />
         </div>
 
         <div className="flex justify-center items-center">

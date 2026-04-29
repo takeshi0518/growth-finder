@@ -49,10 +49,12 @@ import {
 import { uploadStaffAvatar } from '@/lib/utils/upload';
 import Link from 'next/link';
 import { Tables } from '../../../../../../types/supabase';
+import DemoRestricted from '@/components/shared/demo-restricted';
 
 type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id'> | null;
 
 type StaffCardMenuProps = {
+  isDemo: boolean;
   staff: Staff;
   selectedPeriod: EvaluationPeriod;
 };
@@ -342,6 +344,7 @@ function EditPasswordDialog({
 }
 
 export default function StaffCardMenu({
+  isDemo,
   staff,
   selectedPeriod,
 }: StaffCardMenuProps) {
@@ -379,20 +382,42 @@ export default function StaffCardMenu({
               評価(期間未選択)
             </DropdownMenuItem>
           )}
-          <DropdownMenuItem
-            className="cursor-pointer"
-            onSelect={() => setIsEditOpen(true)}
-          >
-            <Icons.Pencil className="mr-2 size-4" />
-            編集
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            className="cursor-pointer"
-            onSelect={() => setIsEditPasswordOpen(true)}
-          >
-            <Icons.KeyRound className="mr-2 size-4" />
-            パスワード変更
-          </DropdownMenuItem>
+
+          {isDemo ? (
+            <DropdownMenuItem
+              disabled
+              className="cursor-not-allowed text-muted-foreground"
+            >
+              <Icons.Pencil className="mr-2 size-4" />
+              編集（デモモードのため不可）
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onSelect={() => setIsEditOpen(true)}
+            >
+              <Icons.Pencil className="mr-2 size-4" />
+              編集
+            </DropdownMenuItem>
+          )}
+
+          {isDemo ? (
+            <DropdownMenuItem
+              disabled
+              className="cursor-not-allowed text-muted-foreground"
+            >
+              <Icons.KeyRound className="mr-2 size-4" />
+              パスワード変更(デモモードのため不可)
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onSelect={() => setIsEditPasswordOpen(true)}
+            >
+              <Icons.KeyRound className="mr-2 size-4" />
+              パスワード変更
+            </DropdownMenuItem>
+          )}
           <DropdownMenuItem
             onSelect={() => setIsDeleteOpen(true)}
             className="cursor-pointer text-destructive"
