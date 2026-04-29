@@ -8,10 +8,12 @@ import { Tables } from '../../../../../types/supabase';
 type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id' | 'name'>;
 
 type EvaluationPeriodListProps = {
+  isDemo: boolean;
   evaluationPeriods: EvaluationPeriod[];
 };
 
 export default function EvaluationPeriodList({
+  isDemo,
   evaluationPeriods,
 }: EvaluationPeriodListProps) {
   return (
@@ -35,7 +37,10 @@ export default function EvaluationPeriodList({
                 className="flex justify-between items-center text-sm p-2 border-b"
               >
                 {period.name}
-                <EvaluationPeriodMenu evaluationPeriod={period} />
+                <EvaluationPeriodMenu
+                  isDemo={isDemo}
+                  evaluationPeriod={period}
+                />
               </p>
             ))}
           </div>

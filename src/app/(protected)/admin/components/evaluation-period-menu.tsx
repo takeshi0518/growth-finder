@@ -43,6 +43,7 @@ import LoaderCircleIcon from '@/components/shared/loader-circle';
 type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id' | 'name'>;
 
 type EvaluationPeriodMenuProps = {
+  isDemo: boolean;
   evaluationPeriod: EvaluationPeriod;
 };
 
@@ -167,6 +168,7 @@ function EditDialog({
 }
 
 export default function EvaluationPeriodMenu({
+  isDemo,
   evaluationPeriod,
 }: EvaluationPeriodMenuProps) {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -180,20 +182,40 @@ export default function EvaluationPeriodMenu({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem
-            className="cursor-pointer"
-            onSelect={() => setIsEditOpen(true)}
-          >
-            <Icons.Pencil className="mr-2 size-4" />
-            編集
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            className="cursor-pointer text-destructive"
-            onSelect={() => setIsDeleteOpen(true)}
-          >
-            <Icons.Trash2 className="mr-2 size-4" />
-            削除
-          </DropdownMenuItem>
+          {isDemo ? (
+            <DropdownMenuItem
+              disabled
+              className="cursor-not-allowed text-muted-foreground"
+            >
+              <Icons.Pencil className="mr-2 size-4" />
+              編集(デモモードのため不可)
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onSelect={() => setIsEditOpen(true)}
+            >
+              <Icons.Pencil className="mr-2 size-4" />
+              編集
+            </DropdownMenuItem>
+          )}
+          {isDemo ? (
+            <DropdownMenuItem
+              disabled
+              className="cursor-not-allowed text-muted-foreground"
+            >
+              <Icons.Trash2 className="mr-2 size-4" />
+              削除(デモモードのため不可)
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem
+              className="cursor-pointer text-destructive"
+              onSelect={() => setIsDeleteOpen(true)}
+            >
+              <Icons.Trash2 className="mr-2 size-4" />
+              削除
+            </DropdownMenuItem>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
 
