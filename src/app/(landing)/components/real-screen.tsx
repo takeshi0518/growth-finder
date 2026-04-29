@@ -67,7 +67,7 @@ function Screenshot({
 
 export default function RealScreen() {
   return (
-    <section className="pt-16 pb-20">
+    <section>
       <Container>
         <SectionTitle>実際の画面</SectionTitle>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

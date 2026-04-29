@@ -39,7 +39,7 @@ function FeatureCard({ icon: Icon, title, description }: FeatureCardProps) {
 
 export default function Feature() {
   return (
-    <section id="features" className="py-20 scroll-mt-24">
+    <section id="features" className="scroll-mt-24">
       <Container>
         <SectionTitle>Growth Finderの機能</SectionTitle>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 place-items-center">
