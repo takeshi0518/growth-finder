@@ -29,11 +29,16 @@ type Profile = Pick<
 >;
 
 type StaffProfile = {
+  isDemo: boolean;
   targetStaff: Profile;
   staffId: string;
 };
 
-export default function StaffProfile({ targetStaff, staffId }: StaffProfile) {
+export default function StaffProfile({
+  isDemo,
+  targetStaff,
+  staffId,
+}: StaffProfile) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(
     targetStaff.avatar_url
@@ -123,14 +128,16 @@ export default function StaffProfile({ targetStaff, staffId }: StaffProfile) {
                       <Icons.UserCircle className="w-16 h-16 text-muted-foreground" />
                     )}
                   </div>
-                  <button
-                    type="button"
-                    disabled={isUploading}
-                    onClick={() => fileInputRef.current?.click()}
-                    className="absolute bottom-0 right-0 bg-background border rounded-full px-2 py-0.5 text-xs"
-                  >
-                    編集
-                  </button>
+                  {!isDemo && (
+                    <button
+                      type="button"
+                      disabled={isUploading}
+                      onClick={() => fileInputRef.current?.click()}
+                      className="absolute bottom-0 right-0 bg-background border rounded-full px-2 py-0.5 text-xs"
+                    >
+                      編集
+                    </button>
+                  )}
                   <input
                     type="file"
                     ref={fileInputRef}
@@ -157,31 +164,50 @@ export default function StaffProfile({ targetStaff, staffId }: StaffProfile) {
               </div>
             </div>
 
-            <div className="space-y-2 w-full max-w-md">
-              <Label htmlFor="name">名前</Label>
-              <Input id="name" type="text" {...register('name')} />
-              {errors.name && (
-                <p className="text-sm text-red-500">{errors.name?.message}</p>
-              )}
-            </div>
-            <div className="space-y-2 w-full max-w-md">
-              <Label htmlFor="email">メールアドレス</Label>
-              <Input id="email" type="email" {...register('email')} />
-              {errors.email && (
-                <p className="text-sm text-red-500">{errors.email?.message}</p>
-              )}
-            </div>
+            {isDemo ? (
+              <div className="space-y-4 w-full max-w-md">
+                <div className="space-y-2">
+                  <Label>名前</Label>
+                  <Input value={targetStaff.name ?? ''} disabled readOnly />
+                </div>
+                <div className="space-y-2">
+                  <Label>メールアドレス</Label>
+                  <Input value={targetStaff.email ?? ''} disabled readOnly />
+                </div>
+              </div>
+            ) : (
+              <>
+                <div className="space-y-2 w-full max-w-md">
+                  <Label htmlFor="name">名前</Label>
+                  <Input id="name" type="text" {...register('name')} />
+                  {errors.name && (
+                    <p className="text-sm text-red-500">
+                      {errors.name?.message}
+                    </p>
+                  )}
+                </div>
+                <div className="space-y-2 w-full max-w-md">
+                  <Label htmlFor="email">メールアドレス</Label>
+                  <Input id="email" type="email" {...register('email')} />
+                  {errors.email && (
+                    <p className="text-sm text-red-500">
+                      {errors.email?.message}
+                    </p>
+                  )}
+                </div>
 
-            <div className="text-center w-full max-w-md">
-              <Button
-                type="submit"
-                size="lg"
-                disabled={isSubmitting}
-                className="w-full md:max-w-48"
-              >
-                {isSubmitting ? <LoaderCircleIcon /> : '保存'}
-              </Button>
-            </div>
+                <div className="text-center w-full max-w-md">
+                  <Button
+                    type="submit"
+                    size="lg"
+                    disabled={isSubmitting}
+                    className="w-full md:max-w-48"
+                  >
+                    {isSubmitting ? <LoaderCircleIcon /> : '保存'}
+                  </Button>
+                </div>
+              </>
+            )}
           </div>
         </form>
       </CardContent>

@@ -12,7 +12,7 @@ import { ExistingEvaluationForStaffCard } from '../../../../../types/evaluations
 export default async function StaffManagementPage() {
   const supabase = await createClient();
 
-  const { orgId } = await requireAdmin(supabase);
+  const { orgId, profile } = await requireAdmin(supabase);
 
   const { data: staffs, error: staffsError } = await supabase
     .from('profiles')
@@ -74,6 +74,7 @@ export default async function StaffManagementPage() {
 
         <CardContent className="space-y-6">
           <StaffList
+            isDemo={profile.is_demo ?? false}
             staffs={staffs ?? []}
             selectedPeriod={selectedPeriod}
             existingEvaluations={existingEvaluations ?? []}

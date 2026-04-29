@@ -38,6 +38,7 @@ import {
   ChevronLeft,
   ChevronRight,
   MousePointer,
+  TriangleAlert,
 } from 'lucide-react';
 
 import { FaXTwitter, FaGithub } from 'react-icons/fa6';
@@ -91,6 +92,7 @@ export const Icons = {
   ChevronLeft,
   ChevronRight,
   MousePointer,
+  TriangleAlert,
   FaXTwitter,
   FaGithub,
   FcGoogle,
