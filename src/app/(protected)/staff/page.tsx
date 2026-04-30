@@ -2,7 +2,10 @@ import ProfileCard from '@/components/shared/profile-card';
 import { createClient } from '@/lib/supabase/server';
 import { requireStaff } from '@/lib/utils/requireStaff';
 import PeriodSelector from './components/period-selector';
-import { ExistingEvaluation } from '../../../../types/evaluations';
+import {
+  ExistingEvaluation,
+  PeriodForChart,
+} from '../../../../types/evaluations';
 import { formatChartData } from '@/lib/utils/evaluation-format';
 import { Icons } from '@/components/icon/icons';
 import StaffEvaluationSection from '@/components/evaluation/staff-evaluation-section';
@@ -63,7 +66,7 @@ export default async function StaffPage({
         .single()) as { data: ExistingEvaluation | null; error: unknown })
     : { data: null };
 
-  const { data } = await supabase
+  const { data } = (await supabase
     .from('evaluation_periods')
     .select(
       `
@@ -84,7 +87,7 @@ export default async function StaffPage({
     .eq('organization_id', orgId)
     .eq('evaluations.staff_id', user.id)
     .order('created_at', { ascending: true })
-    .limit(4);
+    .limit(4)) as { data: PeriodForChart[] | null; error: unknown };
 
   const chartData = formatChartData(data ?? []);
 
