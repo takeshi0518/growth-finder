@@ -83,7 +83,10 @@ export default async function AdminPage() {
         <div className="lg:min-w-80">
           <ProfileCard profile={profile} />
         </div>
-        <EvaluationPeriodList evaluationPeriods={evaluationPeriods} />
+        <EvaluationPeriodList
+          isDemo={profile.is_demo ?? false}
+          evaluationPeriods={evaluationPeriods}
+        />
       </div>
       <EvaluationSection
         evaluationPeriods={evaluationPeriods}

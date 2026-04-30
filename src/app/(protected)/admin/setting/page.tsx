@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase/server';
 import BackPageLink from '@/components/shared/back-page-link';
 import AdminContainer from '../components/admin-contaimer';
 import { requireAdmin } from '@/lib/utils/requireAdmin';
+import DemoRestricted from '@/components/shared/demo-restricted';
 
 export default async function SettingPage() {
   const supabase = await createClient();
@@ -26,7 +27,9 @@ export default async function SettingPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <SettingForm profile={profile} />
+            <DemoRestricted isDemo={profile.is_demo ?? false}>
+              <SettingForm profile={profile} />
+            </DemoRestricted>
           </CardContent>
         </Card>
 
@@ -38,7 +41,9 @@ export default async function SettingPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <PasswordForm isOAuthUser={isOAuthUser} />
+            <DemoRestricted isDemo={profile.is_demo ?? false}>
+              <PasswordForm isOAuthUser={isOAuthUser} />
+            </DemoRestricted>
           </CardContent>
         </Card>
       </div>

@@ -10,12 +10,14 @@ import { ExistingEvaluationForStaffCard } from '../../../../../../types/evaluati
 type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id'> | null;
 
 type StaffListProps = {
+  isDemo: boolean;
   staffs: Staff[];
   selectedPeriod: EvaluationPeriod;
   existingEvaluations: ExistingEvaluationForStaffCard[];
 };
 
 export default function StaffList({
+  isDemo,
   staffs,
   selectedPeriod,
   existingEvaluations,
@@ -44,6 +46,7 @@ export default function StaffList({
               );
               return (
                 <StaffCard
+                  isDemo={isDemo}
                   key={staff.id}
                   staff={staff}
                   selectedPeriod={selectedPeriod}

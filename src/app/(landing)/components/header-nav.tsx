@@ -6,7 +6,7 @@ import MobileMenu from '../../../components/shared/mobile-menu';
 import { useSmoothScroll } from '@/app/(landing)/hooks/use-smooth-scroll';
 
 const guestNavItems = [
-  { href: '#features', label: '機能' },
+  { href: '#problem-solution', label: '解決するもの' },
   { href: '#usage', label: '使い方' },
   { href: '/login', label: 'ログイン' },
   { href: '/signup', label: '新規登録' },

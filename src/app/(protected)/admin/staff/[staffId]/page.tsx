@@ -20,7 +20,7 @@ export default async function StaffDetailPage({
 
   const supabase = await createClient();
 
-  const { orgId } = await requireAdmin(supabase);
+  const { orgId, profile } = await requireAdmin(supabase);
 
   const { data: targetStaff, error: targetStaffError } = await supabase
     .from('profiles')
@@ -101,7 +101,11 @@ export default async function StaffDetailPage({
   return (
     <AdminContainer>
       <BackPageLink href="/admin/staff" label="スタッフ一覧に戻る" />
-      <StaffProfile targetStaff={targetStaff} staffId={staffId} />
+      <StaffProfile
+        isDemo={profile.is_demo ?? false}
+        targetStaff={targetStaff}
+        staffId={staffId}
+      />
       {!selectedPeriod ? (
         <p className="flex items-center gap-2 text-sm text-muted-foreground">
           <Icons.CircleAlert />

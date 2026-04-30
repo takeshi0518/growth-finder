@@ -6,7 +6,7 @@ import SectionTitle from './section-title';
 
 export default function CallToAction() {
   return (
-    <section className="py-20">
+    <section>
       <Container>
         <div className="text-center">
           <SectionTitle>今すぐGrowth Finderを体験</SectionTitle>
