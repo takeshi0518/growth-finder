@@ -4,7 +4,10 @@ import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import AdminContainer from '../../components/admin-contaimer';
 import { requireAdmin } from '@/lib/utils/requireAdmin';
-import { ExistingEvaluation } from '../../../../../../types/evaluations';
+import {
+  ExistingEvaluation,
+  PeriodForChart,
+} from '../../../../../../types/evaluations';
 import { Icons } from '@/components/icon/icons';
 import { formatChartData } from '@/lib/utils/evaluation-format';
 import StaffEvaluationSection from '@/components/evaluation/staff-evaluation-section';
@@ -73,7 +76,7 @@ export default async function StaffDetailPage({
         .single()) as { data: ExistingEvaluation | null; error: unknown })
     : { data: null };
 
-  const { data } = await supabase
+  const { data } = (await supabase
     .from('evaluation_periods')
     .select(
       `
@@ -94,7 +97,7 @@ export default async function StaffDetailPage({
     .eq('organization_id', orgId)
     .eq('evaluations.staff_id', staffId)
     .order('created_at', { ascending: true })
-    .limit(4);
+    .limit(4)) as { data: PeriodForChart[] | null; error: unknown };
 
   const chartData = formatChartData(data ?? []);
 
