@@ -347,13 +347,13 @@ SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 カフェ店長として 13年の現場経験を持つ、フロントエンドエンジニア志望者です。
 2025 年 11 月にプログラミング学習を開始し、表面的な書き方ではなく根本原理の理解を重視して学んでいます。
 
-### 🔗 リンク
+### リンク
 
 - **GitHub**: [@takeshi0518](https://github.com/takeshi0518)
 - **Zenn**: [技術記事一覧](https://zenn.dev/takeshi0518)
 - **X (Twitter)**: [@your_handle](https://x.com/y_takeshi0518)
 
-### 💡 このプロジェクトを通じて伝えたいこと
+### このプロジェクトを通じて伝えたいこと
 
 > **「現場の課題を、技術で解決する」**
 >
