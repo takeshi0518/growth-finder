@@ -9,13 +9,6 @@
 
 ![ダッシュボード](./docs/screenshots/01-top.png)
 
-> スタッフの成長を可視化し、店長とスタッフの関係性構築を支援する人材育成ツール
-
-[![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org/)
-[![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?logo=supabase&logoColor=white)](https://supabase.com/)
-[![Vercel](https://img.shields.io/badge/Vercel-000000?logo=vercel&logoColor=white)](https://vercel.com/)
-
 **デモサイト**: [https://growth-finder-psi.vercel.app/](https://growth-finder-psi.vercel.app/)
 
 ---
@@ -106,9 +99,15 @@
 #### 1. 評価入力フォーム
 
 ネストタブ UI で、４カテゴリ ×3 観点を直感的に評価できます。
+現場で店長がスマートフォンで入力するシーンを想定し、評価ボタンを横並びに配置するなど、モバイルでの操作性・タップのしやすさにこだわって設計しました。
 タブを切り替えても入力データは保持される設計です。
 
-![評価入力](./docs/screenshots/05-evaluation-input.png)
+<table>
+  <tr>
+    <td><img src="./docs/screenshots/05-evaluation-input.png" alt="PC版" width="100%"></td>
+    <td width="280"><img src="./docs/screenshots/06-mobile.png" alt="モバイル版" width="100%"></td>
+  </tr>
+</table>
 
 #### 2. 各項目には良かった点・もっと良くなる点をモーダルでコメント記録
 
@@ -130,12 +129,12 @@
 
 ![スタッフ管理](./docs/screenshots/03-staff-list.png)
 
-#### 5. モバイル対応
+<!-- #### 5. モバイル対応
 
-評価するときのデバイスはモバイルがベストなので、  
+評価するときのデバイスはモバイルがベストなので、
 それを想定したレスポンシブ設計。
 
-![モバイル板](./docs/screenshots/06-mobile.png)
+![モバイル板](./docs/screenshots/06-mobile.png) -->
 
 ### 機能一覧
 
