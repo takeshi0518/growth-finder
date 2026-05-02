@@ -106,12 +106,9 @@ https://github.com/user-attachments/assets/7048cab6-717d-4a6a-a735-e344a159e431
 
 https://github.com/user-attachments/assets/9fb44b26-97fc-4050-8c9a-cf192c3c62ea
 
-<table>
-  <tr>
-    <td><img src="./docs/screenshots/05-evaluation-input.png" alt="PC版" width="100%"></td>
-    <td width="280"><img src="./docs/screenshots/06-mobile.png" alt="モバイル版" width="100%"></td>
-  </tr>
-</table>
+<img src="./docs/screenshots/06-mobile.png" alt="モバイル版" width="300">
+
+![PC版](./docs/screenshots/05-evaluation-input.png)
 
 #### 2. 各項目には良かった点・もっと良くなる点をモーダルでコメント記録
 
@@ -291,30 +288,7 @@ https://github.com/user-attachments/assets/9fb44b26-97fc-4050-8c9a-cf192c3c62ea
 - `react-hook-form` の `useForm` を**親の Client Component 一箇所で管理**し、`setValue` / `watch` を子コンポーネントに props で渡す設計に変更
 - これにより、UI はタブで切り替わっていても、フォーム状態は単一のソースで保持される
 
-### 2. データ取得関数のエラーハンドリング標準化
-
-Vercel のプロジェクト「Commerce」 のコードリーディングから学んだ**「データフェッチの 3 パターン統一」**を参考にしています。
-
-```ts
-// 例: スタッフ取得関数
-async function getStaff(id: string): Promise<Staff | undefined> {
-  const { data, error } = await supabase
-    .from('staffs')
-    .select('*')
-    .eq('id', id)
-    .single();
-
-  if (error) throw error; // ① エラー時は throw
-  if (!data) return undefined; // ② データ無しは undefined
-  return data; // ③ 正常時は data
-}
-```
-
-呼び出し側で `if (!staff) notFound()` のように扱えるため、404・エラー・正常系の境界が明確になります。
-
-> 詳細は [GitHub Issue #97](97) で背景と全関数の監査計画を整理しました。
-
-### 3. 計算ロジックの責務分離
+### 2. 計算ロジックの責務分離
 
 ランク算出・評価率計算など、UI に依存しない純粋なロジックは `lib/utils/evaluation-calc.ts` に集約しました。
 
@@ -327,7 +301,7 @@ export const calcEvaluation = (items: EvaluationItem[]) => ...
 
 これにより、**UI をテストせずにロジック単体で Vitest テストが書ける**設計になっています。
 
-### 4. 認証システムの本格実装
+### 3. 認証システムの本格実装
 
 ポートフォリオでありがちな「ログイン機能だけ」ではなく、本番運用を意識した実装にしています。
 
@@ -337,21 +311,9 @@ export const calcEvaluation = (items: EvaluationItem[]) => ...
 - ミドルウェアでのルート保護
 - ロール (admin / staff) によるアクセス制御
 
-### 5. コロケーション原則に基づくディレクトリ設計
+### 4. コロケーション原則に基づくディレクトリ設計
 
 機能ごとにファイルを近接配置し、**「あるページに関わるコードは 1 つの場所に集約する」**ことで保守性を高めています。
-
-```
-app/
-  (admin)/
-    evaluations/
-      [id]/
-        edit/
-          page.tsx
-          _components/      ← このページ専用のコンポーネント
-          _actions/         ← Server Actions
-          _schemas/         ← Zodスキーマ
-```
 
 ---
 
@@ -374,8 +336,6 @@ app/
 
 評価セクションの型を別の関数に渡したらコンパイルが通らない、という問題で詰まりました。
 当初は「同じ形なのになぜ？」と混乱しましたが、\*\*TypeScript の構造的型付けを体系的に学び直すことで解決。
-
-> Zenn に [Next.js と MVC の違いについての記事](https://zenn.dev/takeshi0518/articles/4900ca7f320355) を書いた際にも、こうした「言語の根本仕様の理解」が読み手に評価された経験があり、Why overHow の学習姿勢を継続しています。
 
 ---
 
