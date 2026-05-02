@@ -11,6 +11,8 @@
 
 **デモサイト**: [https://growth-finder-psi.vercel.app/](https://growth-finder-psi.vercel.app/)
 
+https://github.com/user-attachments/assets/7048cab6-717d-4a6a-a735-e344a159e431
+
 ---
 
 ## デモを試す
@@ -101,6 +103,8 @@
 ネストタブ UI で、４カテゴリ ×3 観点を直感的に評価できます。
 現場で店長がスマートフォンで入力するシーンを想定し、評価ボタンを横並びに配置するなど、モバイルでの操作性・タップのしやすさにこだわって設計しました。
 タブを切り替えても入力データは保持される設計です。
+
+https://github.com/user-attachments/assets/7165522f-339e-4ef1-8e4b-55b70e3175e7
 
 <table>
   <tr>
@@ -407,7 +411,6 @@ cp .env.example .env.local
 - `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` / `SUPABASE_SERVICE_ROLE_KEY` は `npx supabase start` の出力から取得できます。
 - `SUPABASE_SERVICE_ROLE_KEY` は RLS をバイパスする権限を持つため何でも出来ます。サーバーサイドでのみ使用してください。
 - Google OAuth を使う場合は、Google Cloud Console で取得した `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` を `.env.local` に設定してください。
-
 
 # 開発サーバーを起動
 
