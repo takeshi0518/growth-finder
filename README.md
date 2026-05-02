@@ -104,7 +104,7 @@ https://github.com/user-attachments/assets/7048cab6-717d-4a6a-a735-e344a159e431
 現場で店長がスマートフォンで入力するシーンを想定し、評価ボタンを横並びに配置するなど、モバイルでの操作性・タップのしやすさにこだわって設計しました。
 タブを切り替えても入力データは保持される設計です。
 
-https://github.com/user-attachments/assets/7165522f-339e-4ef1-8e4b-55b70e3175e7
+https://github.com/user-attachments/assets/9fb44b26-97fc-4050-8c9a-cf192c3c62ea
 
 <table>
   <tr>
