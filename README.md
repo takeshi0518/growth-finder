@@ -380,46 +380,41 @@ app/
 ### 必要環境
 
 - Node.js 20+
-- Docker / Docker Compose (推奨)
-- Supabase アカウント
+- Docker / Docker Compose (Supabase ローカル環境用)
+- Supabase CLI
 
-### ローカル環境(Docker 使用)
+### 手順
 
-```bash
+\```bash
+
 # リポジトリをクローン
+
 git clone https://github.com/takeshi0518/Growth-finder.git
 cd Growth-finder
 
+# 依存パッケージをインストール
+
+npm install
+
+# Supabase ローカル環境を起動
+
+npx supabase start
+
 # 環境変数を設定
+
 cp .env.example .env.local
-# .env.localにSupabaseの認証情報を追加
 
-# Dockerコンテナを起動
-docker-compose up -d
+- `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` / `SUPABASE_SERVICE_ROLE_KEY` は `npx supabase start` の出力から取得できます。
+- `SUPABASE_SERVICE_ROLE_KEY` は RLS をバイパスする権限を持つため何でも出来ます。サーバーサイドでのみ使用してください。
+- Google OAuth を使う場合は、Google Cloud Console で取得した `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` を `.env.local` に設定してください。
 
-# 依存関係をインストール
-docker-compose exec app npm install
 
 # 開発サーバーを起動
-docker-compose exec app npm run dev
-```
+
+npm run dev
+\```
 
 http://localhost:3000 でアプリケーションが起動します。
-
-### 通常のローカル環境(Docker なし)
-
-```bash
-npm install
-npm run dev
-```
-
-### 環境変数
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
-```
 
 ---
 
