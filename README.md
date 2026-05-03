@@ -22,7 +22,7 @@ https://github.com/user-attachments/assets/7048cab6-717d-4a6a-a735-e344a159e431
 
 **デモサイト**: https://growth-finder-psi.vercel.app/
 
-> 💡 デモ環境では、評価入力・履歴閲覧・ランク算出など主要機能をすべてお試しいただけます。
+> デモ環境では、評価入力・履歴閲覧・ランク算出など主要機能をすべてお試しいただけます。
 > アカウント登録なしで、面接・カジュアル面談中にもすぐご確認いただけるよう設計しました。
 
 ---
@@ -34,9 +34,7 @@ https://github.com/user-attachments/assets/7048cab6-717d-4a6a-a735-e344a159e431
 - [主な機能](#主な機能)
 - [技術スタックと選定理由](#技術スタックと選定理由)
 - [システム設計](#システム設計)
-- [実装で工夫した点・こだわり](#実装で工夫した点こだわり)
-- [苦労した点と解決方法](#苦労した点と解決方法)
-- [今後の実装予定](#今後の実装予定)
+- [設計上の試行錯誤](#設計上の試行錯誤)
 - [セットアップ方法](#セットアップ方法)
 - [開発者について](#開発者について)
 
@@ -130,16 +128,9 @@ https://github.com/user-attachments/assets/9fb44b26-97fc-4050-8c9a-cf192c3c62ea
 
 ![スタッフ管理](./docs/screenshots/03-staff-list.png)
 
-<!-- #### 5. モバイル対応
-
-評価するときのデバイスはモバイルがベストなので、
-それを想定したレスポンシブ設計。
-
-![モバイル板](./docs/screenshots/06-mobile.png) -->
-
 ### 機能一覧
 
-### 認証・権限管理
+#### 認証・権限管理
 
 - ユーザー登録・ログイン機能(Supabase Auth)
   - メールアドレス + パスワード認証
@@ -148,13 +139,13 @@ https://github.com/user-attachments/assets/9fb44b26-97fc-4050-8c9a-cf192c3c62ea
 - ロールベースアクセス制御(管理者/スタッフ)
 - ルート保護(Next.js Middleware)
 
-### スタッフ管理
+#### スタッフ管理
 
 - スタッフ一覧表示
 - スタッフ追加・編集・削除(CRUD)
 - スタッフ検索機能
 
-### 評価機能
+#### 評価機能
 
 - 評価入力フォーム(react-hook-form + Zod)
   - ネストタブ UI(4 カテゴリ × 3 観点)
@@ -165,58 +156,35 @@ https://github.com/user-attachments/assets/9fb44b26-97fc-4050-8c9a-cf192c3c62ea
 - 下書き保存機能(draft / completed ステータス管理)
 - 評価期間管理
 
-### 集計・可視化
+#### 集計・可視化
 
 - 総合ランク自動算出
 - カテゴリ別達成率の自動計算
 - スキルグラフ(Recharts レーダーチャート)
 - 達成率ドーナツチャート(Recharts)
 
-### 育成支援
+#### 育成支援
 
 - アクションプラン記録
 - 総括コメント記録
 - 3 ヶ月後の未来(目標)記録
 
-### UI / UX
+#### UI / UX
 
 - レスポンシブ対応(モバイル / PC)
 - shadcn/ui によるコンポーネント設計
 
-### テスト・品質
+#### テスト・品質
 
 - ESLint(静的解析)
 - Vitest(単体テスト)
-- Playwright(E2E テスト)
 - GitHub Actions(CI/CD)
 
-### インフラ
+#### インフラ
 
 - Vercel(ホスティング)
 - Supabase(BaaS / PostgreSQL)
 - Docker(ローカル開発環境)
-
-### 今後の実装予定
-
-#### 評価項目のマスターデータ化
-
-**現状の課題:**
-現在の評価項目は `constants` ファイルにハードコードされており、
-評価作成時に `evaluation_items` テーブルへ INSERT する実装になっています。
-そのため、評価項目の追加・編集にはコードの変更とデプロイが必要です。
-
-**設計方針:**
-
-- `evaluation_item_masters` テーブルを新設し、評価項目のマスターデータとして管理
-- 管理者画面から評価項目の追加・編集・無効化を可能に
-- 評価作成時はマスターから `evaluation_items` へ**コピー**する設計
-
-関連 Issue: [#88](https://github.com/takeshi0518/Growth-finder/issues/88)
-
-#### 品質向上
-
-- [ ] Vitest による単体テスト
-- [ ] Playwright による E2E テスト
 
 ---
 
@@ -245,12 +213,12 @@ https://github.com/user-attachments/assets/9fb44b26-97fc-4050-8c9a-cf192c3c62ea
 
 ### 開発環境・インフラ
 
-| 技術                             | 選定理由                                                                                  |
-| -------------------------------- | ----------------------------------------------------------------------------------------- |
-| **Vercel**                       | Next.js との親和性。                                                                      |
-| **Docker**                       | ローカル環境の再現性確保のため。Linux/Docker 基礎を Ubuntu コンテナで学習した経験を活用。 |
-| **GitHub Actions**               | PR 作成時に自動で Lint/Test を走らせ、品質担保。ブランチ保護ルールと組み合わせて運用。    |
-| **ESLint / Vitest / Playwright** | 静的解析・単体テスト・E2E テストの 3 層で品質を担保する設計。                             |
+| 技術                | 選定理由                                                                                  |
+| ------------------- | ----------------------------------------------------------------------------------------- |
+| **Vercel**          | Next.js との親和性。                                                                      |
+| **Docker**          | ローカル環境の再現性確保のため。Linux/Docker 基礎を Ubuntu コンテナで学習した経験を活用。 |
+| **GitHub Actions**  | PR 作成時に自動で Lint/Test を走らせ、品質担保。ブランチ保護ルールと組み合わせて運用。    |
+| **ESLint / Vitest** | 静的解析・単体テスト 2 層で品質を担保する設計。                                           |
 
 ---
 
@@ -276,108 +244,11 @@ https://github.com/user-attachments/assets/9fb44b26-97fc-4050-8c9a-cf192c3c62ea
 
 ---
 
-## 実装で工夫した点・こだわり
+## 設計上の試行錯誤
 
-### 1. タブ切替時の入力データ保持
+### 1.
 
-評価フォームは「総合 / 基本動作 / バリスタ / キャッシャー」× 「スキル / ホスピタリティ / クレンリネス」のネストタブ構成です。
-当初は各タブをコンポーネント分割していましたが、**タブ切替時に unmount されて入力中のデータが消える**問題に直面しました。
-
-**解決策:**
-
-- `react-hook-form` の `useForm` を**親の Client Component 一箇所で管理**し、`setValue` / `watch` を子コンポーネントに props で渡す設計に変更
-- これにより、UI はタブで切り替わっていても、フォーム状態は単一のソースで保持される
-
-### 2. 計算ロジックの責務分離
-
-ランク算出・評価率計算など、UI に依存しない純粋なロジックは `lib/utils/evaluation-calc.ts` に集約しました。
-
-```ts
-// lib/utils/evaluation-calc.ts
-export const calcRate = (score: number, maxScore: number) => ...
-export const calcRank = (rate: number) => ...
-export const calcEvaluation = (items: EvaluationItem[]) => ...
-```
-
-これにより、**UI をテストせずにロジック単体で Vitest テストが書ける**設計になっています。
-
-### 3. 認証システムの本格実装
-
-ポートフォリオでありがちな「ログイン機能だけ」ではなく、本番運用を意識した実装にしています。
-
-- メール/パスワード認証 + メール確認フロー
-- Google OAuth (Supabase Auth 経由)
-- パスワードリセット機能
-- ミドルウェアでのルート保護
-- ロール (admin / staff) によるアクセス制御
-
-### 4. コロケーション原則に基づくディレクトリ設計
-
-機能ごとにファイルを近接配置し、**「あるページに関わるコードは 1 つの場所に集約する」**ことで保守性を高めています。
-
----
-
-## 苦労した点と解決方法
-
-### 課題 1: 評価データの重複登録バグ
-
-**現象:** 同じスタッフ・同じ日付の評価を保存すると、新規レコードが増え続けてしまう。
-
-**原因:** 単純な`insert`を使っていたため、PostgreSQL 側に重複防止の制約がなかった。
-
-**解決:**
-
-- `(staff_id, evaluation_date)` に UNIQUE 制約を追加
-- `insert` を `upsert` に変更し、存在すれば更新、なければ作成する挙動に統一
-
-**学び:** **「アプリ側のロジックだけでなく、DB 制約レベルでもデータ整合性を担保する」**重要性を実感しました。
-
-### 課題 2: TypeScript の構造的型付けへの理解
-
-評価セクションの型を別の関数に渡したらコンパイルが通らない、という問題で詰まりました。
-当初は「同じ形なのになぜ？」と混乱しましたが、\*\*TypeScript の構造的型付けを体系的に学び直すことで解決。
-
----
-
-## セットアップ方法
-
-### 必要環境
-
-- Node.js 20+
-- Docker / Docker Compose (Supabase ローカル環境用)
-- Supabase CLI
-
-### 手順
-
-\```bash
-
-# リポジトリをクローン
-
-git clone https://github.com/takeshi0518/Growth-finder.git
-cd Growth-finder
-
-# 依存パッケージをインストール
-
-npm install
-
-# Supabase ローカル環境を起動
-
-npx supabase start
-
-# 環境変数を設定
-
-cp .env.example .env.local
-
-- `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` / `SUPABASE_SERVICE_ROLE_KEY` は `npx supabase start` の出力から取得できます。
-- `SUPABASE_SERVICE_ROLE_KEY` は RLS をバイパスする権限を持つため何でも出来ます。サーバーサイドでのみ使用してください。
-- Google OAuth を使う場合は、Google Cloud Console で取得した `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` を `.env.local` に設定してください。
-
-# 開発サーバーを起動
-
-npm run dev
-\```
-
-http://localhost:3000 でアプリケーションが起動します。
+### 2.
 
 ---
 
@@ -386,13 +257,13 @@ http://localhost:3000 でアプリケーションが起動します。
 ### 柳澤武志 (Takeshi Yanagisawa)
 
 カフェ店長として 13 年の現場経験を持つ、フロントエンドエンジニア志望者です。
-2025 年 11 月にプログラミング学習を開始し、表面的な書き方ではなく根本原理の理解を重視して学んでいます。
+2024 年 11 月にプログラミング学習を開始し、表面的な書き方ではなく根本原理の理解を重視して学んでいます。
 
 ### リンク
 
 - **GitHub**: [@takeshi0518](https://github.com/takeshi0518)
 - **Zenn**: [技術記事一覧](https://zenn.dev/takeshi0518)
-- **X (Twitter)**: [@your_handle](https://x.com/y_takeshi0518)
+- **X (Twitter)**: [@y_takeshi0518](https://x.com/y_takeshi0518)
 
 ### このプロジェクトを通じて伝えたいこと
 
