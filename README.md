@@ -246,9 +246,160 @@ https://github.com/user-attachments/assets/9fb44b26-97fc-4050-8c9a-cf192c3c62ea
 
 ## 設計上の試行錯誤
 
-### 1.
+### 1. DB 層とフォーム層の境界での型整形
 
-### 2.
+**背景:2 つの構造をもつデータ**
+評価入力画面では、Supabase から既存の評価データを取得し、react-hook-form の `defaultValues` に渡します。ただし、DB の構造とフォームの構造は形が違う。
+
+**DB の構造のコード(.select の３階層のネスト)**
+
+```typescript
+.select(
+  `
+    id,
+    status,
+    action_plan,
+    total_comment,
+    future_vision,
+    evaluation_sections (
+      id,
+      section_type,
+      good_points,
+      improvement_points,
+      skill_score,
+      skill_max,
+      hospitality_score,
+      hospitality_max,
+      cleanliness_score,
+      cleanliness_max,
+      evaluation_items (
+        item_name,
+        category,
+        score
+      )
+    )
+  `
+)
+```
+
+**フォームの構造のコード(basic/barista/cashier をキーに持つオブジェクト)**
+
+```typescript
+{
+    basic: {
+      skill: {},
+      hospitality: {},
+      cleanliness: {},
+      good_points: [],
+      improvement_points: [],
+    },
+    barista: {
+      skill: {},
+      hospitality: {},
+      cleanliness: {},
+      good_points: [],
+      improvement_points: [],
+    },
+    cashier: {
+      skill: {},
+      hospitality: {},
+      cleanliness: {},
+      good_points: [],
+      improvement_points: [],
+    },
+    action_plan: '',
+    total_comment: '',
+    future_vision: '',
+  }
+```
+
+**なぜ形を揃えなかったのか**
+両者を一致させるためには DB 側の構造を変更するか、フォーム側を配列構造にするかの２択になります。  
+しかしフォーム側を配列にすると、以下のデメリットがあります。
+
+- 配列の 0 番目は basic、という暗黙のルールが生まれます。
+- setValue 時のパスを`sections.0.skill.xxx`のようにインデックスで指定する必要があります。
+
+特に２点目は、評価項目コンポーネント`EvaluationItem`で問題になります。このコンポーネントは複数のカテゴリ・複数の項目を共通ロジックで扱うため、`setValue`のパスをテンプレートリテラルで動的に組み立てます。
+
+```typescript
+setValue(`${sectionType}.${category}.${item_name}`, score);
+```
+
+オブジェクト構造であれば`sectionType = 'basic' | 'barista' | 'cashier'`をそのままパスに使えます。一方、配列構造だと「basic は 0 番目、barista は 1 番目...」というマッピングをコンポーネント側で持たないといけなくなり、コードが複雑になります。
+
+DB の構造は DB の都合、フォームの構造は UI の都合です。
+それぞれの都合に合わせた形を持ち、境界で整形するようにしました。
+
+**最初の実装と違和感**
+当初は reduce の初期値に空オブジェクト`{}`を渡し、それを`as FormattedEvaluation`で目的の型を主張する形で実装していました。動作はしていましたが、TypeScript の学習を進める中で、`as`キャストが型チェックを黙らせる手段でしかないことを理解しました。  
+このコードでは初期値の`{}`を「`FormattedEvaluation`だ」と強引に主張しているだけで、実際に`basic`/`barista`/`cashier`のプロパティが揃っているかは保証されません。  
+`reduce`の処理の中でプロパティが追加される前提に依存しており、もし処理に不備があっても型エラーで気が付けない状態でした。
+
+```typescript
+const result = existingEvaluation.evaluation_sections.reduce((acc, cur) => {
+  acc[cur.section_type] = {
+    ...formatCategoryScores(cur.evaluation_items),
+    good_points: (cur.good_points ?? []) as string[],
+    improvement_points: (cur.improvement_points ?? []) as string[],
+  };
+  return acc;
+}, {} as FormattedEvaluation);
+```
+
+**書き直した実装**
+reduce にジェネリクス型引数を渡し、返り値の型を宣言しました。  
+初期値も EMPTY_SECTION_DATA で必須プロパティを揃え、型と実体を一致させました。
+
+```typescript
+const EMPTY_SECTION_DATA: SectionData = {
+  skill: {},
+  hospitality: {},
+  cleanliness: {},
+  good_points: [],
+  improvement_points: [],
+};
+
+export const formatEvaluationData = (
+  existingEvaluation: ExistingEvaluation
+) => {
+  const result =
+    existingEvaluation.evaluation_sections.reduce<FormattedEvaluation>(
+      (acc, cur) => {
+        acc[cur.section_type] = {
+          ...formatCategoryScores(cur.evaluation_items),
+          good_points: cur.good_points ?? [],
+          improvement_points: cur.improvement_points ?? [],
+        };
+        return acc;
+      },
+      {
+        basic: {
+          ...EMPTY_SECTION_DATA,
+        },
+        barista: {
+          ...EMPTY_SECTION_DATA,
+        },
+        cashier: {
+          ...EMPTY_SECTION_DATA,
+        },
+      }
+    );
+
+  return result;
+};
+```
+
+**もう一つの型崩れ：Supabase の自動生成型の限界**
+Supabase は select の結果から型を自動生成しますが、
+DB の CHECK 制約までは型に反映されません。
+例えば、`evaluation_sections.section_type` は DB 側で `CHECK('basic', 'cashier', 'barista')`制約はありますが、返却される型は `string`になります。アプリケーション側で `SectionType = 'basic' | 'cashier' | 'barista'`を定義し、整形時に型を絞る必要がありました。
+
+**設計判断としての学び**
+
+- DB の構造とアプリケーションのデータ構造は無理に一致させる必要はありません
+- 両者の境界で整形することで、DB を変えずにアプリケーションの都合に合わせられます
+- DB の自動生成型は万能ではない。CHECK 制約のような情報は失われるため、必要に応じてアプリケーション側で型を絞り直す判断が必要です
 
 ---
 
