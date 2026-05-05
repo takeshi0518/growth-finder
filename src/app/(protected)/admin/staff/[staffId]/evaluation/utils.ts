@@ -5,26 +5,21 @@ import {
   FormattedEvaluation,
 } from '../../../../../../../types/evaluations';
 
-const EMPTY_SECTION_DATA: SectionData = {
+const createEmptySectionData = (): SectionData => ({
   skill: {},
   hospitality: {},
   cleanliness: {},
   good_points: [],
   improvement_points: [],
-};
+});
 
 //evaluation_itemsをcategoryごとに{item_name: score}の形に整形する
 export const formatCategoryScores = (items: EvaluationItem[]) =>
-  items.reduce<SectionData>(
-    (acc, cur) => {
-      if (!acc[cur.category]) acc[cur.category] = {};
-      acc[cur.category][cur.item_name] = cur.score ?? 0;
-      return acc;
-    },
-    {
-      ...EMPTY_SECTION_DATA,
-    }
-  );
+  items.reduce<SectionData>((acc, cur) => {
+    if (!acc[cur.category]) acc[cur.category] = {};
+    acc[cur.category][cur.item_name] = cur.score ?? 0;
+    return acc;
+  }, createEmptySectionData());
 
 //既存評価データをEvaluationFormのdefaultValues形式に整形する
 export const formatEvaluationData = (
@@ -41,15 +36,9 @@ export const formatEvaluationData = (
         return acc;
       },
       {
-        basic: {
-          ...EMPTY_SECTION_DATA,
-        },
-        barista: {
-          ...EMPTY_SECTION_DATA,
-        },
-        cashier: {
-          ...EMPTY_SECTION_DATA,
-        },
+        basic: createEmptySectionData(),
+        barista: createEmptySectionData(),
+        cashier: createEmptySectionData(),
       }
     );
 
