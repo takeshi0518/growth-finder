@@ -49,7 +49,6 @@ import {
 import { uploadStaffAvatar } from '@/lib/utils/upload';
 import Link from 'next/link';
 import { Tables } from '../../../../../../types/supabase';
-import DemoRestricted from '@/components/shared/demo-restricted';
 
 type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id'> | null;
 
