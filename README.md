@@ -22,7 +22,7 @@ https://github.com/user-attachments/assets/7048cab6-717d-4a6a-a735-e344a159e431
 
 **デモサイト**: https://growth-finder-psi.vercel.app/
 
-> 💡 デモ環境では、評価入力・履歴閲覧・ランク算出など主要機能をすべてお試しいただけます。
+> デモ環境では、評価入力・履歴閲覧・ランク算出など主要機能をすべてお試しいただけます。
 > アカウント登録なしで、面接・カジュアル面談中にもすぐご確認いただけるよう設計しました。
 
 ---
@@ -34,9 +34,7 @@ https://github.com/user-attachments/assets/7048cab6-717d-4a6a-a735-e344a159e431
 - [主な機能](#主な機能)
 - [技術スタックと選定理由](#技術スタックと選定理由)
 - [システム設計](#システム設計)
-- [実装で工夫した点・こだわり](#実装で工夫した点こだわり)
-- [苦労した点と解決方法](#苦労した点と解決方法)
-- [今後の実装予定](#今後の実装予定)
+- [設計上の試行錯誤](#設計上の試行錯誤)
 - [セットアップ方法](#セットアップ方法)
 - [開発者について](#開発者について)
 
@@ -66,7 +64,7 @@ https://github.com/user-attachments/assets/7048cab6-717d-4a6a-a735-e344a159e431
 
 ### アナログ運用時代
 
-そこで、QHC(Quality / Hospitality / Cleanliness)の評価フレームワークを基に、自分で**「伸びしろ発見チェックシート」を Excel で作成**しました。
+そこで、QHC(Quality / Hospitality / Cleanliness)の評価フレームワークを基に、自分で **「伸びしろ発見チェックシート」** を Excel で作成しました。
 
 - [開発コンセプトスライド](./docs/concept-slides.pdf) ― なぜこのツールを作ったのか
 - [伸びしろ発見チェックシート](./docs/growth-finder-sheet.pdf) ― 自作したツール(印刷用)
@@ -120,7 +118,7 @@ https://github.com/user-attachments/assets/9fb44b26-97fc-4050-8c9a-cf192c3c62ea
 #### 3. サマリー・自動ランク算出
 
 評価点から自動でランクを算出。アクションプランや 3 ヶ月後の未来まで記録できる  
-**「対話のためのツール」**としての設計です。
+ **「対話のためのツール」** としての設計です。
 
 ![サマリー画面](./docs/screenshots/04-summary.png)
 
@@ -130,16 +128,9 @@ https://github.com/user-attachments/assets/9fb44b26-97fc-4050-8c9a-cf192c3c62ea
 
 ![スタッフ管理](./docs/screenshots/03-staff-list.png)
 
-<!-- #### 5. モバイル対応
-
-評価するときのデバイスはモバイルがベストなので、
-それを想定したレスポンシブ設計。
-
-![モバイル板](./docs/screenshots/06-mobile.png) -->
-
 ### 機能一覧
 
-### 認証・権限管理
+#### 認証・権限管理
 
 - ユーザー登録・ログイン機能(Supabase Auth)
   - メールアドレス + パスワード認証
@@ -148,13 +139,13 @@ https://github.com/user-attachments/assets/9fb44b26-97fc-4050-8c9a-cf192c3c62ea
 - ロールベースアクセス制御(管理者/スタッフ)
 - ルート保護(Next.js Middleware)
 
-### スタッフ管理
+#### スタッフ管理
 
 - スタッフ一覧表示
 - スタッフ追加・編集・削除(CRUD)
 - スタッフ検索機能
 
-### 評価機能
+#### 評価機能
 
 - 評価入力フォーム(react-hook-form + Zod)
   - ネストタブ UI(4 カテゴリ × 3 観点)
@@ -165,92 +156,78 @@ https://github.com/user-attachments/assets/9fb44b26-97fc-4050-8c9a-cf192c3c62ea
 - 下書き保存機能(draft / completed ステータス管理)
 - 評価期間管理
 
-### 集計・可視化
+#### 集計・可視化
 
 - 総合ランク自動算出
 - カテゴリ別達成率の自動計算
 - スキルグラフ(Recharts レーダーチャート)
 - 達成率ドーナツチャート(Recharts)
 
-### 育成支援
+#### 育成支援
 
 - アクションプラン記録
 - 総括コメント記録
 - 3 ヶ月後の未来(目標)記録
 
-### UI / UX
+#### UI / UX
 
 - レスポンシブ対応(モバイル / PC)
 - shadcn/ui によるコンポーネント設計
 
-### テスト・品質
+#### テスト・品質
 
 - ESLint(静的解析)
 - Vitest(単体テスト)
-- Playwright(E2E テスト)
 - GitHub Actions(CI/CD)
 
-### インフラ
+#### インフラ
 
 - Vercel(ホスティング)
 - Supabase(BaaS / PostgreSQL)
 - Docker(ローカル開発環境)
 
-### 今後の実装予定
-
-#### 評価項目のマスターデータ化
-
-**現状の課題:**
-現在の評価項目は `constants` ファイルにハードコードされており、
-評価作成時に `evaluation_items` テーブルへ INSERT する実装になっています。
-そのため、評価項目の追加・編集にはコードの変更とデプロイが必要です。
-
-**設計方針:**
-
-- `evaluation_item_masters` テーブルを新設し、評価項目のマスターデータとして管理
-- 管理者画面から評価項目の追加・編集・無効化を可能に
-- 評価作成時はマスターから `evaluation_items` へ**コピー**する設計
-
-関連 Issue: [#88](https://github.com/takeshi0518/Growth-finder/issues/88)
-
-#### 品質向上
-
-- [ ] Vitest による単体テスト
-- [ ] Playwright による E2E テスト
-
 ---
 
 ## 技術スタックと選定理由
 
-「なぜそれを選んだか」を意識して技術選定を行いました。  
-このアプリに必要な特性から逆算しています。
+「なぜそれを選んだか」を意識して技術選定を行いました。
+
+本アプリは業務ツールであり SEO 対策が不要なため、SPA(Single Page Application)での開発も検討しました。最終的に Next.js を採用したのは、以下 2 つの理由からです。
+
+1. **ロールベースのルーティングが複雑になるため**
+   管理者とスタッフの 2 種類のロールがあり、それぞれで遷移できる画面が異なります。App Router のファイルベースルーティングと middleware で、ルート保護とロール判定を一箇所で管理できます。
+
+2. **セキュリティと UX を両立させたかったため**
+   評価の登録・更新といった機密性の高いデータのロジックは Server Actions でサーバー側に集約し、画面遷移は SPA のように滑らかな UX を保ちたいと考えました。Server Components と Server Actions の組み合わせで、この両立が実現できます。
+
+技術選定の詳細は以下の通りです。
 
 ### フロントエンド
 
-| 技術                         | 選定理由                                                                                                                                                       |
-| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Next.js 15 (App Router)**  | Server Components / Server Actions を使うことで、評価データの更新ロジックをサーバー側に集約でき、クライアントバンドルを軽量化できる。                          |
-| **TypeScript**               | 評価項目・ランク算出など、ドメインロジックの型安全性が必須。`status: 'draft' \| 'completed'` のような Union 型で状態を表現することで、バグを未然に防いでいる。 |
-| **React 19**                 | Server Components と `use()` API による非同期データ受け渡しなど、最新パターンを学習・実践するため。                                                            |
-| **Tailwind CSS + shadcn/ui** | デザインシステムを自作する工数を削減しつつ、コンポーネントを自分のリポジトリで管理できる柔軟性が魅力。                                                         |
-| **react-hook-form + Zod**    | フォーム状態の管理と、サーバー/クライアント両方で同じスキーマを使えるバリデーション設計のため。                                                                |
-| **Recharts**                 | スタッフの成長曲線を可視化するため。React との統合がスムーズ。                                                                                                 |
+| 技術                         | 選定理由                                                                                                                                                                                                  |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Next.js 15 (App Router)**  | Server Components/Server Actions による「責務の分離」の徹底させるため使用しました。本アプリでは「評価」という不正があってはならないデータを扱うため、更新ロジックを Server Actions に集約し隠蔽しました。 |
+| **TypeScript**               | 評価項目・ランク算出など、ドメインロジックの型安全性が必須になります。`SectionType = 'basic' \| 'barista' \| 'cashier` のような Union 型で状態を表現することで、バグを未然に防いでいます。                |
+| **React 19**                 | Server Components と `use()` API による非同期データ受け渡しなど、最新パターンを学習・実践するため導入しました。                                                                                           |
+| **Tailwind CSS + shadcn/ui** | デザインシステムを自作する工数を削減しつつ、コンポーネントを自分のリポジトリで管理できる柔軟性が魅力であるため導入しました。                                                                              |
+| **react-hook-form + Zod**    | フォーム状態の管理と、サーバー/クライアント両方で同じスキーマを使えるバリデーション設計で扱いやすいので採用しました。                                                                                     |
+| **Recharts**                 | スタッフの成長曲線を可視化するためです。React との統合がスムーズ なので導入しました。                                                                                                                     |
 
 ### バックエンド
 
-| 技術           | 選定理由                                                                                                                                 |
-| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| **Supabase**   | PostgreSQL ベースで、認証・DB・Row Level Security が一体化している。個人開発のスピード感と、本格的な DB 設計の両立が可能。               |
-| **PostgreSQL** | 評価データの正規化(evaluations / evaluation_sections / evaluation_items の 3 テーブル構成)に必要なリレーショナル DB の恩恵を受けるため。 |
+| 技術           | 選定理由                                                                                                                                     |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Supabase**   | PostgreSQL ベースで、認証・DB・Row Level Security が一体化している。個人開発のスピード感と、本格的な DB 設計の両立が可能なため採用しました。 |
+| **PostgreSQL** | 評価データの複雑なリレーション（3 層構造の正規化）を厳格に管理し、データの整合性を担保するのに RDB が最適だと判断したためです。              |
 
 ### 開発環境・インフラ
 
-| 技術                             | 選定理由                                                                                  |
-| -------------------------------- | ----------------------------------------------------------------------------------------- |
-| **Vercel**                       | Next.js との親和性。                                                                      |
-| **Docker**                       | ローカル環境の再現性確保のため。Linux/Docker 基礎を Ubuntu コンテナで学習した経験を活用。 |
-| **GitHub Actions**               | PR 作成時に自動で Lint/Test を走らせ、品質担保。ブランチ保護ルールと組み合わせて運用。    |
-| **ESLint / Vitest / Playwright** | 静的解析・単体テスト・E2E テストの 3 層で品質を担保する設計。                             |
+| 技術                | 選定理由                                                                                          |
+| ------------------- | ------------------------------------------------------------------------------------------------- |
+| **Vercel**          | Next.js との親和性が高いため選択しました。                                                        |
+| **Docker**          | ローカル環境の再現性確保のため。Linux/Docker 基礎を Ubuntu コンテナで学習した経験を活用しました。 |
+| **GitHub Actions**  | PR 作成時に自動で Lint/Test を走らせ、品質担保。ブランチ保護ルールと組み合わせて運用しています。  |
+| **ESLint / Vitest** | 静的解析・単体テスト 2 層で品質を担保する設計にしました。                                         |
 
 ---
 
@@ -276,108 +253,265 @@ https://github.com/user-attachments/assets/9fb44b26-97fc-4050-8c9a-cf192c3c62ea
 
 ---
 
-## 実装で工夫した点・こだわり
+## 設計上の試行錯誤
 
-### 1. タブ切替時の入力データ保持
+### 1. DB 層とフォーム層の境界での型整形
 
-評価フォームは「総合 / 基本動作 / バリスタ / キャッシャー」× 「スキル / ホスピタリティ / クレンリネス」のネストタブ構成です。
-当初は各タブをコンポーネント分割していましたが、**タブ切替時に unmount されて入力中のデータが消える**問題に直面しました。
+**背景:2 つの構造をもつデータ**
+評価入力画面では、Supabase から既存の評価データを取得し、react-hook-form の `defaultValues` に渡します。ただし、DB の構造とフォームの構造は形が違う。
 
-**解決策:**
+**DB の構造のコード(.select の３階層のネスト)**
 
-- `react-hook-form` の `useForm` を**親の Client Component 一箇所で管理**し、`setValue` / `watch` を子コンポーネントに props で渡す設計に変更
-- これにより、UI はタブで切り替わっていても、フォーム状態は単一のソースで保持される
-
-### 2. 計算ロジックの責務分離
-
-ランク算出・評価率計算など、UI に依存しない純粋なロジックは `lib/utils/evaluation-calc.ts` に集約しました。
-
-```ts
-// lib/utils/evaluation-calc.ts
-export const calcRate = (score: number, maxScore: number) => ...
-export const calcRank = (rate: number) => ...
-export const calcEvaluation = (items: EvaluationItem[]) => ...
+```typescript
+.select(
+  `
+    id,
+    status,
+    action_plan,
+    total_comment,
+    future_vision,
+    evaluation_sections (
+      id,
+      section_type,
+      good_points,
+      improvement_points,
+      skill_score,
+      skill_max,
+      hospitality_score,
+      hospitality_max,
+      cleanliness_score,
+      cleanliness_max,
+      evaluation_items (
+        item_name,
+        category,
+        score
+      )
+    )
+  `
+)
 ```
 
-これにより、**UI をテストせずにロジック単体で Vitest テストが書ける**設計になっています。
+**フォームの構造のコード(basic/barista/cashier をキーに持つオブジェクト)**
 
-### 3. 認証システムの本格実装
+```typescript
+{
+    basic: {
+      skill: {},
+      hospitality: {},
+      cleanliness: {},
+      good_points: [],
+      improvement_points: [],
+    },
+    barista: {
+      skill: {},
+      hospitality: {},
+      cleanliness: {},
+      good_points: [],
+      improvement_points: [],
+    },
+    cashier: {
+      skill: {},
+      hospitality: {},
+      cleanliness: {},
+      good_points: [],
+      improvement_points: [],
+    },
+    action_plan: '',
+    total_comment: '',
+    future_vision: '',
+  }
+```
 
-ポートフォリオでありがちな「ログイン機能だけ」ではなく、本番運用を意識した実装にしています。
+**なぜ形を揃えなかったのか**
+両者を一致させるためには DB 側の構造を変更するか、フォーム側を配列構造にするかの２択になります。  
+しかしフォーム側を配列にすると、以下のデメリットがあります。
 
-- メール/パスワード認証 + メール確認フロー
-- Google OAuth (Supabase Auth 経由)
-- パスワードリセット機能
-- ミドルウェアでのルート保護
-- ロール (admin / staff) によるアクセス制御
+- 配列の 0 番目は basic、という暗黙のルールが生まれます。
+- setValue 時のパスを`sections.0.skill.xxx`のようにインデックスで指定する必要があります。
 
-### 4. コロケーション原則に基づくディレクトリ設計
+特に２点目は、評価項目コンポーネント`EvaluationItem`で問題になります。このコンポーネントは複数のカテゴリ・複数の項目を共通ロジックで扱うため、`setValue`のパスをテンプレートリテラルで動的に組み立てます。
 
-機能ごとにファイルを近接配置し、**「あるページに関わるコードは 1 つの場所に集約する」**ことで保守性を高めています。
+```typescript
+setValue(`${sectionType}.${category}.${item_name}`, score);
+```
 
----
+オブジェクト構造であれば`sectionType = 'basic' | 'barista' | 'cashier'`をそのままパスに使えます。一方、配列構造だと「basic は 0 番目、barista は 1 番目...」というマッピングをコンポーネント側で持たないといけなくなり、コードが複雑になります。
 
-## 苦労した点と解決方法
+DB の構造は DB の都合、フォームの構造は UI の都合です。
+それぞれの都合に合わせた形を持ち、境界で整形するようにしました。
 
-### 課題 1: 評価データの重複登録バグ
+**最初の実装と違和感**
+当初は reduce の初期値に空オブジェクト`{}`を渡し、それを`as FormattedEvaluation`で目的の型を主張する形で実装していました。動作はしていましたが、TypeScript の学習を進める中で、`as`キャストが型チェックを黙らせる手段でしかないことを理解しました。  
+このコードでは初期値の`{}`を「`FormattedEvaluation`だ」と強引に主張しているだけで、実際に`basic`/`barista`/`cashier`のプロパティが揃っているかは保証されません。  
+`reduce`の処理の中でプロパティが追加される前提に依存しており、もし処理に不備があっても型エラーで気が付けない状態でした。
 
-**現象:** 同じスタッフ・同じ日付の評価を保存すると、新規レコードが増え続けてしまう。
+```typescript
+const result = existingEvaluation.evaluation_sections.reduce((acc, cur) => {
+  acc[cur.section_type] = {
+    ...formatCategoryScores(cur.evaluation_items),
+    good_points: (cur.good_points ?? []) as string[],
+    improvement_points: (cur.improvement_points ?? []) as string[],
+  };
+  return acc;
+}, {} as FormattedEvaluation);
+```
 
-**原因:** 単純な`insert`を使っていたため、PostgreSQL 側に重複防止の制約がなかった。
+**書き直した実装**
+reduce にジェネリクス型引数を渡し、返り値の型を宣言しました。  
+初期値も EMPTY_SECTION_DATA で必須プロパティを揃え、型と実体を一致させました。
 
-**解決:**
+```typescript
+const EMPTY_SECTION_DATA: SectionData = {
+  skill: {},
+  hospitality: {},
+  cleanliness: {},
+  good_points: [],
+  improvement_points: [],
+};
 
-- `(staff_id, evaluation_date)` に UNIQUE 制約を追加
-- `insert` を `upsert` に変更し、存在すれば更新、なければ作成する挙動に統一
+export const formatEvaluationData = (
+  existingEvaluation: ExistingEvaluation
+) => {
+  const result =
+    existingEvaluation.evaluation_sections.reduce<FormattedEvaluation>(
+      (acc, cur) => {
+        acc[cur.section_type] = {
+          ...formatCategoryScores(cur.evaluation_items),
+          good_points: cur.good_points ?? [],
+          improvement_points: cur.improvement_points ?? [],
+        };
+        return acc;
+      },
+      {
+        basic: {
+          ...EMPTY_SECTION_DATA,
+        },
+        barista: {
+          ...EMPTY_SECTION_DATA,
+        },
+        cashier: {
+          ...EMPTY_SECTION_DATA,
+        },
+      }
+    );
 
-**学び:** **「アプリ側のロジックだけでなく、DB 制約レベルでもデータ整合性を担保する」**重要性を実感しました。
+  return result;
+};
+```
 
-### 課題 2: TypeScript の構造的型付けへの理解
+**もう一つの型崩れ：Supabase の自動生成型の限界**
+Supabase は select の結果から型を自動生成しますが、
+DB の CHECK 制約までは型に反映されません。
+例えば、`evaluation_sections.section_type` は DB 側で `CHECK('basic', 'cashier', 'barista')`制約はありますが、返却される型は `string`になります。アプリケーション側で `SectionType = 'basic' | 'cashier' | 'barista'`を定義し、整形時に型を絞る必要がありました。
 
-評価セクションの型を別の関数に渡したらコンパイルが通らない、という問題で詰まりました。
-当初は「同じ形なのになぜ？」と混乱しましたが、\*\*TypeScript の構造的型付けを体系的に学び直すことで解決。
+**設計判断としての学び**
 
----
+- DB の構造とアプリケーションのデータ構造は無理に一致させる必要はありません
+- 両者の境界で整形することで、DB を変えずにアプリケーションの都合に合わせられます
+- DB の自動生成型は万能ではない。CHECK 制約のような情報は失われるため、必要に応じてアプリケーション側で型を絞り直す判断が必要です
 
-## セットアップ方法
+### 2. 認証フローの設計 - 1 つのログイン画面で 2 種類のロールを安全に扱う
 
-### 必要環境
+**背景:管理者と一般スタッフが共存するアプリ**
+本アプリのロールは`admin`と`staff`の 2 種類あります。
+ログイン画面は 1 つで、管理者・スタッフのタブを切り替えることで表示されるフォームが切り替わる構成です。Google OAuth ボタンは管理者タブにのみ表示しています。
 
-- Node.js 20+
-- Docker / Docker Compose (Supabase ローカル環境用)
-- Supabase CLI
+![ログイン画面](./docs/screenshots/login.png)
 
-### 手順
+**最初の実装と気づき**
 
-\```bash
+スタッフのルーティングをチェックしていたとき、スタッフが管理者になりすまして管理者アカウントを作成できる状態であることに気づきました。
 
-# リポジトリをクローン
+管理者タブの「Google で続ける」ボタンは `signUpWithGoogle` を呼び出し、`role: 'admin'` を `user_metadata` に含める実装になっていました。そのため、スタッフが管理者タブで Google OAuth を実行すると、新規 admin として`profiles` レコードが作られ、`/admin` にアクセスできる状態でした。
 
-git clone https://github.com/takeshi0518/Growth-finder.git
-cd Growth-finder
+**検討した選択肢**
+問題の解決策として、2 つの方向性を検討しました。
 
-# 依存パッケージをインストール
+### 選択肢 1: 管理者用ログインとスタッフ用ログインの 2 種類用意する
 
-npm install
+`/admin-login`・`/staff-login`のような URL を作り、物理的にスタッフが管理者の Google OAuth ボタンを押せなくすることを検討しました。しかしいくつか問題があり採用には至りませんでした。
+採用しなかった理由は以下の通りです。
 
-# Supabase ローカル環境を起動
+- 管理者がスタッフに案内する URL が複数存在するため、混乱を招きます
+- 誤って管理者用ログイン URL をスタッフに伝えてしまうと URL 秘匿に依存していた防御線が崩れます
 
-npx supabase start
+特に 2 番目は実際に起こりうるリスクです。URL の秘匿に頼る設計は運用ミス 1 回で致命傷になりかねません。
 
-# 環境変数を設定
+### 選択肢 2: 認証ロジックで OAuth フローの意図を判別する(採用)
 
-cp .env.example .env.local
+ログイン画面は 1 つのままで、OAuth のリダイレクト URL に「ログイン目的なのかサインアップ目的なのか」を示すパラメータ(`intent`)を付与します。OAuth callback 側でその`intent`と`profiles`のデータを照合することで不正なフローを弾く設計です。
 
-- `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` / `SUPABASE_SERVICE_ROLE_KEY` は `npx supabase start` の出力から取得できます。
-- `SUPABASE_SERVICE_ROLE_KEY` は RLS をバイパスする権限を持つため何でも出来ます。サーバーサイドでのみ使用してください。
-- Google OAuth を使う場合は、Google Cloud Console で取得した `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` を `.env.local` に設定してください。
+この方針を採用した理由は以下の通りです。
 
-# 開発サーバーを起動
+- 運用面:ログイン画面が 1 つでスタッフに URL を伝える際の混乱がありません
+- セキュリティ面:URL 秘匿に依存しないため、伝え間違いなどの運用ミスに強くなります
+- 実装面:管理者・スタッフのログイン画面を共有できるためコードの記述量が抑えられます
 
-npm run dev
-\```
+**採用した設計:intent パラメータによるフロー判別と既存フラグの活用**
 
-http://localhost:3000 でアプリケーションが起動します。
+本アプリには、もともと OAuth 認証時に２つの仕組みが存在していました。
+
+1. **intent パラメータ**: OAuth callback で「ログインなのかサインアップなのか」を判定し、遷移先を分岐するために導入したクエリパラメータです(`intent=login` → `/admin`、`intent=signup` → `/setup`)。
+
+2. **is_setup_complete フラグ**: OAuth でアカウントを作成した直後のセットアップ未完了を表現するフラグです。名前や店舗名などが未入力の状態で、管理者アカウントとして不完全な状態を示します。
+
+これらは、いずれももともと UX 向上のために実装した機能です。OAuth 認証ではメールアドレスしか取得できないため、名前や店舗名を別途入力させる必要があります。intent と is_setup_complete を組み合わせることで、ログイン直後にセットアップ画面へ自動的に誘導し、ユーザーにプロフィール設定の手間を取らせない設計にしていました。
+
+**今回の問題への適用**
+
+スタッフが管理者になりすましてアカウントを作成できる脆弱性に対して、新しい仕組みを作るのではなく、既存の`intent`と`is_setup_complete`を組み合わせて検証する形で解決しました。
+
+具体的には callback で`intent === 'login'`の分岐に、`profile.role === 'admin'`かつ`profile.is_setup_complete === true`の検証を追加し解決しました。
+
+```typescript
+// ...(profile 取得など)
+
+if (intent === 'login') {
+  const isValidAdmin =
+    profile.role === 'admin' && profile.is_setup_complete === true;
+
+  if (!profile.is_setup_complete) {
+    return; // セットアップ未完了はブロック
+  }
+
+  if (!isValidAdmin) {
+    return; // 管理者以外はブロック
+  }
+
+  return; // /admin へ
+}
+
+if (intent === 'signup') {
+  if (profile.is_setup_complete) {
+    return; // 既存ユーザーは /admin へ
+  }
+  return; // セットアップ未完了ユーザーは /setup へ
+}
+
+return; // intent が無い場合は /login へ
+```
+
+**intent ごとの動作**
+
+- intent === 'login': 既存の admin かつセットアップ完了済みのときのみ /admin へ
+- intent === 'signup': 新規は /setup へ、セットアップ完了済みなら /admin へ
+- intent が無い場合: 想定外のフローなので /login へ
+
+この分岐の検証により、スタッフが管理者タブから OAuth 認証しても、`intent === 'login'`分岐で弾かれます。既存の仕組みに検証ロジックを追加するだけで、URL 秘匿に依存しない防御を実装することができました。
+
+**設計の限界としての判断:スタッフのアカウント発行**
+
+セキュリティの観点からは、スタッフが自分でアカウントを作成する形が望ましいです。しかし現場には「アカウントを作成しておいてください」と案内をしても、やらない人が一定数います。評価したいときにスタッフのアカウントが無いとスケジュールが狂ったりして業務に支障をきたします。
+
+そのため、スタッフのアカウントは管理者が代理で発行する設計にしました。セキュリティの理想を追求して扱いづらい設計より、現場で確実に運用される設計を選びました。
+
+ただし、この運用には弱点があります。管理者がスタッフのパスワードを知っている状態であり、スタッフが自分でパスワードを変更しない限り、その状態が続きます。本来なら初回ログイン時にパスワード変更を促す仕組みが望ましいので、将来的には改善していきたいです。
+
+**設計判断としての学び**
+
+- URL の秘匿性に頼る設計は、1 回の運用ミスで致命傷になるので認証ロジックでの判別の方が運用に強い
+- 新しい機能を実装するときは、既存の仕組みを再利用できないか考えることで、実装コストを下げることができる
+- セキュリティの理想と現場での運用の現実を理解して、落としどころを決め設計すること
 
 ---
 
@@ -386,13 +520,13 @@ http://localhost:3000 でアプリケーションが起動します。
 ### 柳澤武志 (Takeshi Yanagisawa)
 
 カフェ店長として 13 年の現場経験を持つ、フロントエンドエンジニア志望者です。
-2025 年 11 月にプログラミング学習を開始し、表面的な書き方ではなく根本原理の理解を重視して学んでいます。
+2024 年 11 月にプログラミング学習を開始し、表面的な書き方ではなく根本原理の理解を重視して学んでいます。
 
 ### リンク
 
 - **GitHub**: [@takeshi0518](https://github.com/takeshi0518)
 - **Zenn**: [技術記事一覧](https://zenn.dev/takeshi0518)
-- **X (Twitter)**: [@your_handle](https://x.com/y_takeshi0518)
+- **X (Twitter)**: [@y_takeshi0518](https://x.com/y_takeshi0518)
 
 ### このプロジェクトを通じて伝えたいこと
 
