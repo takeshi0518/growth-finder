@@ -91,5 +91,5 @@ describe('formatEvaluationData', () => {
     expect(result).toEqual(expected);
   });
 
-  it('', () => {});
+  it('scoreがnullのとき0のフォールバックが機能している', () => {});
 });
