@@ -1,5 +1,6 @@
-import { formatEvaluationData } from './utils';
+import { formatCategoryScores, formatEvaluationData } from './utils';
 import {
+  EvaluationItem,
   ExistingEvaluation,
   FormattedEvaluation,
 } from '../../../../../../../types/evaluations';
@@ -90,6 +91,22 @@ describe('formatEvaluationData', () => {
 
     expect(result).toEqual(expected);
   });
+});
 
-  it('scoreがnullのとき0のフォールバックが機能している', () => {});
+describe('formatCategoryScores', () => {
+  it('scoreがnullまたはundefinedのとき、0にフォールバックされること', () => {
+    const input: EvaluationItem[] = [
+      { item_name: 'item-1', category: 'skill', score: null as any },
+      { item_name: 'item-2', category: 'hospitality', score: undefined as any },
+      { item_name: 'item-3', category: 'cleanliness', score: null as any },
+    ];
+
+    const result = formatCategoryScores(input);
+
+    expect(result.skill['item-1']).toBe(0);
+    expect(result.hospitality['item-2']).toBe(0);
+    expect(result.cleanliness['item-3']).toBe(0);
+  });
+
+  it('')
 });
