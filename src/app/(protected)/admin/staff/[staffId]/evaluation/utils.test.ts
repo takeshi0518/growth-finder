@@ -108,5 +108,15 @@ describe('formatCategoryScores', () => {
     expect(result.cleanliness['item-3']).toBe(0);
   });
 
-  it('')
+  it('空の配列が渡された場合、初期化されたSectionDataを返す', () => {
+    const result = formatCategoryScores([]);
+
+    expect(result).toEqual({
+      skill: {},
+      hospitality: {},
+      cleanliness: {},
+      good_points: [],
+      improvement_points: [],
+    });
+  });
 });
