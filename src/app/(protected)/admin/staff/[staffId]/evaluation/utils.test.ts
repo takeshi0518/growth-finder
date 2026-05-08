@@ -1,5 +1,6 @@
-import { formatEvaluationData } from './utils';
+import { formatCategoryScores, formatEvaluationData } from './utils';
 import {
+  EvaluationItem,
   ExistingEvaluation,
   FormattedEvaluation,
 } from '../../../../../../../types/evaluations';
@@ -89,5 +90,37 @@ describe('formatEvaluationData', () => {
     const result = formatEvaluationData(input);
 
     expect(result).toEqual(expected);
+  });
+});
+
+describe('formatCategoryScores', () => {
+  it('scoreがnullまたはundefinedのとき、0にフォールバックされること', () => {
+    const input: EvaluationItem[] = [
+      // 実行時に型外の値が渡された場合のフォールバックを検証するため意図的にas anyを使用
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      { item_name: 'item-1', category: 'skill', score: null as any },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      { item_name: 'item-2', category: 'hospitality', score: undefined as any },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      { item_name: 'item-3', category: 'cleanliness', score: null as any },
+    ];
+
+    const result = formatCategoryScores(input);
+
+    expect(result.skill['item-1']).toBe(0);
+    expect(result.hospitality['item-2']).toBe(0);
+    expect(result.cleanliness['item-3']).toBe(0);
+  });
+
+  it('空の配列が渡された場合、初期化されたSectionDataを返す', () => {
+    const result = formatCategoryScores([]);
+
+    expect(result).toEqual({
+      skill: {},
+      hospitality: {},
+      cleanliness: {},
+      good_points: [],
+      improvement_points: [],
+    });
   });
 });

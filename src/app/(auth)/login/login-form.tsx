@@ -35,6 +35,8 @@ export default function LoginForm() {
     const method = localStorage.getItem('lastLoginMethod');
     const tab = localStorage.getItem('lastLoginTab');
 
+    // マウント時にlocalStorageから初期値を読み込むための意図的なsetState
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLastLoginMethod(method);
 
     if (tab !== 'admin' && tab !== 'staff') return;
