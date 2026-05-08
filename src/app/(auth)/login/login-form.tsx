@@ -41,7 +41,6 @@ export default function LoginForm() {
 
     if (tab !== 'admin' && tab !== 'staff') return;
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setActiveTab(tab);
   }, []);
 
