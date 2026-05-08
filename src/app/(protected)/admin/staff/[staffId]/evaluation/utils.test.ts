@@ -96,8 +96,12 @@ describe('formatEvaluationData', () => {
 describe('formatCategoryScores', () => {
   it('scoreがnullまたはundefinedのとき、0にフォールバックされること', () => {
     const input: EvaluationItem[] = [
+      // 実行時に型外の値が渡された場合のフォールバックを検証するため意図的にas anyを使用
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       { item_name: 'item-1', category: 'skill', score: null as any },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       { item_name: 'item-2', category: 'hospitality', score: undefined as any },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       { item_name: 'item-3', category: 'cleanliness', score: null as any },
     ];
 
