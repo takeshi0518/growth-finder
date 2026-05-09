@@ -80,6 +80,126 @@ type EditPasswordDialogProps = {
   setIsEditPasswordOpen: Dispatch<SetStateAction<boolean>>;
 };
 
+export default function StaffCardMenu({
+  isDemo,
+  staff,
+  selectedPeriod,
+}: StaffCardMenuProps) {
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isEditPasswordOpen, setIsEditPasswordOpen] = useState(false);
+
+  return (
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" size="icon" className="size-8">
+            <Icons.EllipsisVerticalIcon className="size-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuItem asChild className="cursor-pointer">
+            <Link href={`/admin/staff/${staff.id}`}>
+              <Icons.FileText className="mr-2 size-4" />
+              詳細
+            </Link>
+          </DropdownMenuItem>
+          {selectedPeriod ? (
+            <DropdownMenuItem asChild className="cursor-pointer">
+              <Link
+                href={`/admin/staff/${staff.id}/evaluation?periodId=${selectedPeriod.id}`}
+              >
+                <Icons.ClipboardList className="mr-2 size-4" />
+                評価
+              </Link>
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem disabled>
+              <Icons.ClipboardList className="mr-2 size-4" />
+              評価(期間未選択)
+            </DropdownMenuItem>
+          )}
+
+          {isDemo ? (
+            <DropdownMenuItem
+              disabled
+              className="cursor-not-allowed text-muted-foreground"
+            >
+              <Icons.Pencil className="mr-2 size-4" />
+              編集（デモモードのため不可）
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onSelect={() => setIsEditOpen(true)}
+            >
+              <Icons.Pencil className="mr-2 size-4" />
+              編集
+            </DropdownMenuItem>
+          )}
+
+          {isDemo ? (
+            <DropdownMenuItem
+              disabled
+              className="cursor-not-allowed text-muted-foreground"
+            >
+              <Icons.KeyRound className="mr-2 size-4" />
+              パスワード変更(デモモードのため不可)
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onSelect={() => setIsEditPasswordOpen(true)}
+            >
+              <Icons.KeyRound className="mr-2 size-4" />
+              パスワード変更
+            </DropdownMenuItem>
+          )}
+          {isDemo ? (
+            <DropdownMenuItem
+              disabled
+              className="cursor-not-allowed text-muted-foreground"
+            >
+              <Icons.Trash2 className="mr-2 size-4" />
+              削除（デモモードのため不可）
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem
+              onSelect={() => setIsDeleteOpen(true)}
+              className="cursor-pointer text-destructive"
+            >
+              <Icons.Trash2 className="mr-2 size-4" />
+              削除
+            </DropdownMenuItem>
+          )}
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <DeleteDialog
+        staffName={staff.name}
+        staffId={staff.id}
+        isDeleteOpen={isDeleteOpen}
+        setIsDeleteOpen={setIsDeleteOpen}
+      />
+
+      <EditDialog
+        staffId={staff.id}
+        staffName={staff.name}
+        staffEmail={staff.email}
+        staffAvatarUrl={staff.avatar_url}
+        isEditOpen={isEditOpen}
+        setIsEditOpen={setIsEditOpen}
+      />
+
+      <EditPasswordDialog
+        staffId={staff.id}
+        isEditPasswordOpen={isEditPasswordOpen}
+        setIsEditPasswordOpen={setIsEditPasswordOpen}
+      />
+    </>
+  );
+}
+
 function DeleteDialog({
   staffName,
   staffId,
@@ -339,125 +459,5 @@ function EditPasswordDialog({
         </form>
       </DialogContent>
     </Dialog>
-  );
-}
-
-export default function StaffCardMenu({
-  isDemo,
-  staff,
-  selectedPeriod,
-}: StaffCardMenuProps) {
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const [isEditOpen, setIsEditOpen] = useState(false);
-  const [isEditPasswordOpen, setIsEditPasswordOpen] = useState(false);
-
-  return (
-    <>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon" className="size-8">
-            <Icons.EllipsisVerticalIcon className="size-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuItem asChild className="cursor-pointer">
-            <Link href={`/admin/staff/${staff.id}`}>
-              <Icons.FileText className="mr-2 size-4" />
-              詳細
-            </Link>
-          </DropdownMenuItem>
-          {selectedPeriod ? (
-            <DropdownMenuItem asChild className="cursor-pointer">
-              <Link
-                href={`/admin/staff/${staff.id}/evaluation?periodId=${selectedPeriod.id}`}
-              >
-                <Icons.ClipboardList className="mr-2 size-4" />
-                評価
-              </Link>
-            </DropdownMenuItem>
-          ) : (
-            <DropdownMenuItem disabled>
-              <Icons.ClipboardList className="mr-2 size-4" />
-              評価(期間未選択)
-            </DropdownMenuItem>
-          )}
-
-          {isDemo ? (
-            <DropdownMenuItem
-              disabled
-              className="cursor-not-allowed text-muted-foreground"
-            >
-              <Icons.Pencil className="mr-2 size-4" />
-              編集（デモモードのため不可）
-            </DropdownMenuItem>
-          ) : (
-            <DropdownMenuItem
-              className="cursor-pointer"
-              onSelect={() => setIsEditOpen(true)}
-            >
-              <Icons.Pencil className="mr-2 size-4" />
-              編集
-            </DropdownMenuItem>
-          )}
-
-          {isDemo ? (
-            <DropdownMenuItem
-              disabled
-              className="cursor-not-allowed text-muted-foreground"
-            >
-              <Icons.KeyRound className="mr-2 size-4" />
-              パスワード変更(デモモードのため不可)
-            </DropdownMenuItem>
-          ) : (
-            <DropdownMenuItem
-              className="cursor-pointer"
-              onSelect={() => setIsEditPasswordOpen(true)}
-            >
-              <Icons.KeyRound className="mr-2 size-4" />
-              パスワード変更
-            </DropdownMenuItem>
-          )}
-          {isDemo ? (
-            <DropdownMenuItem
-              disabled
-              className="cursor-not-allowed text-muted-foreground"
-            >
-              <Icons.Trash2 className="mr-2 size-4" />
-              削除（デモモードのため不可）
-            </DropdownMenuItem>
-          ) : (
-            <DropdownMenuItem
-              onSelect={() => setIsDeleteOpen(true)}
-              className="cursor-pointer text-destructive"
-            >
-              <Icons.Trash2 className="mr-2 size-4" />
-              削除
-            </DropdownMenuItem>
-          )}
-        </DropdownMenuContent>
-      </DropdownMenu>
-
-      <DeleteDialog
-        staffName={staff.name}
-        staffId={staff.id}
-        isDeleteOpen={isDeleteOpen}
-        setIsDeleteOpen={setIsDeleteOpen}
-      />
-
-      <EditDialog
-        staffId={staff.id}
-        staffName={staff.name}
-        staffEmail={staff.email}
-        staffAvatarUrl={staff.avatar_url}
-        isEditOpen={isEditOpen}
-        setIsEditOpen={setIsEditOpen}
-      />
-
-      <EditPasswordDialog
-        staffId={staff.id}
-        isEditPasswordOpen={isEditPasswordOpen}
-        setIsEditPasswordOpen={setIsEditPasswordOpen}
-      />
-    </>
   );
 }
