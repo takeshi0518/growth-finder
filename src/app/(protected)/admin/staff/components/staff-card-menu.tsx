@@ -89,6 +89,12 @@ export default function StaffCardMenu({
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isEditPasswordOpen, setIsEditPasswordOpen] = useState(false);
 
+  const DemoBadge = (
+    <span className="ml-1 text-[9px] font-nomal leading-none opacity-70">
+      デモモードのため不可
+    </span>
+  );
+
   return (
     <>
       <DropdownMenu>
@@ -126,7 +132,8 @@ export default function StaffCardMenu({
               className="cursor-not-allowed text-muted-foreground"
             >
               <Icons.Pencil className="mr-2 size-4" />
-              編集（デモモードのため不可）
+              編集
+              {DemoBadge}
             </DropdownMenuItem>
           ) : (
             <DropdownMenuItem
@@ -144,7 +151,8 @@ export default function StaffCardMenu({
               className="cursor-not-allowed text-muted-foreground"
             >
               <Icons.KeyRound className="mr-2 size-4" />
-              パスワード変更(デモモードのため不可)
+              パスワード変更
+              {DemoBadge}
             </DropdownMenuItem>
           ) : (
             <DropdownMenuItem
@@ -161,7 +169,8 @@ export default function StaffCardMenu({
               className="cursor-not-allowed text-muted-foreground"
             >
               <Icons.Trash2 className="mr-2 size-4" />
-              削除（デモモードのため不可）
+              削除
+              {DemoBadge}
             </DropdownMenuItem>
           ) : (
             <DropdownMenuItem
