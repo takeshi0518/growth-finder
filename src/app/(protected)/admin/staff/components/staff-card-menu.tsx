@@ -1,6 +1,6 @@
 'use client';
 
-import { Dispatch, SetStateAction, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useMemo, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   AlertDialog,
@@ -49,6 +49,7 @@ import {
 import { uploadStaffAvatar } from '@/lib/utils/upload';
 import Link from 'next/link';
 import { Tables } from '../../../../../../types/supabase';
+import { cn } from '@/lib/utils';
 
 type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id'> | null;
 
@@ -80,6 +81,12 @@ type EditPasswordDialogProps = {
   setIsEditPasswordOpen: Dispatch<SetStateAction<boolean>>;
 };
 
+const DemoBadge = (
+  <span className="ml-1 text-[9px] font-nomal leading-none text-muted-foreground opacity-70">
+    デモモードのため不可
+  </span>
+);
+
 export default function StaffCardMenu({
   isDemo,
   staff,
@@ -89,10 +96,28 @@ export default function StaffCardMenu({
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isEditPasswordOpen, setIsEditPasswordOpen] = useState(false);
 
-  const DemoBadge = (
-    <span className="ml-1 text-[9px] font-nomal leading-none opacity-70">
-      デモモードのため不可
-    </span>
+  const menuItems = useMemo(
+    () => [
+      {
+        icon: Icons.Pencil,
+        label: '編集',
+        className: '',
+        onSelect: () => setIsEditOpen(true),
+      },
+      {
+        icon: Icons.KeyRound,
+        label: 'パスワード変更',
+        className: '',
+        onSelect: () => setIsEditPasswordOpen(true),
+      },
+      {
+        icon: Icons.Trash2,
+        label: '削除',
+        className: 'cursor-pointer text-destructive',
+        onSelect: () => setIsDeleteOpen(true),
+      },
+    ],
+    [isDemo]
   );
 
   return (
@@ -126,61 +151,26 @@ export default function StaffCardMenu({
             </DropdownMenuItem>
           )}
 
-          {isDemo ? (
-            <DropdownMenuItem
-              disabled
-              className="cursor-not-allowed text-muted-foreground"
-            >
-              <Icons.Pencil className="mr-2 size-4" />
-              編集
-              {DemoBadge}
-            </DropdownMenuItem>
-          ) : (
-            <DropdownMenuItem
-              className="cursor-pointer"
-              onSelect={() => setIsEditOpen(true)}
-            >
-              <Icons.Pencil className="mr-2 size-4" />
-              編集
-            </DropdownMenuItem>
-          )}
-
-          {isDemo ? (
-            <DropdownMenuItem
-              disabled
-              className="cursor-not-allowed text-muted-foreground"
-            >
-              <Icons.KeyRound className="mr-2 size-4" />
-              パスワード変更
-              {DemoBadge}
-            </DropdownMenuItem>
-          ) : (
-            <DropdownMenuItem
-              className="cursor-pointer"
-              onSelect={() => setIsEditPasswordOpen(true)}
-            >
-              <Icons.KeyRound className="mr-2 size-4" />
-              パスワード変更
-            </DropdownMenuItem>
-          )}
-          {isDemo ? (
-            <DropdownMenuItem
-              disabled
-              className="cursor-not-allowed text-muted-foreground"
-            >
-              <Icons.Trash2 className="mr-2 size-4" />
-              削除
-              {DemoBadge}
-            </DropdownMenuItem>
-          ) : (
-            <DropdownMenuItem
-              onSelect={() => setIsDeleteOpen(true)}
-              className="cursor-pointer text-destructive"
-            >
-              <Icons.Trash2 className="mr-2 size-4" />
-              削除
-            </DropdownMenuItem>
-          )}
+          {menuItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <DropdownMenuItem
+                key={item.label}
+                disabled={isDemo}
+                className={cn(
+                  isDemo
+                    ? 'cursor-not-allowed text-muted-foreground'
+                    : 'cursor-pointer',
+                  item.className
+                )}
+                onSelect={isDemo ? undefined : item.onSelect}
+              >
+                <Icon className="mr-2 size-4" />
+                {item.label}
+                {isDemo && DemoBadge}
+              </DropdownMenuItem>
+            );
+          })}
         </DropdownMenuContent>
       </DropdownMenu>
 
