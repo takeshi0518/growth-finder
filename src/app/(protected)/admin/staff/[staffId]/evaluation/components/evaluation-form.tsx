@@ -204,12 +204,15 @@ export default function EvaluationForm({
                   <EvaluationComments register={register} />
                 </>
               ) : existingEvaluations?.status === 'draft' ? (
-                <p className="flex items-center gap-2 text-muted-foreground justify-center p-4">
-                  <Icons.CircleAlert className="w-5 h-5" />
+                <p className="flex items-center text-xs sm:text-md gap-1 text-muted-foreground justify-center p-2 mt-8">
+                  <Icons.CircleAlert className="w-4 h-4" />
                   下書き保存中のため表示できません
                 </p>
               ) : (
-                <p>まだ評価が登録されていません</p>
+                <p className="flex items-center text-xs sm:text-md gap-1 text-muted-foreground justify-center p-2 mt-8">
+                  <Icons.CircleAlert className="w-4 h-4" />
+                  まだ評価が登録されていません
+                </p>
               )}
             </TabsContent>
             <TabsContent value="basic">
