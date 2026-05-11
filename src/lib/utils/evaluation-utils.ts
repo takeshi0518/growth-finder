@@ -3,6 +3,7 @@ import {
   EvaluationItem,
   ExistingEvaluationSection,
   SectionType,
+  TabType,
 } from '../../../types/evaluations';
 
 export const getSectionStats = (
@@ -46,4 +47,8 @@ export const isSectionType = (v: string): v is SectionType => {
 
 export const isCategoryType = (v: string): v is Category => {
   return ['skill', 'hospitality', 'cleanliness'].includes(v);
+};
+
+export const isValidTab = (v: string): v is TabType => {
+  return v === 'all' || isSectionType(v);
 };
