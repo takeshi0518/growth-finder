@@ -8,6 +8,8 @@ export type EvaluationItemConstant = Pick<
 
 export type SectionType = 'basic' | 'barista' | 'cashier';
 
+export type TabType = SectionType | 'all';
+
 export type Category = 'skill' | 'hospitality' | 'cleanliness';
 
 export type FormattedEvaluation = Record<SectionType, SectionData>;
