@@ -15,6 +15,7 @@ import {
   EvaluationItemConstant,
   ExistingEvaluation,
   FormattedEvaluation,
+  TabType,
 } from '../../../../../../../../types/evaluations';
 import EvaluationComments from './evaluation-comments';
 import { useForm, useWatch } from 'react-hook-form';
@@ -30,6 +31,8 @@ import {
   Category,
 } from '../../../../../../../../types/evaluations';
 import Summary from './sumarry';
+import { useState } from 'react';
+import { isValidTab } from '@/lib/utils/evaluation-utils';
 
 const SECTION_TYPES: SectionType[] = ['basic', 'barista', 'cashier'];
 const CATEGORIES: Category[] = ['skill', 'hospitality', 'cleanliness'];
@@ -71,6 +74,14 @@ export default function EvaluationForm({
   baristaHospitalityItems,
   baristaCleanliness,
 }: EvaluationFormProps) {
+  const [isActive, setIsActive] = useState<TabType>('all');
+  const isSummaryViewWithoutData =
+    isActive === 'all' && existingEvaluations?.status !== 'completed';
+  const handleTabChange = (v: string) => {
+    if (isValidTab(v)) {
+      setIsActive(v);
+    }
+  };
   const {
     register,
     setValue,
@@ -169,7 +180,7 @@ export default function EvaluationForm({
       </CardHeader>
       <form onSubmit={handleSubmit(onSubmit)}>
         <CardContent className="mb-6">
-          <Tabs defaultValue="all">
+          <Tabs defaultValue="all" onValueChange={(v) => handleTabChange(v)}>
             <TabsList className="grid grid-cols-2 sm:grid-cols-4 h-auto w-full">
               <TabsTrigger
                 value="all"
@@ -204,12 +215,15 @@ export default function EvaluationForm({
                   <EvaluationComments register={register} />
                 </>
               ) : existingEvaluations?.status === 'draft' ? (
-                <p className="flex items-center gap-2 text-muted-foreground justify-center p-4">
-                  <Icons.CircleAlert className="w-5 h-5" />
+                <p className="flex items-center text-xs sm:text-md gap-1 text-muted-foreground justify-center p-2 mt-8">
+                  <Icons.CircleAlert className="w-4 h-4" />
                   下書き保存中のため表示できません
                 </p>
               ) : (
-                <p>まだ評価が登録されていません</p>
+                <p className="flex items-center text-xs sm:text-md gap-1 text-muted-foreground justify-center p-2 mt-8">
+                  <Icons.CircleAlert className="w-4 h-4" />
+                  まだ評価が登録されていません
+                </p>
               )}
             </TabsContent>
             <TabsContent value="basic">
@@ -244,18 +258,20 @@ export default function EvaluationForm({
             </TabsContent>
           </Tabs>
         </CardContent>
-        <CardFooter className="flex justify-around">
-          <Button
-            variant="secondary"
-            type="button"
-            onClick={saveDraftEvaluations}
-          >
-            下書き
-          </Button>
-          <Button variant="default" type="submit" disabled={isSubmitting}>
-            {isSubmitting ? <LoaderCircleIcon /> : '保存'}
-          </Button>
-        </CardFooter>
+        {isSummaryViewWithoutData ? null : (
+          <CardFooter className="flex justify-around">
+            <Button
+              variant="secondary"
+              type="button"
+              onClick={saveDraftEvaluations}
+            >
+              下書き
+            </Button>
+            <Button variant="default" type="submit" disabled={isSubmitting}>
+              {isSubmitting ? <LoaderCircleIcon /> : '保存'}
+            </Button>
+          </CardFooter>
+        )}
       </form>
     </Card>
   );
