@@ -8,6 +8,9 @@ import { TotalEvaluations } from '../../../../types/evaluations';
 import { redirect } from 'next/navigation';
 import { calcEvaluation } from '@/lib/utils/evaluation-calc';
 import { formatCategoryRates } from '@/lib/utils/evaluation-format';
+import { Icons } from '@/components/icon/icons';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 export default async function AdminPage() {
   const supabase = await createClient();
@@ -88,21 +91,33 @@ export default async function AdminPage() {
           evaluationPeriods={evaluationPeriods}
         />
       </div>
-      <EvaluationSection
-        evaluationPeriods={evaluationPeriods}
-        currentEvaluationPeriod={currentEvaluationPeriod}
-        rank={totalEvaluation.rank}
-        rate={totalEvaluation.rate}
-        skillRate={totalEvaluation.skillRate}
-        hospitalityRate={totalEvaluation.hospitalityRate}
-        cleanlinessRate={totalEvaluation.cleanlinessRate}
-        formattedData={formattedData}
-        progressRate={progressRate}
-        evaluatedStaffs={evaluatedStaffs}
-        unevaluatedStaffs={unevaluatedStaffs}
-        unevaluatedStaffLists={unevaluatedStaffLists}
-        label="評価"
-      />
+      {evaluatedStaffs > 0 ? (
+        <EvaluationSection
+          evaluationPeriods={evaluationPeriods}
+          currentEvaluationPeriod={currentEvaluationPeriod}
+          rank={totalEvaluation.rank}
+          rate={totalEvaluation.rate}
+          skillRate={totalEvaluation.skillRate}
+          hospitalityRate={totalEvaluation.hospitalityRate}
+          cleanlinessRate={totalEvaluation.cleanlinessRate}
+          formattedData={formattedData}
+          progressRate={progressRate}
+          evaluatedStaffs={evaluatedStaffs}
+          unevaluatedStaffs={unevaluatedStaffs}
+          unevaluatedStaffLists={unevaluatedStaffLists}
+          label="評価"
+        />
+      ) : (
+        <div className="flex flex-col items-center gap-5 rounded-xl border bg-primary-foreground p-20 text-center">
+          <div className="flex items-center gap-2">
+            <Icons.AlertCircle className="w-5 h-5" />
+            <p className="text-muted-foreground">評価済みスタッフがいません</p>
+          </div>
+          <Button asChild>
+            <Link href="/admin/staff">スタッフ一覧へ</Link>
+          </Button>
+        </div>
+      )}
     </AdminContainer>
   );
 }
