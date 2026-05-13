@@ -37,15 +37,18 @@ export const calcRate = (sections: SectionScores[]) => {
     skillScore: totalSkillScore,
     hospitalityScore: totalHospitalityScore,
     cleanlinessScore: totalCleanlinessScore,
-    skillRate: Math.floor((totalSkillScore / totalSkillMax) * 100),
-    hospitalityRate: Math.floor(
-      (totalHospitalityScore / totalHospitalityMax) * 100
-    ),
-    cleanlinessRate: Math.floor(
-      (totalCleanlinessScore / totalCleanlinessMax) * 100
-    ),
+    skillRate:
+      totalSkillMax > 0
+        ? Math.floor((totalSkillScore / totalSkillMax) * 100)
+        : 0,
+    hospitalityRate: totalHospitalityMax
+      ? Math.floor((totalHospitalityScore / totalHospitalityMax) * 100)
+      : 0,
+    cleanlinessRate: totalCleanlinessMax
+      ? Math.floor((totalCleanlinessScore / totalCleanlinessMax) * 100)
+      : 0,
     totalScore,
-    totalRate: Math.floor((totalScore / totalMax) * 100),
+    totalRate: totalMax > 0 ? Math.floor((totalScore / totalMax) * 100) : 0,
   };
 };
 
