@@ -1,6 +1,6 @@
 import { SectionType } from '../../../types/evaluations';
 
-type SectionScores = {
+export type SectionScores = {
   section_type: SectionType;
   skill_score: number;
   skill_max: number;

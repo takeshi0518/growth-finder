@@ -1,4 +1,4 @@
-import { calcRank } from './evaluation-calc';
+import { calcRank, calcRate, SectionScores } from './evaluation-calc';
 
 describe('calcRank', () => {
   it('90以上はA', () => expect(calcRank(90)).toBe('A'));
@@ -8,4 +8,52 @@ describe('calcRank', () => {
   it('50はC', () => expect(calcRank(50)).toBe('C'));
   it('49はD(境界値)', () => expect(calcRank(49)).toBe('D'));
   it('0はD', () => expect(calcRank(0)).toBe('D'));
+});
+
+describe('calcRate', () => {
+  it('複数セクションのスコアが正しく合算され、各カテゴリのrateが計算される', () => {
+    const input: SectionScores[] = [
+      {
+        section_type: 'basic',
+        skill_score: 4,
+        skill_max: 8,
+        hospitality_score: 4,
+        hospitality_max: 8,
+        cleanliness_score: 6,
+        cleanliness_max: 8,
+      },
+      {
+        section_type: 'barista',
+        skill_score: 7,
+        skill_max: 8,
+        hospitality_score: 4,
+        hospitality_max: 8,
+        cleanliness_score: 7,
+        cleanliness_max: 8,
+      },
+      {
+        section_type: 'basic',
+        skill_score: 6,
+        skill_max: 8,
+        hospitality_score: 4,
+        hospitality_max: 8,
+        cleanliness_score: 6,
+        cleanliness_max: 8,
+      },
+    ];
+
+    const expected = {
+      skillScore: 17,
+      hospitalityScore: 12,
+      cleanlinessScore: 19,
+      skillRate: 70,
+      hospitalityRate: 50,
+      cleanlinessRate: 79,
+      totalScore: 48,
+      totalRate: 66,
+    };
+
+    const result = calcRate(input);
+    expect(result).toEqual(expected);
+  });
 });
