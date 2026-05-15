@@ -56,4 +56,22 @@ describe('calcRate', () => {
     const result = calcRate(input);
     expect(result).toEqual(expected);
   });
+  it('引数に空の配列を渡したとき各rateが0にフォールバックされる', () => {
+    const input: SectionScores[] = [];
+
+    const expected = {
+      skillScore: 0,
+      hospitalityScore: 0,
+      cleanlinessScore: 0,
+      skillRate: 0,
+      hospitalityRate: 0,
+      cleanlinessRate: 0,
+      totalScore: 0,
+      totalRate: 0,
+    };
+
+    const result = calcRate(input);
+
+    expect(result).toEqual(expected);
+  });
 });
