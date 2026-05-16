@@ -1,4 +1,9 @@
-import { calcRank, calcRate, SectionScores } from './evaluation-calc';
+import {
+  calcEvaluation,
+  calcRank,
+  calcRate,
+  SectionScores,
+} from './evaluation-calc';
 
 describe('calcRank', () => {
   it('90以上はA', () => expect(calcRank(90)).toBe('A'));
@@ -32,7 +37,7 @@ describe('calcRate', () => {
         cleanliness_max: 8,
       },
       {
-        section_type: 'basic',
+        section_type: 'cashier',
         skill_score: 6,
         skill_max: 8,
         hospitality_score: 4,
@@ -73,5 +78,71 @@ describe('calcRate', () => {
     const result = calcRate(input);
 
     expect(result).toEqual(expected);
+  });
+});
+
+describe('calcEvaluation', () => {
+  it('各セクションのrate・rank・各カテゴリrateが正しく計算されたsectionRatesが返ってくる', () => {
+    const sections: SectionScores[] = [
+      {
+        section_type: 'basic',
+        skill_score: 4,
+        skill_max: 8,
+        hospitality_score: 4,
+        hospitality_max: 8,
+        cleanliness_score: 6,
+        cleanliness_max: 8,
+      },
+      {
+        section_type: 'barista',
+        skill_score: 7,
+        skill_max: 8,
+        hospitality_score: 4,
+        hospitality_max: 8,
+        cleanliness_score: 7,
+        cleanliness_max: 8,
+      },
+      {
+        section_type: 'cashier',
+        skill_score: 6,
+        skill_max: 8,
+        hospitality_score: 4,
+        hospitality_max: 8,
+        cleanliness_score: 6,
+        cleanliness_max: 8,
+      },
+    ];
+
+    const expected = [
+      {
+        sectionType: 'basic',
+        rate: 58,
+        rank: 'C',
+        skillRate: 50,
+        hospitalityRate: 50,
+        cleanlinessRate: 75,
+      },
+      {
+        sectionType: 'barista',
+        rate: 75,
+        rank: 'B',
+        skillRate: 87,
+        hospitalityRate: 50,
+        cleanlinessRate: 87,
+      },
+      {
+        sectionType: 'cashier',
+        rate: 66,
+        rank: 'C',
+        skillRate: 75,
+        hospitalityRate: 50,
+        cleanlinessRate: 75,
+      },
+    ];
+
+    const result = calcEvaluation(sections);
+
+    expect(result.sectionRates).toEqual(expected);
+    expect(result.sectionRates).toHaveLength(3);
   });
 });
