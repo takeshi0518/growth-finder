@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import Container from './container';
+import Container from '@/components/shared/contaienr';
 import { Icons } from '../../../components/icon/icons';
 
 const footerLinks = {

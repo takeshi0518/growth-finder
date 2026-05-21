@@ -1,18 +1,8 @@
-import type { Metadata } from 'next';
 import Image from 'next/image';
-
 import Container from '@/components/shared/contaienr';
+import BackPageLink from '@/components/shared/back-page-link';
 
-export const metadata: Metadata = {
-  title: 'Growth Finder',
-  description: 'スタッフの成長を可視化し、関係性構築を支援する人材育成ツール',
-};
-
-export default function ProtectedLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function NotFound() {
   return (
     <div className="min-h-screen flex flex-col">
       <header className="border-b bg-card">
@@ -29,7 +19,13 @@ export default function ProtectedLayout({
       </header>
 
       <main className="flex-1 flex items-center justify-center p-4">
-        {children}
+        <div className="flex flex-col items-center gap-10">
+          <h1 className="font-bold text-3xl lg:text-6xl">404 Not Found</h1>
+          <p className="text-muted-foreground text-base lg:text-lg">
+            お探しのページは見つかりませんでした
+          </p>
+          <BackPageLink href="/" label="ホームへ戻る" />
+        </div>
       </main>
 
       <footer className="bg-card py-4">
