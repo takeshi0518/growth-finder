@@ -1,5 +1,5 @@
 import SectionTitle from './section-title';
-import Container from './container';
+import Container from '@/components/shared/contaienr';
 import { Icons } from '@/components/icon/icons';
 import Image from 'next/image';
 

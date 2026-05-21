@@ -4,7 +4,7 @@ import { LucideIcon } from 'lucide-react';
 import { Button } from '../../../components/ui/button';
 import { Icons } from '../../../components/icon/icons';
 import SectionTitle from './section-title';
-import Container from './container';
+import Container from '@/components/shared/contaienr';
 
 const usageList = [
   {

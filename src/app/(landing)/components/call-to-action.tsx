@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
-import Container from './container';
+import Container from '@/components/shared/contaienr';
 import SectionTitle from './section-title';
 
 export default function CallToAction() {

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 import SectionTitle from './section-title';
-import Container from './container';
+import Container from '@/components/shared/contaienr';
 
 const screenshots = [
   {
