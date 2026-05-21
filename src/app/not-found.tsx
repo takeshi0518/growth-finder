@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Container from './(landing)/components/container';
+import Container from '@/components/shared/contaienr';
 import BackPageLink from '@/components/shared/back-page-link';
 
 export default function NotFound() {
