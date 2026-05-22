@@ -17,18 +17,22 @@ export default async function AdminPage() {
 
   const { orgId, profile } = await requireAdmin(supabase);
 
-  const { data: staffs, error: staffError } = await supabase
-    .from('profiles')
-    .select('id, name, role, store_name, avatar_url, email')
-    .eq('organization_id', orgId)
-    .eq('role', 'staff');
+  const [
+    { data: staffs, error: staffError },
+    { data: evaluationPeriods, error: periodsError },
+  ] = await Promise.all([
+    supabase
+      .from('profiles')
+      .select('id, name, role, store_name, avatar_url, email')
+      .eq('organization_id', orgId)
+      .eq('role', 'staff'),
+    supabase
+      .from('evaluation_periods')
+      .select('id, name, is_current')
+      .eq('organization_id', orgId),
+  ]);
+
   if (staffError) redirect('/admin');
-
-  const { data: evaluationPeriods, error: periodsError } = await supabase
-    .from('evaluation_periods')
-    .select('id, name, is_current')
-    .eq('organization_id', orgId);
-
   if (periodsError || !evaluationPeriods) return;
 
   const currentEvaluationPeriod = evaluationPeriods.find(
