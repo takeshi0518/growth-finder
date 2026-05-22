@@ -15,7 +15,9 @@
     "db:migrate": "supabase migration up && npm run db:types",
     "db:reset": "supabase db reset && npm run db:types",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "preview": "next build && next start",
+    "preview:all": "supabase start && next build && next start"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
