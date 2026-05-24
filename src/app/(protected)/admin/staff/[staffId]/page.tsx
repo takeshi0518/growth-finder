@@ -25,21 +25,56 @@ export default async function StaffDetailPage({
 
   const { orgId, profile } = await requireAdmin(supabase);
 
-  const { data: targetStaff, error: targetStaffError } = await supabase
-    .from('profiles')
-    .select('name, store_name, role, email, avatar_url')
-    .eq('id', staffId)
-    .eq('organization_id', orgId)
-    .single();
-  if (targetStaffError || !targetStaff) redirect('/admin/staff');
+  const [
+    { data: targetStaff, error: targetStaffError },
+    { data: selectedPeriod, error },
+    chartRawResult,
+  ] = await Promise.all([
+    supabase
+      .from('profiles')
+      .select('name, store_name, role, email, avatar_url')
+      .eq('id', staffId)
+      .eq('organization_id', orgId)
+      .single(),
+    supabase
+      .from('evaluation_periods')
+      .select('id, name')
+      .eq('organization_id', orgId)
+      .eq('is_current', true)
+      .maybeSingle(),
+    supabase
+      .from('evaluation_periods')
+      .select(
+        `
+        id, name,
+        evaluations!inner (
+          evaluation_sections (
+            section_type,
+            skill_score,
+            skill_max,
+            hospitality_score,
+            hospitality_max,
+            cleanliness_score,
+            cleanliness_max
+          )
+        )
+        `
+      )
+      .eq('organization_id', orgId)
+      .eq('evaluations.staff_id', staffId)
+      .order('created_at', { ascending: true })
+      .limit(4),
+  ]);
 
-  const { data: selectedPeriod, error } = await supabase
-    .from('evaluation_periods')
-    .select('id, name')
-    .eq('organization_id', orgId)
-    .eq('is_current', true)
-    .maybeSingle();
+  if (targetStaffError || !targetStaff) redirect('/admin/staff');
   if (error) throw new Error('評価期間の取得に失敗しました');
+
+  const { data } = chartRawResult as {
+    data: PeriodForChart[] | null;
+    error: unknown;
+  };
+
+  const chartData = formatChartData(data ?? []);
 
   const { data: targetEvaluation } = selectedPeriod
     ? ((await supabase
@@ -75,31 +110,6 @@ export default async function StaffDetailPage({
         .eq('organization_id', orgId)
         .single()) as { data: ExistingEvaluation | null; error: unknown })
     : { data: null };
-
-  const { data } = (await supabase
-    .from('evaluation_periods')
-    .select(
-      `
-      id, name,
-      evaluations!inner (
-        evaluation_sections (
-          section_type,
-          skill_score,
-          skill_max,
-          hospitality_score,
-          hospitality_max,
-          cleanliness_score,
-          cleanliness_max
-        )
-      )
-      `
-    )
-    .eq('organization_id', orgId)
-    .eq('evaluations.staff_id', staffId)
-    .order('created_at', { ascending: true })
-    .limit(4)) as { data: PeriodForChart[] | null; error: unknown };
-
-  const chartData = formatChartData(data ?? []);
 
   return (
     <AdminContainer>

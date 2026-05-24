@@ -34,49 +34,56 @@ export default async function EvaluationPage({
 
   const { orgId } = await requireAdmin(supabase);
 
-  const { data: staffProfile, error: staffProfileError } = await supabase
-    .from('profiles')
-    .select('name, store_name, role, email, avatar_url')
-    .eq('organization_id', orgId)
-    .eq('id', staffId)
-    .single();
-  if (staffProfileError) throw new Error('スタッフ情報の取得に失敗しました');
-
-  //初回評価時はデータが存在しないためnullになるケースがある
-  //.single()はデータが存在しない場合もerrorを返すため意図的にerrorを無視している
-  const { data: existingEvaluation } = (await supabase
-    .from('evaluations')
-    .select(
-      `
+  const [
+    { data: staffProfile, error: staffProfileError },
+    existingEvaluationResult,
+  ] = await Promise.all([
+    supabase
+      .from('profiles')
+      .select('name, store_name, role, email, avatar_url')
+      .eq('organization_id', orgId)
+      .eq('id', staffId)
+      .single(),
+    supabase
+      .from('evaluations')
+      .select(
+        `
         id,
         status,
         action_plan,
         total_comment,
         future_vision,
-            evaluation_sections (
-            id,
-            section_type,
-            good_points,
-            improvement_points,
-            skill_score,
-            skill_max,
-            hospitality_score,
-            hospitality_max,
-            cleanliness_score,
-            cleanliness_max,
-              evaluation_items (
-                item_name,
-                category,
-                score
-          )
-        )
-      `
-    )
-    .eq('staff_id', staffId)
-    .eq('evaluation_period_id', periodId)
-    .eq('organization_id', orgId)
-    //DBのCHECK制約によりsection_typeはSectionTypeのいずれかであることが保証されている
-    .single()) as { data: ExistingEvaluation | null; error: unknown };
+        evaluation_sections (
+          id,
+          section_type,
+          good_points,
+          improvement_points,
+          skill_score,
+          skill_max,
+          hospitality_score,
+          hospitality_max,
+          cleanliness_score,
+          cleanliness_max,
+          evaluation_items (
+            item_name,
+            category,
+            score
+            )
+            )
+            `
+      )
+      .eq('staff_id', staffId)
+      .eq('evaluation_period_id', periodId)
+      .eq('organization_id', orgId)
+      .single(),
+  ]);
+
+  const { data: existingEvaluation } = existingEvaluationResult as {
+    data: ExistingEvaluation | null;
+    error: unknown;
+  };
+
+  if (staffProfileError) throw new Error('スタッフ情報の取得に失敗しました');
 
   const formattedEvaluationData = existingEvaluation
     ? formatEvaluationData(existingEvaluation)
