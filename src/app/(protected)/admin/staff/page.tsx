@@ -14,21 +14,24 @@ export default async function StaffManagementPage() {
 
   const { orgId, profile } = await requireAdmin(supabase);
 
-  const { data: staffs, error: staffsError } = await supabase
-    .from('profiles')
-    .select('id, name, role, store_name, avatar_url, email')
-    .eq('organization_id', orgId)
-    .eq('role', 'staff');
+  const [
+    { data: staffs, error: staffsError },
+    { data: selectedPeriod, error: selectedPeriodError },
+  ] = await Promise.all([
+    supabase
+      .from('profiles')
+      .select('id, name, role, store_name, avatar_url, email')
+      .eq('organization_id', orgId)
+      .eq('role', 'staff'),
+    supabase
+      .from('evaluation_periods')
+      .select('id')
+      .eq('organization_id', orgId)
+      .eq('is_current', true)
+      .maybeSingle(),
+  ]);
 
   if (staffsError) redirect('/admin');
-
-  const { data: selectedPeriod, error: selectedPeriodError } = await supabase
-    .from('evaluation_periods')
-    .select('id')
-    .eq('organization_id', orgId)
-    .eq('is_current', true)
-    .maybeSingle();
-
   if (selectedPeriodError) redirect('/admin');
 
   const { data: existingEvaluations, error: exisgintError } = selectedPeriod
