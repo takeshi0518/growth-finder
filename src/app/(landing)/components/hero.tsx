@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import Container from '@/components/shared/contaienr';
+import DemoLoginButton from './demo-login-button';
 
 export default function Hero() {
   return (
@@ -26,9 +27,8 @@ export default function Hero() {
               </p>
             </div>
             <div className="flex flex-col gap-4 md:flex-row md:justify-center sm:gap-8 md:gap-12">
-              <Button size="lg" asChild>
-                <Link href="/demo">デモで今すぐ試す</Link>
-              </Button>
+              <DemoLoginButton />
+
               <Button size="lg" variant="outline" asChild>
                 <Link href="/signup">無料ではじめる</Link>
               </Button>
