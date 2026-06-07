@@ -41,10 +41,10 @@ export default function FadeIn({
       ref={ref}
       style={{ transitionDelay: `${delay}s` }}
       className={cn(
-        'transition-all duration-700 ease-out motion-reduce:transition-none',
         isVisible
-          ? 'opacity-100 translate-y-0'
-          : 'opacity-0 translate-y-8 motion-reduce:opacity-100 motion-reduce:translate-y-0',
+          ? 'animate-in fade-in slide-in-from-bottom-8 duration-700 fill-mode-both'
+          : 'opacity-0',
+        'motion-reduce:animate-none motion-reduce:opacity-100',
         className
       )}
     >
