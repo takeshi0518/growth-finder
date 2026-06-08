@@ -40,6 +40,8 @@ import {
   MousePointer,
   TriangleAlert,
   ArrowBigDown,
+  MessageSquareText,
+  ChartColumnIncreasing,
 } from 'lucide-react';
 
 import { FaXTwitter, FaGithub } from 'react-icons/fa6';
@@ -95,6 +97,9 @@ export const Icons = {
   MousePointer,
   TriangleAlert,
   ArrowBigDown,
+  MessageSquareText,
+  ChartColumnIncreasing,
+  
   FaXTwitter,
   FaGithub,
   FcGoogle,
