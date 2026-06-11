@@ -17,7 +17,7 @@ export default function CallToAction() {
             デモモードでは、アカウントを登録せずにアプリを利用できます
           </p>
           <div className="flex justify-center">
-            <DemoLoginButton />
+            <DemoLoginButton className="text-base sm:text-lg md:text-xl py-5 md:py-6 lg:py-7 md:w-lg" />
           </div>
         </div>
       </Container>
