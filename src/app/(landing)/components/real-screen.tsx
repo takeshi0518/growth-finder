@@ -72,28 +72,24 @@ function Screenshot({
   priority,
 }: ScreenshotProps) {
   return (
-    <div className="bg-card rounded-3xl overflow-hidden border">
-      <div className="p-6 lg:p-10">
-        <div className="flex items-center gap-3 font-bold mb-5">
-          <div className="flex items-center justify-center w-6 sm:w-8 h-6 sm:h-8 bg-primary rounded-full text-primary-foreground text-xs sm:text-sm md:text-base">
-            <span>{index}</span>
-          </div>
-          <h3 className="font-bold">{title}</h3>
+    <div className="bg-card rounded-3xl overflow-hidden border p-8 space-y-5">
+      <div className="flex items-center gap-3 font-bold">
+        <div className="flex items-center justify-center w-6 sm:w-8 h-6 sm:h-8 bg-primary rounded-full text-primary-foreground text-xs sm:text-sm md:text-base">
+          <span>{index}</span>
         </div>
-        <Image
-          src={src}
-          alt={alt}
-          priority={priority}
-          width={1000}
-          height={600}
-          className="w-full h-auto rounded-lg border"
-        />
+        <h3 className="font-bold">{title}</h3>
       </div>
-      <div className="border-t p-7 lg:p-12 space-y-1">
-        <p className="text-xs md:text-sm lg:text-base text-muted-foreground">
-          {description}
-        </p>
-      </div>
+      <Image
+        src={src}
+        alt={alt}
+        priority={priority}
+        width={1000}
+        height={600}
+        className="w-full h-auto rounded-lg border"
+      />
+      <p className="text-xs md:text-sm lg:text-base text-muted-foreground">
+        {description}
+      </p>
     </div>
   );
 }
