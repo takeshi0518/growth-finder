@@ -53,43 +53,47 @@ export default function RealScreen() {
       <Container>
         <SectionTitle>実際の画面</SectionTitle>
 
-        <div className="overflow-hidden">
-          <div
-            className="flex transition-transform duration-500 ease-out"
-            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-          >
-            {screenshots.map((screenshot) => (
-              <div key={screenshot.alt} className="w-full shrink-0 px-2">
-                <Image
-                  src={screenshot.src}
-                  alt={screenshot.alt}
-                  width={1000}
-                  height={600}
-                  className="w-full h-auto rounded-lg border"
-                />
-                <p className="mt-4 text-center font-bold">{screenshot.title}</p>
-              </div>
-            ))}
+        <div className="max-w-4xl mx-auto bg-card rounded-3xl border p-6">
+          <div className="overflow-hidden">
+            <div
+              className="flex transition-transform duration-500 ease-out"
+              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            >
+              {screenshots.map((screenshot) => (
+                <div key={screenshot.alt} className="w-full shrink-0 px-2">
+                  <Image
+                    src={screenshot.src}
+                    alt={screenshot.alt}
+                    width={1000}
+                    height={600}
+                    className="w-full h-auto rounded-lg border"
+                  />
+                  <p className="mt-4 text-center font-bold">
+                    {screenshot.title}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
 
-        <div className="flex justify-center gap-10 mt-6">
-          <button
-            onClick={handlePrev}
-            disabled={currentIndex === 0}
-            aria-label="前のスライドへ"
-            className="hover:opacity-70 disabled:opacity-40 disabled:cursor-not-allowed"
-          >
-            <Icons.ChevronLeft className="w-10 h-10" />
-          </button>
-          <button
-            onClick={handleNext}
-            disabled={currentIndex === screenshots.length - 1}
-            aria-label="次のスライドへ"
-            className="hover:opacity-70 disabled:opacity-40 disabled:cursor-not-allowed"
-          >
-            <Icons.ChevronRight className="w-10 h-10" />
-          </button>
+          <div className="flex justify-center gap-10 mt-6">
+            <button
+              onClick={handlePrev}
+              disabled={currentIndex === 0}
+              aria-label="前のスライドへ"
+              className="hover:opacity-70 disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <Icons.ChevronLeft className="w-10 h-10" />
+            </button>
+            <button
+              onClick={handleNext}
+              disabled={currentIndex === screenshots.length - 1}
+              aria-label="次のスライドへ"
+              className="hover:opacity-70 disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <Icons.ChevronRight className="w-10 h-10" />
+            </button>
+          </div>
         </div>
       </Container>
     </section>
