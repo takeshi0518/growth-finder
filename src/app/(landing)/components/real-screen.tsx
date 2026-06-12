@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import Image from 'next/image';
 
 import SectionTitle from './section-title';
@@ -34,62 +37,58 @@ const screenshots = [
   },
 ];
 
-type ScreenshotProps = {
-  src: string;
-  alt: string;
-  index: number;
-  title: string;
-  description: string;
-  priority?: boolean;
-};
-
 export default function RealScreen() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleNext = () => {
+    setCurrentIndex(currentIndex + 1);
+  };
+  const handlePrev = () => {
+    setCurrentIndex(currentIndex - 1);
+  };
+
   return (
     <section>
       <Container>
         <SectionTitle>実際の画面</SectionTitle>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {screenshots.map((screenshot, index) => (
-            <Screenshot
-              key={screenshot.alt}
-              {...screenshot}
-              priority={index === 0}
-              index={index + 1}
-            />
-          ))}
+
+        <div className="overflow-hidden">
+          <div
+            className="flex transition-transform duration-500 ease-out"
+            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+          >
+            {screenshots.map((screenshot) => (
+              <div key={screenshot.alt} className="w-full shrink-0 px-2">
+                <Image
+                  src={screenshot.src}
+                  alt={screenshot.alt}
+                  width={1000}
+                  height={600}
+                  className="w-full h-auto rounded-lg border"
+                />
+                <p className="mt-4 text-center font-bold">{screenshot.title}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex justify-center gap-4 mt-6">
+          <button
+            onClick={handlePrev}
+            disabled={currentIndex === 0}
+            className="px-4 py-2 border rounded-lg disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            前へ
+          </button>
+          <button
+            onClick={handleNext}
+            disabled={currentIndex === screenshots.length - 1}
+            className="px-4 py-2 border rounded-lg disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            次へ
+          </button>
         </div>
       </Container>
     </section>
-  );
-}
-
-function Screenshot({
-  src,
-  alt,
-  index,
-  title,
-  description,
-  priority,
-}: ScreenshotProps) {
-  return (
-    <div className="bg-card rounded-3xl overflow-hidden border p-8 space-y-5">
-      <div className="flex items-center gap-3 font-bold">
-        <div className="flex items-center justify-center w-6 sm:w-8 h-6 sm:h-8 bg-primary rounded-full text-primary-foreground text-xs sm:text-sm md:text-base">
-          <span>{index}</span>
-        </div>
-        <h3 className="font-bold">{title}</h3>
-      </div>
-      <Image
-        src={src}
-        alt={alt}
-        priority={priority}
-        width={1000}
-        height={600}
-        className="w-full h-auto rounded-lg border"
-      />
-      <p className="text-xs md:text-sm lg:text-base text-muted-foreground">
-        {description}
-      </p>
-    </div>
   );
 }
