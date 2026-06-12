@@ -52,15 +52,14 @@ export default function RealScreen() {
     <section>
       <Container>
         <SectionTitle>実際の画面</SectionTitle>
-
-        <div className="max-w-4xl mx-auto bg-card rounded-3xl border p-6">
-          <div className="overflow-hidden">
+        <div className="max-w-5xl mx-auto bg-card rounded-3xl border p-3 sm:p-4 md:p-5 lg:p-6">
+          <div className="relative overflow-hidden">
             <div
               className="flex transition-transform duration-500 ease-out"
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
               {screenshots.map((screenshot) => (
-                <div key={screenshot.alt} className="w-full shrink-0 px-2">
+                <div key={screenshot.alt} className="relative w-full shrink-0">
                   <Image
                     src={screenshot.src}
                     alt={screenshot.alt}
@@ -68,32 +67,29 @@ export default function RealScreen() {
                     height={600}
                     className="w-full h-auto rounded-lg border"
                   />
-                  <p className="mt-4 text-center font-bold">
-                    {screenshot.title}
-                  </p>
                 </div>
               ))}
             </div>
-          </div>
-
-          <div className="flex justify-center gap-10 mt-6">
             <button
               onClick={handlePrev}
               disabled={currentIndex === 0}
               aria-label="前のスライドへ"
-              className="hover:opacity-70 disabled:opacity-40 disabled:cursor-not-allowed"
+              className="bg-white/80 rounded-full absolute left-3 lg:left-9 top-1/2 -translate-y-1/2 hover:opacity-70 disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              <Icons.ChevronLeft className="w-10 h-10" />
+              <Icons.ChevronLeft className="w-7 sm:w-8 md:w-10 lg:w-15 h-7 sm:h-8 md:h-10 lg:h-15" />
             </button>
             <button
               onClick={handleNext}
               disabled={currentIndex === screenshots.length - 1}
               aria-label="次のスライドへ"
-              className="hover:opacity-70 disabled:opacity-40 disabled:cursor-not-allowed"
+              className="bg-white/80 rounded-full absolute right-3 lg:right-9 top-1/2 -translate-y-1/2 hover:opacity-70 disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              <Icons.ChevronRight className="w-10 h-10" />
+              <Icons.ChevronRight className="w-7 sm:w-8 md:w-10 lg:w-15 h-7 sm:h-8 md:h-10 lg:h-15" />
             </button>
           </div>
+          <p className="text-center mt-4 font-bold text-xs sm:text-sm md:text-base lg:text-lg">
+            {screenshots[currentIndex].title}
+          </p>
         </div>
       </Container>
     </section>
