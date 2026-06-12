@@ -5,6 +5,7 @@ import Image from 'next/image';
 
 import SectionTitle from './section-title';
 import Container from '@/components/shared/contaienr';
+import { Icons } from '@/components/icon/icons';
 
 const screenshots = [
   {
@@ -72,20 +73,22 @@ export default function RealScreen() {
           </div>
         </div>
 
-        <div className="flex justify-center gap-4 mt-6">
+        <div className="flex justify-center gap-10 mt-6">
           <button
             onClick={handlePrev}
             disabled={currentIndex === 0}
-            className="px-4 py-2 border rounded-lg disabled:opacity-40 disabled:cursor-not-allowed"
+            aria-label="前のスライドへ"
+            className="hover:opacity-70 disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            前へ
+            <Icons.ChevronLeft className="w-10 h-10" />
           </button>
           <button
             onClick={handleNext}
             disabled={currentIndex === screenshots.length - 1}
-            className="px-4 py-2 border rounded-lg disabled:opacity-40 disabled:cursor-not-allowed"
+            aria-label="次のスライドへ"
+            className="hover:opacity-70 disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            次へ
+            <Icons.ChevronRight className="w-10 h-10" />
           </button>
         </div>
       </Container>
