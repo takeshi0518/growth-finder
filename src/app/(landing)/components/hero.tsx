@@ -8,8 +8,8 @@ export default function Hero() {
   return (
     <section className="min-h-screen flex items-center pt-20 lg:pt-8">
       <Container>
-        <div className="flex flex-col md:flex-row items-center gap-5">
-          <div className="flex flex-col gap-3 items-center md:flex-1">
+        <div className="flex flex-col md:flex-row items-center gap-8">
+          <div className="flex flex-col gap-8 items-center md:flex-1">
             <div className="flex flex-col gap-4 lg:gap-8">
               <p className="text-left font-bold text-2xl md:text-3xl lg:text-5xl">
                 スタッフ評価の
@@ -24,7 +24,7 @@ export default function Hero() {
               </p>
             </div>
 
-            <div className="flex flex-col items-center gap-5">
+            <div className="flex flex-col items-center gap-8">
               <ul className="flex gap-3 md:gap-8 xl:gap-20">
                 <li className="flex flex-col items-center gap-2">
                   <div className="flex justify-center items-center w-12 md:w-18 lg:w-28 h-12 md:h-18 lg:h-28 bg-white rounded-full shadow-xs">
@@ -58,7 +58,7 @@ export default function Hero() {
                 </li>
               </ul>
 
-              <DemoLoginButton />
+              <DemoLoginButton className="text-base sm:text-lg md:text-xl py-4 md:py-5 lg:py-6 md:w-lg" />
             </div>
           </div>
           <div className="md:flex-1">
