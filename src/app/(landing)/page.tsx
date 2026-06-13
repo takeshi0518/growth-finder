@@ -7,7 +7,7 @@ import Usage from './components/usage';
 
 export default function LandingPage() {
   return (
-    <div className="space-y-40">
+    <div className="space-y-24 md:space-y-32 lg:space-y-40">
       <Hero />
       <ProblemSolution />
       <RealScreen />
