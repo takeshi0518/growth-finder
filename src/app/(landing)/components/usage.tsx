@@ -3,6 +3,7 @@ import { LucideIcon } from 'lucide-react';
 import { Icons } from '../../../components/icon/icons';
 import SectionTitle from './section-title';
 import Container from '@/components/shared/contaienr';
+import FadeIn from './fade-in';
 
 const usageList = [
   {
@@ -42,10 +43,14 @@ export default function Usage() {
   return (
     <section id="usage">
       <Container className="space-y-20">
-        <SectionTitle>Growth Finderの使い方</SectionTitle>
+        <FadeIn delay={0}>
+          <SectionTitle>Growth Finderの使い方</SectionTitle>
+        </FadeIn>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {usageList.map((item) => (
-            <UsageItem key={item.title} {...item} />
+          {usageList.map((item, i) => (
+            <FadeIn key={item.title} delay={i * 0.1}>
+              <UsageItem {...item} />
+            </FadeIn>
           ))}
         </div>
       </Container>

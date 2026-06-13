@@ -17,9 +17,7 @@ export default function LandingPage() {
         <RealScreen />
       </FadeIn>
 
-      <FadeIn delay={0}>
-        <Usage />
-      </FadeIn>
+      <Usage />
 
       <FadeIn delay={0}>
         <CallToAction />
