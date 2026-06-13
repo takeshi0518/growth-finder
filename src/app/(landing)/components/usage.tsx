@@ -1,21 +1,16 @@
-import Link from 'next/link';
 import { LucideIcon } from 'lucide-react';
 
-import { Button } from '../../../components/ui/button';
 import { Icons } from '../../../components/icon/icons';
 import SectionTitle from './section-title';
 import Container from '@/components/shared/contaienr';
+import FadeIn from './fade-in';
 
 const usageList = [
   {
     index: '1',
     icon: Icons.Edit3,
     title: 'アカウント',
-    description: (
-      <Button size="sm" asChild variant="ghost">
-        <Link href="/signup">すぐに始める</Link>
-      </Button>
-    ),
+    description: '1分でアカウント作成',
   },
   {
     index: '2',
@@ -44,30 +39,36 @@ type UsageItemProps = {
   description: React.ReactNode;
 };
 
-function UsageItem({ index, icon: Icon, title, description }: UsageItemProps) {
-  return (
-    <div className="bg-primary-foreground w-full p-6 lg:p-12 border rounded-2xl">
-      <p className="text-xl md:text-2xl">{index}</p>
-      <div className="text-center mt-3">
-        <Icon className="w-8 md:w-10 h-8 md:h-10 mx-auto text-primary" />
-        <p className="mt-3 text-base font-semibold">{title}</p>
-        <div className="mt-4 text-xs text-muted-foreground">{description}</div>
-      </div>
-    </div>
-  );
-}
-
 export default function Usage() {
   return (
     <section id="usage">
-      <Container>
-        <SectionTitle>Growth Finderの使い方</SectionTitle>
+      <Container className="space-y-20">
+        <FadeIn delay={0}>
+          <SectionTitle>Growth Finderの使い方</SectionTitle>
+        </FadeIn>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {usageList.map((item) => (
-            <UsageItem key={item.title} {...item} />
+          {usageList.map((item, i) => (
+            <FadeIn key={item.title} delay={i * 0.1}>
+              <UsageItem {...item} />
+            </FadeIn>
           ))}
         </div>
       </Container>
     </section>
+  );
+}
+
+function UsageItem({ index, icon: Icon, title, description }: UsageItemProps) {
+  return (
+    <div className="bg-primary-foreground w-full p-8 border rounded-2xl">
+      <div className="flex items-center justify-center font-bold w-6 sm:w-8 h-6 sm:h-8 bg-primary rounded-full text-primary-foreground text-sm sm:text-base">
+        <span>{index}</span>
+      </div>
+      <div className="text-center space-y-3">
+        <Icon className="w-12 md:w-14 h-12 md:h-14 mx-auto text-primary" />
+        <p className="text-lg font-semibold">{title}</p>
+        <div className="text-sm text-primary font-bold">{description}</div>
+      </div>
+    </div>
   );
 }

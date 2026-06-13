@@ -40,9 +40,12 @@ import {
   MousePointer,
   TriangleAlert,
   ArrowBigDown,
+  MessageSquareText,
+  ChartColumnIncreasing,
 } from 'lucide-react';
 
 import { FaXTwitter, FaGithub } from 'react-icons/fa6';
+import { TbArrowBigDownLinesFilled } from 'react-icons/tb';
 import {
   FaRunning,
   FaRegCommentDots,
@@ -95,6 +98,9 @@ export const Icons = {
   MousePointer,
   TriangleAlert,
   ArrowBigDown,
+  MessageSquareText,
+  ChartColumnIncreasing,
+
   FaXTwitter,
   FaGithub,
   FcGoogle,
@@ -104,4 +110,5 @@ export const Icons = {
   FaHammer,
   FaHandHoldingHeart,
   MdCleaningServices,
+  TbArrowBigDownLinesFilled,
 };
