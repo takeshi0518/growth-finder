@@ -46,7 +46,7 @@ export default function ProblemSolution() {
           ))}
         </div>
 
-        <div className="space-y-5">
+        <div>
           <div className="flex justify-center text-primary">
             <Icons.ArrowBigDown className="w-20 h-20" />
           </div>
