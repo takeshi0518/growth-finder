@@ -50,7 +50,7 @@ export default function RealScreen() {
 
   return (
     <section>
-      <Container>
+      <Container className="space-y-20">
         <SectionTitle>実際の画面</SectionTitle>
         <div className="max-w-5xl mx-auto bg-card rounded-3xl border p-3 sm:p-4 md:p-5 lg:p-6">
           <div className="relative overflow-hidden">
