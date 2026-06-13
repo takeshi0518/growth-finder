@@ -6,7 +6,7 @@ import { Icons } from '@/components/icon/icons';
 
 export default function Hero() {
   return (
-    <section className="min-h-screen flex items-center pt-20 lg:pt-8">
+    <section className="relative min-h-screen flex items-center pt-20 lg:pt-8">
       <Container>
         <div className="flex flex-col md:flex-row items-center gap-8">
           <div className="flex flex-col gap-8 items-center md:flex-1">
@@ -72,6 +72,10 @@ export default function Hero() {
           </div>
         </div>
       </Container>
+      <div className="absolute bottom-3 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center animate-bounce-gentle">
+        <Icons.TbArrowBigDownLinesFilled className="w-5 h-5 text-muted-foreground" />
+        <p className="mt-3 text-xs text-muted-foreground">Scroll</p>
+      </div>
     </section>
   );
 }

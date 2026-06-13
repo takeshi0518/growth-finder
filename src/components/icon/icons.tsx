@@ -45,6 +45,7 @@ import {
 } from 'lucide-react';
 
 import { FaXTwitter, FaGithub } from 'react-icons/fa6';
+import { TbArrowBigDownLinesFilled } from 'react-icons/tb';
 import {
   FaRunning,
   FaRegCommentDots,
@@ -99,7 +100,7 @@ export const Icons = {
   ArrowBigDown,
   MessageSquareText,
   ChartColumnIncreasing,
-  
+
   FaXTwitter,
   FaGithub,
   FcGoogle,
@@ -109,4 +110,5 @@ export const Icons = {
   FaHammer,
   FaHandHoldingHeart,
   MdCleaningServices,
+  TbArrowBigDownLinesFilled,
 };
