@@ -3,6 +3,7 @@ import Container from '@/components/shared/contaienr';
 import { Icons } from '@/components/icon/icons';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
+import FadeIn from './fade-in';
 
 const items = [
   {
@@ -29,44 +30,54 @@ export default function ProblemSolution() {
   return (
     <section id="problem-solution" className="scroll-mt-24">
       <Container className="space-y-20">
-        <SectionTitle>
-          こんな
-          <span className="font-bold text-primary">お悩み</span>
-          ありませんか？
-        </SectionTitle>
+        <FadeIn delay={0}>
+          <SectionTitle>
+            こんな
+            <span className="font-bold text-primary">お悩み</span>
+            ありませんか？
+          </SectionTitle>
+        </FadeIn>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {items.map((item) => (
-            <Card
-              text={item.problem}
-              key={item.problem}
-              icon={item.problemIcon}
-              variant="problem"
-            />
-          ))}
-        </div>
-
-        <div>
-          <div className="flex justify-center text-primary">
-            <Icons.ArrowBigDown className="w-20 h-20" />
+        <FadeIn delay={0}>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {items.map((item, i) => (
+              <FadeIn key={item.problem} delay={i * 0.1}>
+                <Card
+                  text={item.problem}
+                  icon={item.problemIcon}
+                  variant="problem"
+                />
+              </FadeIn>
+            ))}
           </div>
+        </FadeIn>
 
-          <div className="text-2xl md:text-4xl font-bold text-center">
-            <span className="font-bold text-primary">Growth Finder</span>
-            が解決します
+        <FadeIn delay={0}>
+          <div>
+            <div className="flex justify-center text-primary">
+              <Icons.ArrowBigDown className="w-20 h-20" />
+            </div>
+
+            <div className="text-2xl md:text-4xl font-bold text-center">
+              <span className="font-bold text-primary">Growth Finder</span>
+              が解決します
+            </div>
           </div>
-        </div>
+        </FadeIn>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {items.map((item) => (
-            <Card
-              text={item.solution}
-              key={item.solution}
-              icon={item.solutionIcon}
-              variant="solution"
-            />
-          ))}
-        </div>
+        <FadeIn delay={0}>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {items.map((item, i) => (
+              <FadeIn key={item.solution} delay={i * 0.1}>
+                <Card
+                  text={item.solution}
+                  icon={item.solutionIcon}
+                  variant="solution"
+                />
+              </FadeIn>
+            ))}
+          </div>
+        </FadeIn>
       </Container>
     </section>
   );
