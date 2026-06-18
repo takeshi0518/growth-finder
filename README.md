@@ -171,12 +171,6 @@ https://github.com/user-attachments/assets/9fb44b26-97fc-4050-8c9a-cf192c3c62ea
 
 ![ER図](./docs/er-diagram.png)
 
-**設計のポイント:**
-
-- `evaluations` (評価本体) → `evaluation_sections` (カテゴリ単位) → `evaluation_items` (項目単位) の 3 層構造で正規化
-- 良かった点・改善点は `evaluation_sections` 上に `TEXT[]` (配列型)で保持し、可変長コメントに対応
-- `(staff_id, evaluation_date)` に UNIQUE 制約 + upsert で、同日の重複登録を防止
-
 ### 画面遷移図
 
 ![画面遷移図](./docs/screen-transition.jpg)
@@ -445,25 +439,11 @@ return; // intent が無い場合は /login へ
 
 ---
 
-## 開発者について
-
-### 柳澤武志 (Takeshi Yanagisawa)
-
-カフェ店長として 13 年の現場経験を持つ、フロントエンドエンジニア志望者です。
-2024 年 11 月にプログラミング学習を開始し、表面的な書き方ではなく根本原理の理解を重視して学んでいます。
-
-### リンク
+## リンク
 
 - **GitHub**: [@takeshi0518](https://github.com/takeshi0518)
 - **Zenn**: [技術記事一覧](https://zenn.dev/takeshi0518)
 - **X (Twitter)**: [@y_takeshi0518](https://x.com/y_takeshi0518)
-
-### このプロジェクトを通じて伝えたいこと
-
-> **「現場の課題を、技術で解決する」**
->
-> エンジニアリングは目的ではなく手段です。
-> 13 年の現場経験で見つけた課題を、自分の手で解決していくプロセスそのものが、私のエンジニアとしての価値だと考えています。
 
 ---
 
