@@ -179,95 +179,73 @@ https://github.com/user-attachments/assets/9fb44b26-97fc-4050-8c9a-cf192c3c62ea
 
 ### 1. DB 層とフォーム層の境界での型整形
 
-**背景:2 つの構造をもつデータ**
-評価入力画面では、Supabase から既存の評価データを取得し、react-hook-form の `defaultValues` に渡します。ただし、DB の構造とフォームの構造は形が違う。
+DB から取得した評価データの構造と、react-hook-form が扱うフォームの構造は形が異なります。これをどう繋ぐかを考える中で、「データ構造の設計」「型の付け方」「自動生成型の限界」という 3 つの判断に向き合いました。
 
-**DB の構造のコード(.select の３階層のネスト)**
+#### 1-1. なぜ DB の形にフォームを「揃えなかった」のか
 
-```typescript
+**結論から言うと、両者を無理に一致させず、境界で整形する設計にしました。**
+
+DB からは `.select` のネストで、`evaluation_sections` が**配列**として返ってきます。一方フォームは、`basic` / `barista` / `cashier` をキーに持つ**オブジェクト**で扱いたい。この 2 つの構造をどう繋ぐかで、2 つの選択肢がありました。
+
+<details>
+<summary>DB の構造とフォームの構造（クリックで展開）</summary>
+
+**DB の構造（.select の 3 階層ネスト）**
+
+​`` typescript
 .select(
   `
-    id,
-    status,
-    action_plan,
-    total_comment,
-    future_vision,
+    id, status, action_plan, total_comment, future_vision,
     evaluation_sections (
-      id,
-      section_type,
-      good_points,
-      improvement_points,
-      skill_score,
-      skill_max,
-      hospitality_score,
-      hospitality_max,
-      cleanliness_score,
-      cleanliness_max,
-      evaluation_items (
-        item_name,
-        category,
-        score
-      )
+      id, section_type, good_points, improvement_points,
+      skill_score, skill_max,
+      hospitality_score, hospitality_max,
+      cleanliness_score, cleanliness_max,
+      evaluation_items ( item_name, category, score )
     )
   `
 )
-```
+​ ``
 
-**フォームの構造のコード(basic/barista/cashier をキーに持つオブジェクト)**
+**フォームの構造（basic/barista/cashier をキーに持つオブジェクト）**
 
-```typescript
+​`typescript
 {
-    basic: {
-      skill: {},
-      hospitality: {},
-      cleanliness: {},
-      good_points: [],
-      improvement_points: [],
-    },
-    barista: {
-      skill: {},
-      hospitality: {},
-      cleanliness: {},
-      good_points: [],
-      improvement_points: [],
-    },
-    cashier: {
-      skill: {},
-      hospitality: {},
-      cleanliness: {},
-      good_points: [],
-      improvement_points: [],
-    },
-    action_plan: '',
-    total_comment: '',
-    future_vision: '',
-  }
-```
+  basic:   { skill: {}, hospitality: {}, cleanliness: {}, good_points: [], improvement_points: [] },
+  barista: { skill: {}, hospitality: {}, cleanliness: {}, good_points: [], improvement_points: [] },
+  cashier: { skill: {}, hospitality: {}, cleanliness: {}, good_points: [], improvement_points: [] },
+  action_plan: '', total_comment: '', future_vision: '',
+}
+​`
 
-**なぜ形を揃えなかったのか**
-両者を一致させるためには DB 側の構造を変更するか、フォーム側を配列構造にするかの２択になります。  
-しかしフォーム側を配列にすると、以下のデメリットがあります。
+</details>
 
-- 配列の 0 番目は basic、という暗黙のルールが生まれます。
-- setValue 時のパスを`sections.0.skill.xxx`のようにインデックスで指定する必要があります。
+**選択肢 A：フォームを DB に合わせて配列にする**
 
-特に２点目は、評価項目コンポーネント`EvaluationItem`で問題になります。このコンポーネントは複数のカテゴリ・複数の項目を共通ロジックで扱うため、`setValue`のパスをテンプレートリテラルで動的に組み立てます。
+この場合、2 つのデメリットが生じます。
 
-```typescript
+- 「配列の 0 番目は basic」という暗黙のルールが生まれる
+- `setValue` のパスを `sections.0.skill.xxx` とインデックスで指定する必要がある
+
+特に 2 点目が問題でした。評価項目を扱う `EvaluationItem` コンポーネントは、複数カテゴリ・項目を共通ロジックで処理するため、`setValue` のパスをテンプレートリテラルで動的に組み立てます。
+
+​`` typescript
 setValue(`${sectionType}.${category}.${item_name}`, score);
-```
+​ ``
 
-オブジェクト構造であれば`sectionType = 'basic' | 'barista' | 'cashier'`をそのままパスに使えます。一方、配列構造だと「basic は 0 番目、barista は 1 番目...」というマッピングをコンポーネント側で持たないといけなくなり、コードが複雑になります。
+オブジェクト構造なら `sectionType = 'basic' | 'barista' | 'cashier'` をそのままパスに使えます。配列だと「basic は 0 番目、barista は 1 番目…」というマッピングをコンポーネント側で持つ必要があり、複雑になります。
 
-DB の構造は DB の都合、フォームの構造は UI の都合です。
-それぞれの都合に合わせた形を持ち、境界で整形するようにしました。
+**選択肢 B：それぞれの都合に合わせ、境界で整形する（採用）**
 
-**最初の実装と違和感**
-当初は reduce の初期値に空オブジェクト`{}`を渡し、それを`as FormattedEvaluation`で目的の型を主張する形で実装していました。動作はしていましたが、TypeScript の学習を進める中で、`as`キャストが型チェックを黙らせる手段でしかないことを理解しました。  
-このコードでは初期値の`{}`を「`FormattedEvaluation`だ」と強引に主張しているだけで、実際に`basic`/`barista`/`cashier`のプロパティが揃っているかは保証されません。  
-`reduce`の処理の中でプロパティが追加される前提に依存しており、もし処理に不備があっても型エラーで気が付けない状態でした。
+DB の構造は DB の都合、フォームの構造は UI の都合です。無理に揃えず、取得時に整形をかける形にしました。こうすることで両者が疎結合になり、**DB の構造を変えてもフォーム側を変えずに済む**（その逆も同様）という保守性のメリットが得られます。
 
-```typescript
+#### 1-2. `as` キャストをやめ、型と実体を一致させる
+
+**当初は `as` で型を「主張」していましたが、それは型チェックを黙らせているだけだと気づき、型と実体が一致する書き方に直しました。**
+
+当初の実装では、reduce の初期値に空オブジェクト `{}` を渡し、`as FormattedEvaluation` で型を主張していました。動作はしていましたが、TypeScript の学習を進める中で、`as` キャストは**型チェックを黙らせる手段でしかない**と理解しました。
+
+​`typescript
 const result = existingEvaluation.evaluation_sections.reduce((acc, cur) => {
   acc[cur.section_type] = {
     ...formatCategoryScores(cur.evaluation_items),
@@ -276,61 +254,60 @@ const result = existingEvaluation.evaluation_sections.reduce((acc, cur) => {
   };
   return acc;
 }, {} as FormattedEvaluation);
-```
+​`
 
-**書き直した実装**
-reduce にジェネリクス型引数を渡し、返り値の型を宣言しました。  
-初期値も EMPTY_SECTION_DATA で必須プロパティを揃え、型と実体を一致させました。
+この書き方では、初期値の `{}` を「`FormattedEvaluation` だ」と強引に主張しているだけで、実際に `basic` / `barista` / `cashier` が揃っているかは**保証されません**。reduce の処理でプロパティが追加される前提に依存しており、もし処理に不備があっても**型エラーで気づけない**状態でした。
 
-```typescript
+そこで、reduce にジェネリクス型引数 `<FormattedEvaluation>` を渡して返り値の型を宣言し、初期値も `EMPTY_SECTION_DATA` で必須プロパティを揃えることで、**型と実体を一致させました**。
+
+<details>
+<summary>書き直した実装（クリックで展開）</summary>
+
+​```typescript
 const EMPTY_SECTION_DATA: SectionData = {
-  skill: {},
-  hospitality: {},
-  cleanliness: {},
-  good_points: [],
-  improvement_points: [],
+skill: {}, hospitality: {}, cleanliness: {},
+good_points: [], improvement_points: [],
 };
 
-export const formatEvaluationData = (
-  existingEvaluation: ExistingEvaluation
-) => {
-  const result =
-    existingEvaluation.evaluation_sections.reduce<FormattedEvaluation>(
-      (acc, cur) => {
-        acc[cur.section_type] = {
-          ...formatCategoryScores(cur.evaluation_items),
-          good_points: cur.good_points ?? [],
-          improvement_points: cur.improvement_points ?? [],
-        };
-        return acc;
-      },
-      {
-        basic: {
-          ...EMPTY_SECTION_DATA,
-        },
-        barista: {
-          ...EMPTY_SECTION_DATA,
-        },
-        cashier: {
-          ...EMPTY_SECTION_DATA,
-        },
-      }
-    );
-
-  return result;
+export const formatEvaluationData = (existingEvaluation: ExistingEvaluation) => {
+const result = existingEvaluation.evaluation_sections.reduce<FormattedEvaluation>(
+(acc, cur) => {
+acc[cur.section_type] = {
+...formatCategoryScores(cur.evaluation_items),
+good_points: cur.good_points ?? [],
+improvement_points: cur.improvement_points ?? [],
 };
-```
+return acc;
+},
+{
+basic: { ...EMPTY_SECTION_DATA },
+barista: { ...EMPTY_SECTION_DATA },
+cashier: { ...EMPTY_SECTION_DATA },
+}
+);
+return result;
+};
+​```
 
-**もう一つの型崩れ：Supabase の自動生成型の限界**
-Supabase は select の結果から型を自動生成しますが、
-DB の CHECK 制約までは型に反映されません。
-例えば、`evaluation_sections.section_type` は DB 側で `CHECK('basic', 'cashier', 'barista')`制約はありますが、返却される型は `string`になります。アプリケーション側で `SectionType = 'basic' | 'cashier' | 'barista'`を定義し、整形時に型を絞る必要がありました。
+</details>
 
-**設計判断としての学び**
+#### 1-3. 自動生成型の限界 ― AI コーディングで見落としやすい型崩れ
 
-- DB の構造とアプリケーションのデータ構造は無理に一致させる必要はありません
-- 両者の境界で整形することで、DB を変えずにアプリケーションの都合に合わせられます
-- DB の自動生成型は万能ではない。CHECK 制約のような情報は失われるため、必要に応じてアプリケーション側で型を絞り直す判断が必要です
+**Supabase が自動生成する型は、DB の CHECK 制約までは反映しません。そのため、アプリケーション側で型を絞り直す必要がありました。**
+
+Supabase は `.select` の結果から型を自動生成してくれます。しかし、この型は DB の CHECK 制約を反映しません。
+
+例えば `evaluation_sections.section_type` は、DB 側で `CHECK (section_type IN ('basic', 'cashier', 'barista'))` の制約をかけています。それでも、自動生成される型は `string` のままです。そこでアプリケーション側で `SectionType = 'basic' | 'cashier' | 'barista'` を定義し、整形時に型を絞り込みました。
+
+この「自動生成型が `string` で返ってくる」点は、**AI にコードを生成させているとそのまま通り過ぎてしまいやすい**箇所です。動作はするため、型の穴に気づかないまま進んでしまう。自動生成型の限界をあらかじめ理解していたことで、自分で型を絞り直す判断ができました。
+
+---
+
+### このセクションで得た設計判断としての学び
+
+- **DB の構造とアプリケーションの構造は、無理に一致させる必要はない。** 境界で整形することで両者を疎結合に保て、片方の変更がもう片方に波及しない
+- **`as` キャストは型を「主張」するだけで「保証」しない。** ジェネリクスや初期値で、型と実体を一致させる
+- **自動生成型は万能ではない。** CHECK 制約のような情報は失われるため、必要に応じてアプリケーション側で型を絞り直す
 
 ### 2. 認証フローの設計 - 1 つのログイン画面で 2 種類のロールを安全に扱う
 
