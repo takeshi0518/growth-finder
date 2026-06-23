@@ -46,6 +46,7 @@ export default async function AdminPage() {
           `
     id,
     staff_id,
+    status,
       evaluation_sections (
       id,
       section_type,
@@ -75,10 +76,11 @@ export default async function AdminPage() {
   );
 
   const totalStaffs = staffs.length;
-  const evaluatedStaffs = totalEvaluations?.length ?? 0;
+  const evaluatedStaffs =
+    totalEvaluations?.filter((e) => e.status === 'completed').length ?? 0;
+  const unevaluatedStaffs = totalStaffs - evaluatedStaffs;
   const progressRate =
     totalStaffs > 0 ? Math.round((evaluatedStaffs / totalStaffs) * 100) : 0;
-  const unevaluatedStaffs = totalStaffs - evaluatedStaffs;
   const unevaluatedStaffLists = staffs.filter(
     (staff) =>
       !totalEvaluations?.some((evaluation) => evaluation.staff_id === staff.id)
