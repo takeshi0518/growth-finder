@@ -95,7 +95,6 @@ export type TotalEvaluations = Pick<
   'id' | 'staff_id'
 > & {
   status: Status;
-} & {
   evaluation_sections: (Pick<
     Tables<'evaluation_sections'>,
     | 'id'
