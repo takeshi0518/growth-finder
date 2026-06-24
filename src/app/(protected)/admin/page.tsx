@@ -67,7 +67,9 @@ export default async function AdminPage() {
     : { data: null };
 
   const allSections =
-    totalEvaluations?.flatMap((v) => v.evaluation_sections) ?? [];
+    totalEvaluations
+      ?.filter((evaluation) => evaluation.status === 'completed')
+      .flatMap((v) => v.evaluation_sections) ?? [];
   const totalEvaluation = calcEvaluation(allSections);
   const formattedData = formatCategoryRates(
     totalEvaluation.skillRate,
