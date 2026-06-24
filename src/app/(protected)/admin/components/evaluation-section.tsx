@@ -25,9 +25,10 @@ type EvaluationSectionProps = {
   cleanlinessRate: number;
   formattedData: FormattedSectionRate[];
   progressRate: number;
-  evaluatedStaffs: number;
-  unevaluatedStaffs: number;
+  completedStaffs: number;
+  uncompletedStaffs: number;
   unevaluatedStaffLists: Staff[];
+  draftStaffLists: Staff[];
   label: string;
 };
 
@@ -41,9 +42,10 @@ export default function EvaluationSection({
   cleanlinessRate,
   formattedData,
   progressRate,
-  evaluatedStaffs,
-  unevaluatedStaffs,
+  completedStaffs,
+  uncompletedStaffs,
   unevaluatedStaffLists,
+  draftStaffLists,
   label,
 }: EvaluationSectionProps) {
   return (
@@ -96,7 +98,7 @@ export default function EvaluationSection({
                 完了
               </span>
               <span className="text-2xl sm:text-3xl text-muted-foreground font-bold">
-                {evaluatedStaffs}
+                {completedStaffs}
               </span>
             </div>
             <div className="flex flex-col aspect-square w-full max-w-45 items-center justify-center gap-1 border rounded-xl p-5">
@@ -105,17 +107,25 @@ export default function EvaluationSection({
                 未完了
               </span>
               <span className="text-2xl sm:text-3xl text-muted-foreground font-bold">
-                {unevaluatedStaffs}
+                {uncompletedStaffs}
               </span>
             </div>
           </div>
           <Label>
             <span className="size-2 bg-primary rounded-full" />
-            未評価スタッフ一覧
+            未完了スタッフ一覧
           </Label>
           <UnevaluatedStaffList
             currentEvaluationPeriod={currentEvaluationPeriod?.id}
             unevaluatedStaffLists={unevaluatedStaffLists}
+          />
+          <Label>
+            <span className="size-2 bg-primary rounded-full" />
+            下書きスタッフ一覧
+          </Label>
+          <UnevaluatedStaffList
+            currentEvaluationPeriod={currentEvaluationPeriod?.id}
+            unevaluatedStaffLists={draftStaffLists}
           />
         </div>
       </CardContent>
