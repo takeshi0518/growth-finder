@@ -261,6 +261,25 @@ INSERT INTO evaluations (
   'キャッシャーでは自らお客様へ商品を進めることができる。バリスタでは忙しい時間帯でもカフェラテをきれいに作成できるようになっている。後輩を指導できている。'
 );
 
+INSERT INTO auth.identities (
+  provider_id,
+  user_id,
+  identity_data,
+  provider,
+  last_sign_in_at,
+  created_at,
+  updated_at
+)
+SELECT
+  id,
+  id,
+  jsonb_build_object('sub', id::text, 'email', email),
+  'email',
+  NOW(),
+  NOW(),
+  NOW()
+FROM auth.users;
+
 INSERT INTO evaluations (
   id,
   organization_id,
