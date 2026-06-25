@@ -67,7 +67,9 @@ export default async function AdminPage() {
     : { data: null };
 
   const allSections =
-    totalEvaluations?.flatMap((v) => v.evaluation_sections) ?? [];
+    totalEvaluations
+      ?.filter((evaluation) => evaluation.status === 'completed')
+      .flatMap((v) => v.evaluation_sections) ?? [];
   const totalEvaluation = calcEvaluation(allSections);
   const formattedData = formatCategoryRates(
     totalEvaluation.skillRate,
@@ -75,16 +77,32 @@ export default async function AdminPage() {
     totalEvaluation.cleanlinessRate
   );
 
-  const totalStaffs = staffs.length;
-  const evaluatedStaffs =
-    totalEvaluations?.filter((e) => e.status === 'completed').length ?? 0;
-  const unevaluatedStaffs = totalStaffs - evaluatedStaffs;
-  const progressRate =
-    totalStaffs > 0 ? Math.round((evaluatedStaffs / totalStaffs) * 100) : 0;
-  const unevaluatedStaffLists = staffs.filter(
+  const completedStaffLists = staffs.filter((staff) =>
+    totalEvaluations?.some(
+      (evaluation) =>
+        evaluation.staff_id === staff.id && evaluation.status === 'completed'
+    )
+  );
+
+  const draftStaffLists = staffs.filter((staff) =>
+    totalEvaluations?.some(
+      (evaluation) =>
+        evaluation.staff_id === staff.id && evaluation.status === 'draft'
+    )
+  );
+
+  const notStartedStaffLists = staffs.filter(
     (staff) =>
       !totalEvaluations?.some((evaluation) => evaluation.staff_id === staff.id)
   );
+
+  const totalStaffs = staffs.length;
+  const completedStaffs = completedStaffLists.length;
+  const draftStaffs = draftStaffLists.length;
+  const notStartedStaffs = notStartedStaffLists.length;
+
+  const progressRate =
+    totalStaffs > 0 ? Math.round((completedStaffs / totalStaffs) * 100) : 0;
 
   return (
     <AdminContainer>
@@ -97,7 +115,7 @@ export default async function AdminPage() {
           evaluationPeriods={evaluationPeriods}
         />
       </div>
-      {evaluatedStaffs > 0 ? (
+      {totalStaffs > 0 ? (
         <EvaluationSection
           evaluationPeriods={evaluationPeriods}
           currentEvaluationPeriod={currentEvaluationPeriod}
@@ -108,16 +126,18 @@ export default async function AdminPage() {
           cleanlinessRate={totalEvaluation.cleanlinessRate}
           formattedData={formattedData}
           progressRate={progressRate}
-          evaluatedStaffs={evaluatedStaffs}
-          unevaluatedStaffs={unevaluatedStaffs}
-          unevaluatedStaffLists={unevaluatedStaffLists}
+          completedStaffs={completedStaffs}
+          notStartedStaffs={notStartedStaffs}
+          draftStaffs={draftStaffs}
+          unevaluatedStaffLists={notStartedStaffLists}
+          draftStaffLists={draftStaffLists}
           label="評価"
         />
       ) : (
         <div className="flex flex-col items-center gap-5 rounded-xl border bg-primary-foreground p-20 text-center">
           <div className="flex items-center gap-2">
             <Icons.AlertCircle className="w-5 h-5" />
-            <p className="text-muted-foreground">評価済みスタッフがいません</p>
+            <p className="text-muted-foreground">スタッフがいません</p>
           </div>
           <Button asChild>
             <Link href="/admin/staff">スタッフ一覧へ</Link>

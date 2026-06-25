@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import ProgressBar from '@/components/evaluation/progress-bar';
 import { FormattedSectionRate } from '@/lib/utils/evaluation-format';
 import { Staff } from '../../../../../types/staff';
-import UnevaluatedStaffList from './unevaluated-staff-list';
+import StaffList from './staff-list';
 
 type EvaluationPeriod = Pick<
   Tables<'evaluation_periods'>,
@@ -25,9 +25,11 @@ type EvaluationSectionProps = {
   cleanlinessRate: number;
   formattedData: FormattedSectionRate[];
   progressRate: number;
-  evaluatedStaffs: number;
-  unevaluatedStaffs: number;
+  completedStaffs: number;
+  notStartedStaffs: number;
+  draftStaffs: number;
   unevaluatedStaffLists: Staff[];
+  draftStaffLists: Staff[];
   label: string;
 };
 
@@ -41,9 +43,11 @@ export default function EvaluationSection({
   cleanlinessRate,
   formattedData,
   progressRate,
-  evaluatedStaffs,
-  unevaluatedStaffs,
+  completedStaffs,
+  notStartedStaffs,
+  draftStaffs,
   unevaluatedStaffLists,
+  draftStaffLists,
   label,
 }: EvaluationSectionProps) {
   return (
@@ -89,33 +93,44 @@ export default function EvaluationSection({
             sectionRates={[{ label: '進捗率', rate: progressRate }]}
             label="評価進捗"
           />
-          <div className="flex gap-10 justify-around">
-            <div className="flex flex-col aspect-square w-full max-w-45 items-center justify-center gap-1 border rounded-xl p-5">
-              <span className="flex gap-1 items-center text-sm sm:text-lg text-green-400">
+          <div className="flex flex-col lg:flex-row gap-5 items-center">
+            <div className="flex gap-5 w-full items-center justify-between border rounded-xl px-8 py-5">
+              <span className="flex items-center text-sm sm:text-lg text-green-400">
                 <Icons.Check className="w-5 h-5" />
                 完了
               </span>
               <span className="text-2xl sm:text-3xl text-muted-foreground font-bold">
-                {evaluatedStaffs}
+                {completedStaffs}
               </span>
             </div>
-            <div className="flex flex-col aspect-square w-full max-w-45 items-center justify-center gap-1 border rounded-xl p-5">
+            <div className="flex gap-5 w-full items-center justify-between border rounded-xl px-8 py-5">
               <span className="flex gap-1 items-center text-sm sm:text-lg text-gray-400">
                 <Icons.Users className="w-5 h-5" />
                 未完了
               </span>
               <span className="text-2xl sm:text-3xl text-muted-foreground font-bold">
-                {unevaluatedStaffs}
+                {notStartedStaffs}
+              </span>
+            </div>
+            <div className="flex gap-5 w-full items-center justify-between border rounded-xl px-8 py-5">
+              <span className="flex gap-1 items-center text-sm sm:text-lg text-blue-400">
+                <Icons.Edit3 className="w-5 h-5" />
+                下書き
+              </span>
+              <span className="text-2xl sm:text-3xl text-muted-foreground font-bold">
+                {draftStaffs}
               </span>
             </div>
           </div>
-          <Label>
-            <span className="size-2 bg-primary rounded-full" />
-            未評価スタッフ一覧
-          </Label>
-          <UnevaluatedStaffList
+          <StaffList
             currentEvaluationPeriod={currentEvaluationPeriod?.id}
-            unevaluatedStaffLists={unevaluatedStaffLists}
+            staffs={unevaluatedStaffLists}
+            title="未完了スタッフ一覧"
+          />
+          <StaffList
+            currentEvaluationPeriod={currentEvaluationPeriod?.id}
+            staffs={draftStaffLists}
+            title="下書きスタッフ一覧"
           />
         </div>
       </CardContent>
