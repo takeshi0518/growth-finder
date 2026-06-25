@@ -13,34 +13,38 @@ import { Staff } from '../../../../../types/staff';
 import { Icons } from '@/components/icon/icons';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 
-type UnevaluatedStaffCardProps = {
+type StaffCardProps = {
   staff: Staff;
   periodId?: string;
 };
 
-type UnevaluatedStaffListProps = {
-  unevaluatedStaffLists: Staff[];
+type StaffListProps = {
+  staffs: Staff[];
   currentEvaluationPeriod?: string;
+  title: string;
 };
 
-export default function UnevaluatedStaffList({
-  unevaluatedStaffLists,
+export default function StaffList({
+  staffs,
   currentEvaluationPeriod,
-}: UnevaluatedStaffListProps) {
+  title,
+}: StaffListProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 6;
   const startIndex = (currentPage - 1) * pageSize;
-  const currentItems = unevaluatedStaffLists.slice(
-    startIndex,
-    startIndex + pageSize
-  );
-  const totalPage = Math.ceil(unevaluatedStaffLists.length / pageSize);
+  const currentItems = staffs.slice(startIndex, startIndex + pageSize);
+  const totalPage = Math.ceil(staffs.length / pageSize);
   return (
     <>
+      <Label>
+        <span className="size-2 bg-primary rounded-full" />
+        {title}
+      </Label>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {currentItems.map((staff) => (
-          <UnevaluatedStaffCard
+          <StaffCard
             key={staff.id}
             staff={staff}
             periodId={currentEvaluationPeriod}
@@ -83,7 +87,7 @@ export default function UnevaluatedStaffList({
   );
 }
 
-function UnevaluatedStaffCard({ staff, periodId }: UnevaluatedStaffCardProps) {
+function StaffCard({ staff, periodId }: StaffCardProps) {
   return (
     <Card>
       <CardContent className="pb-4">

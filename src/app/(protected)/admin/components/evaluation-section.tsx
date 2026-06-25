@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import ProgressBar from '@/components/evaluation/progress-bar';
 import { FormattedSectionRate } from '@/lib/utils/evaluation-format';
 import { Staff } from '../../../../../types/staff';
-import UnevaluatedStaffList from './unevaluated-staff-list';
+import StaffList from './staff-list';
 
 type EvaluationPeriod = Pick<
   Tables<'evaluation_periods'>,
@@ -122,21 +122,15 @@ export default function EvaluationSection({
               </span>
             </div>
           </div>
-          <Label>
-            <span className="size-2 bg-primary rounded-full" />
-            未完了スタッフ一覧
-          </Label>
-          <UnevaluatedStaffList
+          <StaffList
             currentEvaluationPeriod={currentEvaluationPeriod?.id}
-            unevaluatedStaffLists={unevaluatedStaffLists}
+            staffs={unevaluatedStaffLists}
+            title="未完了スタッフ一覧"
           />
-          <Label>
-            <span className="size-2 bg-primary rounded-full" />
-            下書きスタッフ一覧
-          </Label>
-          <UnevaluatedStaffList
+          <StaffList
             currentEvaluationPeriod={currentEvaluationPeriod?.id}
-            unevaluatedStaffLists={draftStaffLists}
+            staffs={draftStaffLists}
+            title="下書きスタッフ一覧"
           />
         </div>
       </CardContent>
