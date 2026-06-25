@@ -100,7 +100,6 @@ export default async function AdminPage() {
   const completedStaffs = completedStaffLists.length;
   const draftStaffs = draftStaffLists.length;
   const notStartedStaffs = notStartedStaffLists.length;
-  const uncompletedStaffs = draftStaffs + notStartedStaffs;
 
   const progressRate =
     totalStaffs > 0 ? Math.round((completedStaffs / totalStaffs) * 100) : 0;
@@ -128,7 +127,8 @@ export default async function AdminPage() {
           formattedData={formattedData}
           progressRate={progressRate}
           completedStaffs={completedStaffs}
-          uncompletedStaffs={uncompletedStaffs}
+          notStartedStaffs={notStartedStaffs}
+          draftStaffs={draftStaffs}
           unevaluatedStaffLists={notStartedStaffLists}
           draftStaffLists={draftStaffLists}
           label="評価"
