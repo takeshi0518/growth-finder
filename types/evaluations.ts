@@ -12,6 +12,8 @@ export type TabType = SectionType | 'all';
 
 export type Category = 'skill' | 'hospitality' | 'cleanliness';
 
+export type Status = 'completed' | 'draft';
+
 export type FormattedEvaluation = Record<SectionType, SectionData>;
 
 export type EvaluationItem = Pick<
@@ -45,6 +47,8 @@ export type ExistingEvaluationForStaffCard = Pick<
   Tables<'evaluations'>,
   'id' | 'staff_id'
 > & {
+  status: Status;
+} & {
   evaluation_sections: Pick<
     ExistingEvaluationSection,
     | 'section_type'
@@ -92,6 +96,7 @@ export type TotalEvaluations = Pick<
   Tables<'evaluations'>,
   'id' | 'staff_id'
 > & {
+  status: Status;
   evaluation_sections: (Pick<
     Tables<'evaluation_sections'>,
     | 'id'
