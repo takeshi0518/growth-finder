@@ -61,7 +61,7 @@ export default function StaffCard({
           <p>役職 {staff.role}</p>
           <p>店舗名 {staff.store_name}</p>
         </div>
-        {!evaluation && (
+        {!staffEvaluation && (
           <div className="mt-3 pt-3 border-t space-y-2">
             <p className="text-xs font-medium text-muted-foreground">
               現在の評価
