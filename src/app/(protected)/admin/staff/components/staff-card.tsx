@@ -23,10 +23,6 @@ export default function StaffCard({
   selectedPeriod,
   staffEvaluation,
 }: StaffCardProps) {
-  const evaluation = staffEvaluation
-    ? calcEvaluation(staffEvaluation.evaluation_sections)
-    : null;
-
   return (
     <Card className="relative">
       <CardContent className="pb-4">
@@ -61,42 +57,56 @@ export default function StaffCard({
           <p>役職 {staff.role}</p>
           <p>店舗名 {staff.store_name}</p>
         </div>
-        {!staffEvaluation && (
-          <div className="mt-3 pt-3 border-t space-y-2">
-            <p className="text-xs font-medium text-muted-foreground">
-              現在の評価
-            </p>
-            <span className="text-xs text-muted-foreground mt-1 bg-gray-400/10 rounded-xl p-2">
-              未完了
-            </span>
-          </div>
-        )}
-        {staffEvaluation?.status === 'completed' && evaluation && (
-          <div className="mt-3 pt-3 border-t space-y-2">
-            <p className="text-xs font-medium text-muted-foreground">
-              現在の評価
-            </p>
-            <div className="flex flex-wrap gap-2">
-              <span className="text-xs text-muted-foreground mt-1 bg-green-400/10 rounded-xl p-2">
-                {`総合評価: ${evaluation.rank}`}
-              </span>
-              <span className="text-xs text-muted-foreground mt-1 bg-green-400/10 rounded-xl p-2">
-                {`総合達成率: ${evaluation.rate}%`}
-              </span>
-            </div>
-          </div>
-        )}
-        {staffEvaluation?.status === 'draft' && (
-          <div className="mt-3 pt-3 border-t space-y-2">
-            <p className="text-xs font-medium text-muted-foreground">
-              現在の評価
-            </p>
-            <span className="text-xs text-muted-foreground mt-1 bg-blue-400/10 rounded-xl p-2">
-              下書き
-            </span>
-          </div>
-        )}
+        <EvaluationLabel staffEvaluation={staffEvaluation} />
       </CardContent>
     </Card>
+  );
+}
+
+function EvaluationLabel({
+  staffEvaluation,
+}: {
+  staffEvaluation: ExistingEvaluationForStaffCard | undefined;
+}) {
+  if (!staffEvaluation)
+    return (
+      <LabelWrapper>
+        <span className="text-xs text-muted-foreground mt-1 bg-gray-400/10 rounded-xl p-2">
+          未完了
+        </span>
+      </LabelWrapper>
+    );
+
+  if (staffEvaluation.status === 'draft')
+    return (
+      <LabelWrapper>
+        <span className="text-xs text-muted-foreground mt-1 bg-blue-400/10 rounded-xl p-2">
+          下書き
+        </span>
+      </LabelWrapper>
+    );
+
+  const evaluation = calcEvaluation(staffEvaluation.evaluation_sections);
+
+  return (
+    <LabelWrapper>
+      <div className="flex flex-wrap gap-2">
+        <span className="text-xs text-muted-foreground mt-1 bg-green-400/10 rounded-xl p-2">
+          {`総合評価: ${evaluation.rank}`}
+        </span>
+        <span className="text-xs text-muted-foreground mt-1 bg-green-400/10 rounded-xl p-2">
+          {`総合達成率: ${evaluation.rate}%`}
+        </span>
+      </div>
+    </LabelWrapper>
+  );
+}
+
+function LabelWrapper({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="mt-3 pt-3 border-t space-y-2">
+      <p className="text-xs font-medium text-muted-foreground">現在の評価</p>
+      {children}
+    </div>
   );
 }
