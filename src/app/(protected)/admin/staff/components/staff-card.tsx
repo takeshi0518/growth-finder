@@ -61,27 +61,38 @@ export default function StaffCard({
           <p>役職 {staff.role}</p>
           <p>店舗名 {staff.store_name}</p>
         </div>
-        {staffEvaluation && evaluation ? (
+        {!evaluation && (
+          <div className="mt-3 pt-3 border-t space-y-2">
+            <p className="text-xs font-medium text-muted-foreground">
+              現在の評価
+            </p>
+            <span className="text-xs text-muted-foreground mt-1 bg-gray-400/10 rounded-xl p-2">
+              未完了
+            </span>
+          </div>
+        )}
+        {staffEvaluation?.status === 'completed' && evaluation && (
           <div className="mt-3 pt-3 border-t space-y-2">
             <p className="text-xs font-medium text-muted-foreground">
               現在の評価
             </p>
             <div className="flex flex-wrap gap-2">
-              <span className="text-xs text-muted-foreground mt-1 bg-primary/10 rounded-xl p-2">
+              <span className="text-xs text-muted-foreground mt-1 bg-green-400/10 rounded-xl p-2">
                 {`総合評価: ${evaluation.rank}`}
               </span>
-              <span className="text-xs text-muted-foreground mt-1 bg-primary/10 rounded-xl p-2">
+              <span className="text-xs text-muted-foreground mt-1 bg-green-400/10 rounded-xl p-2">
                 {`総合達成率: ${evaluation.rate}%`}
               </span>
             </div>
           </div>
-        ) : (
+        )}
+        {staffEvaluation?.status === 'draft' && (
           <div className="mt-3 pt-3 border-t space-y-2">
             <p className="text-xs font-medium text-muted-foreground">
               現在の評価
             </p>
-            <span className="text-xs text-muted-foreground mt-1 bg-red-100 rounded-xl p-2">
-              未評価
+            <span className="text-xs text-muted-foreground mt-1 bg-blue-400/10 rounded-xl p-2">
+              下書き
             </span>
           </div>
         )}

@@ -41,6 +41,7 @@ export default async function StaffManagementPage() {
           `
     id,
     staff_id,
+    status,
       evaluation_sections (
         section_type,
         skill_score,
@@ -53,8 +54,7 @@ export default async function StaffManagementPage() {
     `
         )
         .eq('organization_id', orgId)
-        .eq('evaluation_period_id', selectedPeriod.id)
-        .eq('status', 'completed')) as {
+        .eq('evaluation_period_id', selectedPeriod.id)) as {
         data: ExistingEvaluationForStaffCard[] | null;
         error: unknown;
       })

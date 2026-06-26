@@ -47,6 +47,8 @@ export type ExistingEvaluationForStaffCard = Pick<
   Tables<'evaluations'>,
   'id' | 'staff_id'
 > & {
+  status: Status;
+} & {
   evaluation_sections: Pick<
     ExistingEvaluationSection,
     | 'section_type'
