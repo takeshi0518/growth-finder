@@ -40,8 +40,8 @@ export type ExistingEvaluationSection = Pick<
 
 export type ExistingEvaluation = Pick<
   Tables<'evaluations'>,
-  'id' | 'status' | 'action_plan' | 'total_comment' | 'future_vision'
-> & { evaluation_sections: ExistingEvaluationSection[] };
+  'id' | 'action_plan' | 'total_comment' | 'future_vision'
+> & { status: Status } & { evaluation_sections: ExistingEvaluationSection[] };
 
 export type ExistingEvaluationForStaffCard = Pick<
   Tables<'evaluations'>,

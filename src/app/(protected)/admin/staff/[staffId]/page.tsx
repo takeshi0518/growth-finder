@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import AdminContainer from '../../components/admin-contaimer';
 import { requireAdmin } from '@/lib/utils/requireAdmin';
 import {
+  ChartDataPoint,
   ExistingEvaluation,
   PeriodForChart,
 } from '../../../../../../types/evaluations';
@@ -14,6 +15,12 @@ import StaffEvaluationSection from '@/components/evaluation/staff-evaluation-sec
 
 type StaffDetailPageProps = {
   params: { staffId: string };
+};
+
+type StaffEvaluationProps = {
+  selectedPeriod?: { id: string; name: string } | null; //TODO: 型をどこで定義するのか？
+  targetEvaluation?: ExistingEvaluation | null;
+  chartData: ChartDataPoint[];
 };
 
 export default async function StaffDetailPage({
@@ -119,23 +126,68 @@ export default async function StaffDetailPage({
         targetStaff={targetStaff}
         staffId={staffId}
       />
-      {!selectedPeriod ? (
-        <p className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Icons.CircleAlert />
-          評価期間が設定されていません
-        </p>
-      ) : !targetEvaluation ? (
-        <p className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Icons.CircleAlert />
-          まだ評価が登録されていません
-        </p>
-      ) : (
-        <StaffEvaluationSection
-          selectedPeriod={selectedPeriod}
-          targetEvaluation={targetEvaluation}
-          chartData={chartData}
-        />
-      )}
+
+      <StaffEvaluation
+        selectedPeriod={selectedPeriod}
+        targetEvaluation={targetEvaluation}
+        chartData={chartData}
+      />
     </AdminContainer>
   );
 }
+
+function StaffEvaluation({
+  selectedPeriod,
+  targetEvaluation,
+  chartData,
+}: StaffEvaluationProps) {
+  if (!selectedPeriod)
+    return (
+      <p className="flex items-center gap-2 text-sm text-muted-foreground">
+        <Icons.CircleAlert />
+        評価期間が設定されていません
+      </p>
+    );
+
+  if (!targetEvaluation)
+    return (
+      <p className="flex items-center gap-2 text-sm text-muted-foreground">
+        <Icons.CircleAlert />
+        まだ評価が登録されていません
+      </p>
+    );
+
+  if (targetEvaluation.status === 'draft')
+    return (
+      <p className="flex items-center gap-2 text-sm text-muted-foreground">
+        <Icons.CircleAlert />
+        下書き中のため表示できません
+      </p>
+    );
+
+  return (
+    <StaffEvaluationSection
+      selectedPeriod={selectedPeriod}
+      targetEvaluation={targetEvaluation}
+      chartData={chartData}
+    />
+  );
+}
+
+// {!selectedPeriod ? (
+//   <p className="flex items-center gap-2 text-sm text-muted-foreground">
+//     <Icons.CircleAlert />
+//     評価期間が設定されていません
+//   </p>
+// ) : !targetEvaluation ? (
+//   <p className="flex items-center gap-2 text-sm text-muted-foreground">
+//     <Icons.CircleAlert />
+//     まだ評価が登録されていません
+//   </p>
+// ) : (
+//   <StaffEvaluationSection
+//     selectedPeriod={selectedPeriod}
+//     targetEvaluation={targetEvaluation}
+//     chartData={chartData}
+//   />
+// )}
