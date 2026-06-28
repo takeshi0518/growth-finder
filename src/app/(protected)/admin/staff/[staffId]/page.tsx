@@ -6,6 +6,7 @@ import AdminContainer from '../../components/admin-contaimer';
 import { requireAdmin } from '@/lib/utils/requireAdmin';
 import {
   ChartDataPoint,
+  EvaluationPeriod,
   ExistingEvaluation,
   PeriodForChart,
 } from '../../../../../../types/evaluations';
@@ -18,7 +19,7 @@ type StaffDetailPageProps = {
 };
 
 type StaffEvaluationProps = {
-  selectedPeriod?: { id: string; name: string } | null; //TODO: 型をどこで定義するのか？
+  selectedPeriod?: EvaluationPeriod | null;
   targetEvaluation?: ExistingEvaluation | null;
   chartData: ChartDataPoint[];
 };
@@ -173,21 +174,3 @@ function StaffEvaluation({
     />
   );
 }
-
-// {!selectedPeriod ? (
-//   <p className="flex items-center gap-2 text-sm text-muted-foreground">
-//     <Icons.CircleAlert />
-//     評価期間が設定されていません
-//   </p>
-// ) : !targetEvaluation ? (
-//   <p className="flex items-center gap-2 text-sm text-muted-foreground">
-//     <Icons.CircleAlert />
-//     まだ評価が登録されていません
-//   </p>
-// ) : (
-//   <StaffEvaluationSection
-//     selectedPeriod={selectedPeriod}
-//     targetEvaluation={targetEvaluation}
-//     chartData={chartData}
-//   />
-// )}

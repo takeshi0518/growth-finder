@@ -16,6 +16,11 @@ export type Status = 'completed' | 'draft';
 
 export type FormattedEvaluation = Record<SectionType, SectionData>;
 
+export type EvaluationPeriod = Pick<
+  Tables<'evaluation_periods'>,
+  'id' | 'name'
+>;
+
 export type EvaluationItem = Pick<
   Tables<'evaluation_items'>,
   'item_name' | 'score'
