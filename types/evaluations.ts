@@ -16,6 +16,11 @@ export type Status = 'completed' | 'draft';
 
 export type FormattedEvaluation = Record<SectionType, SectionData>;
 
+export type EvaluationPeriod = Pick<
+  Tables<'evaluation_periods'>,
+  'id' | 'name'
+>;
+
 export type EvaluationItem = Pick<
   Tables<'evaluation_items'>,
   'item_name' | 'score'
@@ -40,8 +45,8 @@ export type ExistingEvaluationSection = Pick<
 
 export type ExistingEvaluation = Pick<
   Tables<'evaluations'>,
-  'id' | 'status' | 'action_plan' | 'total_comment' | 'future_vision'
-> & { evaluation_sections: ExistingEvaluationSection[] };
+  'id' | 'action_plan' | 'total_comment' | 'future_vision'
+> & { status: Status } & { evaluation_sections: ExistingEvaluationSection[] };
 
 export type ExistingEvaluationForStaffCard = Pick<
   Tables<'evaluations'>,
