@@ -94,3 +94,20 @@ react-hook-form + Zod throughout. Server Actions handle mutations (files named `
 ### UI components
 
 `src/components/ui/` contains shadcn/ui components (auto-managed via `components.json`). `src/components/shared/` holds app-specific shared components. `src/components/evaluation/` holds evaluation display components (charts, scores, etc.) shared between admin and staff views.
+
+### 基本原則
+
+- 必要な場合、コンポーネントの末端に Client Components を使用
+- データ取得は Server Components で行い、必要なデータを Client Components に props で渡す
+- コンポーネント、関数などはそれらが使用されるコンポーネントのできる限り近くに置き、コロケーションに従う
+
+### 命名規則
+
+- ファイル名: ケバブケース(`evaluation-section.tsx`)
+- コンポーネント名: パスカルケース(`EvaluationSection`)
+- 関数名: キャメルケース(`getEvaluation`)
+
+### コンポーネント分割
+
+- **Server Components**: デフォルト(async 可能、データ取得可能)
+- **Client Components**: `"use client"`ディレクティブ付き(インタラクション、状態管理)
