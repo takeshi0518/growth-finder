@@ -13,7 +13,7 @@ import { Staff } from '../../../../../types/staff';
 import { Icons } from '@/components/icon/icons';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
+import SectionTitle from '@/components/shared/section-title';
 
 type StaffCardProps = {
   staff: Staff;
@@ -38,10 +38,7 @@ export default function StaffList({
   const totalPage = Math.ceil(staffs.length / pageSize);
   return (
     <>
-      <Label>
-        <span className="size-2 bg-primary rounded-full" />
-        {title}
-      </Label>
+      <SectionTitle>{title}</SectionTitle>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {currentItems.map((staff) => (
           <StaffCard

@@ -12,7 +12,7 @@ import {
   EvaluationItemConstant,
   Category,
 } from '../../../types/evaluations';
-import { Label } from '../ui/label';
+import SectionTitle from '@/components/shared/section-title';
 import { useState } from 'react';
 import {
   filterEvaluationItemsByCategory,
@@ -62,10 +62,7 @@ export default function SectionTab({
 
   return (
     <div>
-      <Label>
-        <span className="size-2 bg-primary rounded-full" />
-        各セクション詳細スコア
-      </Label>
+      <SectionTitle>各セクション詳細スコア</SectionTitle>
       <Tabs
         defaultValue="skill"
         className="mt-8"

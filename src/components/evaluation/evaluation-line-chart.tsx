@@ -9,7 +9,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { Label } from '../ui/label';
+import SectionTitle from '@/components/shared/section-title';
 import { ChartDataPoint } from '../../../types/evaluations';
 
 type EvaluationLineChart = {
@@ -21,10 +21,7 @@ export default function EvaluationLineChart({
 }: EvaluationLineChart) {
   return (
     <div>
-      <Label>
-        <span className="size-2 bg-primary rounded-full" />
-        総合達成率推移グラフ
-      </Label>
+      <SectionTitle>総合達成率推移グラフ</SectionTitle>
       <span className="text-muted-foreground text-[8px] sm:text-[10px]">
         ※最新から過去4件のデータを表示
       </span>
