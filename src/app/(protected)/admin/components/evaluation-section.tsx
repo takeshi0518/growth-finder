@@ -5,6 +5,7 @@ import { Tables } from '../../../../../types/supabase';
 import SectionEvaluationLayout from '@/components/evaluation/section-evaluation-layout';
 import SectionEvaluationDetail from '@/components/evaluation/section-evaluation-detail';
 import { Label } from '@/components/ui/label';
+import SectionTitle from '@/components/shared/section-title';
 import ProgressBar from '@/components/evaluation/progress-bar';
 import { FormattedSectionRate } from '@/lib/utils/evaluation-format';
 import { Staff } from '../../../../../types/staff';
@@ -75,10 +76,7 @@ export default function EvaluationSection({
             </div>
             <EvaluationPeriodSelect evaluationPeriods={evaluationPeriods} />
           </div>
-          <Label>
-            <span className="size-2 bg-primary rounded-full" />
-            店舗全体評価
-          </Label>
+          <SectionTitle>店舗全体評価</SectionTitle>
           <SectionEvaluationLayout>
             <SectionEvaluationDetail
               rank={rank}

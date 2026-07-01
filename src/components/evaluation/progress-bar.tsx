@@ -1,6 +1,6 @@
 'use client';
 
-import { Label } from '../ui/label';
+import SectionTitle from '@/components/shared/section-title';
 
 type ProgressBarProps = {
   label: string;
@@ -10,10 +10,7 @@ type ProgressBarProps = {
 export default function ProgressBar({ label, sectionRates }: ProgressBarProps) {
   return (
     <div className="lg:flex-1">
-      <Label>
-        <span className="size-2 bg-primary rounded-full" />
-        {label}
-      </Label>
+      <SectionTitle>{label}</SectionTitle>
       <div className="mt-5  border rounded-xl p-5 sm:p-8">
         <div className="space-y-5">
           {sectionRates.map((section) => (
