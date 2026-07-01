@@ -8,7 +8,7 @@ import {
   RadarChart,
   ResponsiveContainer,
 } from 'recharts';
-import { Label } from '../ui/label';
+import SectionTitle from '@/components/shared/section-title';
 import { CHART_COLORS } from '@/lib/constants/chart-colors';
 
 type CategoryRadarChartProps = {
@@ -29,10 +29,7 @@ export default function CategoryRadarChart({
   ];
   return (
     <div>
-      <Label>
-        <span className="size-2 bg-primary rounded-full" />
-        スキルグラフ
-      </Label>
+      <SectionTitle>スキルグラフ</SectionTitle>
       <ResponsiveContainer width="100%" height={300}>
         <RadarChart
           data={data}
