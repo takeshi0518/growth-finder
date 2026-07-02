@@ -111,3 +111,7 @@ react-hook-form + Zod throughout. Server Actions handle mutations (files named `
 
 - **Server Components**: デフォルト(async 可能、データ取得可能)
 - **Client Components**: `"use client"`ディレクティブ付き(インタラクション、状態管理)
+
+### 型定義
+
+- 型定義は type で統一する(interface は使わない)
