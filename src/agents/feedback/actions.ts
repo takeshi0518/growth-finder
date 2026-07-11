@@ -1,6 +1,6 @@
 'use server';
 
-import { mockCompleted } from './mock-data';
+import { mockCompleted, mockError, mockMaxIterations } from './mock-data';
 import type { FeedbackResult } from './types';
 
 // ダミー実装。本番では中身をエージェントループに差し替える。
