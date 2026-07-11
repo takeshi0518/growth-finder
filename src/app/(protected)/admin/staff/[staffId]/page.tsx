@@ -175,6 +175,7 @@ function StaffEvaluation({
       targetEvaluation={targetEvaluation}
       chartData={chartData}
       staffId={staffId}
+      showFeedbackGenerator={true}
     />
   );
 }
