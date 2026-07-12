@@ -1,4 +1,4 @@
-import { Rank } from '@/lib/utils/evaluation-calc';
+import { Rank } from '../../../types/evaluations';
 
 export type TurnLog = {
   turn: number;
