@@ -1,14 +1,49 @@
 'use server';
 
-import { mockCompleted } from './mock-data';
+import Anthropic from '@anthropic-ai/sdk';
 import type { FeedbackResult } from './types';
 
-// ダミー実装。本番では中身をエージェントループに差し替える。
-export async function generateFeedbackAction(
-  //Todo: 本番実装時にはプレフィックスを削除する
-  _staffId: string
-): Promise<FeedbackResult> {
-  await new Promise((resolve) => setTimeout(resolve, 1500));
+const client = new Anthropic();
+const MODEL = 'claude-haiku-4-5';
 
-  return mockCompleted;
+export async function generateFeedbackAction(
+  staffId: string
+): Promise<FeedbackResult> {
+  try {
+    const response = await client.messages.create({
+      model: MODEL,
+      max_tokens: 1024,
+      messages: [
+        {
+          role: 'user',
+          content: `あなたはカフェ店長を補佐するアシスタントです。スタッフ（ID: ${staffId}）の1on1面談用フィードバックを、200字程度で作成してください。`,
+        },
+      ],
+    });
+
+    const textBlock = response.content.find((b) => b.type === 'text');
+    const feedback = textBlock?.type === 'text' ? textBlock.text : '';
+
+    return {
+      status: 'completed',
+      feedback,
+      turns: [
+        {
+          turn: 1,
+          model: MODEL,
+          inputTokens: response.usage.input_tokens,
+          outputTokens: response.usage.output_tokens,
+          costUsd: 0,
+        },
+      ],
+      toolCalls: [],
+    };
+  } catch (error) {
+    return {
+      status: 'error',
+      error: error instanceof Error ? error.message : '不明なエラー',
+      turns: [],
+      toolCalls: [],
+    };
+  }
 }
