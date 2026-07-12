@@ -1,3 +1,5 @@
+import { Rank } from '@/lib/utils/evaluation-calc';
+
 export type TurnLog = {
   turn: number;
   model: string;
@@ -30,3 +32,31 @@ export type FeedbackResult =
       turns: TurnLog[];
       toolCalls: ToolCallLog[];
     };
+
+type TrendDirection = 'improving' | 'stable' | 'declining';
+
+type CategoryTrend = {
+  averageRate: number;
+  direction: TrendDirection;
+};
+
+export type EvaluationTrend = {
+  periodStart: string;
+  periodEnd: string;
+  evaluationCount: number;
+  skill: CategoryTrend;
+  hospitality: CategoryTrend;
+  cleanliness: CategoryTrend;
+};
+
+export type PreviousEvaluation = {
+  periodName: string;
+  skillRate: number;
+  hospitalityRate: number;
+  cleanlinessRate: number;
+  totalRate: number;
+  rank: Rank;
+  actionPlan: string | null;
+  totalComment: string | null;
+  futureVision: string | null;
+};

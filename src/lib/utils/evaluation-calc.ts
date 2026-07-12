@@ -1,4 +1,4 @@
-import { SectionType } from '../../../types/evaluations';
+import { Rank, SectionType } from '../../../types/evaluations';
 
 export type SectionScores = {
   section_type: SectionType;
@@ -52,7 +52,7 @@ export const calcRate = (sections: SectionScores[]) => {
   };
 };
 
-export const calcRank = (rate: number) => {
+export const calcRank = (rate: number): Rank => {
   if (rate >= 90) return 'A';
   if (rate >= 70) return 'B';
   if (rate >= 50) return 'C';
