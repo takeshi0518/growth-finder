@@ -42,6 +42,7 @@ import {
   ArrowBigDown,
   MessageSquareText,
   ChartColumnIncreasing,
+  Bot,
 } from 'lucide-react';
 
 import { FaXTwitter, FaGithub } from 'react-icons/fa6';
@@ -100,6 +101,7 @@ export const Icons = {
   ArrowBigDown,
   MessageSquareText,
   ChartColumnIncreasing,
+  Bot,
 
   FaXTwitter,
   FaGithub,

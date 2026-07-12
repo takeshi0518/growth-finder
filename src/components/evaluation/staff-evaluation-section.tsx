@@ -17,6 +17,7 @@ import {
   SectionType,
 } from '../../../types/evaluations';
 import FeedbackGenerator from './feedback-generator';
+import SectionEvaluationLayout from './section-evaluation-layout';
 
 type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id' | 'name'>;
 
@@ -122,7 +123,9 @@ export default function StaffEvaluationSection({
             />
           </TabsContent>
         </Tabs>
-        {showFeedbackGenerator && <FeedbackGenerator staffId={staffId} />}
+        <SectionEvaluationLayout>
+          {showFeedbackGenerator && <FeedbackGenerator staffId={staffId} />}
+        </SectionEvaluationLayout>
       </CardContent>
     </Card>
   );
