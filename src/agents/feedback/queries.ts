@@ -1,12 +1,18 @@
 import { SupabaseClient } from '@supabase/supabase-js';
-import { PreviousEvaluation } from './types';
+import { EvaluationTrend, PreviousEvaluation } from './types';
 import { calcRank, calcRate, SectionScores } from '@/lib/utils/evaluation-calc';
+import { average, judgeDirection } from './trend';
 
 type PreviousEvaluationRow = {
   action_plan: string | null;
   total_comment: string | null;
   future_vision: string | null;
   evaluation_periods: { name: string }; //Supabaseから返却されるデータは単一で実態に合わせる
+  evaluation_sections: SectionScores[];
+};
+
+type TrendEvaluationRow = {
+  evaluation_periods: { name: string };
   evaluation_sections: SectionScores[];
 };
 
@@ -63,5 +69,58 @@ export async function getPreviousEvaluation(
     actionPlan: previous.action_plan,
     totalComment: previous.total_comment,
     futureVision: previous.future_vision,
+  };
+}
+
+export async function getEvaluationTrend(
+  staffId: string,
+  orgId: string,
+  supabase: SupabaseClient
+): Promise<EvaluationTrend | null> {
+  const { data, error } = await supabase
+    .from('evaluations')
+    .select(
+      `
+    evaluation_periods ( name ),
+    evaluation_sections (
+      section_type,
+      skill_score, skill_max,
+      hospitality_score, hospitality_max,
+      cleanliness_score, cleanliness_max
+    )
+      `
+    )
+    .eq('staff_id', staffId)
+    .eq('organization_id', orgId)
+    .eq('status', 'completed')
+    .order('created_at', { ascending: true });
+
+  if (error) throw error;
+
+  const rows = data as unknown as TrendEvaluationRow[] | null;
+
+  if (!rows || rows.length === 0) return null;
+
+  const rateHistory = rows.map((r) => calcRate(r.evaluation_sections));
+  const skillRates = rateHistory.map((r) => r.skillRate);
+  const hospitalityRates = rateHistory.map((r) => r.hospitalityRate);
+  const cleanlinessRates = rateHistory.map((r) => r.cleanlinessRate);
+
+  return {
+    periodStart: rows[0].evaluation_periods.name,
+    periodEnd: rows[rows.length - 1].evaluation_periods.name,
+    evaluationCount: rows.length,
+    skill: {
+      averageRate: average(skillRates),
+      direction: judgeDirection(skillRates),
+    },
+    hospitality: {
+      averageRate: average(hospitalityRates),
+      direction: judgeDirection(hospitalityRates),
+    },
+    cleanliness: {
+      averageRate: average(cleanlinessRates),
+      direction: judgeDirection(cleanlinessRates),
+    },
   };
 }
