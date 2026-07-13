@@ -33,7 +33,7 @@ export type FeedbackResult =
       toolCalls: ToolCallLog[];
     };
 
-type TrendDirection = 'improving' | 'stable' | 'declining';
+export type TrendDirection = 'improving' | 'stable' | 'declining';
 
 type CategoryTrend = {
   averageRate: number;
