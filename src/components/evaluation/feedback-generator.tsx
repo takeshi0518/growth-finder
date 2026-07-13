@@ -5,7 +5,6 @@ import { FeedbackResult } from '@/agents/feedback/types';
 import { useState } from 'react';
 import { Button } from '../ui/button';
 import { Icons } from '../icon/icons';
-import { Label } from '../ui/label';
 import LoaderCircleIcon from '../shared/loader-circle';
 
 export default function FeedbackGenerator({ staffId }: { staffId: string }) {
