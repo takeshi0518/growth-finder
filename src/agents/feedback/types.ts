@@ -60,3 +60,14 @@ export type PreviousEvaluation = {
   totalComment: string | null;
   futureVision: string | null;
 };
+
+export type CurrentEvaluation = {
+  skillRate: number;
+  hospitalityRate: number;
+  cleanlinessRate: number;
+  totalRate: number;
+  rank: Rank;
+  actionPlan: string | null;
+  totalComment: string | null;
+  futureVision: string | null;
+};

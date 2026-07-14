@@ -1,16 +1,6 @@
 import { calcRank, calcRate } from '@/lib/utils/evaluation-calc';
 import { ExistingEvaluation, Rank } from '../../../types/evaluations';
-
-type CurrentEvaluation = {
-  skillRate: number;
-  hospitalityRate: number;
-  cleanlinessRate: number;
-  totalRate: number;
-  rank: Rank;
-  actionPlan: string | null;
-  totalComment: string | null;
-  futureVision: string | null;
-};
+import { CurrentEvaluation } from './types';
 
 export function formatCurrentEvaluation(
   evaluation: ExistingEvaluation
