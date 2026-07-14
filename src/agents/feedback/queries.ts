@@ -73,9 +73,9 @@ export async function getPreviousEvaluation(
 }
 
 export async function getEvaluationTrend(
+  supabase: SupabaseClient,
   staffId: string,
   orgId: string,
-  supabase: SupabaseClient
 ): Promise<EvaluationTrend | null> {
   const { data, error } = await supabase
     .from('evaluations')
