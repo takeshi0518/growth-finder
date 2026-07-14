@@ -123,9 +123,7 @@ export default function StaffEvaluationSection({
             />
           </TabsContent>
         </Tabs>
-        <SectionEvaluationLayout>
-          {showFeedbackGenerator && <FeedbackGenerator staffId={staffId} />}
-        </SectionEvaluationLayout>
+        {showFeedbackGenerator && <FeedbackGenerator staffId={staffId} />}
       </CardContent>
     </Card>
   );

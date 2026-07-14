@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Button } from '../ui/button';
 import { Icons } from '../icon/icons';
 import LoaderCircleIcon from '../shared/loader-circle';
+import SectionEvaluationLayout from './section-evaluation-layout';
 
 export default function FeedbackGenerator({ staffId }: { staffId: string }) {
   const [result, setResult] = useState<FeedbackResult | null>(null);
@@ -20,19 +21,21 @@ export default function FeedbackGenerator({ staffId }: { staffId: string }) {
   }
 
   return (
-    <div className="mt-6 w-full">
-      <Button onClick={handleGenerate} disabled={isPending} className="w-52">
-        {isPending ? (
-          <>
-            <LoaderCircleIcon /> 生成中...
-          </>
-        ) : (
-          'AIフィードバックを生成'
-        )}
-      </Button>
+    <SectionEvaluationLayout>
+      <div className="mt-6 w-full">
+        <Button onClick={handleGenerate} disabled={isPending} className="w-52">
+          {isPending ? (
+            <>
+              <LoaderCircleIcon /> 生成中...
+            </>
+          ) : (
+            'AIフィードバックを生成'
+          )}
+        </Button>
 
-      {result && <FeedbackResultView result={result} />}
-    </div>
+        {result && <FeedbackResultView result={result} />}
+      </div>
+    </SectionEvaluationLayout>
   );
 }
 
