@@ -7,15 +7,24 @@ import { Button } from '../ui/button';
 import { Icons } from '../icon/icons';
 import LoaderCircleIcon from '../shared/loader-circle';
 import SectionEvaluationLayout from './section-evaluation-layout';
+import { ExistingEvaluation } from '../../../types/evaluations';
 
-export default function FeedbackGenerator({ staffId }: { staffId: string }) {
+type FeedbackgeneratorProps = {
+  staffId: string;
+  targetEvaluation: ExistingEvaluation;
+};
+
+export default function FeedbackGenerator({
+  staffId,
+  targetEvaluation,
+}: FeedbackgeneratorProps) {
   const [result, setResult] = useState<FeedbackResult | null>(null);
   const [isPending, setIsPending] = useState(false);
 
   async function handleGenerate() {
     setIsPending(true);
     setResult(null);
-    const res = await generateFeedbackAction(staffId);
+    const res = await generateFeedbackAction(staffId, targetEvaluation);
     setResult(res);
     setIsPending(false);
   }

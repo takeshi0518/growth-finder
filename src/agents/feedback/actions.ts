@@ -2,12 +2,14 @@
 
 import Anthropic from '@anthropic-ai/sdk';
 import type { FeedbackResult } from './types';
+import { ExistingEvaluation } from '../../../types/evaluations';
 
 const client = new Anthropic();
 const MODEL = 'claude-haiku-4-5';
 
 export async function generateFeedbackAction(
-  staffId: string
+  staffId: string,
+  targetEvaluation: ExistingEvaluation
 ): Promise<FeedbackResult> {
   try {
     const response = await client.messages.create({
