@@ -3,6 +3,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import type { FeedbackResult } from './types';
 import { ExistingEvaluation } from '../../../types/evaluations';
+import { formatCurrentEvaluation } from './format-evaluation';
 
 const client = new Anthropic();
 const MODEL = 'claude-haiku-4-5';
