@@ -120,6 +120,7 @@ export default async function StaffPage({
           selectedPeriod={selectedPeriod}
           targetEvaluation={targetEvaluation}
           chartData={chartData}
+          staffId={user.id}
         />
       )}
     </div>

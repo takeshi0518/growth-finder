@@ -14,6 +14,8 @@ export type Category = 'skill' | 'hospitality' | 'cleanliness';
 
 export type Status = 'completed' | 'draft';
 
+export type Rank = 'A' | 'B' | 'C' | 'D';
+
 export type FormattedEvaluation = Record<SectionType, SectionData>;
 
 export type EvaluationPeriod = Pick<
