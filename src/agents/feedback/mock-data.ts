@@ -32,6 +32,7 @@ export const mockCompleted: FeedbackResult = {
       result: { ok: true },
     },
   ],
+  latencyMs: 6200,
 };
 
 export const mockMaxIterations: FeedbackResult = {
@@ -90,6 +91,7 @@ export const mockMaxIterations: FeedbackResult = {
       result: { ok: true },
     },
   ],
+  latencyMs: 15000,
 };
 
 export const mockError: FeedbackResult = {
@@ -111,4 +113,5 @@ export const mockError: FeedbackResult = {
       result: { ok: false, error: 'connection timeout' },
     },
   ],
+  latencyMs: 800,
 };
