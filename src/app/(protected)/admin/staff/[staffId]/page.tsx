@@ -23,6 +23,7 @@ type StaffEvaluationProps = {
   targetEvaluation?: ExistingEvaluation | null;
   chartData: ChartDataPoint[];
   staffId: string;
+  isDemo: boolean;
 };
 
 export default async function StaffDetailPage({
@@ -134,6 +135,7 @@ export default async function StaffDetailPage({
         targetEvaluation={targetEvaluation}
         chartData={chartData}
         staffId={staffId}
+        isDemo={profile.is_demo ?? false}
       />
     </AdminContainer>
   );
@@ -144,6 +146,7 @@ function StaffEvaluation({
   targetEvaluation,
   chartData,
   staffId,
+  isDemo,
 }: StaffEvaluationProps) {
   if (!selectedPeriod)
     return (
@@ -176,6 +179,7 @@ function StaffEvaluation({
       chartData={chartData}
       staffId={staffId}
       showFeedbackGenerator={true}
+      isDemo={isDemo}
     />
   );
 }

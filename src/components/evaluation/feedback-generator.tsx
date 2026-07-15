@@ -8,15 +8,23 @@ import { Icons } from '../icon/icons';
 import LoaderCircleIcon from '../shared/loader-circle';
 import SectionEvaluationLayout from './section-evaluation-layout';
 import { ExistingEvaluation } from '../../../types/evaluations';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '../ui/accordion';
 
 type FeedbackgeneratorProps = {
   staffId: string;
   targetEvaluation: ExistingEvaluation;
+  showTrace: boolean;
 };
 
 export default function FeedbackGenerator({
   staffId,
   targetEvaluation,
+  showTrace,
 }: FeedbackgeneratorProps) {
   const [result, setResult] = useState<FeedbackResult | null>(null);
   const [isPending, setIsPending] = useState(false);
@@ -28,6 +36,8 @@ export default function FeedbackGenerator({
     setResult(res);
     setIsPending(false);
   }
+
+  const totalCost = result?.turns.reduce((sum, t) => sum + t.costUsd, 0) ?? 0;
 
   return (
     <SectionEvaluationLayout>
@@ -43,6 +53,41 @@ export default function FeedbackGenerator({
         </Button>
 
         {result && <FeedbackResultView result={result} />}
+        {result && showTrace && (
+          <Accordion type="single" collapsible className="mt-4">
+            <AccordionItem value="trace">
+              <AccordionTrigger className="text-xs">
+                AIの処理過程を表示
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="space-y-2 text-xs text-muted-foreground">
+                  <div>
+                    <p className="font-medium">呼び出したツール</p>
+                    {result.toolCalls.length === 0 ? (
+                      <p>ツール呼び出しなし</p>
+                    ) : (
+                      <ul>
+                        {result.toolCalls.map((c, i) => (
+                          <li key={i}>
+                            {c.toolName}
+                            {c.result.ok ? '' : `失敗: ${c.result.error}`}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                  <div>
+                    <p className="font-medium">生成コスト</p>
+                    <p>
+                      {result.turns.length}ターン / 約
+                      {(totalCost * 150).toFixed(2)}円 (${totalCost.toFixed(6)})
+                    </p>
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        )}
       </div>
     </SectionEvaluationLayout>
   );
