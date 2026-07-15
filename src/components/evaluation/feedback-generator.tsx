@@ -133,6 +133,10 @@ function FeedbackTraceView({ result }: { result: FeedbackResult }) {
                 (${totalCost.toFixed(6)})
               </p>
             </div>
+            <div>
+              <p className="font-medium">生成時間</p>
+              <p>{(result.latencyMs / 1000).toFixed(1)}秒</p>
+            </div>
           </div>
         </AccordionContent>
       </AccordionItem>

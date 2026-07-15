@@ -19,6 +19,8 @@ export async function generateFeedbackAction(
   staffId: string,
   targetEvaluation: ExistingEvaluation
 ): Promise<FeedbackResult> {
+  const startedAt = Date.now();
+
   try {
     const supabase = await createClient();
     const { orgId } = await requireAdmin(supabase);
@@ -66,7 +68,13 @@ export async function generateFeedbackAction(
       if (response.stop_reason !== 'tool_use') {
         const textBlock = response.content.find((b) => b.type === 'text');
         const feedback = textBlock?.type === 'text' ? textBlock.text : '';
-        return { status: 'completed', feedback, turns, toolCalls };
+        return {
+          status: 'completed',
+          feedback,
+          turns,
+          toolCalls,
+          latencyMs: Date.now() - startedAt,
+        };
       }
 
       const toolResults: Anthropic.ToolResultBlockParam[] = [];
@@ -102,13 +110,19 @@ export async function generateFeedbackAction(
       messages.push({ role: 'user', content: toolResults });
     }
 
-    return { status: 'max_iterations', turns, toolCalls };
+    return {
+      status: 'max_iterations',
+      turns,
+      toolCalls,
+      latencyMs: Date.now() - startedAt,
+    };
   } catch (error) {
     return {
       status: 'error',
       error: error instanceof Error ? error.message : '不明なエラー',
       turns: [],
       toolCalls: [],
+      latencyMs: Date.now() - startedAt,
     };
   }
 }

@@ -20,17 +20,20 @@ export type FeedbackResult =
       feedback: string;
       turns: TurnLog[];
       toolCalls: ToolCallLog[];
+      latencyMs: number;
     }
   | {
       status: 'max_iterations';
       turns: TurnLog[];
       toolCalls: ToolCallLog[];
+      latencyMs: number;
     }
   | {
       status: 'error';
       error: string;
       turns: TurnLog[];
       toolCalls: ToolCallLog[];
+      latencyMs: number;
     };
 
 export type TrendDirection = 'improving' | 'stable' | 'declining';
