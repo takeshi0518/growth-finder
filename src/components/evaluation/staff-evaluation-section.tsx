@@ -16,6 +16,7 @@ import {
   ExistingEvaluation,
   SectionType,
 } from '../../../types/evaluations';
+import FeedbackGenerator from './feedback-generator';
 
 type EvaluationPeriod = Pick<Tables<'evaluation_periods'>, 'id' | 'name'>;
 
@@ -23,12 +24,16 @@ type StaffEvaluationSectionProps = {
   selectedPeriod: EvaluationPeriod;
   targetEvaluation: ExistingEvaluation;
   chartData: ChartDataPoint[];
+  staffId: string;
+  feedbackGenerator?: { showTrace: boolean };
 };
 
 export default function StaffEvaluationSection({
   selectedPeriod,
   targetEvaluation,
   chartData,
+  staffId,
+  feedbackGenerator,
 }: StaffEvaluationSectionProps) {
   const [activeTab, setActiveTab] = useState<SectionType>('basic');
   const handleTabChange = (v: string) => {
@@ -117,6 +122,13 @@ export default function StaffEvaluationSection({
             />
           </TabsContent>
         </Tabs>
+        {feedbackGenerator && (
+          <FeedbackGenerator
+            staffId={staffId}
+            targetEvaluation={targetEvaluation}
+            showTrace={feedbackGenerator.showTrace}
+          />
+        )}
       </CardContent>
     </Card>
   );
