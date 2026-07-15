@@ -178,8 +178,7 @@ function StaffEvaluation({
       targetEvaluation={targetEvaluation}
       chartData={chartData}
       staffId={staffId}
-      showFeedbackGenerator={true}
-      isDemo={isDemo}
+      feedbackGenerator={{ showTrace: isDemo }}
     />
   );
 }

@@ -121,7 +121,6 @@ export default async function StaffPage({
           targetEvaluation={targetEvaluation}
           chartData={chartData}
           staffId={user.id}
-          showFeedbackGenerator={false}
         />
       )}
     </div>

@@ -25,8 +25,7 @@ type StaffEvaluationSectionProps = {
   targetEvaluation: ExistingEvaluation;
   chartData: ChartDataPoint[];
   staffId: string;
-  showFeedbackGenerator?: boolean;
-  isDemo: boolean;
+  feedbackGenerator?: { showTrace: boolean };
 };
 
 export default function StaffEvaluationSection({
@@ -34,8 +33,7 @@ export default function StaffEvaluationSection({
   targetEvaluation,
   chartData,
   staffId,
-  showFeedbackGenerator,
-  isDemo,
+  feedbackGenerator,
 }: StaffEvaluationSectionProps) {
   const [activeTab, setActiveTab] = useState<SectionType>('basic');
   const handleTabChange = (v: string) => {
@@ -124,11 +122,11 @@ export default function StaffEvaluationSection({
             />
           </TabsContent>
         </Tabs>
-        {showFeedbackGenerator && (
+        {feedbackGenerator && (
           <FeedbackGenerator
             staffId={staffId}
             targetEvaluation={targetEvaluation}
-            showTrace={isDemo}
+            showTrace={feedbackGenerator.showTrace}
           />
         )}
       </CardContent>

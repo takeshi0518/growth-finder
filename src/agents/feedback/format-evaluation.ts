@@ -1,5 +1,5 @@
 import { calcRank, calcRate } from '@/lib/utils/evaluation-calc';
-import { ExistingEvaluation, Rank } from '../../../types/evaluations';
+import { ExistingEvaluation } from '../../../types/evaluations';
 import { CurrentEvaluation } from './types';
 
 export function formatCurrentEvaluation(
