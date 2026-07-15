@@ -87,11 +87,12 @@ Growth Finder のプロダクト哲学は「成長を可視化し、過去と比
 
 ## セットアップ手順
 
-> 本エージェントは既存の Growth Finder リポジトリに機能追加する形で実装している。以下は本機能に関わるセットアップ手順。
+> 本エージェントは既存の Growth Finder リポジトリへの機能追加として実装している。
+> 以下は本機能を動かすための手順。
 
 ```bash
 # 1. リポジトリをクローン
-git clone <repository-url>
+git clone
 cd growth-finder
 
 # 2. 依存パッケージをインストール
@@ -99,32 +100,42 @@ npm install
 
 # 3. 環境変数を設定
 cp .env.example .env.local
-# .env.local に必要な値を記入（次項参照）
+# ANTHROPIC_API_KEY と Supabase の接続情報を記入（次項参照）
 
-# 4. ローカル Supabase を起動しシードを投入
+# 4. ローカル Supabase を起動
 npx supabase start
-npx supabase db reset   # seed.sql によりデモデータが投入される
 
-# 5. 開発サーバーを起動
+# 5. マイグレーションとデモデータを投入
+npm run db:reset   # migration + seed.sql + 型生成
+
+# 6. 開発サーバーを起動
 npm run dev
 ```
 
-デモルートから、認証なしで動作を確認できる。
+`npx supabase start` の実行時に表示される `API URL` と `anon key` を、
+`.env.local` の `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` に設定する。
 
 ---
 
 ## 必要な環境変数
 
+本エージェントが使用するのは以下の 3 つ。
+
 ```env
-# LLM API
+# LLM API（本エージェントで追加）
 ANTHROPIC_API_KEY=your_api_key_here
 
-# Supabase
+# Supabase（既存 / ツールからの評価データ取得に使用）
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
 ```
 
-`ANTHROPIC_API_KEY` はリポジトリに含めず、`.gitignore` 対象の `.env.local` で管理する。使用モデルは `src/agents/feedback/actions.ts` の `MODEL` 定数で指定している。
+`.env.example` にはこの他に `SUPABASE_SERVICE_ROLE_KEY` と Google OAuth 関連の変数があるが、
+これらはアプリ本体の機能で使用するもので、本エージェントの動作には不要。
+
+`ANTHROPIC_API_KEY` は https://console.anthropic.com/settings/keys で取得できる。
+リポジトリには含めず、`.gitignore` 対象の `.env.local` で管理する。
+使用モデルは `src/agents/feedback/actions.ts` の `MODEL` 定数で指定している。
 
 ---
 
