@@ -72,7 +72,7 @@ function FeedbackResultView({ result }: { result: FeedbackResult }) {
               AIフィードバック
             </span>
           </p>
-          <div className="w-full p-3 border rounded-md text-[10px]">
+          <div className="w-full p-5 border rounded-md text-sm">
             <p className="whitespace-pre-wrap leading-relaxed">
               {result.feedback}
             </p>
