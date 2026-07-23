@@ -29,7 +29,8 @@ export default async function AdminPage() {
     supabase
       .from('evaluation_periods')
       .select('id, name, is_current')
-      .eq('organization_id', orgId),
+      .eq('organization_id', orgId)
+      .order('created_at', { ascending: true }),
   ]);
 
   if (staffError) redirect('/admin');
