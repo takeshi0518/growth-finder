@@ -2,19 +2,23 @@
 
 import { createAdminClient } from '../supabase/admin';
 import { createClient } from '../supabase/server';
+import { requireAdmin } from './requireAdmin';
 import { AVATAR_ALLOWED_TYPES, AVATAR_MAX_SIZE } from '@/lib/constants/upload';
 
 export async function uploadStaffAvatar(formData: FormData, staffId: string) {
   const supabase = await createClient();
   const supabaseAdmin = createAdminClient();
 
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser();
+  const { orgId } = await requireAdmin(supabase);
 
-  if (authError) throw new Error('認証エラーが発生しました');
-  if (!user) throw new Error('認証エラーが発生しました');
+  const { data: staff, error: staffError } = await supabase
+    .from('profiles')
+    .select('id')
+    .eq('id', staffId)
+    .eq('organization_id', orgId)
+    .single();
+
+  if (staffError || !staff) throw new Error('スタッフが見つかりません');
 
   const file = formData.get('avatar');
   if (!(file instanceof File)) throw new Error('ファイルが選択されていません');
