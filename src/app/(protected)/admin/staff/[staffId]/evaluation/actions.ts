@@ -50,6 +50,15 @@ const upsertEvaluations = async (
 
   const { orgId, user } = await requireAdmin(supabase);
 
+  const { data: staff, error: staffError } = await supabase
+    .from('profiles')
+    .select('id')
+    .eq('id', staffId)
+    .eq('organization_id', orgId)
+    .single();
+
+  if (staffError || !staff) throw new Error('スタッフが見つかりません');
+
   const validated = evaluationSchema.safeParse(data);
   if (!validated.success) throw new Error('入力内容を確認してください');
 
