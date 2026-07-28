@@ -279,6 +279,7 @@ export type Database = {
     }
     Functions: {
       get_user_organization_id: { Args: never; Returns: string }
+      is_admin: { Args: never; Returns: boolean }
     }
     Enums: {
       [_ in never]: never
