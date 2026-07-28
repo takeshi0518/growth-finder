@@ -30,8 +30,6 @@ export function useAuth() {
   const signUp = async (data: SignupInput) => {
     setIsLoading((prev) => ({ ...prev, signUp: true }));
     try {
-      const organizationId = crypto.randomUUID();
-
       const { error } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
@@ -39,8 +37,6 @@ export function useAuth() {
           data: {
             name: data.name,
             store_name: data.storeName,
-            role: 'admin',
-            organization_id: organizationId,
           },
           emailRedirectTo: `${window.location.origin}/login`,
         },
