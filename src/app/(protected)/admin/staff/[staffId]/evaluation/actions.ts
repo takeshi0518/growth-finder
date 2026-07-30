@@ -59,6 +59,15 @@ const upsertEvaluations = async (
 
   if (staffError || !staff) throw new Error('スタッフが見つかりません');
 
+  const { data: period, error: periodError } = await supabase
+    .from('evaluation_periods')
+    .select('id')
+    .eq('id', periodId)
+    .eq('organization_id', orgId)
+    .single();
+
+  if (periodError || !period) throw new Error('評価期間が見つかりません');
+
   const validated = evaluationSchema.safeParse(data);
   if (!validated.success) throw new Error('入力内容を確認してください');
 
