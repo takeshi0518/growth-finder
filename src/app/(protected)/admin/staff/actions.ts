@@ -3,6 +3,7 @@
 import { createAdminClient } from '@/lib/supabase/admin';
 import { createClient } from '@/lib/supabase/server';
 import { requireAdmin } from '@/lib/utils/requireAdmin';
+import { requireRowInOrg } from '@/lib/utils/requireRowInOrg';
 import {
   AddStaffInput,
   addStaffSchema,
@@ -60,14 +61,13 @@ export async function deleteStaff(staffId: string) {
 
   const { orgId } = await requireAdmin(supabase);
 
-  const { data: staff, error: staffError } = await supabase
-    .from('profiles')
-    .select('id')
-    .eq('id', staffId)
-    .eq('organization_id', orgId)
-    .single();
-
-  if (staffError || !staff) throw new Error('スタッフが見つかりません');
+  await requireRowInOrg(
+    supabase,
+    'profiles',
+    staffId,
+    orgId,
+    'スタッフが見つかりません'
+  );
 
   const { error } = await supabaseAdmin.auth.admin.deleteUser(staffId);
   if (error) throw new Error('スタッフの削除に失敗しました');
@@ -81,14 +81,13 @@ export async function editStaff(data: EditStaffInput, staffId: string) {
 
   const { orgId } = await requireAdmin(supabase);
 
-  const { data: staff, error: staffError } = await supabase
-    .from('profiles')
-    .select('id')
-    .eq('id', staffId)
-    .eq('organization_id', orgId)
-    .single();
-
-  if (staffError || !staff) throw new Error('スタッフが見つかりません');
+  await requireRowInOrg(
+    supabase,
+    'profiles',
+    staffId,
+    orgId,
+    'スタッフが見つかりません'
+  );
 
   const validated = editStaffSchema.safeParse(data);
   if (!validated.success) throw new Error('入力内容を確認してください');
@@ -122,14 +121,13 @@ export async function editStaffPassword(
 
   const { orgId } = await requireAdmin(supabase);
 
-  const { data: staff, error: staffError } = await supabase
-    .from('profiles')
-    .select('id')
-    .eq('id', staffId)
-    .eq('organization_id', orgId)
-    .single();
-
-  if (staffError || !staff) throw new Error('スタッフが見つかりません');
+  await requireRowInOrg(
+    supabase,
+    'profiles',
+    staffId,
+    orgId,
+    'スタッフが見つかりません'
+  );
 
   const validated = editStaffPasswordSchema.safeParse(data);
   if (!validated.success) throw new Error('入力内容を確認してください');

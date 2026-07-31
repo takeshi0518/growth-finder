@@ -3,6 +3,7 @@
 import { createAdminClient } from '../supabase/admin';
 import { createClient } from '../supabase/server';
 import { requireAdmin } from './requireAdmin';
+import { requireRowInOrg } from './requireRowInOrg';
 import { AVATAR_ALLOWED_TYPES, AVATAR_MAX_SIZE } from '@/lib/constants/upload';
 
 export async function uploadStaffAvatar(formData: FormData, staffId: string) {
@@ -11,14 +12,13 @@ export async function uploadStaffAvatar(formData: FormData, staffId: string) {
 
   const { orgId } = await requireAdmin(supabase);
 
-  const { data: staff, error: staffError } = await supabase
-    .from('profiles')
-    .select('id')
-    .eq('id', staffId)
-    .eq('organization_id', orgId)
-    .single();
-
-  if (staffError || !staff) throw new Error('スタッフが見つかりません');
+  await requireRowInOrg(
+    supabase,
+    'profiles',
+    staffId,
+    orgId,
+    'スタッフが見つかりません'
+  );
 
   const file = formData.get('avatar');
   if (!(file instanceof File)) throw new Error('ファイルが選択されていません');

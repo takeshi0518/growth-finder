@@ -2,6 +2,7 @@
 
 import { createClient } from '@/lib/supabase/server';
 import { requireAdmin } from '@/lib/utils/requireAdmin';
+import { requireRowInOrg } from '@/lib/utils/requireRowInOrg';
 import {
   EvaluationInput,
   evaluationSchema,
@@ -50,23 +51,21 @@ const upsertEvaluations = async (
 
   const { orgId, user } = await requireAdmin(supabase);
 
-  const { data: staff, error: staffError } = await supabase
-    .from('profiles')
-    .select('id')
-    .eq('id', staffId)
-    .eq('organization_id', orgId)
-    .single();
+  await requireRowInOrg(
+    supabase,
+    'profiles',
+    staffId,
+    orgId,
+    'スタッフが見つかりません'
+  );
 
-  if (staffError || !staff) throw new Error('スタッフが見つかりません');
-
-  const { data: period, error: periodError } = await supabase
-    .from('evaluation_periods')
-    .select('id')
-    .eq('id', periodId)
-    .eq('organization_id', orgId)
-    .single();
-
-  if (periodError || !period) throw new Error('評価期間が見つかりません');
+  await requireRowInOrg(
+    supabase,
+    'evaluation_periods',
+    periodId,
+    orgId,
+    '評価期間が見つかりません'
+  );
 
   const validated = evaluationSchema.safeParse(data);
   if (!validated.success) throw new Error('入力内容を確認してください');
