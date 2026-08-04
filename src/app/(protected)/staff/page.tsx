@@ -115,6 +115,11 @@ export default async function StaffPage({
           <Icons.CircleAlert />
           まだ評価が登録されていません
         </p>
+      ) : targetEvaluation.status === 'draft' ? (
+        <p className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Icons.CircleAlert />
+          下書き中のため表示できません
+        </p>
       ) : (
         <StaffEvaluationSection
           selectedPeriod={selectedPeriod}
