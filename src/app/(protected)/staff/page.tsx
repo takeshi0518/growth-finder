@@ -86,6 +86,7 @@ export default async function StaffPage({
     )
     .eq('organization_id', orgId)
     .eq('evaluations.staff_id', user.id)
+    .eq('evaluations.status', 'completed')
     .order('created_at', { ascending: true })
     .limit(4)) as { data: PeriodForChart[] | null; error: unknown };
 
