@@ -7,6 +7,7 @@ import { useSmoothScroll } from '@/app/(landing)/hooks/use-smooth-scroll';
 
 const guestNavItems = [
   { href: '#problem-solution', label: '解決するもの' },
+  { href: '#ai-feedback', label: 'AIフィードバック' },
   { href: '#usage', label: '使い方' },
   { href: '/login', label: 'ログイン' },
   { href: '/signup', label: '新規登録' },

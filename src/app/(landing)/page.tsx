@@ -5,6 +5,7 @@ import Hero from './components/hero';
 import RealScreen from './components/real-screen';
 import Usage from './components/usage';
 import FadeIn from './components/fade-in';
+import AiFeedback from './components/ai-feedback';
 
 export default function LandingPage() {
   return (
@@ -16,6 +17,8 @@ export default function LandingPage() {
       <FadeIn delay={0}>
         <RealScreen />
       </FadeIn>
+
+      <AiFeedback />
 
       <Usage />
 
