@@ -28,6 +28,11 @@ const screenshots = [
     alt: 'Growth Finderのスタッフ一覧画面',
     title: 'スタッフ一覧画面',
   },
+  {
+    src: '/images/growth-finder-screenshot5.png',
+    alt: 'Growth FinderのAIフィードバック画面',
+    title: 'AIフィードバック機能',
+  },
 ];
 
 export default function RealScreen() {
