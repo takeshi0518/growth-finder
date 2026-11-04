@@ -12,20 +12,20 @@ export default function Hero() {
           <div className="flex flex-col gap-8 items-center md:flex-1">
             <div className="flex flex-col gap-4 lg:gap-8">
               <p className="text-left font-bold text-2xl md:text-3xl lg:text-5xl">
-                スタッフ評価の
+                スタッフの
               </p>
               <p className="text-left font-bold text-4xl md:text-5xl lg:text-6xl text-primary">
-                属人化をなくす
+                伸びしろを見つける
               </p>
               <p className="text-left text-xl md:text-2xl lg:text-3xl">
-                誰が評価しても同じ基準で
+                成長を可視化して
                 <br />
-                スタッフの成長を可視化
+                1on1の対話につなげる
               </p>
             </div>
 
             <div className="flex flex-col items-center gap-8">
-              <ul className="flex gap-3 md:gap-8 xl:gap-20">
+              <ul className="flex gap-3 md:gap-6 xl:gap-12">
                 <li className="flex flex-col items-center gap-2">
                   <div className="flex justify-center items-center w-12 md:w-18 lg:w-28 h-12 md:h-18 lg:h-28 bg-white rounded-full shadow-xs">
                     <Icons.MessageSquareText className="w-5 md:w-8 lg:w-14 h-5 md:h-8 lg:h-14 text-primary" />
@@ -54,6 +54,16 @@ export default function Hero() {
                     評価基準を統一
                     <br />
                     育成の質を向上
+                  </p>
+                </li>
+                <li className="flex flex-col items-center gap-2">
+                  <div className="flex justify-center items-center w-12 md:w-18 lg:w-28 h-12 md:h-18 lg:h-28 bg-white rounded-full shadow-xs">
+                    <Icons.Bot className="w-5 md:w-8 lg:w-14 h-5 md:h-8 lg:h-14 text-primary" />
+                  </div>
+                  <p className="text-xs md:text-sm xl:text-lg font-bold">
+                    AIが面談の
+                    <br />
+                    たたき台を作成
                   </p>
                 </li>
               </ul>
